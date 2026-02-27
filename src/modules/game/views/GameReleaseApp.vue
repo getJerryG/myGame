@@ -12,7 +12,8 @@
         class="btn-primary"
         @click="createNewVersion"
       >
-        发布新版本      </button>
+        发布新版本
+      </button>
     </template>
 
     <!-- 版本管理 -->
@@ -27,9 +28,9 @@
       <div class="version-info">
         <div class="version-details">
           <p class="version-change">
-              <strong>发布版本</strong>{{ currentVersion.oldVersion }} →
-              <span class="text-gold">{{ currentVersion.newVersion }}</span>
-            </p>
+            <strong>发布版本</strong>{{ currentVersion.oldVersion }} →
+            <span class="text-gold">{{ currentVersion.newVersion }}</span>
+          </p>
           <p><strong>游戏时间</strong>{{ currentVersion.gameDate }}</p>
           <p class="update-description-title">
             <strong>更新说明</strong>
@@ -37,16 +38,20 @@
           <div class="update-description-list">
             <span class="update-description-item">
               <span class="text-gold">{{ currentVersion.description.heroes }}</span>
-              个英雄            </span>
+              个英雄
+            </span>
             <span class="update-description-item">
               <span class="text-gold">{{ currentVersion.description.skins }}</span>
-              个皮肤            </span>
+              个皮肤
+            </span>
             <span class="update-description-item">
               <span class="text-gold">{{ currentVersion.description.activities }}</span>
-              个活动            </span>
+              个活动
+            </span>
             <span class="update-description-item">
               <span class="text-gold">{{ currentVersion.description.optimizations }}</span>
-              项优化            </span>
+              项优化
+            </span>
           </div>
         </div>
       </div>
@@ -280,7 +285,8 @@ const nextVersionInfo = computed(() => {
 const versionHistory = ref<Version[]>([]);
 
 const releaseHistory = ref<ReleaseItem[]>([
-  { id: '1',
+  {
+    id: '1',
     type: '英雄',
     name: '弓箭手',
     version: '1.1.0',
@@ -663,5 +669,3 @@ const handleModuleClick = (item: SidebarItem): void => {
   color: white;
 }
 </style>
-
-

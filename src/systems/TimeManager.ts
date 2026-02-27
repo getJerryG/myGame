@@ -22,7 +22,7 @@ export class TimeManager {
     this.currentDate = {
       year: 1,
       month: 1,
-      day: 1
+      day: 1,
     };
 
     this.startTime = { ...this.currentDate };
@@ -66,18 +66,18 @@ export class TimeManager {
   // 推进到下一天
   public nextDay(): void {
     // 执行4个阶段的时间流程
-    
+
     // 1. 新一天00:00开始
     this.currentPhase = 'new_day';
     this.notifyTimeUpdate();
-    
+
     // 2. 自动运行至24:00（系统自动结算）
     this.currentPhase = 'auto_settlement';
     this.notifyTimeUpdate();
-    
+
     // 3. 推进日期
     this.advanceDate();
-    
+
     // 4. 玩家操作阶段
     this.currentPhase = 'player_operation';
     this.isPlayerTurn = true;
@@ -89,7 +89,7 @@ export class TimeManager {
     this.currentPhase = 'waiting_next_day';
     this.isPlayerTurn = false;
     this.notifyTimeUpdate();
-    
+
     // 调用nextDay完成时间推进
     this.nextDay();
   }
@@ -97,12 +97,12 @@ export class TimeManager {
   // 推进日期
   private advanceDate(): void {
     this.currentDate.day++;
-    
+
     // 每月固定30天（根据PRD）
     if (this.currentDate.day > 30) {
       this.currentDate.day = 1;
       this.currentDate.month++;
-      
+
       if (this.currentDate.month > 12) {
         this.currentDate.month = 1;
         this.currentDate.year++;

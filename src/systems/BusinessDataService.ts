@@ -1,5 +1,5 @@
 import type { BusinessData } from '../types';
-import { eventBus } from '../infrastructure/event-bus';
+import { eventBus } from '../infrastructure/EventBus';
 
 // 定义业务数据服务类
 export class BusinessDataService {

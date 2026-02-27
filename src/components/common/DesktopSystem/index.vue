@@ -1,17 +1,32 @@
 <template>
   <div class="desktop-system">
     <!-- 引入独立的刘海栏组件 -->
-    <NotchBar :levelName="策划职级名称" :levelRank="策划段位" :currentExp="策划经验" :maxExp="策划升级经验" :funds="策划资金" />
+    <NotchBar
+      :levelName="策划职级名称"
+      :levelRank="策划段位"
+      :currentExp="策划经验"
+      :maxExp="策划升级经验"
+      :funds="策划资金"
+    />
 
     <!-- 任务系统面板 -->
     <TaskSystemPanel />
 
     <!-- 退出确认对话框 -->
-    <ExitConfirmDialog :isVisible="showExitDialog" title="退出游戏确认" message="您正在退出游戏，如未保存将造成数据丢失！"
-      @close="showExitDialog = false" @exit="handleExit" @save="handleSaveAndExit" />
+    <ExitConfirmDialog
+      :isVisible="showExitDialog"
+      title="退出游戏确认"
+      message="您正在退出游戏，如未保存将造成数据丢失！"
+      @close="showExitDialog = false"
+      @exit="handleExit"
+      @save="handleSaveAndExit"
+    />
 
     <!-- 升级特效 -->
-    <div v-if="showLevelUpEffect" class="level-up-effect">
+    <div
+      v-if="showLevelUpEffect"
+      class="level-up-effect"
+    >
       <div class="level-up-message">{{ levelUpMessage }}</div>
     </div>
 
@@ -19,15 +34,23 @@
     <div class="desktop-background">
       <!-- 桌面应用图标区域 -->
       <div class="desktop-icons">
-        <DesktopAppIcon v-for="app in allDesktopApps" :key="app.id" :app="app" :position="app.position"
-          @click="openApp(app)" />
+        <DesktopAppIcon
+          v-for="app in allDesktopApps"
+          :key="app.id"
+          :app="app"
+          :position="app.position"
+          @click="openApp(app)"
+        />
       </div>
     </div>
 
     <!-- 任务栏 -->
     <div class="taskbar">
       <div class="taskbar-left">
-        <div class="start-button" @click="toggleStartMenu">
+        <div
+          class="start-button"
+          @click="toggleStartMenu"
+        >
           <span>开始</span>
         </div>
       </div>
@@ -37,21 +60,34 @@
     </div>
 
     <!-- 开始菜单 -->
-    <div v-if="isStartMenuOpen" class="start-menu" @click.stop>
+    <div
+      v-if="isStartMenuOpen"
+      class="start-menu"
+      @click.stop
+    >
       <div class="start-menu-header">
         <h2>开始</h2>
       </div>
       <div class="start-menu-content">
         <div class="start-menu-buttons">
-          <button class="start-menu-button" @click="saveGame">
+          <button
+            class="start-menu-button"
+            @click="saveGame"
+          >
             <span class="button-icon">💾</span>
             <span class="button-text">保存副本</span>
           </button>
-          <button class="start-menu-button" @click="restartGame">
+          <button
+            class="start-menu-button"
+            @click="restartGame"
+          >
             <span class="button-icon">🔄</span>
             <span class="button-text">重新开始</span>
           </button>
-          <button class="start-menu-button" @click="openGameSettings">
+          <button
+            class="start-menu-button"
+            @click="openGameSettings"
+          >
             <span class="button-icon">⚙️</span>
             <span class="button-text">游戏设置</span>
           </button>
@@ -59,17 +95,28 @@
       </div>
     </div>
     <!-- 点击外部关闭开始菜单 -->
-    <div v-if="isStartMenuOpen" class="start-menu-backdrop" @click="closeStartMenu"></div>
+    <div
+      v-if="isStartMenuOpen"
+      class="start-menu-backdrop"
+      @click="closeStartMenu"
+    ></div>
 
     <!-- 弹出层 -->
     <div class="desktop-modals">
-      <DesktopAppContainer v-for="modal in sortedModals" :key="modal.id" :window-id="modal.id" :window-state="{
-        position: modal.position,
-        size: modal.size,
-        isMaximized: modal.isMaximized,
-        isMinimized: minimizedApps.includes(modal.appId),
-        activeModule: modal.activeModule,
-      }" :app="allDesktopApps.find((a) => a.id === modal.appId)" :gameData="gameData" @close="closeApp(modal.appId)"
+      <DesktopAppContainer
+        v-for="modal in sortedModals"
+        :key="modal.id"
+        :window-id="modal.id"
+        :window-state="{
+          position: modal.position,
+          size: modal.size,
+          isMaximized: modal.isMaximized,
+          isMinimized: minimizedApps.includes(modal.appId),
+          activeModule: modal.activeModule,
+        }"
+        :app="allDesktopApps.find((a) => a.id === modal.appId)"
+        :gameData="gameData"
+        @close="closeApp(modal.appId)"
         @update:windowState="
           (updatedState) => {
             const updatedModal = {
@@ -81,7 +128,9 @@
             };
             updateModal(updatedModal);
           }
-        " @app-installed="handleAppInstalled">
+        "
+        @app-installed="handleAppInstalled"
+      >
         <!-- 这里可以添加应用内容的插槽 -->
       </DesktopAppContainer>
     </div>
@@ -965,7 +1014,6 @@ const handleSaveAndExit = () => {
 }
 
 @keyframes levelUpPulse {
-
   0%,
   100% {
     text-shadow: 0 0 10px rgb(74 158 255 / 80%);

@@ -19,6 +19,7 @@ module.exports = {
     'node_modules/',
     'dist/',
     '.trae/',
+    'tests/',
     'tailwind.config.js',
     'postcss.config.js',
     'vite.config.ts',

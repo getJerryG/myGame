@@ -8,7 +8,7 @@
         </div>
         <div class="user-name">策划大师</div>
       </div>
-      
+
       <!-- 用户等级和经验值 -->
       <div class="notch-item">
         <span class="notch-value">{{ levelName }} {{ levelRank }}</span>
@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="notch-info-right">
       <!-- 资金信息 -->
       <div class="notch-item">
@@ -179,38 +179,38 @@ const expProgressPercent = computed(() => {
     padding: 0 10px;
     height: 50px;
   }
-  
+
   .notch-info-left {
     gap: 10px;
   }
-  
+
   .notch-info-right {
     gap: 10px;
   }
-  
+
   .user-info {
     gap: 10px;
   }
-  
+
   .user-avatar {
     width: 35px;
     height: 35px;
   }
-  
+
   .avatar-placeholder {
     font-size: 16px;
   }
-  
+
   .user-name {
     font-size: 14px;
   }
-  
+
   .notch-item {
     padding: 6px 12px;
     font-size: 12px;
     gap: 8px;
   }
-  
+
   .exp-container {
     min-width: 100px;
   }

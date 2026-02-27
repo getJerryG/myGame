@@ -126,7 +126,8 @@
               @click="handleAddStones"
               :disabled="addStones <= 0"
             >
-              充�?            </button>
+              充�?
+            </button>
           </div>
 
           <!-- 抽奖结果展示 -->
@@ -343,7 +344,7 @@ const handleExchange = (): void => {
 const handleAddStones = (): void => {
   if (addStones.value > 0) {
     lotteryStore.stones += addStones.value * 10;
-    showNotification(`成功充�?{addStones.value * 10}祈愿石！`);
+    showNotification('成功充�?{addStones.value * 10}祈愿石！');
     addStones.value = 0;
   }
 };
@@ -1426,5 +1427,3 @@ button:disabled {
   }
 }
 </style>
-
-

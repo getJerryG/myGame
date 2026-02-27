@@ -241,7 +241,8 @@
               class="regenerate-btn"
               @click="regenerateStats"
             >
-              重新生成属�?            </button>
+              重新生成属�?
+            </button>
           </div>
 
           <!-- 模拟数据配置 -->
@@ -1185,5 +1186,3 @@ onMounted(() => {
   font-weight: bold;
 }
 </style>
-
-

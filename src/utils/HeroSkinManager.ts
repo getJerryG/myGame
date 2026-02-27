@@ -273,23 +273,38 @@ export const createSkin = (skinData: Omit<Skin, 'id' | 'createdAt'>): Skin => {
   const id = `skin-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
   // 根据皮肤品质获取基础研发时间和成本
-  const rarityConfig = SKIN_RARITIES.find(rarity => rarity.id === skinData.rarity);
-  const baseDevelopmentTime = rarityConfig ? 
-    (rarityConfig.id === '传说' || rarityConfig.id === '无双限定' ? 30 : 
-     rarityConfig.id === '史诗' ? 20 : 
-     rarityConfig.id === '勇气' ? 15 : 10) : 10;
+  const rarityConfig = SKIN_RARITIES.find((rarity) => rarity.id === skinData.rarity);
+  const baseDevelopmentTime = rarityConfig
+    ? rarityConfig.id === '传说' || rarityConfig.id === '无双限定'
+      ? 30
+      : rarityConfig.id === '史诗'
+        ? 20
+        : rarityConfig.id === '勇气'
+          ? 15
+          : 10
+    : 10;
   const baseDevelopmentCost = rarityConfig ? rarityConfig.baseCost * 100 : 2000;
 
   // 根据创作类型调整研发时间和成本
   const creationTypeConfig = CREATION_TYPE_RARITY_MAP[skinData.creationType as keyof typeof CREATION_TYPE_RARITY_MAP];
-  const timeMultiplier = creationTypeConfig ? 
-    (skinData.creationType === '自己创作' ? 1.5 : 
-     skinData.creationType === '合作创作' ? 1.0 : 
-     skinData.creationType === '聘请大师' ? 0.7 : 0.5) : 1.0;
-  const costMultiplier = creationTypeConfig ? 
-    (skinData.creationType === '自己创作' ? 0.8 : 
-     skinData.creationType === '合作创作' ? 1.0 : 
-     skinData.creationType === '聘请大师' ? 1.5 : 2.0) : 1.0;
+  const timeMultiplier = creationTypeConfig
+    ? skinData.creationType === '自己创作'
+      ? 1.5
+      : skinData.creationType === '合作创作'
+        ? 1.0
+        : skinData.creationType === '聘请大师'
+          ? 0.7
+          : 0.5
+    : 1.0;
+  const costMultiplier = creationTypeConfig
+    ? skinData.creationType === '自己创作'
+      ? 0.8
+      : skinData.creationType === '合作创作'
+        ? 1.0
+        : skinData.creationType === '聘请大师'
+          ? 1.5
+          : 2.0
+    : 1.0;
 
   // 计算最终研发时间和成本
   const developmentTime = Math.floor(baseDevelopmentTime * timeMultiplier);
@@ -308,8 +323,8 @@ export const createSkin = (skinData: Omit<Skin, 'id' | 'createdAt'>): Skin => {
     // 销量相关字段
     sales: {
       daily: 0,
-      total: 0
-    }
+      total: 0,
+    },
   };
 
   // 保存到本地存储
@@ -383,7 +398,7 @@ export const batchCreateSkins = (count: number): void => {
       Object.keys(CREATION_TYPE_RARITY_MAP)[Math.floor(Math.random() * Object.keys(CREATION_TYPE_RARITY_MAP).length)];
 
     // 验证是否可以创建该皮肤
-    const skinData = {
+    const skinData: Omit<Skin, 'id' | 'createdAt'> = {
       name: `${randomHero.name}皮肤${i + 1}`,
       icon: '🧱',
       heroName: randomHero.name,
@@ -399,6 +414,16 @@ export const batchCreateSkins = (count: number): void => {
       obtainDifficulty: Math.random(),
       communityHeat: Math.random(),
       negativePublicOpinion: Math.random(),
+      // 研发相关字段
+      developmentTime: 10,
+      developmentCost: 2000,
+      developmentProgress: 0,
+      status: 'in_development',
+      // 销量相关字段
+      sales: {
+        daily: 0,
+        total: 0,
+      },
     };
 
     const validation = validateSkinCreation(skinData);
@@ -423,53 +448,53 @@ export const getAllSkinMarketData = (): Array<{ skin: Skin; marketData: Simulate
 
 // 验证英雄是否可以创建指定品质的皮肤（基于英雄数量）
 export const validateHeroSkinCreation = (heroCount: number, rarity: string): boolean => {
-  const rarityConfig = 
+  const rarityConfig =
     skinSimulationConfig.rarityPermissions[rarity as keyof typeof skinSimulationConfig.rarityPermissions];
   return !rarityConfig || heroCount >= rarityConfig.requiredHeroCount;
 };
 
 // 推进研发进度
-export const advanceDevelopment = (id: string, isHero: boolean = false): void => {
+export const advanceDevelopment = (id: string, isHero = false): void => {
   if (isHero) {
     // 推进英雄研发进度
     const heroes = getHeroesFromStorage();
-    const heroIndex = heroes.findIndex(hero => hero.id === id);
-    
+    const heroIndex = heroes.findIndex((hero) => hero.id === id);
+
     if (heroIndex !== -1 && heroes[heroIndex].status === 'in_development') {
       // 每天推进的进度 = 100 / 研发时间
       const dailyProgress = 100 / heroes[heroIndex].developmentTime;
       heroes[heroIndex].developmentProgress = Math.min(100, heroes[heroIndex].developmentProgress + dailyProgress);
-      
+
       // 如果研发完成，将状态改为已发布
       if (heroes[heroIndex].developmentProgress >= 100) {
         heroes[heroIndex].status = 'released';
         heroes[heroIndex].developmentProgress = 100;
       }
-      
+
       saveHeroesToStorage(heroes);
     }
   } else {
     // 推进皮肤研发进度
     const skins = getSkinsFromStorage();
-    const skinIndex = skins.findIndex(skin => skin.id === id);
-    
+    const skinIndex = skins.findIndex((skin) => skin.id === id);
+
     if (skinIndex !== -1 && skins[skinIndex].status === 'in_development') {
       // 每天推进的进度 = 100 / 研发时间
       const dailyProgress = 100 / skins[skinIndex].developmentTime;
       skins[skinIndex].developmentProgress = Math.min(100, skins[skinIndex].developmentProgress + dailyProgress);
-      
+
       // 如果研发完成，将状态改为已发布并计算初始销量
       if (skins[skinIndex].developmentProgress >= 100) {
         skins[skinIndex].status = 'released';
         skins[skinIndex].developmentProgress = 100;
-        
+
         // 计算初始销量
         const skinHero = getSkinHero(skins[skinIndex].heroName);
         if (skinHero) {
           calculateSkinInitialSales(skins[skinIndex], skinHero);
         }
       }
-      
+
       saveSkinsToStorage(skins);
     }
   }
@@ -478,59 +503,73 @@ export const advanceDevelopment = (id: string, isHero: boolean = false): void =>
 // 计算皮肤初始销量
 export const calculateSkinInitialSales = (skin: Skin, hero: Hero): void => {
   // 初始销量公式：英雄用户基数 × 英雄出场率 × 皮肤吸引力 × 价格系数 × 品质系数
-  
+
   // 皮肤吸引力：基于设计契合度、稀缺感、社群讨论度等因素计算
   const skinAttraction = (skin.designFit + skin.scarcity + skin.communityHeat) / 3;
-  
+
   // 价格系数：价格越高，系数越低（防止价格过高导致销量过低）
   const priceCoeff = Math.max(0.1, 1 - (skin.price - 200) / 10000);
-  
+
   // 品质系数：不同品质的皮肤有不同的系数
-  const rarityCoeff = SKIN_RARITIES.find(rarity => rarity.id === skin.rarity) ? 
-    (skin.rarity === '传说' || skin.rarity === '无双限定' ? 1.5 : 
-     skin.rarity === '史诗' ? 1.2 : 
-     skin.rarity === '勇气' ? 1.0 : 0.8) : 0.8;
-  
+  const rarityCoeff = SKIN_RARITIES.find((rarity) => rarity.id === skin.rarity)
+    ? skin.rarity === '传说' || skin.rarity === '无双限定'
+      ? 1.5
+      : skin.rarity === '史诗'
+        ? 1.2
+        : skin.rarity === '勇气'
+          ? 1.0
+          : 0.8
+    : 0.8;
+
   // 计算初始销量（总销量）
-  const initialTotalSales = Math.floor(100000 * hero.userBase * hero.pickRate * skinAttraction * priceCoeff * rarityCoeff);
-  
+  const initialTotalSales = Math.floor(
+    100000 * hero.userBase * hero.pickRate * skinAttraction * priceCoeff * rarityCoeff
+  );
+
   // 计算初始日销量（总销量的10%）
   const initialDailySales = Math.floor(initialTotalSales * 0.1);
-  
+
   // 更新皮肤销量数据
   skin.sales = {
     daily: initialDailySales,
-    total: initialTotalSales
+    total: initialTotalSales,
   };
 };
 
 // 计算皮肤每日销量
-export const calculateSkinDailySales = (skin: Skin, hero: Hero, gamePopularity: number, gameWordOfMouth: number): void => {
+export const calculateSkinDailySales = (
+  skin: Skin,
+  hero: Hero,
+  gamePopularity: number,
+  gameWordOfMouth: number
+): void => {
   if (skin.status !== 'released') return;
-  
+
   // 每日销量公式：基础销量 × 热度系数 × 口碑系数 × 英雄表现系数 × 时间衰减系数
-  
+
   // 基础销量：基于初始销量和当前状态计算
   const baseDailySales = skin.sales.daily;
-  
+
   // 热度系数：游戏热度越高，销量越高
   const popularityCoeff = Math.max(0.5, gamePopularity / 100);
-  
+
   // 口碑系数：游戏口碑越好，销量越高
   const wordOfMouthCoeff = Math.max(0.5, gameWordOfMouth / 100);
-  
+
   // 英雄表现系数：英雄使用率和胜率越高，皮肤销量越高
   const heroPerformanceCoeff = Math.max(0.5, (hero.usageRate + hero.winRate) / 200);
-  
+
   // 时间衰减系数：皮肤发布时间越长，销量越低
   const releaseDate = new Date(skin.createdAt);
   const currentDate = new Date();
   const daysSinceRelease = Math.floor((currentDate.getTime() - releaseDate.getTime()) / (1000 * 60 * 60 * 24));
-  const timeDecayCoeff = Math.max(0.3, 1 - (daysSinceRelease / 365));
-  
+  const timeDecayCoeff = Math.max(0.3, 1 - daysSinceRelease / 365);
+
   // 计算当日销量
-  const dailySales = Math.floor(baseDailySales * popularityCoeff * wordOfMouthCoeff * heroPerformanceCoeff * timeDecayCoeff);
-  
+  const dailySales = Math.floor(
+    baseDailySales * popularityCoeff * wordOfMouthCoeff * heroPerformanceCoeff * timeDecayCoeff
+  );
+
   // 更新皮肤销量数据
   skin.sales.daily = dailySales;
   skin.sales.total += dailySales;
@@ -540,42 +579,42 @@ export const calculateSkinDailySales = (skin: Skin, hero: Hero, gamePopularity: 
 export const calculateAllSkinDailySales = (gamePopularity: number, gameWordOfMouth: number): void => {
   const skins = getSkinsFromStorage();
   const heroes = getHeroesFromStorage();
-  
-  skins.forEach(skin => {
+
+  skins.forEach((skin) => {
     if (skin.status === 'released') {
-      const hero = heroes.find(h => h.name === skin.heroName);
+      const hero = heroes.find((h) => h.name === skin.heroName);
       if (hero) {
         calculateSkinDailySales(skin, hero, gamePopularity, gameWordOfMouth);
       }
     }
   });
-  
+
   saveSkinsToStorage(skins);
 };
 
 // 获取所有正在研发的项目（英雄和皮肤）
-export const getInDevelopmentProjects = (): { type: 'hero' | 'skin'; item: Hero | Skin }[] => {
-  const heroes = getHeroesFromStorage().filter(hero => hero.status === 'in_development');
-  const skins = getSkinsFromStorage().filter(skin => skin.status === 'in_development');
-  
-  const projects: { type: 'hero' | 'skin'; item: Hero | Skin }[] = [];
-  
+export const getInDevelopmentProjects = (): Array<{ type: 'hero' | 'skin'; item: Hero | Skin }> => {
+  const heroes = getHeroesFromStorage().filter((hero) => hero.status === 'in_development');
+  const skins = getSkinsFromStorage().filter((skin) => skin.status === 'in_development');
+
+  const projects: Array<{ type: 'hero' | 'skin'; item: Hero | Skin }> = [];
+
   // 添加英雄项目
-  heroes.forEach(hero => {
+  heroes.forEach((hero) => {
     projects.push({
       type: 'hero',
-      item: hero
+      item: hero,
     });
   });
-  
+
   // 添加皮肤项目
-  skins.forEach(skin => {
+  skins.forEach((skin) => {
     projects.push({
       type: 'skin',
-      item: skin
+      item: skin,
     });
   });
-  
+
   // 按研发进度排序
   return projects.sort((a, b) => {
     const progressA = a.type === 'hero' ? (a.item as Hero).developmentProgress : (a.item as Skin).developmentProgress;

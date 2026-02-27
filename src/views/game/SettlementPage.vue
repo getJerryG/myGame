@@ -196,14 +196,7 @@ watch(
 );
 
 // 从store获取数据
-const {
-  money,
-  reputation,
-  popularity,
-  wordOfMouth,
-  totalMoney,
-  currentDate
-} = gameStore;
+const { money, reputation, popularity, wordOfMouth, totalMoney, currentDate } = gameStore;
 
 // 提供默认数据
 const dailyRevenue = ref(1000 + Math.random() * 5000);
@@ -320,7 +313,7 @@ const doughnutOptions = {
 
 // 收入趋势图数据
 const revenueChartData = computed(() => {
-  const history = revenueHistory.length > 0 ? revenueHistory : generateMockHistory(7, 1000, 500);
+  const history = revenueHistory.value.length > 0 ? revenueHistory : generateMockHistory(7, 1000, 500);
   return {
     labels: history.map((_, i) => `第${i + 1}天`),
     datasets: [
@@ -340,8 +333,9 @@ const revenueChartData = computed(() => {
 const userChartData = computed(() => {
   const days = 7;
   const downloadHistory =
-    downloadsHistory.length > 0 ? downloadsHistory.slice(-days) : generateMockHistory(days, 500, 200);
-  const dauHistoryData = dauHistory.length > 0 ? dauHistory.slice(-days) : generateMockHistory(days, 200, 100);
+    downloadsHistory.value.length > 0 ? downloadsHistory.value.slice(-days) : generateMockHistory(days, 500, 200);
+  const dauHistoryData =
+    dauHistory.value.length > 0 ? dauHistory.value.slice(-days) : generateMockHistory(days, 200, 100);
 
   return {
     labels: downloadHistory.map((_, i) => `第${i + 1}天`),
@@ -364,9 +358,13 @@ const userChartData = computed(() => {
 const marketChartData = computed(() => {
   const days = 7;
   const sentimentHistory =
-    marketSentimentHistory.length > 0 ? marketSentimentHistory.slice(-days) : generateMockHistory(days, 50, 20);
+    marketSentimentHistory.value.length > 0
+      ? marketSentimentHistory.value.slice(-days)
+      : generateMockHistory(days, 50, 20);
   const retentionHistoryData =
-    retentionHistory.length > 0 ? retentionHistory.slice(-days).map((r) => r * 100) : generateMockHistory(days, 30, 10);
+    retentionHistory.value.length > 0
+      ? retentionHistory.value.slice(-days).map((r) => r * 100)
+      : generateMockHistory(days, 30, 10);
 
   return {
     labels: sentimentHistory.map((_, i) => `第${i + 1}天`),
@@ -393,8 +391,8 @@ const marketChartData = computed(() => {
 
 // 付费数据图
 const paymentChartData = computed(() => {
-  const payerCount = Math.round(dau * paymentRate);
-  const nonPayerCount = dau - payerCount;
+  const payerCount = Math.round(dau.value * paymentRate.value);
+  const nonPayerCount = dau.value - payerCount;
 
   return {
     labels: ['付费用户', '非付费用户'],

@@ -3,7 +3,7 @@
  * 用于每两周为每个职业推荐强度英雄
  */
 
-import skinSimulationConfig from '../config/skin-simulate.config';
+import skinSimulationConfig from '../config/SkinSimulateConfig';
 
 // 随机事件类型
 export enum RandomEventType {

@@ -3,7 +3,7 @@ import { useGameStore } from './gameStore';
 
 // 定义存档状态类型
 interface SaveState {
-  saves: {
+  saves: Array<{
     id: string;
     date: Date;
     preview: {
@@ -12,7 +12,7 @@ interface SaveState {
       plannerLevel: string;
       plannerSubLevel: string;
     };
-  }[];
+  }>;
   currentSaveId: string | null;
   autoSaveInterval: number | null;
 }
@@ -22,7 +22,7 @@ export const useSaveStore = defineStore('save', {
   state: (): SaveState => ({
     saves: [],
     currentSaveId: null,
-    autoSaveInterval: null
+    autoSaveInterval: null,
   }),
 
   getters: {
@@ -31,8 +31,8 @@ export const useSaveStore = defineStore('save', {
     // 获取当前存档
     getCurrentSave: (state) => {
       if (!state.currentSaveId) return null;
-      return state.saves.find(save => save.id === state.currentSaveId) || null;
-    }
+      return state.saves.find((save) => save.id === state.currentSaveId) || null;
+    },
   },
 
   actions: {
@@ -51,7 +51,7 @@ export const useSaveStore = defineStore('save', {
           // 将字符串日期转换为Date对象
           this.saves = parsedSaves.map((save: any) => ({
             ...save,
-            date: new Date(save.date)
+            date: new Date(save.date),
           }));
         } catch (error) {
           console.error('Failed to load saves:', error);
@@ -70,31 +70,31 @@ export const useSaveStore = defineStore('save', {
       const gameStore = useGameStore();
       const saveData = this.serializeGameData(gameStore);
       const saveId = Date.now().toString();
-      
+
       // 保存游戏数据
       localStorage.setItem(`game_save_${saveId}`, JSON.stringify(saveData));
-      
+
       // 创建存档预览
       const savePreview = {
         currentDate: { ...gameStore.currentDate },
         money: gameStore.money,
         plannerLevel: gameStore.plannerLevel,
-        plannerSubLevel: gameStore.plannerSubLevel
+        plannerSubLevel: gameStore.plannerSubLevel,
       };
-      
+
       // 添加到存档列表
       const newSave = {
         id: saveId,
         date: new Date(),
-        preview: savePreview
+        preview: savePreview,
       };
-      
+
       this.saves.push(newSave);
       this.currentSaveId = saveId;
-      
+
       // 保存存档列表
       this.saveSavesToStorage();
-      
+
       return saveId;
     },
 
@@ -114,18 +114,18 @@ export const useSaveStore = defineStore('save', {
     deleteSave(saveId: string) {
       // 删除游戏数据
       localStorage.removeItem(`game_save_${saveId}`);
-      
+
       // 从存档列表中移除
-      this.saves = this.saves.filter(save => save.id !== saveId);
-      
+      this.saves = this.saves.filter((save) => save.id !== saveId);
+
       // 如果删除的是当前存档，重置当前存档ID
       if (this.currentSaveId === saveId) {
         this.currentSaveId = null;
       }
-      
+
       // 保存存档列表
       this.saveSavesToStorage();
-      
+
       return true;
     },
 
@@ -147,7 +147,7 @@ export const useSaveStore = defineStore('save', {
         ongoingProjects: [...gameStore.ongoingProjects],
         onlineHeroes: [...gameStore.onlineHeroes],
         onlineSkins: [...gameStore.onlineSkins],
-        activeEvents: [...gameStore.activeEvents]
+        activeEvents: [...gameStore.activeEvents],
       };
     },
 
@@ -189,6 +189,6 @@ export const useSaveStore = defineStore('save', {
         clearInterval(this.autoSaveInterval);
         this.autoSaveInterval = null;
       }
-    }
-  }
+    },
+  },
 });

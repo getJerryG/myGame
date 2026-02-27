@@ -100,36 +100,98 @@ export default defineConfig({
       // 启用Tree-shaking
       treeshake: true,
       output: {
-        // 手动代码分割
+        // 手动代码分割 - 优化策略
         manualChunks(id) {
           // 库代码分割
           if (id.includes('node_modules')) {
-            if (id.includes('vue') || id.includes('vue-router') || id.includes('pinia')) {
-              return 'vue-vendor';
-            } else if (id.includes('lodash') || id.includes('@vueuse')) {
-              return 'utility';
+            // Vue 核心库
+            if (id.includes('vue/dist') || id.includes('vue-router') || id.includes('pinia')) {
+              return 'vue-core';
             }
-            return id.toString().split('node_modules/')[1].split('/')[0].toString();
+            // Vue 生态系统
+            if (id.includes('@vue')) {
+              return 'vue-ecosystem';
+            }
+            // 工具库
+            if (id.includes('lodash') || id.includes('dayjs') || id.includes('axios')) {
+              return 'utils';
+            }
+            // 图表库
+            if (id.includes('chart.js') || id.includes('vue-chartjs')) {
+              return 'charts';
+            }
+            // 其他第三方库按包名分割
+            const match = id.match(/node_modules\/(?:@[^/]+\/)?([^/]+)/);
+            if (match) {
+              return `vendor-${match[1]}`;
+            }
           }
-          // 样式代码分割
-          if (id.includes('style.css')) {
-            return 'styles';
+          // 业务代码按功能分割
+          if (id.includes('/src/stores/')) {
+            return 'stores';
+          }
+          if (id.includes('/src/components/business/simulation/')) {
+            return 'simulation-components';
+          }
+          if (id.includes('/src/components/business/')) {
+            return 'business-components';
+          }
+          if (id.includes('/src/views/')) {
+            return 'views';
           }
         },
-        // 自动代码分割
-        chunkFileNames: 'js/[name]-[hash].js',
+        // 优化文件命名
+        chunkFileNames: (chunkInfo) => {
+          const name = chunkInfo.name;
+          if (name.includes('vendor') || name.includes('vue') || name.includes('utils')) {
+            return 'js/vendor/[name]-[hash].js';
+          }
+          return 'js/[name]-[hash].js';
+        },
         entryFileNames: 'js/[name]-[hash].js',
-        assetFileNames: '[ext]/[name]-[hash].[ext]'
+        assetFileNames: (assetInfo) => {
+          const info = assetInfo.name || '';
+          if (info.endsWith('.css')) {
+            return 'css/[name]-[hash][extname]';
+          }
+          if (/\.(png|jpe?g|gif|svg|webp|ico)$/.test(info)) {
+            return 'images/[name]-[hash][extname]';
+          }
+          if (/\.(woff2?|ttf|otf|eot)$/.test(info)) {
+            return 'fonts/[name]-[hash][extname]';
+          }
+          return 'assets/[name]-[hash][extname]';
+        }
       }
     },
-    // 优化构建速度
-    minify: 'esbuild',
+    // 使用 Terser 进行更激进的优化
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug'],
+        passes: 2
+      },
+      mangle: {
+        safari10: true
+      }
+    },
     // 配置缓存策略
     cacheDir: './node_modules/.vite',
     // 控制输出文件大小
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 500,
     // 启用CSS代码分割
-    cssCodeSplit: true
+    cssCodeSplit: true,
+    // 启用 CSS 压缩
+    cssMinify: true,
+    // 目标浏览器
+    target: 'es2015',
+    // 动态导入优化
+    dynamicImportVarsOptions: {
+      warnOnError: true,
+      exclude: [/node_modules/]
+    }
   },
   server: PRECOMPRESS,
   preview: PRECOMPRESS,

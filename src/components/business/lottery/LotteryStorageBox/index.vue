@@ -6,7 +6,7 @@
     >
       <h3>收纳箱</h3>
       <span class="total-decompose-points">
-        总分解积分        <span class="points-value">+{{ totalDecomposePoints }}</span>
+        总分解积分 <span class="points-value">+{{ totalDecomposePoints }}</span>
       </span>
       <span class="toggle-icon">{{ isStorageBoxOpen ? '▼' : '▶' }}</span>
     </div>
@@ -26,7 +26,8 @@
         v-if="organizedStorageBox.length === 0"
         class="empty-message"
       >
-        收纳盒是空的，快去抽奖吧�?      </div>
+        收纳盒是空的，快去抽奖吧�?
+      </div>
       <div
         v-for="(item, index) in organizedStorageBox"
         v-else
@@ -316,5 +317,3 @@ const handleDecomposeAll = (): void => {
   font-weight: bold;
 }
 </style>
-
-

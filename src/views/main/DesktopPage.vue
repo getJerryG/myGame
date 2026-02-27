@@ -16,9 +16,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, defineAsyncComponent } from 'vue';
 import HelloPage from './HelloPage.vue';
-import DesktopSystem from '@/components/common/DesktopSystem/index.vue';
+
+// 异步加载 DesktopSystem 组件，减少首屏加载时间
+const DesktopSystem = defineAsyncComponent({
+  loader: () => import('@/components/common/DesktopSystem/index.vue'),
+  loadingComponent: {
+    template: '<div class="desktop-loading">正在加载桌面...</div>',
+  },
+  delay: 0, // 立即显示 loading 状态
+  timeout: 30000, // 30秒超时
+});
 
 // 接收路由参数
 const props = defineProps<{
@@ -96,6 +105,28 @@ const handleHelloModalClose = () => {
 .notch-info {
   display: flex;
   gap: 20px;
+}
+
+/* 桌面加载状态 */
+.desktop-loading {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: #fff;
+  font-size: 1.5rem;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .notch-item {

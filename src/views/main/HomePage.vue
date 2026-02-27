@@ -1,14 +1,14 @@
 <template>
   <div class="home-page">
-    <!-- 背景 -->
-    <div class="home-background"></div>
+    <!-- 背景 - 使用CSS而非图片，避免LCP延迟 -->
+    <div class="home-background" aria-hidden="true"></div>
 
     <!-- 主要内容 -->
     <div class="home-content">
       <!-- 左侧：游戏标题和游戏描述 -->
       <div class="left-column">
-        <!-- 游戏标题 -->
-        <div class="game-title">
+        <!-- 游戏标题 - LCP元素，确保快速渲染 -->
+        <div class="game-title" data-lcp-element>
           <h1>策划大师：王者经营</h1>
           <p class="subtitle">游戏开发模拟</p>
         </div>
@@ -161,6 +161,29 @@ const formatDate = (timestamp: number): string => {
   return date.toLocaleString();
 };
 
+// 预加载 DesktopSystem 组件
+const preloadDesktopSystem = (): void => {
+  // 使用 requestIdleCallback 在浏览器空闲时预加载
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => {
+      import('@/components/common/DesktopSystem/index.vue');
+      import('@/views/main/DesktopPage.vue');
+    }, { timeout: 2000 });
+  } else {
+    // 降级方案：使用 setTimeout
+    setTimeout(() => {
+      import('@/components/common/DesktopSystem/index.vue');
+      import('@/views/main/DesktopPage.vue');
+    }, 1000);
+  }
+};
+
+// 组件挂载时开始预加载
+onMounted(() => {
+  loadSaveGames();
+  preloadDesktopSystem(); // 预加载桌面组件
+});
+
 // 开始新游戏
 const startNewGame = (): void => {
   // 清除可能存在的临时数据，开始全新游戏
@@ -187,11 +210,6 @@ const openAbout = (): void => {
   // 关于页面暂未实现，跳转到首页
   router.push('/');
 };
-
-// 组件挂载时加载存档
-onMounted(() => {
-  loadSaveGames();
-});
 </script>
 
 <style lang="scss" scoped>
@@ -216,8 +234,10 @@ onMounted(() => {
   background-size: cover;
   background-position: center;
   opacity: 0.9;
+  /* 使用contain优化渲染 */
+  contain: strict;
 
-  /* 添加装饰性元�? */
+  /* 添加装饰性元�? - 移除动画以提升性能 */
   &::before {
     content: '';
     position: absolute;
@@ -229,17 +249,8 @@ onMounted(() => {
       radial-gradient(circle at 20% 50%, rgb(74 158 255 / 10%) 0%, transparent 50%),
       radial-gradient(circle at 80% 20%, rgb(255 215 0 / 10%) 0%, transparent 50%),
       radial-gradient(circle at 40% 80%, rgb(255 107 107 / 10%) 0%, transparent 50%);
-    animation: backgroundPulse 4s ease-in-out infinite alternate;
-  }
-}
-
-@keyframes backgroundPulse {
-  from {
-    opacity: 0.8;
-  }
-
-  to {
-    opacity: 1;
+    /* 移除动画，使用静态效果 */
+    opacity: 0.9;
   }
 }
 
@@ -277,6 +288,8 @@ onMounted(() => {
 
 .game-title {
   margin-bottom: 40px;
+  contain: layout style paint; /* 优化渲染性能 */
+  content-visibility: auto; /* 延迟渲染优化 */
 
   h1 {
     font-size: 3.5rem;
@@ -284,8 +297,12 @@ onMounted(() => {
     color: #4a9eff;
     text-shadow: 0 0 20px rgb(74 158 255 / 50%);
     margin: 0;
+    /* 使用更高效的动画 */
     animation: titleGlow 2s ease-in-out infinite alternate;
     line-height: 1.2;
+    /* 确保文字快速渲染 */
+    font-display: swap;
+    will-change: text-shadow;
   }
 
   .subtitle {
@@ -294,6 +311,7 @@ onMounted(() => {
     margin: 15px 0 0;
     opacity: 0.9;
     font-weight: 500;
+    font-display: swap;
   }
 }
 

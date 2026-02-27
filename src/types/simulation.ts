@@ -107,7 +107,16 @@ export interface SimulationEventRequirement {
 }
 
 export interface SimulationEventEffect {
-  type: 'money' | 'reputation' | 'popularity' | 'wordOfMouth' | 'exp' | 'heroCount' | 'skinCount' | 'gameSpeed' | 'eventFrequency';
+  type:
+    | 'money'
+    | 'reputation'
+    | 'popularity'
+    | 'wordOfMouth'
+    | 'exp'
+    | 'heroCount'
+    | 'skinCount'
+    | 'gameSpeed'
+    | 'eventFrequency';
   value: number;
   duration?: number; // 效果持续时间（天）
   isPermanent?: boolean; // 效果是否永久

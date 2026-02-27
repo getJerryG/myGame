@@ -97,10 +97,7 @@ const simulationProgress = ref(0); // 模拟进度 0-100%
 // 初始化游戏模拟
 const initGame = (): void => {
   // 初始化Simulation实例
-  simulation.value = new Simulation(
-    'simulation-1',
-    '默认模拟'
-  );
+  simulation.value = new Simulation('simulation-1', '默认模拟');
 
   // 获取初始游戏状态
   const results = simulation.value.getResults();
@@ -277,5 +274,3 @@ onMounted(() => {
   overflow: hidden;
 }
 </style>
-
-

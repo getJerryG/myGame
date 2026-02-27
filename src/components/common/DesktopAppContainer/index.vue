@@ -1,0 +1,438 @@
+<template>
+  <div
+    class="desktop-app-container"
+    :class="{
+      'is-maximized': windowState.isMaximized,
+      'is-minimized': windowState.isMinimized,
+    }"
+    :style="containerStyle"
+    @mousedown="startDrag"
+  >
+    <!-- 标题栏 -->
+    <div
+      class="app-header"
+      @mousedown.stop="startDragHeader"
+    >
+      <div class="app-title">
+        <span class="app-icon">{{ app.icon }}</span>
+        <span class="app-name">{{ app.name }}</span>
+      </div>
+      <div class="app-controls">
+        <button
+          class="control-button close"
+          @click.stop="handleClose"
+        >
+          <span>×</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 主要内容区域 - 支持侧边栏和主内容布局 -->
+    <div class="app-content">
+      <!-- 侧边栏（可选） -->
+      <aside
+        v-if="app.modules && app.modules.length > 1"
+        class="app-sidebar"
+      >
+        <nav class="sidebar-nav">
+          <div
+            v-for="module in app.modules"
+            :key="module.id"
+            class="sidebar-item"
+            :class="{ active: windowState.activeModule === module.id }"
+            @click="handleModuleChange(module.id)"
+          >
+            <span class="sidebar-item-icon">{{ getModuleIcon(module.id) }}</span>
+            <span class="sidebar-item-name">{{ module.name }}</span>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- 主内容区域 -->
+      <main class="app-main">
+        <!-- 内容主体 -->
+        <div class="content-body">
+          <template v-if="currentAppComponent">
+            <component
+              :is="currentAppComponent"
+              :app="app"
+              :game-data="gameData"
+              @app-installed="(app) => emit('app-installed', app)"
+            />
+          </template>
+          <template v-else>
+            <div class="error-container">
+              <h3>应用组件不存在</h3>
+              <p>无法加载应用: {{ app.id }}</p>
+              <p>请检查应用配置或联系管理员</p>
+            </div>
+          </template>
+        </div>
+      </main>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, computed, onUnmounted, watch } from 'vue';
+import { useWindowManagerStore } from '@/stores/windowManagerStore';
+
+// 导入所有应用组件
+import ChatApp from '@/components/business/apps/chat/ChatApp.vue';
+import CareerApp from '@/components/business/apps/career/CareerApp.vue';
+import CollabCenterApp from '@/components/business/apps/CollabCenter/CollabCenterApp.vue';
+import ContentApp from '@/components/business/apps/content/ContentApp.vue';
+import DataCenterApp from '@/components/business/apps/DataCenter/DataCenterApp.vue';
+import EventApp from '@/components/business/apps/event/EventApp.vue';
+import EventLogApp from '@/components/business/apps/EventLog/EventLogApp.vue';
+import GameReleaseApp from '@/components/business/apps/GameRelease/GameReleaseApp.vue';
+import HeroApp from '@/components/business/apps/hero/HeroApp.vue';
+import LotteryApp from '@/components/business/apps/lottery/LotteryApp.vue';
+import OperationsApp from '@/components/business/apps/operations/OperationsApp.vue';
+import RewardsApp from '@/components/business/apps/rewards/RewardsApp.vue';
+import SentimentCenterApp from '@/components/business/apps/SentimentCenter/SentimentCenterApp.vue';
+import SkinApp from '@/components/business/apps/skin/SkinApp.vue';
+import SystemSettingsApp from '@/components/business/apps/SystemSettings/SystemSettingsApp.vue';
+import TaskCenterApp from '@/components/business/apps/TaskCenter/TaskCenterApp.vue';
+import WalletApp from '@/components/business/apps/wallet/WalletApp.vue';
+import AppStore from '@/components/business/apps/AppStore/AppStore.vue';
+
+// 应用组件映射
+const appComponents: Record<string, any> = {
+  chat: ChatApp,
+  career: CareerApp,
+  'collab-center': CollabCenterApp,
+  content: ContentApp,
+  'data-center': DataCenterApp,
+  event: EventApp,
+  'event-log': EventLogApp,
+  'game-release': GameReleaseApp,
+  hero: HeroApp,
+  lottery: LotteryApp,
+  operations: OperationsApp,
+  rewards: RewardsApp,
+  'sentiment-center': SentimentCenterApp,
+  skin: SkinApp,
+  'system-settings': SystemSettingsApp,
+  'task-center': TaskCenterApp,
+  wallet: WalletApp,
+  'app-store': AppStore,
+};
+
+// 定义应用类型
+interface App {
+  id: string;
+  name: string;
+  icon: string;
+  position: { x: number; y: number };
+  coreData: Record<string, any>;
+  modules: Array<{
+    id: string;
+    name: string;
+  }>;
+}
+
+// 定义窗口状态类型
+interface WindowState {
+  position: { x: number; y: number };
+  size: { width: number; height: number };
+  isMaximized: boolean;
+  isMinimized: boolean;
+  activeModule: string;
+}
+
+// Props定义
+const props = defineProps<{
+  windowId: string;
+  windowState: WindowState;
+  app: App;
+  gameData: any;
+}>();
+
+// Emits定义
+const emit = defineEmits<{
+  close: [appId: string];
+  'update:windowState': [windowState: WindowState];
+  'app-installed': [app: any];
+}>();
+
+// 获取窗口管理器store
+const windowManagerStore = useWindowManagerStore();
+
+// 当前应用组件
+const currentAppComponent = computed(() => {
+  return appComponents[props.app.id];
+});
+
+// 容器样式
+const containerStyle = computed(() => {
+  if (props.windowState.isMaximized) {
+    return {
+      left: '0px',
+      top: '0px',
+      width: '100vw',
+      height: '100vh',
+    };
+  }
+  return {
+    left: `${props.windowState.position.x}px`,
+    top: `${props.windowState.position.y}px`,
+    width: `${props.windowState.size.width}px`,
+    height: `${props.windowState.size.height}px`,
+  };
+});
+
+// 拖拽相关
+const isDragging = ref(false);
+const dragOffset = ref({ x: 0, y: 0 });
+
+// 开始拖拽容器
+const startDrag = (event: MouseEvent) => {
+  if (props.windowState.isMaximized) return;
+  isDragging.value = true;
+  dragOffset.value = {
+    x: event.clientX - props.windowState.position.x,
+    y: event.clientY - props.windowState.position.y,
+  };
+  document.addEventListener('mousemove', handleDrag);
+  document.addEventListener('mouseup', stopDrag);
+};
+
+// 开始拖拽标题栏
+const startDragHeader = (event: MouseEvent) => {
+  startDrag(event);
+};
+
+// 处理拖拽
+const handleDrag = (event: MouseEvent) => {
+  if (!isDragging.value) return;
+  const newPosition = {
+    x: event.clientX - dragOffset.value.x,
+    y: event.clientY - dragOffset.value.y,
+  };
+  emit('update:windowState', {
+    ...props.windowState,
+    position: newPosition,
+  });
+};
+
+// 停止拖拽
+const stopDrag = () => {
+  isDragging.value = false;
+  document.removeEventListener('mousemove', handleDrag);
+  document.removeEventListener('mouseup', stopDrag);
+};
+
+// 处理关闭
+const handleClose = () => {
+  emit('close', props.app.id);
+};
+
+// 处理模块切换
+const handleModuleChange = (moduleId: string) => {
+  emit('update:windowState', {
+    ...props.windowState,
+    activeModule: moduleId,
+  });
+};
+
+// 获取模块图标
+const getModuleIcon = (moduleId: string): string => {
+  const iconMap: Record<string, string> = {
+    'balance-info': '💰',
+    'transaction-history': '📊',
+    'lottery-main': '🎰',
+    'lottery-history': '📝',
+    'lottery-rewards': '🎁',
+    'hero-new': '➕',
+    'hero-manage': '📋',
+    'basic-settings': '⚙️',
+    'advanced-settings': '🔧',
+    about: 'ℹ️',
+  };
+  return iconMap[moduleId] || '📄';
+};
+
+// 组件卸载时清理事件监听器
+onUnmounted(() => {
+  document.removeEventListener('mousemove', handleDrag);
+  document.removeEventListener('mouseup', stopDrag);
+});
+</script>
+
+<style lang="scss" scoped>
+.desktop-app-container {
+  position: absolute;
+  background-color: rgb(26 26 46 / 95%);
+  border-radius: 8px;
+  box-shadow: 0 0 30px rgb(0 0 0 / 50%);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+/* 窗口状态样式 */
+.is-maximized {
+  border-radius: 0;
+}
+
+.is-minimized {
+  display: none;
+}
+
+/* 标题栏样式 */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background-color: rgb(74 158 255 / 10%);
+  border-bottom: 1px solid rgb(74 158 255 / 30%);
+  cursor: move;
+}
+
+.app-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-icon {
+  font-size: 16px;
+  color: #4a9eff;
+}
+
+.app-name {
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.app-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.control-button {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.control-button.close {
+  background-color: rgb(255 107 107 / 20%);
+  color: #ff6b6b;
+}
+
+.control-button.close:hover {
+  background-color: rgb(255 107 107 / 40%);
+}
+
+/* 内容区域样式 */
+.app-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* 侧边栏样式 */
+.app-sidebar {
+  width: 200px;
+  background-color: rgb(0 0 0 / 20%);
+  border-right: 1px solid rgb(74 158 255 / 30%);
+}
+
+.sidebar-nav {
+  padding: 16px 0;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #aaa;
+}
+
+.sidebar-item:hover {
+  background-color: rgb(74 158 255 / 10%);
+  color: #fff;
+}
+
+.sidebar-item.active {
+  background-color: rgb(74 158 255 / 20%);
+  color: #4a9eff;
+  border-right: 3px solid #4a9eff;
+}
+
+.sidebar-item-icon {
+  font-size: 16px;
+}
+
+.sidebar-item-name {
+  font-size: 14px;
+}
+
+/* 主内容区域样式 */
+.app-main {
+  flex: 1;
+  overflow: auto;
+  padding: 20px;
+}
+
+.content-body {
+  width: 100%;
+  height: 100%;
+}
+
+/* 错误容器样式 */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: #ff6b6b;
+}
+
+.error-container h3 {
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+.error-container p {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+/* 滚动条样式 */
+.app-main::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.app-main::-webkit-scrollbar-track {
+  background: rgb(0 0 0 / 20%);
+}
+
+.app-main::-webkit-scrollbar-thumb {
+  background: rgb(74 158 255 / 50%);
+  border-radius: 4px;
+}
+
+.app-main::-webkit-scrollbar-thumb:hover {
+  background: rgb(74 158 255 / 80%);
+}
+</style>

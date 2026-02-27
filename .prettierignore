@@ -1,0 +1,8 @@
+# 忽略文档目录下的所有markdown文件，保持原样
+
+# 忽略其他不需要格式化的文件
+*.log
+node_modules/
+dist/
+build/
+coverage/

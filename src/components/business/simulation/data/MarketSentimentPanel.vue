@@ -4,7 +4,12 @@
     <div class="sentiment-dashboard">
       <h3 class="panel-title">市场情绪</h3>
       <div class="dashboard-container">
-        <svg class="gauge" width="200" height="150" viewBox="0 0 200 150">
+        <svg
+          class="gauge"
+          width="200"
+          height="150"
+          viewBox="0 0 200 150"
+        >
           <!-- 背景弧线 -->
           <path
             class="gauge-bg"
@@ -28,7 +33,7 @@
           <path
             class="gauge-warning"
             d="M 80 110 A 70 70 0 0 1 120 110"
-            stroke="#F59E0B"
+            stroke="tokens.$warning"
             stroke-width="20"
             fill="none"
             stroke-linecap="round"
@@ -68,7 +73,10 @@
 
         <div class="sentiment-info">
           <div class="sentiment-value">{{ sentimentValue }}%</div>
-          <div class="sentiment-status" :class="sentimentClass">
+          <div
+            class="sentiment-status"
+            :class="sentimentClass"
+          >
             {{ sentimentStatus }}
           </div>
         </div>
@@ -77,7 +85,7 @@
 
     <!-- 最新反馈摘�?-->
     <div class="feedback-summary">
-      <h3 class="panel-title">最新反�?/h3>
+      <h3 class="panel-title">最新反馈</h3>
       <div class="feedback-scroll">
         <div
           v-for="(feedback, index) in recentFeedback"
@@ -97,9 +105,12 @@
     <!-- 待处理决策提�?-->
     <div class="pending-decisions">
       <h3 class="panel-title">
-        待处理决�?        <span v-if="pendingDecisions.length > 0" class="badge">{{
-          pendingDecisions.length
-        }}</span>
+        待处理决策
+        <span
+          v-if="pendingDecisions.length > 0"
+          class="badge"
+          >{{ pendingDecisions.length }}</span
+        >
       </h3>
       <div class="decisions-list">
         <div
@@ -113,9 +124,12 @@
             <div class="decision-due">{{ decision.due }}</div>
           </div>
         </div>
-        <div v-if="pendingDecisions.length === 0" class="empty-state">
-          <span class="empty-icon">�?/span>
-          <span class="empty-text">暂无待处理决�?/span>
+        <div
+          v-if="pendingDecisions.length === 0"
+          class="empty-state"
+        >
+          <span class="empty-icon">✓</span>
+          <span class="empty-text">暂无待处理决策</span>
         </div>
       </div>
     </div>
@@ -130,17 +144,18 @@ export default {
       // 市场情绪�?(0-100)
       sentimentValue: 75,
 
-      // 最近反�?      recentFeedback: [
+      // 最近反馈
+      recentFeedback: [
         {
           id: 1,
-          text: '新皮肤特效太酷了�?,
+          text: '新皮肤特效太酷了！',
           source: '玩家评论',
           type: 'positive',
           icon: '😊',
         },
         {
           id: 2,
-          text: '英雄XX削弱过度，影响游戏体�?,
+          text: '英雄XX削弱过度，影响游戏体验',
           source: '论坛反馈',
           type: 'negative',
           icon: '😞',
@@ -154,21 +169,22 @@ export default {
         },
         {
           id: 4,
-          text: '服务器有点卡，希望优�?,
+          text: '服务器有点卡，希望优化',
           source: '客服反馈',
           type: 'neutral',
           icon: '😐',
         },
         {
           id: 5,
-          text: '新英雄设计很有创�?,
+          text: '新英雄设计很有创意',
           source: '媒体评价',
           type: 'positive',
-          icon: '�?,
+          icon: '⭐',
         },
       ],
 
-      // 待处理决�?      pendingDecisions: [
+      // 待处理决策
+      pendingDecisions: [
         {
           id: 1,
           title: '设置本周登录奖励',
@@ -177,7 +193,7 @@ export default {
         },
         {
           id: 2,
-          title: '调整英雄平衡�?,
+          title: '调整英雄平衡性',
           due: '明天',
           icon: '⚖️',
         },
@@ -191,7 +207,8 @@ export default {
     };
   },
   computed: {
-    // 情绪状�?    sentimentStatus(): string {
+    // 情绪状�?
+    sentimentStatus(): string {
       if (this.sentimentValue >= 70) {
         return '积极';
       } else if (this.sentimentValue >= 40) {
@@ -224,304 +241,243 @@ export default {
     },
   },
   mounted(): void {
-    // 模拟情绪值变�?    this.simulateSentimentChange();
+    // 模拟情绪值变�?
+    this.simulateSentimentChange();
   },
   methods: {
-    // 模拟情绪值变�?    simulateSentimentChange(): void {
+    // 模拟情绪值变�?
+    simulateSentimentChange(): void {
       setInterval(() => {
         const change = (Math.random() - 0.5) * 5;
-        this.sentimentValue = Math.max(
-          0,
-          Math.min(100, this.sentimentValue + change)
-        );
+        this.sentimentValue = Math.max(0, Math.min(100, this.sentimentValue + change));
       }, 5000);
     },
   },
 };
 </script>
 
-<style lang=scss scoped>
+<style lang="scss" scoped>
+
 .market-sentiment-panel {
-  background-color: var(--bg-secondary);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--border-light);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-}
+  @include utils.panel-base;
+  padding: tokens.$spacing-lg;
+  @include utils.flex-col(tokens.$spacing-xl, stretch, flex-start);
 
-.panel-title {
-  font-size: var(--text-lg);
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.badge {
-  background-color: var(--danger-red);
-  color: white;
-  font-size: var(--text-xs);
-  font-weight: var(--font-bold);
-  padding: 2px 8px;
-  border-radius: 10px;
-  min-width: 18px;
-  text-align: center;
-}
-
-/* 市场情绪仪表�? */
-.sentiment-dashboard {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.dashboard-container {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-}
-
-.gauge {
-  flex-shrink: 0;
-}
-
-.gauge-needle {
-  transform-origin: 100px 120px;
-  transition: all 1s ease;
-}
-
-.sentiment-info {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.sentiment-value {
-  font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
-  color: var(--primary-gold);
-}
-
-.sentiment-status {
-  font-size: var(--text-base);
-  font-weight: var(--font-medium);
-}
-
-.status-positive {
-  color: var(--success-green);
-}
-
-.status-warning {
-  color: #f59e0b;
-}
-
-.status-danger {
-  color: var(--danger-red);
-}
-
-/* 最新反馈摘�? */
-.feedback-summary {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.feedback-scroll {
-  max-height: 200px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding-right: 10px;
-}
-
-.feedback-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 12px;
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-md);
-  transition: all var(--transition-fast);
-}
-
-.feedback-item:hover {
-  background-color: rgb(255 255 255 / 10%);
-  transform: translateX(5px);
-}
-
-.feedback-item.positive {
-  border-left: 4px solid var(--success-green);
-}
-
-.feedback-item.negative {
-  border-left: 4px solid var(--danger-red);
-}
-
-.feedback-item.neutral {
-  border-left: 4px solid #f59e0b;
-}
-
-.feedback-icon {
-  font-size: 18px;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.feedback-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.feedback-text {
-  font-size: var(--text-sm);
-  color: var(--text-primary);
-  line-height: 1.4;
-}
-
-.feedback-source {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-}
-
-/* 待处理决策提�? */
-.pending-decisions {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.decisions-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.decision-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-md);
-  transition: all var(--transition-fast);
-}
-
-.decision-item:hover {
-  background-color: rgb(255 255 255 / 10%);
-  transform: translateX(5px);
-}
-
-.decision-icon {
-  font-size: 18px;
-  flex-shrink: 0;
-}
-
-.decision-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.decision-title {
-  font-size: var(--text-sm);
-  color: var(--text-primary);
-  font-weight: var(--font-medium);
-}
-
-.decision-due {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-}
-
-.empty-state {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 30px 20px;
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-md);
-  color: var(--text-muted);
-  font-size: var(--text-sm);
-}
-
-.empty-icon {
-  font-size: 18px;
-}
-
-/* 响应式设�? */
-@media (width <= 768px) {
-  .market-sentiment-panel {
-    padding: 15px;
-    gap: 20px;
+  .panel-title {
+    @include utils.panel-title;
+    display: flex;
+    align-items: center;
+    gap: tokens.$spacing-sm;
   }
 
-  .dashboard-container {
-    flex-direction: column;
-    text-align: center;
-    gap: 20px;
+  .badge {
+    @include utils.badge-notification;
   }
 
-  .feedback-scroll {
-    max-height: 150px;
+  /* 市场情绪仪表�? */
+  .sentiment-dashboard {
+    @include utils.flex-col(tokens.$spacing-md, stretch, flex-start);
+
+    .dashboard-container {
+      @include utils.flex-row(tokens.$spacing-xl, center, flex-start);
+
+      @include utils.mobile {
+        flex-direction: column;
+        text-align: center;
+        gap: tokens.$spacing-lg;
+      }
+    }
+
+    .gauge {
+      flex-shrink: 0;
+
+      .gauge-needle {
+        transform-origin: 100px 120px;
+        transition: all 1s ease;
+      }
+    }
+
+    .sentiment-info {
+      @include utils.flex-col(tokens.$spacing-xs, flex-start, flex-start);
+
+      @include utils.mobile {
+        align-items: center;
+      }
+
+      .sentiment-value {
+        font-size: tokens.$font-size-3xl;
+        font-weight: tokens.$font-weight-bold;
+        color: tokens.$primary-gold;
+      }
+
+      .sentiment-status {
+        font-size: tokens.$font-size-base;
+        font-weight: tokens.$font-weight-medium;
+
+        &.status-positive {
+          color: tokens.$success-green;
+        }
+
+        &.status-warning {
+          color: tokens.$warning;
+        }
+
+        &.status-danger {
+          color: tokens.$danger-red;
+        }
+      }
+    }
   }
 
-  .feedback-item {
-    padding: 10px;
+  /* 最新反馈摘�? */
+  .feedback-summary {
+    @include utils.flex-col(tokens.$spacing-md, stretch, flex-start);
+
+    .feedback-scroll {
+      max-height: 200px;
+      overflow-y: auto;
+      @include utils.flex-col(tokens.$spacing-sm, stretch, flex-start);
+      padding-right: tokens.$spacing-sm;
+      @include utils.custom-scrollbar;
+    }
+
+    .feedback-item {
+      @include utils.flex-row(tokens.$spacing-md, flex-start, flex-start);
+      padding: tokens.$spacing-sm;
+      background-color: tokens.$bg-light;
+      border-radius: tokens.$radius-md;
+      transition: all tokens.$transition-fast;
+
+      &:hover {
+        background-color: tokens.$bg-lighter;
+        transform: translateX(5px);
+      }
+
+      &.positive {
+        border-left: 4px solid tokens.$success-green;
+      }
+
+      &.negative {
+        border-left: 4px solid tokens.$danger-red;
+      }
+
+      &.neutral {
+        border-left: 4px solid tokens.$warning;
+      }
+
+      .feedback-icon {
+        font-size: tokens.$font-size-lg;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .feedback-content {
+        flex: 1;
+        @include utils.flex-col(tokens.$spacing-xs, stretch, flex-start);
+
+        .feedback-text {
+          font-size: tokens.$font-size-sm;
+          color: tokens.$text-primary;
+          line-height: 1.4;
+        }
+
+        .feedback-source {
+          font-size: tokens.$font-size-xs;
+          color: tokens.$text-muted;
+        }
+      }
+    }
   }
 
-  .decision-item {
-    padding: 10px;
+  /* 待处理决策提�? */
+  .pending-decisions {
+    @include utils.flex-col(tokens.$spacing-md, stretch, flex-start);
+
+    .decisions-list {
+      @include utils.flex-col(tokens.$spacing-sm, stretch, flex-start);
+    }
+
+    .decision-item {
+      @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+      padding: tokens.$spacing-sm;
+      background-color: tokens.$bg-light;
+      border-radius: tokens.$radius-md;
+      transition: all tokens.$transition-fast;
+
+      &:hover {
+        background-color: tokens.$bg-lighter;
+        transform: translateX(5px);
+      }
+
+      .decision-icon {
+        font-size: tokens.$font-size-lg;
+        flex-shrink: 0;
+      }
+
+      .decision-content {
+        flex: 1;
+        @include utils.flex-col(tokens.$spacing-xs, stretch, flex-start);
+
+        .decision-title {
+          font-size: tokens.$font-size-sm;
+          color: tokens.$text-primary;
+          font-weight: tokens.$font-weight-medium;
+        }
+
+        .decision-due {
+          font-size: tokens.$font-size-xs;
+          color: tokens.$text-muted;
+        }
+      }
+    }
+
+    .empty-state {
+      @include utils.flex-center;
+      gap: tokens.$spacing-md;
+      padding: tokens.$spacing-xl tokens.$spacing-lg;
+      background-color: tokens.$bg-light;
+      border-radius: tokens.$radius-md;
+      color: tokens.$text-muted;
+      font-size: tokens.$font-size-sm;
+
+      .empty-icon {
+        font-size: tokens.$font-size-lg;
+      }
+    }
   }
 }
 
 /* 横屏手机适配 */
-@media (orientation: landscape) and (height <= 600px) {
+@include utils.landscape-mobile {
   .market-sentiment-panel {
-    padding: 10px;
-    gap: 15px;
-  }
+    padding: tokens.$spacing-sm;
+    gap: tokens.$spacing-md;
 
-  .panel-title {
-    font-size: var(--text-base);
-  }
+    .panel-title {
+      font-size: tokens.$font-size-base;
+    }
 
-  .dashboard-container {
-    gap: 20px;
-  }
+    .dashboard-container {
+      gap: tokens.$spacing-lg;
+    }
 
-  .gauge {
-    width: 150px;
-    height: 120px;
-  }
+    .gauge {
+      width: 150px;
+      height: 120px;
+    }
 
-  .sentiment-value {
-    font-size: var(--text-2xl);
-  }
+    .sentiment-value {
+      font-size: tokens.$font-size-2xl;
+    }
 
-  .feedback-scroll {
-    max-height: 120px;
-  }
+    .feedback-scroll {
+      max-height: 120px;
+    }
 
-  .feedback-item {
-    padding: 8px;
-  }
-
-  .decision-item {
-    padding: 8px;
+    .feedback-item,
+    .decision-item {
+      padding: tokens.$spacing-xs;
+    }
   }
 }
 </style>
-
-
-
-

@@ -419,15 +419,14 @@ const continueGame = (): void => {
 </script>
 
 <style lang="scss" scoped>
+
 .settlement-page {
   width: 100vw;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include utils.flex-center;
   overflow: hidden;
   position: relative;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: tokens.$font-family-base;
 }
 
 .settlement-background {
@@ -436,7 +435,7 @@ const continueGame = (): void => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background: linear-gradient(135deg, tokens.$bg-dark 0%, tokens.$bg-secondary 50%, tokens.$bg-tertiary 100%);
   background-size: cover;
   background-position: center;
   opacity: 0.9;
@@ -468,34 +467,32 @@ const continueGame = (): void => {
 }
 
 .settlement-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include utils.flex-col(tokens.$spacing-md, center, flex-start);
   z-index: 1;
-  max-width: 1200px;
+  max-width: tokens.$max-content-width;
   width: 100%;
-  padding: 20px;
+  padding: tokens.$spacing-md;
   overflow-y: auto;
   max-height: 100vh;
 }
 
 .settlement-title {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: tokens.$spacing-lg;
 
   h1 {
-    font-size: 3rem;
-    font-weight: bold;
-    color: #ffd700;
+    font-size: tokens.$font-size-5xl;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$primary-gold;
     text-shadow: 0 0 20px rgb(255 215 0 / 50%);
     margin: 0;
     animation: titleGlow 2s ease-in-out infinite alternate;
   }
 
   .settlement-date {
-    font-size: 1.2rem;
-    color: #fff;
-    margin: 10px 0 0;
+    font-size: tokens.$font-size-lg;
+    color: tokens.$text-primary;
+    margin: tokens.$spacing-sm 0 0;
     opacity: 0.8;
   }
 }
@@ -514,53 +511,51 @@ const continueGame = (): void => {
 
 /* 核心数据概览 */
 .settlement-overview {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
+  @include utils.grid-auto-fill(200px, tokens.$spacing-md);
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: tokens.$spacing-lg;
 
   .overview-item {
-    background-color: rgb(255 255 255 / 10%);
-    border-radius: 15px;
-    padding: 20px;
+    background-color: tokens.$bg-lighter;
+    border-radius: tokens.$radius-lg;
+    padding: tokens.$spacing-md;
     backdrop-filter: blur(10px);
-    border: 2px solid rgb(255 255 255 / 20%);
+    border: 2px solid tokens.$border-light;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: all tokens.$transition-normal;
 
     &:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgb(0 0 0 / 30%);
+      box-shadow: tokens.$shadow-lg;
       border-color: rgb(255 215 0 / 50%);
     }
 
     .overview-label {
-      color: #aaa;
-      font-size: 0.9rem;
-      margin-bottom: 10px;
+      color: tokens.$gray-400;
+      font-size: tokens.$font-size-sm;
+      margin-bottom: tokens.$spacing-sm;
       display: block;
     }
 
     .overview-value {
-      font-size: 1.8rem;
-      font-weight: bold;
-      color: #fff;
+      font-size: tokens.$font-size-2xl;
+      font-weight: tokens.$font-weight-bold;
+      color: tokens.$text-primary;
 
       &.income {
-        color: #22c55e;
+        color: tokens.$success;
       }
 
       &.downloads {
-        color: #4a9eff;
+        color: tokens.$primary;
       }
 
       &.dau {
-        color: #f59e0b;
+        color: tokens.$warning;
       }
 
       &.sentiment {
-        color: #ec4899;
+        color: tokens.$lottery-purple;
       }
     }
   }
@@ -568,34 +563,32 @@ const continueGame = (): void => {
 
 /* 图表区域 */
 .charts-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
-  gap: 20px;
+  @include utils.grid-auto-fill(550px, tokens.$spacing-md);
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: tokens.$spacing-lg;
 }
 
 .chart-card {
-  background-color: rgb(255 255 255 / 10%);
-  border-radius: 15px;
-  padding: 20px;
+  background-color: tokens.$bg-lighter;
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-md;
   backdrop-filter: blur(10px);
-  border: 2px solid rgb(255 255 255 / 20%);
-  transition: all 0.3s ease;
+  border: 2px solid tokens.$border-light;
+  transition: all tokens.$transition-normal;
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgb(0 0 0 / 30%);
+    box-shadow: tokens.$shadow-lg;
     border-color: rgb(255 215 0 / 50%);
   }
 
   h3 {
-    color: #fff;
-    margin: 0 0 20px;
-    font-size: 1.3rem;
+    color: tokens.$text-primary;
+    margin: 0 0 tokens.$spacing-md;
+    font-size: tokens.$font-size-lg;
     text-align: center;
-    border-bottom: 1px solid rgb(255 255 255 / 20%);
-    padding-bottom: 10px;
+    border-bottom: 1px solid tokens.$border-light;
+    padding-bottom: tokens.$spacing-sm;
   }
 
   .chart-container {
@@ -607,40 +600,36 @@ const continueGame = (): void => {
 /* 详细数据表格 */
 .detailed-data {
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: tokens.$spacing-lg;
 
   h3 {
-    color: #fff;
-    margin: 0 0 20px;
-    font-size: 1.5rem;
+    color: tokens.$text-primary;
+    margin: 0 0 tokens.$spacing-md;
+    font-size: tokens.$font-size-xl;
     text-align: center;
   }
 
   .data-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 15px;
+    @include utils.grid-auto-fill(250px, tokens.$spacing-md);
   }
 
   .data-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    background-color: rgb(255 255 255 / 10%);
-    border-radius: 10px;
+    @include utils.flex-between;
+    padding: tokens.$spacing-sm tokens.$spacing-md;
+    background-color: tokens.$bg-lighter;
+    border-radius: tokens.$radius-md;
     backdrop-filter: blur(5px);
-    border: 1px solid rgb(255 255 255 / 20%);
+    border: 1px solid tokens.$border-light;
 
     .data-label {
-      color: #aaa;
-      font-weight: 500;
+      color: tokens.$gray-400;
+      font-weight: tokens.$font-weight-medium;
     }
 
     .data-value {
-      color: #fff;
-      font-weight: bold;
-      font-size: 1.1rem;
+      color: tokens.$text-primary;
+      font-weight: tokens.$font-weight-bold;
+      font-size: tokens.$font-size-lg;
     }
   }
 }
@@ -648,32 +637,32 @@ const continueGame = (): void => {
 /* 操作按钮 */
 .settlement-actions {
   display: flex;
-  gap: 20px;
-  margin-top: 30px;
+  gap: tokens.$spacing-md;
+  margin-top: tokens.$spacing-lg;
 
   .action-button {
-    padding: 12px 30px;
-    font-size: 1.1rem;
-    color: #fff;
-    background-color: rgb(255 255 255 / 20%);
-    border: 2px solid rgb(255 255 255 / 30%);
-    border-radius: 25px;
+    padding: tokens.$spacing-sm tokens.$spacing-xl;
+    font-size: tokens.$font-size-lg;
+    color: tokens.$text-primary;
+    background-color: tokens.$bg-lighter;
+    border: 2px solid tokens.$border-light;
+    border-radius: tokens.$radius-full;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
+    transition: all tokens.$transition-normal;
+    font-weight: tokens.$font-weight-bold;
 
     &:hover {
-      background-color: rgb(255 255 255 / 30%);
-      border-color: rgb(255 255 255 / 50%);
+      background-color: tokens.$bg-light;
+      border-color: tokens.$border-medium;
       transform: translateY(-2px);
     }
 
     &.primary {
-      background: linear-gradient(135deg, #4a9eff 0%, #357abd 100%);
+      background: linear-gradient(135deg, tokens.$primary 0%, tokens.$primary-dark 100%);
       border-color: rgb(74 158 255 / 50%);
 
       &:hover {
-        background: linear-gradient(135deg, #357abd 0%, #4a9eff 100%);
+        background: linear-gradient(135deg, tokens.$primary-dark 0%, tokens.$primary 100%);
         box-shadow: 0 6px 20px rgb(74 158 255 / 40%);
       }
     }
@@ -681,22 +670,8 @@ const continueGame = (): void => {
 }
 
 /* 滚动条样式 */
-.settlement-content::-webkit-scrollbar {
-  width: 8px;
-}
-
-.settlement-content::-webkit-scrollbar-track {
-  background: rgb(255 255 255 / 10%);
-  border-radius: 4px;
-}
-
-.settlement-content::-webkit-scrollbar-thumb {
-  background: rgb(74 158 255 / 50%);
-  border-radius: 4px;
-}
-
-.settlement-content::-webkit-scrollbar-thumb:hover {
-  background: rgb(74 158 255 / 70%);
+.settlement-content {
+  @include utils.custom-scrollbar;
 }
 
 /* 响应式设计 */
@@ -714,7 +689,7 @@ const continueGame = (): void => {
 
 @media (width <= 768px) {
   .settlement-title h1 {
-    font-size: 2rem;
+    font-size: tokens.$font-size-3xl;
   }
 
   .settlement-overview {
@@ -737,7 +712,7 @@ const continueGame = (): void => {
 
   .settlement-actions {
     flex-direction: column;
-    gap: 10px;
+    gap: tokens.$spacing-sm;
     width: 100%;
     max-width: 300px;
   }

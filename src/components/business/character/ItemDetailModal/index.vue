@@ -35,7 +35,7 @@
       class="empty-detail"
     >
       <div class="empty-icon">📦</div>
-      <p>没有选中的物�?/p></p>
+      <p>没有选中的物品</p>
     </div>
   </GameModal>
 </template>
@@ -58,91 +58,83 @@ defineEmits(['close']);
 </script>
 
 <style lang="scss" scoped>
+
 .item-detail {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
+  @include utils.flex-col(tokens.$space-3);
 }
 
 .item-header {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
+  @include utils.flex-col(tokens.$space-1, flex-start);
 }
 
 .item-type-badge {
   align-self: flex-start;
   background-color: rgb(59 130 246 / 20%);
-  color: #3b82f6;
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--radius-full);
-  font-size: var(--text-xs);
-  font-weight: var(--font-medium);
+  color: tokens.$primary-blue;
+  padding: tokens.$space-1 tokens.$space-2;
+  border-radius: tokens.$radius-full;
+  font-size: tokens.$font-size-xs;
+  font-weight: tokens.$font-weight-medium;
   text-transform: capitalize;
 }
 
 .item-name {
-  font-size: var(--text-xl);
-  font-weight: var(--font-bold);
-  color: var(--text-primary);
+  font-size: tokens.$font-size-xl;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
   margin: 0;
 }
 
 .item-description {
-  color: var(--text-secondary);
-  line-height: 1.5;
+  color: tokens.$text-secondary;
+  line-height: tokens.$line-height-normal;
 }
 
 .item-section-title {
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
-  margin: 0;
-  margin-bottom: var(--space-2);
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-semibold;
+  color: tokens.$text-primary;
+  margin: 0 0 tokens.$space-2;
 }
 
 .item-effects {
-  margin-top: var(--space-1);
+  margin-top: tokens.$space-1;
 }
 
 .effects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: var(--space-2);
+  gap: tokens.$space-2;
 }
 
 .effect-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgb(255 255 255 / 5%);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-md);
-  padding: var(--space-2);
+  @include utils.flex-between;
+
+  background-color: tokens.$bg-light;
+  border: 1px solid tokens.$border-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$space-2;
 }
 
 .effect-name {
-  color: var(--text-secondary);
-  font-size: var(--text-sm);
+  color: tokens.$text-secondary;
+  font-size: tokens.$font-size-sm;
 }
 
 .effect-value {
-  color: var(--primary-gold);
-  font-weight: var(--font-semibold);
-  font-size: var(--text-sm);
+  color: tokens.$primary-gold;
+  font-weight: tokens.$font-weight-semibold;
+  font-size: tokens.$font-size-sm;
 }
 
 .empty-detail {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-6);
-  gap: var(--space-3);
-  color: var(--text-secondary);
+  @include utils.flex-col(tokens.$space-3, center, center);
+
+  padding: tokens.$space-6;
+  color: tokens.$text-secondary;
 }
 
 .empty-icon {
-  font-size: var(--text-4xl);
+  font-size: tokens.$font-size-4xl;
 }
 </style>

@@ -271,112 +271,107 @@ const endCollab = (collabId: string) => {
 </script>
 
 <style lang="scss" scoped>
+
 .collab-center-app {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  background-color: rgb(26 26 46 / 95%);
-  color: #fff;
+  @include utils.flex-col(0, stretch, flex-start);
+  background-color: tokens.$bg-secondary;
+  color: tokens.$text-primary;
 }
 
 .app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 20px;
-  background-color: rgb(74 158 255 / 10%);
-  border-bottom: 1px solid rgb(74 158 255 / 30%);
-}
+  @include utils.flex-between;
+  padding: tokens.$spacing-md tokens.$spacing-lg;
+  background-color: rgba(tokens.$primary-blue, 0.1);
+  border-bottom: 1px solid rgba(tokens.$primary-blue, 0.3);
 
-.app-header h2 {
-  margin: 0;
-  color: #4a9eff;
-  font-size: 18px;
-  font-weight: bold;
+  h2 {
+    margin: 0;
+    color: tokens.$primary-blue;
+    font-size: tokens.$font-size-lg;
+    font-weight: tokens.$font-weight-bold;
+  }
 }
 
 .create-collab-btn {
-  padding: 8px 16px;
-  background-color: #4a9eff;
-  color: white;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  background-color: tokens.$primary-blue;
+  color: tokens.$text-primary;
   border: none;
-  border-radius: 4px;
+  border-radius: tokens.$radius-sm;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  transition: all 0.2s ease;
-}
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-bold;
+  transition: all tokens.$transition-fast;
 
-.create-collab-btn:hover {
-  background-color: #357abd;
+  &:hover {
+    background-color: tokens.$primary-dark;
+  }
 }
 
 /* 标签页导航 */
 .tab-nav {
-  display: flex;
-  padding: 0 20px;
-  background-color: rgb(0 0 0 / 20%);
-  border-bottom: 1px solid rgb(74 158 255 / 30%);
+  @include utils.flex-row(0, center, flex-start);
+  padding: 0 tokens.$spacing-lg;
+  background-color: tokens.$bg-light;
+  border-bottom: 1px solid rgba(tokens.$primary-blue, 0.3);
 }
 
 .tab-btn {
-  padding: 12px 24px;
+  padding: tokens.$spacing-md tokens.$spacing-lg;
   background: none;
   border: none;
-  color: #aaa;
+  color: tokens.$text-muted;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  transition: all 0.2s ease;
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-bold;
+  transition: all tokens.$transition-fast;
   border-bottom: 3px solid transparent;
-}
 
-.tab-btn:hover {
-  color: #fff;
-}
+  &:hover {
+    color: tokens.$text-primary;
+  }
 
-.tab-btn.active {
-  color: #4a9eff;
-  border-bottom-color: #4a9eff;
+  &.active {
+    color: tokens.$primary-blue;
+    border-bottom-color: tokens.$primary-blue;
+  }
 }
 
 /* 应用内容 */
 .app-content {
   flex: 1;
-  padding: 20px;
+  padding: tokens.$spacing-lg;
   overflow-y: auto;
+  @include utils.custom-scrollbar;
 }
 
 /* 联动列表 */
 .collab-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  @include utils.flex-col(tokens.$spacing-md);
 }
 
 .collab-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px;
-  background-color: rgb(0 0 0 / 20%);
-  border-radius: 8px;
-  transition: all 0.2s ease;
-}
+  @include utils.flex-between;
+  padding: tokens.$spacing-md;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  transition: all tokens.$transition-fast;
 
-.collab-item:hover {
-  background-color: rgb(0 0 0 / 30%);
-  transform: translateY(-2px);
-}
+  &:hover {
+    background-color: rgba(tokens.$bg-light, 1.5);
+    transform: translateY(-2px);
+  }
 
-.collab-item.ongoing {
-  border-left: 4px solid #4a9eff;
-}
+  &.ongoing {
+    border-left: 4px solid tokens.$primary-blue;
+  }
 
-.collab-item.completed {
-  border-left: 4px solid #52c41a;
-  opacity: 0.8;
+  &.completed {
+    border-left: 4px solid tokens.$success;
+    opacity: 0.8;
+  }
 }
 
 .collab-info {
@@ -384,259 +379,221 @@ const endCollab = (collabId: string) => {
 }
 
 .collab-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+  @include utils.flex-between;
+  margin-bottom: tokens.$spacing-sm;
 }
 
 .collab-name {
-  font-size: 16px;
-  font-weight: bold;
-  color: #fff;
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
 }
 
 .collab-status {
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: bold;
-}
+  padding: tokens.$spacing-xs tokens.$spacing-md;
+  border-radius: tokens.$radius-full;
+  font-size: tokens.$font-size-xs;
+  font-weight: tokens.$font-weight-bold;
 
-.collab-status.进行中 {
-  background-color: rgb(74 158 255 / 20%);
-  color: #4a9eff;
-}
+  &.进行中 {
+    background-color: rgba(tokens.$primary-blue, 0.2);
+    color: tokens.$primary-blue;
+  }
 
-.collab-status.已结束 {
-  background-color: rgb(82 196 26 / 20%);
-  color: #52c41a;
+  &.已结束 {
+    background-color: rgba(tokens.$success, 0.2);
+    color: tokens.$success;
+  }
 }
 
 .collab-description {
-  font-size: 14px;
-  color: #aaa;
-  margin-bottom: 12px;
-  line-height: 1.4;
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-muted;
+  margin-bottom: tokens.$spacing-md;
+  line-height: tokens.$line-height-normal;
 }
 
 .collab-meta {
-  display: flex;
-  gap: 16px;
-  font-size: 12px;
-  color: #888;
+  @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+  font-size: tokens.$font-size-xs;
+  color: tokens.$gray-500;
 }
 
 .meta-item {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  @include utils.flex-row(tokens.$spacing-xs);
 }
 
 .collab-actions {
-  display: flex;
-  gap: 10px;
+  @include utils.flex-row(tokens.$spacing-sm);
   flex-shrink: 0;
 }
 
 .action-btn {
-  padding: 8px 16px;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
   border: none;
-  border-radius: 4px;
+  border-radius: tokens.$radius-sm;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  transition: all 0.2s ease;
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-bold;
+  transition: all tokens.$transition-fast;
 }
 
 .view-detail {
-  background-color: rgb(74 158 255 / 20%);
-  color: #4a9eff;
-}
+  background-color: rgba(tokens.$primary-blue, 0.2);
+  color: tokens.$primary-blue;
 
-.view-detail:hover {
-  background-color: rgb(74 158 255 / 40%);
+  &:hover {
+    background-color: rgba(tokens.$primary-blue, 0.4);
+  }
 }
 
 .end-collab {
-  background-color: rgb(255 107 107 / 20%);
-  color: #ff6b6b;
-}
+  background-color: rgba(tokens.$error, 0.2);
+  color: tokens.$error;
 
-.end-collab:hover {
-  background-color: rgb(255 107 107 / 40%);
+  &:hover {
+    background-color: rgba(tokens.$error, 0.4);
+  }
 }
 
 /* 空状态 */
 .empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  @include utils.flex-col(tokens.$spacing-md, center, center);
   height: 200px;
-  color: #aaa;
+  color: tokens.$text-muted;
   text-align: center;
 }
 
 .empty-icon {
-  font-size: 48px;
-  margin-bottom: 16px;
+  font-size: tokens.$font-size-4xl;
+  margin-bottom: tokens.$spacing-md;
 }
 
 .empty-text {
-  font-size: 16px;
-  margin-bottom: 20px;
+  font-size: tokens.$font-size-base;
+  margin-bottom: tokens.$spacing-lg;
 }
 
 .create-first-btn {
-  padding: 10px 20px;
-  background-color: #4a9eff;
-  color: white;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  background-color: tokens.$primary-blue;
+  color: tokens.$text-primary;
   border: none;
-  border-radius: 4px;
+  border-radius: tokens.$radius-sm;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  transition: all 0.2s ease;
-}
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-bold;
+  transition: all tokens.$transition-fast;
 
-.create-first-btn:hover {
-  background-color: #357abd;
+  &:hover {
+    background-color: tokens.$primary-dark;
+  }
 }
 
 /* 模态框样式 */
 .modal-overlay {
-  position: fixed;
-  inset: 0;
-  background-color: rgb(0 0 0 / 80%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+  @include utils.modal-overlay;
 }
 
 .modal-content {
-  background-color: rgb(26 26 46 / 95%);
-  border-radius: 8px;
-  padding: 20px;
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-lg;
   width: 90%;
   max-width: 500px;
-  box-shadow: 0 0 30px rgb(0 0 0 / 50%);
+  box-shadow: tokens.$shadow-xl;
 }
 
 .modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
+  @include utils.flex-between;
+  margin-bottom: tokens.$spacing-lg;
 
-.modal-header h3 {
-  margin: 0;
-  color: #4a9eff;
-  font-size: 18px;
-  font-weight: bold;
+  h3 {
+    margin: 0;
+    color: tokens.$primary-blue;
+    font-size: tokens.$font-size-lg;
+    font-weight: tokens.$font-weight-bold;
+  }
 }
 
 .close-btn {
   background: none;
   border: none;
-  color: #aaa;
-  font-size: 24px;
+  color: tokens.$text-muted;
+  font-size: tokens.$font-size-2xl;
   cursor: pointer;
-  transition: color 0.2s ease;
-}
+  transition: color tokens.$transition-fast;
 
-.close-btn:hover {
-  color: #fff;
+  &:hover {
+    color: tokens.$text-primary;
+  }
 }
 
 .modal-body {
-  margin-bottom: 20px;
+  margin-bottom: tokens.$spacing-lg;
 }
 
 .form-group {
-  margin-bottom: 16px;
-}
+  margin-bottom: tokens.$spacing-md;
 
-.form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 14px;
-  font-weight: bold;
-  color: #fff;
-}
+  label {
+    display: block;
+    margin-bottom: tokens.$spacing-sm;
+    font-size: tokens.$font-size-sm;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$text-primary;
+  }
 
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 10px;
-  background-color: rgb(0 0 0 / 30%);
-  border: 1px solid rgb(74 158 255 / 30%);
-  border-radius: 4px;
-  color: #fff;
-  font-size: 14px;
-  transition: all 0.2s ease;
-}
+  input,
+  textarea {
+    width: 100%;
+    padding: tokens.$spacing-sm;
+    background-color: tokens.$bg-light;
+    border: 1px solid rgba(tokens.$primary-blue, 0.3);
+    border-radius: tokens.$radius-sm;
+    color: tokens.$text-primary;
+    font-size: tokens.$font-size-sm;
+    transition: all tokens.$transition-fast;
 
-.form-group input:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: #4a9eff;
-  box-shadow: 0 0 0 2px rgb(74 158 255 / 20%);
+    &:focus {
+      outline: none;
+      border-color: tokens.$primary-blue;
+      box-shadow: 0 0 0 2px rgba(tokens.$primary-blue, 0.2);
+    }
+  }
 }
 
 .form-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-  margin-top: 24px;
+  @include utils.flex-row(tokens.$spacing-sm, center, flex-end);
+  margin-top: tokens.$spacing-xl;
 }
 
 .btn-cancel,
 .btn-create {
-  padding: 10px 20px;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
   border: none;
-  border-radius: 4px;
+  border-radius: tokens.$radius-sm;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  transition: all 0.2s ease;
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-bold;
+  transition: all tokens.$transition-fast;
 }
 
 .btn-cancel {
-  background-color: rgb(255 255 255 / 20%);
-  color: white;
-}
+  background-color: tokens.$bg-lighter;
+  color: tokens.$text-primary;
 
-.btn-cancel:hover {
-  background-color: rgb(255 255 255 / 30%);
+  &:hover {
+    background-color: rgba(tokens.$bg-lighter, 1.5);
+  }
 }
 
 .btn-create {
-  background-color: #4a9eff;
-  color: white;
-}
+  background-color: tokens.$primary-blue;
+  color: tokens.$text-primary;
 
-.btn-create:hover {
-  background-color: #357abd;
-}
-
-/* 滚动条样式 */
-.app-content::-webkit-scrollbar {
-  width: 8px;
-}
-
-.app-content::-webkit-scrollbar-track {
-  background: rgb(0 0 0 / 20%);
-}
-
-.app-content::-webkit-scrollbar-thumb {
-  background: rgb(74 158 255 / 50%);
-  border-radius: 4px;
-}
-
-.app-content::-webkit-scrollbar-thumb:hover {
-  background: rgb(74 158 255 / 80%);
+  &:hover {
+    background-color: tokens.$primary-dark;
+  }
 }
 </style>

@@ -63,63 +63,59 @@ const goBack = () => {
 </script>
 
 <style lang="scss" scoped>
+
 .app-page {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  background-color: #f5f5f5;
+  @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
+  background-color: tokens.$gray-100;
 }
 
 .app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  background-color: #1a1a2e;
-  color: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+  @include utils.flex-between;
+  padding: tokens.$spacing-md;
+  background-color: tokens.$bg-dark;
+  color: tokens.$text-primary;
+  box-shadow: tokens.$shadow-md;
 
-.app-header h1 {
-  margin: 0;
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: #4a9eff;
+  h1 {
+    margin: 0;
+    font-size: tokens.$font-size-2xl;
+    font-weight: tokens.$font-weight-semibold;
+    color: tokens.$primary;
+  }
 }
 
 .back-button {
-  padding: 10px 20px;
-  background-color: #4a9eff;
-  color: white;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  background-color: tokens.$primary;
+  color: tokens.$text-primary;
   border: none;
-  border-radius: 5px;
+  border-radius: tokens.$radius-sm;
   cursor: pointer;
-  font-size: 1rem;
-  transition: all 0.3s ease;
+  font-size: tokens.$font-size-base;
+  transition: all tokens.$transition-normal;
 
   &:hover {
-    background-color: #357abd;
+    background-color: tokens.$primary-dark;
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(74, 158, 255, 0.4);
+    box-shadow: tokens.$shadow-blue;
   }
 }
 
 .app-content {
   flex: 1;
-  padding: 20px;
+  padding: tokens.$spacing-md;
   overflow-y: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include utils.flex-center;
 
   & > div {
     width: 100%;
-    max-width: 1200px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-    padding: 30px;
+    max-width: tokens.$max-content-width;
+    background-color: tokens.$text-primary;
+    border-radius: tokens.$radius-md;
+    box-shadow: tokens.$shadow-md;
+    padding: tokens.$spacing-xl;
     text-align: center;
   }
 }

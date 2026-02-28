@@ -120,98 +120,75 @@ const localFilters = ref({ ...props.filters });
 }
 </script>
 
-<style lang=scss scoped>
+<style lang="scss" scoped>
+
 .filters {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
-  margin-bottom: 20px;
+  background: tokens.$text-primary;
+  padding: tokens.$spacing-lg;
+  border-radius: tokens.$radius-md;
+  box-shadow: tokens.$shadow-md;
+  margin-bottom: tokens.$spacing-lg;
 }
 
 .filter-row {
-  display: flex;
-  gap: 15px;
-  align-items: center;
+  @include utils.flex-row(tokens.$spacing-3, center, flex-start);
   flex-wrap: wrap;
-  margin-bottom: 15px;
-}
+  margin-bottom: tokens.$spacing-md;
 
-.filter-row:last-child {
-  margin-bottom: 0;
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .filter-group {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+  @include utils.flex-col(tokens.$spacing-xs, stretch, flex-start);
   min-width: 150px;
-}
 
-.filter-group.search {
-  flex: 1;
-  min-width: 200px;
+  &.search {
+    flex: 1;
+    min-width: 200px;
+  }
 }
 
 .filter-label {
-  font-size: 12px;
-  font-weight: bold;
-  color: #64748b;
+  font-size: tokens.$font-size-xs;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$gray-500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.filter-select,
-.search-input {
-  padding: 10px;
-  border: 2px solid #e2e8f0;
-  border-radius: 6px;
-  font-size: 14px;
-  transition: all 0.3s ease;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
-}
-
-.filter-select:focus,
-.search-input:focus {
-  outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgb(102 126 234 / 10%);
+.filter-select {
+  @include utils.select-base;
 }
 
 .search-input {
+  @include utils.input-base;
   width: 100%;
-  background: #f8fafc;
+  background: tokens.$gray-50;
 }
 
 .reset-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 15px;
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  @include utils.btn-danger;
+  @include utils.flex-row(tokens.$spacing-sm, center);
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  font-size: tokens.$font-size-sm;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-}
+  margin-top: auto;
 
-.reset-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgb(239 68 68 / 40%);
-}
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-red;
+  }
 
-.reset-btn:active {
-  transform: translateY(0);
+  &:active {
+    transform: translateY(0);
+  }
 }
 
 .reset-icon {
-  font-size: 16px;
+  font-size: tokens.$font-size-base;
 }
 </style>
 

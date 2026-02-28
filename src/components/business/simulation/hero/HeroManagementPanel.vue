@@ -58,7 +58,7 @@ interface Hero {
   stats: HeroStats;
 }
 
-// 面板折叠状�?const isCollapsed = ref(false);
+// 面板折叠状�?const isCollapsed = ref(false);
 
 // 筛选器
 const filters = ref({
@@ -67,7 +67,7 @@ const filters = ref({
   search: '',
 });
 
-// 选中的英�?const selectedHero = ref<Hero | null>(null);
+// 选中的英�?const selectedHero = ref<Hero | null>(null);
 
 // 英雄数据
 const heroes = ref<Hero[]>([
@@ -166,8 +166,8 @@ const heroes = ref<Hero[]>([
   },
   {
     id: 4,
-    name: '程咬�?,
-    avatar: '🛡�?,
+    name: '程咬�?,
+    avatar: '🛡�?,
     category: 'tank',
     strength: 'T1',
     stats: {
@@ -234,7 +234,7 @@ const heroes = ref<Hero[]>([
   },
 ]);
 
-// 筛选后的英雄列�?const filteredHeroes = computed(() => {
+// 筛选后的英雄列�?const filteredHeroes = computed(() => {
   return heroes.value.filter((hero) => {
     const matchesCategory =
       filters.value.category === 'all' ||
@@ -249,7 +249,7 @@ const heroes = ref<Hero[]>([
   });
 });
 
-// 切换折叠状�?const toggleCollapse = (): void => {
+// 切换折叠状�?const toggleCollapse = (): void => {
   isCollapsed.value = !isCollapsed.value;
 };
 
@@ -258,7 +258,7 @@ const selectHero = (hero: Hero): void => {
   selectedHero.value = hero;
 };
 
-// 重置筛�?const resetFilters = (): void => {
+// 重置筛�?const resetFilters = (): void => {
   filters.value = {
     category: 'all',
     strength: 'all',
@@ -267,26 +267,20 @@ const selectHero = (hero: Hero): void => {
 };
 </script>
 
-<style lang=scss scoped>
+<style lang="scss" scoped>
+
 .hero-management-panel {
-  background-color: var(--bg-secondary);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  overflow: hidden;
-  border: 1px solid var(--border-light);
-  transition: all var(--transition-normal);
+  @include utils.panel-base;
 }
 
 .panel-content {
-  padding: 20px;
-  transition: all 0.3s ease;
+  @include utils.panel-content;
   max-height: 1000px;
-  overflow: hidden;
-}
 
-.panel-content.collapsed {
-  max-height: 0;
-  padding: 0 20px;
+  &.collapsed {
+    max-height: 0;
+    padding: 0 tokens.$spacing-lg;
+  }
 }
 </style>
 

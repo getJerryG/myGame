@@ -57,10 +57,11 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
 
-// 公共导航栏组�?const isMenuOpen = ref(false);
+// 公共导航栏组件
+const isMenuOpen = ref(false);
 const isHidden = ref(true); // 默认隐藏
 const isMobile = ref(false);
-const hideTimer = ref(null);
+const hideTimer = ref<ReturnType<typeof setTimeout> | null>(null);
 
 const toggleMenu = (): void => {
   isMenuOpen.value = !isMenuOpen.value;
@@ -79,7 +80,8 @@ const handleMouseEnter = (): void => {
 const handleMouseLeave = (): void => {
   // 只有在非移动设备上才自动隐藏
   if (!isMobile.value) {
-    // 立即隐藏导航�?    isHidden.value = true;
+    // 立即隐藏导航栏
+    isHidden.value = true;
   }
 };
 
@@ -98,7 +100,8 @@ const checkMobile = (): void => {
 onMounted(() => {
   checkMobile();
   window.addEventListener('resize', checkMobile);
-  // 初始状态隐�?  isHidden.value = true;
+  // 初始状态隐藏
+  isHidden.value = true;
 });
 
 onUnmounted(() => {
@@ -110,114 +113,125 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-/* 导航栏样�? */
+
+/* 导航栏样式 */
 .navbar {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-  color: white;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  background: linear-gradient(135deg, tokens.$gray-800 0%, tokens.$gray-700 100%);
+  color: tokens.$text-primary;
+  padding: tokens.$spacing-sm tokens.$spacing-lg;
+  @include utils.flex-between;
   box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1000;
+  z-index: tokens.$z-fixed;
+
+  /* 导航栏隐藏状态 */
+  &.navbar-hidden {
+    transform: translateY(-80%);
+    box-shadow: 0 0 0 rgb(0 0 0 / 0%);
+  }
+
+  /* 鼠标接近时的显示效果 */
+  &:hover {
+    transform: translateY(0);
+    box-shadow: 0 4px 20px rgb(0 0 0 / 30%);
+  }
 }
 
-/* 导航栏隐藏状�? */
-.navbar.navbar-hidden {
-  transform: translateY(-80%);
-  box-shadow: 0 0 0 rgb(0 0 0 / 0%);
-}
+.navbar-brand {
+  h1 {
+    margin: 0;
+    font-size: tokens.$font-size-2xl;
+    font-weight: tokens.$font-weight-bold;
+    text-shadow: 0 2px 4px rgb(0 0 0 / 30%);
+    transition: all tokens.$transition-normal;
+  }
 
-/* 鼠标接近时的显示效果 */
-.navbar:hover {
-  transform: translateY(0);
-  box-shadow: 0 4px 20px rgb(0 0 0 / 30%);
-}
-
-.navbar-brand h1 {
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-shadow: 0 2px 4px rgb(0 0 0 / 30%);
-  transition: all 0.3s ease;
-}
-
-.navbar:hover .navbar-brand h1 {
-  transform: scale(1.05);
+  .navbar:hover & h1 {
+    transform: scale(1.05);
+  }
 }
 
 .menu-toggle {
   display: none;
   background: none;
   border: none;
-  color: white;
-  font-size: 1.5rem;
+  color: tokens.$text-primary;
+  font-size: tokens.$font-size-2xl;
   cursor: pointer;
   padding: 0;
   width: 40px;
   height: 40px;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
-}
+  transition: all tokens.$transition-normal;
 
-.menu-toggle:hover {
-  transform: scale(1.1);
-  text-shadow: 0 0 10px rgb(255 255 255 / 50%);
-}
+  &:hover {
+    transform: scale(1.1);
+    text-shadow: 0 0 10px rgb(255 255 255 / 50%);
+  }
 
-@media (width <= 768px) {
-  .menu-toggle {
+  @include utils.mobile {
     display: flex;
   }
 }
 
 .navbar-menu {
-  display: flex;
-  gap: 20px;
-  transition: all 0.3s ease;
+  @include utils.flex-row(tokens.$spacing-lg, center);
+  transition: all tokens.$transition-normal;
 }
 
 .nav-link {
-  color: white;
+  color: tokens.$text-primary;
   text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 20px;
+  padding: tokens.$spacing-2 tokens.$spacing-4;
+  border-radius: tokens.$radius-full;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-block;
   position: relative;
   overflow: hidden;
-  font-weight: 500;
-}
+  font-weight: tokens.$font-weight-medium;
+  animation: fadeInUp 0.3s ease forwards;
 
-/* 导航链接悬停效果 */
-.nav-link:hover {
-  background: rgb(255 255 255 / 15%);
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 5px 15px rgb(0 0 0 / 30%);
-}
+  /* 导航链接悬停效果 */
+  &:hover {
+    background: rgb(255 255 255 / 15%);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 5px 15px rgb(0 0 0 / 30%);
+  }
 
-/* 导航链接激活状�? */
-.nav-link.router-link-active {
-  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
-  box-shadow: 0 4px 12px rgb(76 175 80 / 40%);
-}
+  /* 导航链接激活状态 */
+  &.router-link-active {
+    background: linear-gradient(135deg, tokens.$success 0%, tokens.$success-green 100%);
+    box-shadow: 0 4px 12px rgb(16 185 129 / 40%);
 
-.nav-link.router-link-active:hover {
-  background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
-  transform: translateY(-3px) scale(1.05);
+    &:hover {
+      background: linear-gradient(135deg, tokens.$success-green 0%, #3d8b40 100%);
+      transform: translateY(-3px) scale(1.05);
+    }
+  }
+
+  &:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+
+  &:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  &:nth-child(3) {
+    animation-delay: 0.3s;
+  }
 }
 
 /* 链接文本 */
 .link-text {
   position: relative;
   z-index: 2;
-  transition: all 0.3s ease;
+  transition: all tokens.$transition-normal;
 }
 
 /* 链接发光效果 */
@@ -232,15 +246,15 @@ onUnmounted(() => {
   opacity: 0;
   transition: all 0.6s ease;
   z-index: 1;
+
+  .nav-link:hover & {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
-.nav-link:hover .link-glow {
-  transform: scale(1);
-  opacity: 1;
-}
-
-/* 响应式设�? */
-@media (width <= 768px) {
+/* 响应式设计 */
+@include utils.mobile {
   .menu-toggle {
     display: flex;
   }
@@ -250,7 +264,7 @@ onUnmounted(() => {
     top: 100%;
     left: 0;
     right: 0;
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    background: linear-gradient(135deg, tokens.$gray-800 0%, tokens.$gray-700 100%);
     flex-direction: column;
     gap: 0;
     padding: 0;
@@ -258,31 +272,31 @@ onUnmounted(() => {
     overflow: hidden;
     transition: max-height 0.3s ease;
     box-shadow: 0 4px 6px rgb(0 0 0 / 10%);
-  }
 
-  .navbar-menu.menu-open {
-    max-height: 300px;
+    &.menu-open {
+      max-height: 300px;
+    }
   }
 
   .nav-link {
-    padding: 12px 20px;
+    padding: tokens.$spacing-3 tokens.$spacing-5;
     border-bottom: 1px solid rgb(255 255 255 / 10%);
     width: 100%;
     box-sizing: border-box;
     border-radius: 0;
-  }
 
-  .nav-link:last-child {
-    border-bottom: none;
-  }
+    &:last-child {
+      border-bottom: none;
+    }
 
-  .nav-link:hover {
-    transform: none;
-    background: rgb(255 255 255 / 10%);
+    &:hover {
+      transform: none;
+      background: rgb(255 255 255 / 10%);
+    }
   }
 
   .navbar-brand h1 {
-    font-size: 1.2rem;
+    font-size: tokens.$font-size-lg;
   }
 
   .navbar {
@@ -290,16 +304,16 @@ onUnmounted(() => {
   }
 }
 
-/* 可访问性增�? */
+/* 可访问性增强 */
 .nav-link:focus {
-  outline: 2px solid #4caf50;
+  outline: 2px solid tokens.$success;
   outline-offset: 2px;
 }
 
 .menu-toggle:focus {
-  outline: 2px solid white;
+  outline: 2px solid tokens.$text-primary;
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: tokens.$radius-sm;
 }
 
 /* 动画效果 */
@@ -313,21 +327,5 @@ onUnmounted(() => {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.nav-link {
-  animation: fadeInUp 0.3s ease forwards;
-}
-
-.nav-link:nth-child(1) {
-  animation-delay: 0.1s;
-}
-
-.nav-link:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.nav-link:nth-child(3) {
-  animation-delay: 0.3s;
 }
 </style>

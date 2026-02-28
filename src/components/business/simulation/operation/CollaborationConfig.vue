@@ -2,8 +2,7 @@
   <div class="collaboration-config">
     <div class="config-section">
       <h4 class="section-title">合作联动配置</h4>
-      <p class="section-description">
-        选择合适的合作对象和联动方式，提升游戏影响�?      </p>
+      <p class="section-description">选择合适的合作对象和联动方式，提升游戏影响力</p>
 
       <!-- 合作联动列表 -->
       <div class="collaboration-list">
@@ -43,7 +42,7 @@
             </div>
             <div class="effect-item">
               <span class="effect-label">持续时间</span>
-              <span class="effect-value">{{ option.expected.duration }}�?/span>
+              <span class="effect-value">{{ option.expected.duration }}天</span>
             </div>
           </div>
         </div>
@@ -51,7 +50,10 @@
 
       <!-- 操作按钮 -->
       <div class="collab-actions">
-        <button class="btn btn-secondary" @click="resetSelection">
+        <button
+          class="btn btn-secondary"
+          @click="resetSelection"
+        >
           <span class="btn-icon">🔄</span>
           <span class="btn-text">重置选择</span>
         </button>
@@ -60,7 +62,7 @@
           :disabled="!selectedOptionId"
           @click="confirmCollaboration"
         >
-          <span class="btn-icon">�?/span>
+          <span class="btn-icon">✅</span>
           <span class="btn-text">确认合作</span>
         </button>
       </div>
@@ -91,11 +93,7 @@ defineProps({
   },
 });
 
-const emit = defineEmits([
-  'select-option',
-  'confirm-collaboration',
-  'reset-selection',
-]);
+const emit = defineEmits(['select-option', 'confirm-collaboration', 'reset-selection']);
 
 // 选中的合作选项
 const selectedOptionId = ref<string | null>(null);
@@ -137,73 +135,62 @@ function resetSelection(): void {
 }
 </script>
 
-<style lang=scss scoped>
+<style lang="scss" scoped>
+
 .collaboration-config {
   padding: 0;
 }
 
 /* 配置区块 */
 .config-section {
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-md);
-  padding: 20px;
+  @include utils.config-section;
 }
 
 .section-title {
-  font-size: var(--text-base);
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
-  margin: 0 0 8px;
+  @include utils.section-title;
 }
 
 .section-description {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-  margin: 0 0 20px;
+  @include utils.section-description;
 }
 
 /* 合作联动列表 */
 .collaboration-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-bottom: 25px;
+  @include utils.flex-col(tokens.$spacing-md, stretch);
+  margin-bottom: tokens.$spacing-xl;
 }
 
 .collab-item {
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-md);
-  padding: 15px;
-  transition: all var(--transition-fast);
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-md;
+  transition: all tokens.$transition-fast;
   border: 1px solid transparent;
-}
 
-.collab-item:hover {
-  background-color: rgb(255 255 255 / 10%);
-  border-color: var(--border-light);
-}
+  &:hover {
+    background-color: tokens.$bg-lighter;
+    border-color: tokens.$border-light;
+  }
 
-.collab-item.selected {
-  background-color: rgb(59 130 246 / 20%);
-  border-color: var(--primary-blue);
-  box-shadow: 0 2px 8px rgb(59 130 246 / 30%);
+  &.selected {
+    background-color: rgb(59 130 246 / 20%);
+    border-color: tokens.$primary-blue;
+    box-shadow: tokens.$shadow-blue;
+  }
 }
 
 .collab-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 15px;
+  @include utils.flex-between(flex-start);
+  margin-bottom: tokens.$spacing-md;
 }
 
 .collab-info {
-  display: flex;
-  gap: 12px;
+  @include utils.flex-row(tokens.$spacing-sm, center);
   flex: 1;
 }
 
 .collab-icon {
-  font-size: 24px;
+  font-size: tokens.$font-size-xl;
   flex-shrink: 0;
 }
 
@@ -212,93 +199,97 @@ function resetSelection(): void {
 }
 
 .collab-name {
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
-  margin-bottom: 4px;
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-semibold;
+  color: tokens.$text-primary;
+  margin-bottom: tokens.$spacing-xs;
 }
 
 .collab-type {
-  font-size: var(--text-xs);
-  color: var(--text-secondary);
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
 }
 
 .select-btn {
-  padding: 6px 12px;
-  background-color: rgb(255 255 255 / 10%);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-sm);
-  font-size: var(--text-xs);
-  color: var(--text-secondary);
+  padding: tokens.$spacing-xs tokens.$spacing-sm;
+  background-color: tokens.$bg-lighter;
+  border: 1px solid tokens.$border-light;
+  border-radius: tokens.$radius-sm;
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
   cursor: pointer;
-  transition: all var(--transition-fast);
-}
+  transition: all tokens.$transition-fast;
 
-.select-btn:hover {
-  background-color: rgb(59 130 246 / 20%);
-  color: var(--text-primary);
-}
+  &:hover {
+    background-color: rgb(59 130 246 / 20%);
+    color: tokens.$text-primary;
+  }
 
-.select-btn.active {
-  background-color: var(--primary-blue);
-  color: white;
-  border-color: var(--primary-blue);
+  &.active {
+    background-color: tokens.$primary-blue;
+    color: white;
+    border-color: tokens.$primary-blue;
+  }
 }
 
 /* 合作效果 */
 .collab-effects {
-  display: flex;
-  gap: 20px;
+  @include utils.flex-row(tokens.$spacing-xl, center);
   flex-wrap: wrap;
-  padding-top: 12px;
+  padding-top: tokens.$spacing-sm;
   border-top: 1px solid rgb(255 255 255 / 10%);
 }
 
 .effect-item {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+  @include utils.stat-item;
 }
 
 .effect-label {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
+  @include utils.stat-label;
 }
 
 .effect-value {
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--text-secondary);
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-semibold;
+  color: tokens.$text-secondary;
 }
 
 /* 操作按钮 */
 .collab-actions {
-  display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-  margin-top: 20px;
-  padding-top: 20px;
+  @include utils.flex-row(tokens.$spacing-md, center, flex-end);
+  margin-top: tokens.$spacing-lg;
+  padding-top: tokens.$spacing-lg;
   border-top: 1px solid rgb(255 255 255 / 10%);
+
+  .btn {
+    &-primary {
+      @include utils.btn-primary;
+    }
+
+    &-secondary {
+      @include utils.btn-secondary;
+    }
+  }
 }
 
-/* 响应式设�? */
-@media (width <= 768px) {
+/* 响应式设计 */
+@include utils.mobile {
   .collab-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: tokens.$spacing-sm;
   }
 
   .collab-effects {
-    gap: 15px;
+    gap: tokens.$spacing-md;
   }
 
   .collab-actions {
     flex-direction: column;
-  }
 
-  .collab-actions .btn {
-    width: 100%;
+    .btn {
+      width: 100%;
+    }
   }
 }
 </style>

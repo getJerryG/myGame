@@ -7,7 +7,7 @@
         aria-expanded="!isCollapsed"
         @click="toggleCollapse"
       >
-        <span class="collapse-icon">{{ isCollapsed ? '▶️' : '�? }}</span>
+        <span class="collapse-icon">{{ isCollapsed ? '▶️' : '🔽' }}</span>
       </button>
     </div>
 
@@ -23,10 +23,10 @@
               class="chart-bar"
             >
               <div
-                class="bar"
+                class="bar revenue-bar"
                 :style="{ height: (item.value / maxRevenueValue) * 100 + '%' }"
               ></div>
-              <div class="bar-label">{{ item.date.day }}�?/div>
+              <div class="bar-label">{{ item.date.day }}日</div>
             </div>
           </div>
         </div>
@@ -34,7 +34,7 @@
 
       <!-- 下载量趋势图�?-->
       <div class="trend-chart">
-        <h3 class="chart-title">下载量趋�?/h3>
+        <h3 class="chart-title">下载量趋势</h3>
         <div class="chart-container">
           <div class="chart-bars">
             <div
@@ -48,7 +48,7 @@
                   height: (item.value / maxDownloadsValue) * 100 + '%',
                 }"
               ></div>
-              <div class="bar-label">{{ item.date.day }}�?/div>
+              <div class="bar-label">{{ item.date.day }}日</div>
             </div>
           </div>
         </div>
@@ -70,7 +70,7 @@
                   height: (item.value / maxActiveUsersValue) * 100 + '%',
                 }"
               ></div>
-              <div class="bar-label">{{ item.date.day }}�?/div>
+              <div class="bar-label">{{ item.date.day }}日</div>
             </div>
           </div>
         </div>
@@ -139,171 +139,162 @@ const toggleCollapse = (): void => {
 };
 </script>
 
-<style lang=scss scoped>
-/* 数据趋势面板 */
+<style lang="scss" scoped>
+
 .data-panel {
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
+  border-radius: tokens.$radius-lg;
+  box-shadow: tokens.$shadow-md;
   overflow: hidden;
-  border: 1px solid #e2e8f0;
-}
+  border: 1px solid tokens.$gray-200;
 
-/* 面板头部 */
-.panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  background: white;
-  border-bottom: 1px solid #e2e8f0;
-  border-radius: 8px 8px 0 0;
-}
-
-.panel-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: #1e293b;
-  margin: 0;
-}
-
-.collapse-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 5px;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-}
-
-.collapse-btn:hover {
-  background-color: #f1f5f9;
-}
-
-.collapse-icon {
-  font-size: 14px;
-}
-
-/* 面板内容 */
-.panel-content {
-  padding: 16px;
-  background: white;
-  border-radius: 0 0 8px 8px;
-  transition: all 0.3s ease;
-  overflow: hidden;
-}
-
-.panel-content.collapsed {
-  max-height: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
-/* 趋势图表 */
-.trend-chart {
-  margin-bottom: 16px;
-}
-
-.trend-chart:last-child {
-  margin-bottom: 0;
-}
-
-.chart-title {
-  font-size: 12px;
-  font-weight: 500;
-  color: #64748b;
-  margin-bottom: 12px;
-}
-
-.chart-container {
-  height: 150px;
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-  padding: 16px 0;
-}
-
-.chart-bars {
-  flex: 1;
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-}
-
-.chart-bar {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-}
-
-.bar {
-  width: 100%;
-  background: linear-gradient(180deg, #3498db, #2980b9);
-  border-radius: 4px 4px 0 0;
-  transition: height 0.3s ease;
-  min-height: 2px;
-}
-
-.bar.downloads-bar {
-  background: linear-gradient(180deg, #2ecc71, #27ae60);
-}
-
-.bar.active-users-bar {
-  background: linear-gradient(180deg, #f39c12, #e67e22);
-}
-
-.bar-label {
-  font-size: 10px;
-  color: #64748b;
-}
-
-/* 响应式设�? */
-@media (width <= 768px) {
   .panel-header {
-    padding: 12px 15px;
+    @include utils.flex-between(center);
+    padding: tokens.$spacing-md tokens.$spacing-lg;
+    background: white;
+    border-bottom: 1px solid tokens.$gray-200;
+    border-radius: tokens.$radius-lg tokens.$radius-lg 0 0;
+  }
+
+  .panel-title {
+    font-size: tokens.$font-size-sm;
+    font-weight: tokens.$font-weight-semibold;
+    color: tokens.$gray-800;
+    margin: 0;
+  }
+
+  .collapse-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: tokens.$spacing-xs;
+    border-radius: tokens.$radius-sm;
+    transition: background-color tokens.$transition-fast;
+
+    &:hover {
+      background-color: tokens.$gray-100;
+    }
+
+    .collapse-icon {
+      font-size: tokens.$font-size-sm;
+    }
   }
 
   .panel-content {
-    padding: 15px;
+    padding: tokens.$spacing-md;
+    background: white;
+    border-radius: 0 0 tokens.$radius-lg tokens.$radius-lg;
+    transition: all tokens.$transition-normal;
+    overflow: hidden;
+
+    &.collapsed {
+      max-height: 0;
+      padding: 0;
+      overflow: hidden;
+    }
   }
 
-  .chart-container {
-    height: 180px;
+  .trend-chart {
+    margin-bottom: tokens.$spacing-md;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .chart-title {
+      font-size: tokens.$font-size-xs;
+      font-weight: tokens.$font-weight-medium;
+      color: tokens.$gray-500;
+      margin-bottom: tokens.$spacing-sm;
+    }
+
+    .chart-container {
+      height: 150px;
+      @include utils.flex-row(tokens.$spacing-sm, flex-end, flex-start);
+      padding: tokens.$spacing-md 0;
+
+      .chart-bars {
+        flex: 1;
+        @include utils.flex-row(tokens.$spacing-sm, flex-end, flex-start);
+
+        .chart-bar {
+          flex: 1;
+          @include utils.flex-col(tokens.$spacing-xs, center, flex-end);
+
+          .bar {
+            width: 100%;
+            border-radius: tokens.$radius-sm tokens.$radius-sm 0 0;
+            transition: height tokens.$transition-normal;
+            min-height: 2px;
+
+            &.revenue-bar {
+              background: linear-gradient(180deg, tokens.$primary-light, tokens.$primary);
+            }
+
+            &.downloads-bar {
+              background: linear-gradient(180deg, tokens.$success-green, tokens.$secondary-dark);
+            }
+
+            &.active-users-bar {
+              background: linear-gradient(180deg, tokens.$warning, #e67e22);
+            }
+          }
+
+          .bar-label {
+            font-size: 10px;
+            color: tokens.$gray-500;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* 响应式设�? */
+@include utils.mobile {
+  .data-panel {
+    .panel-header {
+      padding: tokens.$spacing-sm tokens.$spacing-md;
+    }
+
+    .panel-content {
+      padding: tokens.$spacing-md;
+    }
+
+    .chart-container {
+      height: 180px;
+    }
   }
 }
 
 /* 横屏手机适配 */
-@media (orientation: landscape) and (height <= 600px) {
-  .panel-header {
-    padding: 10px 12px;
-  }
+@include utils.landscape-mobile {
+  .data-panel {
+    .panel-header {
+      padding: tokens.$spacing-xs tokens.$spacing-sm;
+    }
 
-  .panel-title {
-    font-size: 14px;
-  }
+    .panel-title {
+      font-size: tokens.$font-size-sm;
+    }
 
-  .panel-content {
-    padding: 12px;
-  }
+    .panel-content {
+      padding: tokens.$spacing-sm;
+    }
 
-  .chart-container {
-    height: 150px;
-    padding: 10px 0;
-  }
+    .chart-container {
+      height: 150px;
+      padding: tokens.$spacing-sm 0;
 
-  .chart-title {
-    font-size: 13px;
-    margin-bottom: 10px;
-  }
+      .chart-title {
+        font-size: tokens.$font-size-sm;
+        margin-bottom: tokens.$spacing-sm;
+      }
 
-  .bar-label {
-    font-size: 9px;
+      .bar-label {
+        font-size: 9px;
+      }
+    }
   }
 }
 </style>
-
-
-
-

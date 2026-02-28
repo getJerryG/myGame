@@ -103,7 +103,8 @@ const props = defineProps({
 
 const emit = defineEmits(['update:activeModule']);
 
-// 活跃模块状�?const activeModule = ref(props.app.modules[0].id);
+// 活跃模块状态
+const activeModule = ref(props.app.modules[0].id);
 
 // 格式化侧边栏项，添加图标
 const sidebarItems = computed(() => {
@@ -136,10 +137,6 @@ const transactionHistory = ref([
   },
 ]);
 
-// 当前激活的模块（暂未使用，保留以备后续扩展�?// const currentModule = computed(() => {
-//   return props.app.modules.find((m) => m.id === activeModule.value) || props.app.modules[0];
-// });
-
 // 处理侧边栏项点击
 const handleItemChange = (itemId: string): void => {
   activeModule.value = itemId;
@@ -148,41 +145,39 @@ const handleItemChange = (itemId: string): void => {
 </script>
 
 <style lang="scss" scoped>
-/* 侧边栏菜�? */
+
+/* 侧边栏菜单 */
 .sidebar-menu {
-  display: flex;
-  flex-direction: column;
+  @include utils.flex-col(0, stretch);
   width: 100%;
   height: 100%;
-  background-color: var(--sidebar-bg, #2a2a3a);
-  padding: 16px 0;
+  background-color: tokens.$bg-secondary;
+  padding: tokens.$spacing-md 0;
   overflow-y: auto;
 }
 
 .menu-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 24px;
+  @include utils.flex-row(tokens.$spacing-md, center);
+  padding: tokens.$spacing-md tokens.$spacing-lg;
   background: none;
   border: none;
-  color: var(--sidebar-text, #aaa);
+  color: tokens.$text-secondary;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all tokens.$transition-fast;
   text-align: left;
-  font-size: 16px;
-  font-weight: var(--font-semibold, 600);
-}
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-semibold;
 
-.menu-item:hover {
-  background-color: var(--sidebar-hover, rgb(74 158 255 / 10%));
-  color: var(--sidebar-hover-text, #4a9eff);
-}
+  &:hover {
+    background-color: tokens.$bg-light;
+    color: tokens.$primary-blue;
+  }
 
-.menu-item.active {
-  background-color: var(--sidebar-active, rgb(74 158 255 / 20%));
-  color: var(--sidebar-active-text, #4a9eff);
-  border-right: 3px solid var(--sidebar-active-border, #4a9eff);
+  &.active {
+    background-color: rgb(59 130 246 / 20%);
+    color: tokens.$primary-blue;
+    border-right: 3px solid tokens.$primary-blue;
+  }
 }
 
 .menu-icon {
@@ -193,197 +188,171 @@ const handleItemChange = (itemId: string): void => {
 .wallet-content {
   width: 100%;
   height: 100%;
-  padding: 24px;
-  background-color: var(--content-bg, #1e1e2e);
-  color: var(--text-primary, #fff);
+  padding: tokens.$spacing-lg;
+  background-color: tokens.$bg-primary;
+  color: tokens.$text-primary;
   overflow-y: auto;
+  @include utils.custom-scrollbar;
 }
 
 .module-content {
-  background-color: var(--card-bg, #2a2a3a);
-  border-radius: 8px;
-  padding: 24px;
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-lg;
   min-height: 200px;
-  box-shadow: 0 2px 12px rgb(0 0 0 / 30%);
-}
+  box-shadow: tokens.$shadow-md;
 
-.module-content h3 {
-  margin: 0 0 20px;
-  font-size: 20px;
-  color: var(--primary-gold, #ffd700);
-  font-weight: var(--font-bold, 700);
-}
+  h3 {
+    margin: 0 0 tokens.$spacing-md;
+    font-size: tokens.$font-size-xl;
+    color: tokens.$primary-gold;
+    font-weight: tokens.$font-weight-bold;
+  }
 
-.module-content h4 {
-  margin: 0 0 12px;
-  font-size: 16px;
-  color: var(--text-primary, #fff);
-}
+  h4 {
+    margin: 0 0 tokens.$space-3;
+    font-size: tokens.$font-size-base;
+    color: tokens.$text-primary;
+  }
 
-.module-content p {
-  margin: 0 0 16px;
-  color: var(--text-secondary, #b0b0b0);
-  line-height: 1.6;
+  p {
+    margin: 0 0 tokens.$space-4;
+    color: tokens.$text-secondary;
+    line-height: tokens.$line-height-normal;
+  }
 }
 
 /* 钱包应用样式 */
 .balance-container {
-  margin-top: 16px;
+  margin-top: tokens.$spacing-md;
 }
 
 .balance-card {
-  background-color: var(--card-hover, rgb(0 0 0 / 20%));
-  border-radius: 8px;
-  padding: 28px;
-  border: 1px solid var(--border-color, rgb(74 158 255 / 20%));
-  transition: all 0.2s ease;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-xl;
+  border: 1px solid tokens.$border-light;
+  transition: all tokens.$transition-fast;
   text-align: center;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 30%);
-}
+  box-shadow: tokens.$shadow-md;
 
-.balance-card:hover {
-  border-color: var(--primary-color, rgb(74 158 255 / 50%));
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgb(0 0 0 / 40%);
+  &:hover {
+    border-color: tokens.$primary-blue;
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-lg;
+  }
 }
 
 .balance-amount {
   font-size: 52px;
-  font-weight: var(--font-bold, 700);
-  color: var(--primary-gold, #ffd700);
-  margin: 20px 0;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$primary-gold;
+  margin: tokens.$spacing-md 0;
 }
 
 .balance-details {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  margin-top: 28px;
-  padding-top: 28px;
-  border-top: 1px solid var(--border-color, rgb(74 158 255 / 20%));
+  gap: tokens.$spacing-lg;
+  margin-top: tokens.$spacing-xl;
+  padding-top: tokens.$spacing-xl;
+  border-top: 1px solid tokens.$border-light;
 }
 
 .detail-item {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  @include utils.flex-col(tokens.$space-1, center);
 }
 
 .detail-label {
-  color: var(--text-secondary, #b0b0b0);
-  font-size: 14px;
+  color: tokens.$text-secondary;
+  font-size: tokens.$font-size-sm;
 }
 
 .detail-value {
-  color: var(--text-primary, #fff);
-  font-weight: var(--font-bold, 700);
-  font-size: 20px;
-}
+  color: tokens.$text-primary;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-xl;
 
-.detail-value.positive {
-  color: var(--success-color, #2ed573);
-}
+  &.positive {
+    color: tokens.$success;
+  }
 
-.detail-value.negative {
-  color: var(--danger-color, #ff4757);
+  &.negative {
+    color: tokens.$error;
+  }
 }
 
 /* 交易记录样式 */
 .transaction-history {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  margin-top: tokens.$spacing-md;
+  @include utils.flex-col(tokens.$spacing-md);
 }
 
 .transaction-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--card-bg, #2a2a3a);
-  padding: 20px;
-  border-radius: 8px;
-  border: 1px solid var(--border-color, rgb(74 158 255 / 20%));
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 30%);
-}
+  @include utils.flex-between;
+  background-color: tokens.$bg-secondary;
+  padding: tokens.$spacing-md;
+  border-radius: tokens.$radius-md;
+  border: 1px solid tokens.$border-light;
+  transition: all tokens.$transition-fast;
+  box-shadow: tokens.$shadow-sm;
 
-.transaction-item:hover {
-  border-color: var(--primary-color, rgb(74 158 255 / 50%));
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgb(0 0 0 / 40%);
+  &:hover {
+    border-color: tokens.$primary-blue;
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-md;
+  }
 }
 
 .transaction-info {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  @include utils.flex-col(tokens.$space-1);
 }
 
 .transaction-type {
-  font-weight: var(--font-bold, 700);
-  color: var(--text-primary, #fff);
-  font-size: 16px;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
+  font-size: tokens.$font-size-base;
 }
 
 .transaction-date {
-  color: var(--text-secondary, #b0b0b0);
-  font-size: 13px;
+  color: tokens.$text-secondary;
+  font-size: tokens.$font-size-xs;
 }
 
 .transaction-amount {
-  font-weight: var(--font-bold, 700);
-  font-size: 20px;
-}
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-xl;
 
-.transaction-amount.positive {
-  color: var(--success-color, #2ed573);
-}
+  &.positive {
+    color: tokens.$success;
+  }
 
-.transaction-amount.negative {
-  color: var(--danger-color, #ff4757);
+  &.negative {
+    color: tokens.$error;
+  }
 }
 
 .no-transactions {
   text-align: center;
-  padding: 48px;
-  color: var(--text-secondary, #b0b0b0);
-  background-color: var(--card-hover, rgb(0 0 0 / 20%));
-  border: 1px dashed var(--border-color, rgb(74 158 255 / 20%));
-  border-radius: 8px;
+  padding: tokens.$spacing-2xl;
+  color: tokens.$text-secondary;
+  background-color: tokens.$bg-light;
+  border: 1px dashed tokens.$border-light;
+  border-radius: tokens.$radius-md;
 }
 
-/* 滚动条样�? */
-.wallet-content::-webkit-scrollbar {
-  width: 8px;
-}
-
-.wallet-content::-webkit-scrollbar-track {
-  background: var(--scrollbar-track, rgb(0 0 0 / 10%));
-  border-radius: 4px;
-}
-
-.wallet-content::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb, rgb(74 158 255 / 50%));
-  border-radius: 4px;
-}
-
-.wallet-content::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover, rgb(74 158 255 / 70%));
-}
-
-/* 响应式设�? */
-@media (width <= 768px) {
+/* 响应式设计 */
+@include utils.mobile {
   .wallet-content {
-    padding: 16px;
+    padding: tokens.$spacing-md;
   }
 
   .module-content {
-    padding: 20px;
+    padding: tokens.$spacing-md;
   }
 
   .balance-card {
-    padding: 20px;
+    padding: tokens.$spacing-lg;
   }
 
   .balance-amount {
@@ -392,13 +361,13 @@ const handleItemChange = (itemId: string): void => {
 
   .balance-details {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: tokens.$spacing-md;
   }
 
   .transaction-item {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+    gap: tokens.$space-3;
   }
 
   .transaction-amount {

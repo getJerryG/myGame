@@ -41,14 +41,15 @@ import TopCoreData from './TopCoreData.vue';
 // 向父组件传递事�?defineEmits(['next-day']);
 </script>
 
-<style lang=scss scoped>
+<style lang="scss" scoped>
+
 .simulation-header {
-  background-color: var(--bg-dark);
-  padding: 10px 20px;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 30%);
-  z-index: 50;
-  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-  border-bottom: 2px solid var(--primary-gold);
+  background-color: tokens.$bg-dark;
+  padding: tokens.$spacing-sm tokens.$spacing-lg;
+  box-shadow: tokens.$shadow-lg;
+  z-index: tokens.$z-sticky;
+  border-radius: 0 0 tokens.$radius-sm tokens.$radius-sm;
+  border-bottom: 2px solid tokens.$primary-gold;
 }
 </style>
 

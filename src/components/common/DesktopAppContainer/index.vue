@@ -261,80 +261,73 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
+
 .desktop-app-container {
   position: absolute;
   background-color: rgb(26 26 46 / 95%);
-  border-radius: 8px;
+  border-radius: tokens.$radius-lg;
   box-shadow: 0 0 30px rgb(0 0 0 / 50%);
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  z-index: 1000;
-  transition: all 0.3s ease;
-}
+  @include utils.flex-col(tokens.$spacing-none, stretch, flex-start);
+  z-index: tokens.$z-fixed;
+  transition: all tokens.$transition-normal;
 
-/* 窗口状态样式 */
-.is-maximized {
-  border-radius: 0;
-}
+  /* 窗口状态样式 */
+  &.is-maximized {
+    border-radius: 0;
+  }
 
-.is-minimized {
-  display: none;
+  &.is-minimized {
+    display: none;
+  }
 }
 
 /* 标题栏样式 */
 .app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 16px;
+  @include utils.flex-between;
+  padding: tokens.$spacing-sm tokens.$spacing-lg;
   background-color: rgb(74 158 255 / 10%);
   border-bottom: 1px solid rgb(74 158 255 / 30%);
   cursor: move;
 }
 
 .app-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  @include utils.flex-row(tokens.$spacing-sm, center);
 }
 
 .app-icon {
-  font-size: 16px;
-  color: #4a9eff;
+  font-size: tokens.$font-size-base;
+  color: tokens.$primary-blue;
 }
 
 .app-name {
-  color: #fff;
-  font-size: 14px;
-  font-weight: bold;
+  color: tokens.$text-primary;
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-bold;
 }
 
 .app-controls {
-  display: flex;
-  gap: 8px;
+  @include utils.flex-row(tokens.$spacing-sm, center);
 }
 
 .control-button {
   width: 24px;
   height: 24px;
   border: none;
-  border-radius: 4px;
+  border-radius: tokens.$radius-sm;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  transition: all 0.2s ease;
-}
+  @include utils.flex-center;
+  font-size: tokens.$font-size-sm;
+  transition: all tokens.$transition-fast;
 
-.control-button.close {
-  background-color: rgb(255 107 107 / 20%);
-  color: #ff6b6b;
-}
+  &.close {
+    background-color: rgb(255 107 107 / 20%);
+    color: tokens.$danger-red;
 
-.control-button.close:hover {
-  background-color: rgb(255 107 107 / 40%);
+    &:hover {
+      background-color: rgb(255 107 107 / 40%);
+    }
+  }
 }
 
 /* 内容区域样式 */
@@ -347,48 +340,46 @@ onUnmounted(() => {
 /* 侧边栏样式 */
 .app-sidebar {
   width: 200px;
-  background-color: rgb(0 0 0 / 20%);
+  background-color: tokens.$bg-light;
   border-right: 1px solid rgb(74 158 255 / 30%);
 }
 
 .sidebar-nav {
-  padding: 16px 0;
+  padding: tokens.$spacing-lg 0;
 }
 
 .sidebar-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 20px;
+  @include utils.flex-row(tokens.$spacing-3, center);
+  padding: tokens.$spacing-3 tokens.$spacing-5;
   cursor: pointer;
-  transition: all 0.2s ease;
-  color: #aaa;
-}
+  transition: all tokens.$transition-fast;
+  color: tokens.$gray-400;
 
-.sidebar-item:hover {
-  background-color: rgb(74 158 255 / 10%);
-  color: #fff;
-}
+  &:hover {
+    background-color: rgb(74 158 255 / 10%);
+    color: tokens.$text-primary;
+  }
 
-.sidebar-item.active {
-  background-color: rgb(74 158 255 / 20%);
-  color: #4a9eff;
-  border-right: 3px solid #4a9eff;
+  &.active {
+    background-color: rgb(74 158 255 / 20%);
+    color: tokens.$primary-blue;
+    border-right: 3px solid tokens.$primary-blue;
+  }
 }
 
 .sidebar-item-icon {
-  font-size: 16px;
+  font-size: tokens.$font-size-base;
 }
 
 .sidebar-item-name {
-  font-size: 14px;
+  font-size: tokens.$font-size-sm;
 }
 
 /* 主内容区域样式 */
 .app-main {
   flex: 1;
   overflow: auto;
-  padding: 20px;
+  padding: tokens.$spacing-5;
 }
 
 .content-body {
@@ -398,41 +389,40 @@ onUnmounted(() => {
 
 /* 错误容器样式 */
 .error-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  @include utils.flex-col(tokens.$spacing-4, center, center);
   height: 100%;
   text-align: center;
-  color: #ff6b6b;
-}
+  color: tokens.$danger-red;
 
-.error-container h3 {
-  font-size: 20px;
-  margin-bottom: 16px;
-}
+  h3 {
+    font-size: tokens.$font-size-xl;
+    margin-bottom: tokens.$spacing-4;
+  }
 
-.error-container p {
-  font-size: 14px;
-  margin-bottom: 8px;
+  p {
+    font-size: tokens.$font-size-sm;
+    margin-bottom: tokens.$spacing-2;
+  }
 }
 
 /* 滚动条样式 */
-.app-main::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
+.app-main {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
 
-.app-main::-webkit-scrollbar-track {
-  background: rgb(0 0 0 / 20%);
-}
+  &::-webkit-scrollbar-track {
+    background: tokens.$bg-light;
+  }
 
-.app-main::-webkit-scrollbar-thumb {
-  background: rgb(74 158 255 / 50%);
-  border-radius: 4px;
-}
+  &::-webkit-scrollbar-thumb {
+    background: rgb(74 158 255 / 50%);
+    border-radius: tokens.$radius-sm;
 
-.app-main::-webkit-scrollbar-thumb:hover {
-  background: rgb(74 158 255 / 80%);
+    &:hover {
+      background: rgb(74 158 255 / 80%);
+    }
+  }
 }
 </style>

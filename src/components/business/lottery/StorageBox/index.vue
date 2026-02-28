@@ -153,190 +153,198 @@ function validateDecomposeQuantity(item: StorageItem, index: number): void {
 </script>
 
 <style lang="scss" scoped>
-/* 收纳盒面�? */
+
+/* 收纳盒面板 */
 .storage-box-panel {
-  background-color: #f0f8ff;
-  border-radius: 8px;
-  margin-bottom: 20px;
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-lg;
+  margin-bottom: tokens.$spacing-lg;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+  box-shadow: tokens.$shadow-md;
+  border: 1px solid tokens.$border-light;
   flex-shrink: 0;
 }
 
 /* 面板头部 */
-.storage-box-panel .panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
+.panel-header {
+  @include utils.flex-between;
+  padding: tokens.$spacing-md;
   cursor: pointer;
-  background-color: #e3f2fd;
-  border-bottom: 1px solid #bbdefb;
+  background-color: tokens.$bg-light;
+  border-bottom: 1px solid tokens.$border-light;
   height: 50px;
   flex-shrink: 0;
+
+  h3 {
+    margin: 0;
+    color: tokens.$primary-blue;
+    font-size: tokens.$font-size-base;
+    line-height: 20px;
+  }
 }
 
-.storage-box-panel .panel-header h3 {
-  margin: 0;
-  color: #2196f3;
-  font-size: 16px;
-  line-height: 20px;
-}
-
-/* 总分解积�? */
+/* 总分解积分 */
 .total-decompose-points {
-  font-size: 12px;
-  color: #4caf50;
+  font-size: tokens.$font-size-xs;
+  color: tokens.$success;
   margin-right: auto;
-  margin-left: 10px;
+  margin-left: tokens.$spacing-sm;
   white-space: nowrap;
 }
 
 .points-value {
-  font-weight: bold;
-  font-size: 14px;
-  color: #4caf50;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-sm;
+  color: tokens.$success;
 }
 
 /* 展开/折叠图标 */
 .toggle-icon {
-  font-size: 12px;
-  color: #64b5f6;
-  transition: transform 0.3s;
+  font-size: tokens.$font-size-xs;
+  color: tokens.$primary-light;
+  transition: transform tokens.$transition-normal;
 }
 
 /* 全部分解按钮 */
 .decompose-all-button {
-  margin: 0 15px 15px;
-  background-color: #f44336;
+  margin: 0 tokens.$spacing-md tokens.$spacing-md;
+  background-color: tokens.$error;
   color: white;
   border: none;
-  padding: 8px 15px;
-  border-radius: 3px;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  border-radius: tokens.$radius-sm;
   cursor: pointer;
-  font-size: 14px;
-  transition: all 0.3s;
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-medium;
+  transition: all tokens.$transition-normal;
   height: 40px;
   flex-shrink: 0;
+
+  &:hover:not(:disabled) {
+    background-color: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: tokens.$shadow-md;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
 }
 
-.decompose-all-button:hover:not(:disabled) {
-  background-color: #d32f2f;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgb(0 0 0 / 15%);
-}
-
-.decompose-all-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
-
-/* 收纳盒列�? */
+/* 收纳盒列表 */
 .storage-list {
   overflow-y: auto;
-  padding: 0 15px 15px;
+  padding: 0 tokens.$spacing-md tokens.$spacing-md;
   min-height: 0;
   max-height: 400px;
+  @include utils.custom-scrollbar;
 }
 
-/* 空状�? */
+/* 空状态 */
 .empty-message {
   text-align: center;
-  color: #666;
-  padding: 20px;
+  color: tokens.$text-secondary;
+  padding: tokens.$spacing-lg;
   font-style: italic;
-  background-color: white;
-  border-radius: 5px;
-  margin-top: 15px;
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-md;
+  margin-top: tokens.$spacing-md;
 }
 
-/* 收纳�? */
+/* 收纳项 */
 .storage-item {
-  background-color: white;
-  padding: 8px;
-  border-radius: 5px;
-  margin-top: 10px;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
-  transition: transform 0.2s;
+  background-color: tokens.$bg-secondary;
+  padding: tokens.$spacing-sm;
+  border-radius: tokens.$radius-md;
+  margin-top: tokens.$spacing-sm;
+  box-shadow: tokens.$shadow-sm;
+  border: 1px solid tokens.$border-light;
+  transition: all tokens.$transition-fast;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-md;
+    border-color: tokens.$border-medium;
+  }
 }
 
-.storage-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgb(0 0 0 / 15%);
-}
-
-/* 收纳项内�? */
+/* 收纳项内容 */
 .storage-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include utils.flex-between;
 }
 
 .storage-name {
-  font-weight: bold;
-  color: #333;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
 }
 
 .storage-value {
-  color: #2196f3;
-  font-weight: bold;
+  color: tokens.$primary-blue;
+  font-weight: tokens.$font-weight-bold;
 }
 
 /* 分解功能 */
 .decompose-section {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px dashed #e0e0e0;
+  margin-top: tokens.$spacing-sm;
+  padding-top: tokens.$spacing-sm;
+  border-top: 1px dashed tokens.$border-light;
 }
 
 .decompose-controls {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 5px;
-  align-items: center;
+  @include utils.flex-row(tokens.$spacing-sm, center);
+  margin-bottom: tokens.$spacing-xs;
 }
 
 .decompose-quantity {
   width: 60px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 12px;
+  padding: tokens.$spacing-xs;
+  border: 1px solid tokens.$border-light;
+  border-radius: tokens.$radius-sm;
+  font-size: tokens.$font-size-xs;
   text-align: center;
+  background-color: tokens.$bg-primary;
+  color: tokens.$text-primary;
+
+  &:focus {
+    outline: none;
+    border-color: tokens.$primary-gold;
+  }
 }
 
 .decompose-button {
-  padding: 5px 10px;
-  background-color: #f44336;
+  padding: tokens.$spacing-xs tokens.$spacing-sm;
+  background-color: tokens.$error;
   color: white;
   border: none;
-  border-radius: 4px;
-  font-size: 12px;
+  border-radius: tokens.$radius-sm;
+  font-size: tokens.$font-size-xs;
+  font-weight: tokens.$font-weight-medium;
   cursor: pointer;
-  transition: all 0.3s;
-}
+  transition: all tokens.$transition-normal;
 
-.decompose-button:hover:not(:disabled) {
-  background-color: #d32f2f;
-  transform: translateY(-1px);
-}
+  &:hover:not(:disabled) {
+    background-color: #dc2626;
+    transform: translateY(-1px);
+  }
 
-.decompose-button:disabled {
-  background-color: #bdbdbd;
-  cursor: not-allowed;
-  transform: none;
+  &:disabled {
+    background-color: tokens.$gray-400;
+    cursor: not-allowed;
+    transform: none;
+  }
 }
 
 .decompose-reward {
-  font-size: 11px;
-  color: #666;
-  margin-top: 5px;
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
+  margin-top: tokens.$spacing-xs;
 }
 
 .reward-points {
-  color: #4caf50;
-  font-weight: bold;
+  color: tokens.$success;
+  font-weight: tokens.$font-weight-bold;
 }
 </style>
 

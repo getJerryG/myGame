@@ -1,254 +1,436 @@
 <template>
   <div class="game-settings-app">
-    <!-- 左侧菜单�?-->
-    <div class="modal-sidebar">
-      <div
-        class="sidebar-item"
-        v-for="module in app.modules"
-        :key="module.id"
-        :class="{ active: activeModule === module.id }"
-        @click="switchModule(module.id)"
+    <!-- 应用头部 -->
+    <div class="app-header">
+      <h2 class="app-title">游戏设置</h2>
+      <button
+        class="close-btn"
+        @click="closeApp"
       >
-        <span class="sidebar-item-icon">{{ getModuleIcon(module.id) }}</span>
-        <span class="sidebar-item-name">{{ module.name }}</span>
+        ×
+      </button>
+    </div>
+
+    <!-- 设置内容 -->
+    <div class="settings-content">
+      <!-- 音频设置 -->
+      <div class="settings-section">
+        <h3 class="section-title">音频设置</h3>
+        <div class="setting-item">
+          <span class="setting-label">主音量</span>
+          <input
+            v-model="settings.masterVolume"
+            type="range"
+            min="0"
+            max="100"
+            class="setting-slider"
+          />
+          <span class="setting-value">{{ settings.masterVolume }}%</span>
+        </div>
+        <div class="setting-item">
+          <span class="setting-label">背景音乐</span>
+          <input
+            v-model="settings.bgmVolume"
+            type="range"
+            min="0"
+            max="100"
+            class="setting-slider"
+          />
+          <span class="setting-value">{{ settings.bgmVolume }}%</span>
+        </div>
+        <div class="setting-item">
+          <span class="setting-label">音效</span>
+          <input
+            v-model="settings.sfxVolume"
+            type="range"
+            min="0"
+            max="100"
+            class="setting-slider"
+          />
+          <span class="setting-value">{{ settings.sfxVolume }}%</span>
+        </div>
+      </div>
+
+      <!-- 画面设置 -->
+      <div class="settings-section">
+        <h3 class="section-title">画面设置</h3>
+        <div class="setting-item">
+          <span class="setting-label">分辨率</span>
+          <select
+            v-model="settings.resolution"
+            class="setting-select"
+          >
+            <option value="1920x1080">1920x1080</option>
+            <option value="1600x900">1600x900</option>
+            <option value="1366x768">1366x768</option>
+            <option value="1280x720">1280x720</option>
+          </select>
+        </div>
+        <div class="setting-item">
+          <span class="setting-label">全屏模式</span>
+          <label class="toggle-switch">
+            <input
+              v-model="settings.fullscreen"
+              type="checkbox"
+            />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="setting-item">
+          <span class="setting-label">垂直同步</span>
+          <label class="toggle-switch">
+            <input
+              v-model="settings.vsync"
+              type="checkbox"
+            />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- 游戏设置 -->
+      <div class="settings-section">
+        <h3 class="section-title">游戏设置</h3>
+        <div class="setting-item">
+          <span class="setting-label">自动保存</span>
+          <label class="toggle-switch">
+            <input
+              v-model="settings.autoSave"
+              type="checkbox"
+            />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="setting-item">
+          <span class="setting-label">显示FPS</span>
+          <label class="toggle-switch">
+            <input
+              v-model="settings.showFps"
+              type="checkbox"
+            />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="setting-item">
+          <span class="setting-label">语言</span>
+          <select
+            v-model="settings.language"
+            class="setting-select"
+          >
+            <option value="zh-CN">简体中文</option>
+            <option value="zh-TW">繁体中文</option>
+            <option value="en">English</option>
+            <option value="ja">日本語</option>
+          </select>
+        </div>
       </div>
     </div>
 
-    <!-- 右侧内容�?-->
-    <div class="modal-main">
-      <!-- 核心数据概览 -->
-      <div class="content-header">
-        <h2>{{ currentModule.name }}</h2>
-        <div
-          class="module-core-data"
-          v-if="app.coreData"
-        >
-          <div
-            class="core-data-item"
-            v-for="(value, key) in app.coreData"
-            :key="key"
-          >
-            <span class="core-data-label">{{ getCoreDataLabel(key) }}:</span>
-            <span class="core-data-value">{{ value }}</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 模块内容 -->
-      <div class="content-body">
-        <!-- 基本设置模块 -->
-        <div
-          v-if="activeModule === 'basic-settings'"
-          class="module-content"
-        >
-          <h3>基本设置</h3>
-          <p>基本设置功能开发中...</p>
-        </div>
-
-        <!-- 高级设置模块 -->
-        <div
-          v-else-if="activeModule === 'advanced-settings'"
-          class="module-content"
-        >
-          <h3>高级设置</h3>
-          <p>高级设置功能开发中...</p>
-        </div>
-
-        <!-- 关于模块 -->
-        <div
-          v-else-if="activeModule === 'about'"
-          class="module-content"
-        >
-          <h3>关于</h3>
-          <div class="about-content">
-            <p><strong>游戏策划模拟系统</strong></p>
-            <p>版本�?.0.0</p>
-            <p>版权所�?© 2026</p>
-          </div>
-        </div>
-      </div>
+    <!-- 底部按钮 -->
+    <div class="settings-footer">
+      <button
+        class="footer-btn secondary"
+        @click="resetSettings"
+      >
+        恢复默认
+      </button>
+      <button
+        class="footer-btn primary"
+        @click="saveSettings"
+      >
+        保存设置
+      </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { reactive } from 'vue';
 
-const props = defineProps({
-  app: {
-    type: Object,
-    required: true,
-  },
-  gameData: {
-    type: Object,
-    default: () => ({}),
-  },
+// 设置数据
+const settings = reactive({
+  masterVolume: 80,
+  bgmVolume: 60,
+  sfxVolume: 70,
+  resolution: '1920x1080',
+  fullscreen: false,
+  vsync: true,
+  autoSave: true,
+  showFps: false,
+  language: 'zh-CN',
 });
 
-const emit = defineEmits(['update:activeModule']);
-
-// 活跃模块状�?const activeModule = ref(props.app.modules[0].id);
-
-// 当前激活的模块
-const currentModule = computed(() => {
-  return props.app.modules.find((m) => m.id === activeModule.value) || props.app.modules[0];
-});
-
-// 切换模块
-const switchModule = (moduleId: string): void => {
-  activeModule.value = moduleId;
-  emit('update:activeModule', moduleId);
+// 恢复默认设置
+const resetSettings = () => {
+  settings.masterVolume = 80;
+  settings.bgmVolume = 60;
+  settings.sfxVolume = 70;
+  settings.resolution = '1920x1080';
+  settings.fullscreen = false;
+  settings.vsync = true;
+  settings.autoSave = true;
+  settings.showFps = false;
+  settings.language = 'zh-CN';
 };
 
-// 获取模块图标
-const getModuleIcon = (moduleId: string): string => {
-  const icons = {
-    'basic-settings': '⚙️',
-    'advanced-settings': '🔧',
-    about: 'ℹ️',
-  };
-  return icons[moduleId] || '📦';
+// 保存设置
+const saveSettings = () => {
+  // TODO: 实现保存设置逻辑
+  alert('设置已保存！');
 };
 
-// 获取核心数据标签
-const getCoreDataLabel = (key: string): string => {
-  return key;
+// 关闭应用
+const closeApp = () => {
+  window.history.back();
 };
 </script>
 
 <style lang="scss" scoped>
+
 .game-settings-app {
-  display: flex;
-  width: 100%;
+  @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
   height: 100%;
+  background-color: tokens.$bg-lighter;
+  border-radius: tokens.$radius-lg;
   overflow: hidden;
 }
 
-/* 左侧菜单栏样�? */
-.modal-sidebar {
-  width: 200px;
-  background-color: rgb(0 0 0 / 20%);
-  border-right: 1px solid #333;
-  overflow-y: auto;
+.app-header {
+  @include utils.flex-between;
+  padding: tokens.$spacing-md tokens.$spacing-lg;
+  background: linear-gradient(135deg, tokens.$gray-600 0%, tokens.$gray-700 100%);
+  color: tokens.$text-primary;
+
+  .app-title {
+    margin: 0;
+    font-size: tokens.$font-size-xl;
+    font-weight: tokens.$font-weight-bold;
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    color: tokens.$text-primary;
+    font-size: tokens.$font-size-2xl;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    @include utils.flex-center;
+    border-radius: 50%;
+    transition: all tokens.$transition-normal;
+
+    &:hover {
+      background-color: rgb(255 255 255 / 20%);
+    }
+  }
 }
 
-.sidebar-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
+.settings-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: tokens.$spacing-xl;
+}
+
+.settings-section {
+  margin-bottom: tokens.$spacing-xl;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .section-title {
+    margin: 0 0 tokens.$spacing-md;
+    font-size: tokens.$font-size-lg;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$text-primary;
+    padding-bottom: tokens.$spacing-sm;
+    border-bottom: 2px solid tokens.$border-light;
+  }
+}
+
+.setting-item {
+  @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+  padding: tokens.$spacing-md 0;
+  border-bottom: 1px solid tokens.$border-light;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.setting-label {
+  flex: 1;
+  font-size: tokens.$font-size-base;
+  color: tokens.$text-primary;
+}
+
+.setting-slider {
+  width: 150px;
+  height: 6px;
+  border-radius: 3px;
+  background: tokens.$bg-light;
+  outline: none;
+  -webkit-appearance: none;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: tokens.$primary;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgb(74 158 255 / 40%);
+    transition: all tokens.$transition-normal;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+
+  &::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: tokens.$primary;
+    cursor: pointer;
+    border: none;
+  }
+}
+
+.setting-value {
+  min-width: 50px;
+  text-align: right;
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-muted;
+}
+
+.setting-select {
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  font-size: tokens.$font-size-base;
+  border: 2px solid tokens.$border-light;
+  border-radius: tokens.$radius-md;
+  background-color: tokens.$bg-light;
+  color: tokens.$text-primary;
+  outline: none;
   cursor: pointer;
-  transition: all 0.2s ease;
-  color: #b0b0b0;
-  border-left: 3px solid transparent;
+  min-width: 150px;
+
+  &:focus {
+    border-color: tokens.$primary;
+    box-shadow: 0 0 0 3px rgb(74 158 255 / 20%);
+  }
 }
 
-.sidebar-item:hover {
-  background-color: rgb(74 158 255 / 20%);
-  color: #fff;
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + .toggle-slider {
+      background-color: tokens.$primary;
+
+      &::before {
+        transform: translateX(24px);
+      }
+    }
+  }
+
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: tokens.$bg-light;
+    transition: tokens.$transition-normal;
+    border-radius: 26px;
+    border: 2px solid tokens.$border-light;
+
+    &::before {
+      position: absolute;
+      content: '';
+      height: 18px;
+      width: 18px;
+      left: 2px;
+      bottom: 2px;
+      background-color: tokens.$text-primary;
+      transition: tokens.$transition-normal;
+      border-radius: 50%;
+    }
+  }
 }
 
-.sidebar-item.active {
-  background-color: rgb(74 158 255 / 30%);
-  color: #fff;
-  border-left-color: #4a9eff;
+.settings-footer {
+  @include utils.flex-row(tokens.$spacing-md, center, center);
+  padding: tokens.$spacing-md tokens.$spacing-xl;
+  background-color: tokens.$bg-light;
+  border-top: 1px solid tokens.$border-light;
+
+  .footer-btn {
+    padding: tokens.$spacing-sm tokens.$spacing-xl;
+    font-size: tokens.$font-size-base;
+    font-weight: tokens.$font-weight-semibold;
+    border: none;
+    border-radius: tokens.$radius-md;
+    cursor: pointer;
+    transition: all tokens.$transition-normal;
+    min-width: 120px;
+
+    &.primary {
+      background: linear-gradient(135deg, tokens.$primary 0%, tokens.$primary-dark 100%);
+      color: tokens.$text-primary;
+      box-shadow: 0 4px 15px rgb(74 158 255 / 40%);
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgb(74 158 255 / 60%);
+      }
+    }
+
+    &.secondary {
+      background-color: tokens.$bg-lighter;
+      color: tokens.$text-primary;
+      border: 2px solid tokens.$border-light;
+
+      &:hover {
+        background-color: tokens.$bg-light;
+        border-color: tokens.$primary;
+      }
+    }
+  }
 }
 
-.sidebar-item-icon {
-  font-size: 18px;
-  width: 20px;
-  text-align: center;
-}
+/* 响应式设计 */
+@media (width <= 768px) {
+  .settings-content {
+    padding: tokens.$spacing-lg tokens.$spacing-md;
+  }
 
-.sidebar-item-name {
-  font-size: 14px;
-  font-weight: 500;
-}
+  .setting-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: tokens.$spacing-sm;
+  }
 
-/* 右侧内容区域样式 */
-.modal-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  background-color: rgb(26 26 46 / 50%);
-}
+  .setting-slider,
+  .setting-select {
+    width: 100%;
+  }
 
-.content-header {
-  padding: 16px;
-  border-bottom: 1px solid #333;
-  background-color: rgb(0 0 0 / 10%);
-}
+  .settings-footer {
+    flex-direction: column;
 
-.content-header h2 {
-  margin: 0 0 12px;
-  font-size: 20px;
-  color: #fff;
-}
-
-.module-core-data {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.core-data-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-}
-
-.core-data-label {
-  color: #b0b0b0;
-}
-
-.core-data-value {
-  color: #4a9eff;
-  font-weight: bold;
-}
-
-.content-body {
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
-  color: #fff;
-}
-
-.module-content {
-  background-color: rgb(0 0 0 / 10%);
-  border-radius: 8px;
-  padding: 20px;
-  min-height: 200px;
-}
-
-.module-content h3 {
-  margin: 0 0 16px;
-  font-size: 18px;
-  color: #4a9eff;
-}
-
-.module-content p {
-  margin: 0 0 16px;
-  color: #b0b0b0;
-  line-height: 1.6;
-}
-
-/* 关于页面样式 */
-.about-content {
-  background-color: rgb(0 0 0 / 20%);
-  border-radius: 8px;
-  padding: 20px;
-  margin-top: 16px;
-}
-
-.about-content p {
-  margin: 8px 0;
-  color: #b0b0b0;
-  font-size: 14px;
-}
-
-.about-content strong {
-  color: #4a9eff;
+    .footer-btn {
+      width: 100%;
+    }
+  }
 }
 </style>

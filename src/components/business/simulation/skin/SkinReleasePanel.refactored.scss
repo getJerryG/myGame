@@ -1,0 +1,657 @@
+// ============================================
+// SkinReleasePanel 样式 - 重构示例
+// ============================================
+// 展示如何使用新的样式系统重构组件
+// ============================================
+
+@use '@/styles/variables' as v;
+@use '@/styles/mixins' as m;
+
+// 面板根元素
+.skin-release-panel {
+  @include m.panel-base;
+}
+
+// 面板头部
+.panel-header {
+  @include m.panel-header;
+}
+
+.panel-title {
+  @include m.panel-title;
+}
+
+.collapse-btn {
+  @include m.collapse-btn;
+
+  .collapse-icon {
+    font-size: 14px;
+  }
+}
+
+// 面板内容
+.panel-content {
+  @include m.panel-content;
+  display: flex;
+  flex-direction: column;
+  gap: v.$spacing-lg;
+  height: calc(100vh - 400px);
+  min-height: 600px;
+
+  &.collapsed {
+    max-height: 0;
+    padding: 0;
+  }
+}
+
+// 皮肤库区域
+.skin-library {
+  display: flex;
+  flex-direction: column;
+}
+
+// 品质筛选标签
+.quality-tabs {
+  display: flex;
+  gap: v.$spacing-sm;
+  margin-bottom: v.$spacing-lg;
+  overflow-x: auto;
+  padding-bottom: v.$spacing-sm;
+}
+
+.quality-tab {
+  @include m.flex-row(v.$spacing-sm, center, center);
+  padding: v.$spacing-sm v.$spacing-md;
+  background-color: v.$bg-light;
+  border-radius: v.$radius-md;
+  cursor: pointer;
+  transition: all v.$transition-fast;
+  border: 1px solid transparent;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: v.$bg-lighter;
+    transform: translateY(-2px);
+  }
+
+  &.active {
+    background-color: rgb(251 191 36 / 20%);
+    border-color: v.$primary-gold;
+    box-shadow: v.$shadow-gold;
+  }
+
+  .tab-icon {
+    font-size: 16px;
+  }
+
+  .tab-label {
+    font-size: v.$font-size-sm;
+    font-weight: v.$font-weight-medium;
+    color: v.$text-secondary;
+  }
+
+  .tab-count {
+    font-size: v.$font-size-xs;
+    color: v.$text-muted;
+  }
+}
+
+// 小节标题
+.section-subtitle {
+  font-size: v.$font-size-sm;
+  font-weight: v.$font-weight-medium;
+  color: v.$primary-gold;
+  margin: 0 0 v.$spacing-md;
+}
+
+// 皮肤展示区域
+.skin-showcase,
+.skin-publish-area {
+  @include m.flex-col(v.$spacing-md);
+  height: 100%;
+  overflow: hidden;
+}
+
+// 皮肤列表
+.skin-list {
+  flex: 1;
+  overflow-y: auto;
+  @include m.flex-col(v.$spacing-sm);
+  padding-right: v.$spacing-sm;
+  @include m.custom-scrollbar;
+}
+
+// 皮肤项
+.skin-item {
+  @include m.flex-row(v.$spacing-md, center);
+  padding: v.$spacing-md;
+  background-color: v.$bg-light;
+  border-radius: v.$radius-md;
+  cursor: pointer;
+  transition: all v.$transition-normal;
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgb(251 191 36 / 10%), transparent);
+    transition: left 0.5s ease;
+  }
+
+  &:hover {
+    background-color: v.$bg-lighter;
+    transform: translateX(5px) translateY(-2px);
+    border-color: v.$border-light;
+    box-shadow: v.$shadow-lg;
+
+    &::before {
+      left: 100%;
+    }
+
+    .skin-avatar {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 10px rgb(251 191 36 / 50%));
+    }
+  }
+
+  &.active {
+    background-color: rgb(251 191 36 / 20%);
+    border-color: v.$primary-gold;
+    box-shadow: v.$shadow-gold;
+  }
+}
+
+// 皮肤预览
+.skin-preview {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.skin-avatar {
+  font-size: 48px;
+  display: block;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  @include m.float;
+}
+
+// 品质徽章
+.skin-quality-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  padding: v.$spacing-xs v.$spacing-sm;
+  border-radius: 10px;
+  font-size: v.$font-size-xs;
+  font-weight: v.$font-weight-bold;
+  color: white;
+  min-width: 40px;
+  text-align: center;
+  @include m.pulse;
+
+  &.brave { background-color: #10b981; }
+  &.epic { background-color: #8b5cf6; }
+  &.legend { background-color: #f59e0b; }
+  &.limited { background-color: #ef4444; }
+}
+
+// 皮肤信息
+.skin-info {
+  flex: 1;
+  @include m.flex-col(v.$spacing-xs);
+}
+
+.skin-name {
+  font-size: v.$font-size-sm;
+  font-weight: v.$font-weight-semibold;
+  color: v.$text-primary;
+}
+
+.skin-hero {
+  font-size: v.$font-size-xs;
+  color: v.$text-secondary;
+}
+
+.skin-stats {
+  @include m.flex-row(v.$spacing-lg);
+  margin-top: v.$spacing-xs;
+}
+
+.stat-item {
+  @include m.stat-item;
+}
+
+.stat-label {
+  @include m.stat-label;
+}
+
+.stat-value {
+  @include m.stat-value;
+}
+
+// 皮肤详情
+.skin-detail {
+  @include m.flex-col(v.$spacing-lg);
+  overflow-y: auto;
+  padding-right: v.$spacing-sm;
+  flex: 1;
+  @include m.custom-scrollbar;
+
+  &.empty {
+    @include m.flex-center;
+    background-color: v.$bg-light;
+    border-radius: v.$radius-md;
+    border: 2px dashed v.$border-light;
+    flex: 1;
+  }
+}
+
+.empty-state {
+  @include m.flex-col(v.$spacing-md, center);
+  padding: v.$spacing-xl;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 48px;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: v.$font-size-base;
+  color: v.$text-muted;
+}
+
+// 详情区块
+.detail-section {
+  background-color: v.$bg-light;
+  border-radius: v.$radius-md;
+  padding: v.$spacing-lg;
+  @include m.flex-col(v.$spacing-md);
+
+  h5 {
+    font-size: v.$font-size-sm;
+    font-weight: v.$font-weight-semibold;
+    color: v.$primary-gold;
+    margin: 0;
+    padding-bottom: v.$spacing-sm;
+    border-bottom: 1px solid v.$border-light;
+  }
+
+  h6 {
+    font-size: v.$font-size-xs;
+    font-weight: v.$font-weight-medium;
+    color: v.$text-secondary;
+    margin: 0 0 v.$spacing-sm;
+  }
+}
+
+// 皮肤头部信息
+.skin-header {
+  @include m.flex-row(v.$spacing-lg);
+}
+
+.skin-avatar-large {
+  font-size: 64px;
+  flex-shrink: 0;
+}
+
+.skin-basic-info {
+  flex: 1;
+  @include m.flex-col(v.$spacing-sm);
+}
+
+.skin-title {
+  font-size: v.$font-size-lg;
+  font-weight: v.$font-weight-bold;
+  color: v.$text-primary;
+  margin: 0;
+}
+
+.skin-subtitle {
+  font-size: v.$font-size-sm;
+  color: v.$text-secondary;
+}
+
+.skin-price {
+  @include m.flex-row(v.$spacing-sm);
+}
+
+.price-label {
+  font-size: v.$font-size-sm;
+  color: v.$text-muted;
+}
+
+.price-value {
+  @include m.value-text(v.$font-size-base);
+}
+
+// 皮肤特效
+.skin-effects {
+  @include m.flex-col(v.$spacing-sm);
+}
+
+.effects-list {
+  @include m.flex-col(v.$spacing-sm);
+}
+
+.effect-item {
+  @include m.flex-row(v.$spacing-sm);
+  padding: v.$spacing-sm v.$spacing-md;
+  background-color: rgb(255 255 255 / 2%);
+  border-radius: v.$radius-sm;
+}
+
+.effect-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.effect-description {
+  font-size: v.$font-size-sm;
+  color: v.$text-secondary;
+  flex: 1;
+}
+
+// 发布设置
+.release-settings {
+  @include m.flex-col(v.$spacing-md);
+}
+
+.setting-item {
+  @include m.flex-col(v.$spacing-xs);
+}
+
+.setting-label {
+  font-size: v.$font-size-sm;
+  color: v.$text-secondary;
+  font-weight: v.$font-weight-medium;
+}
+
+.setting-input,
+.setting-select {
+  @include m.input-base;
+}
+
+.setting-checkbox {
+  @include m.flex-row(v.$spacing-sm);
+
+  input[type='checkbox'] {
+    width: 16px;
+    height: 16px;
+    accent-color: v.$primary-gold;
+  }
+
+  label {
+    font-size: v.$font-size-sm;
+    color: v.$text-secondary;
+    cursor: pointer;
+  }
+}
+
+// 折扣控制
+.discount-control {
+  @include m.flex-row(v.$spacing-lg, center);
+  margin-bottom: v.$spacing-sm;
+}
+
+.discount-slider {
+  @include m.slider-base;
+  flex: 1;
+}
+
+.discount-value {
+  font-size: v.$font-size-sm;
+  font-weight: v.$font-weight-bold;
+  color: v.$primary-gold;
+  min-width: 40px;
+  text-align: center;
+}
+
+// 价格预览
+.price-preview {
+  @include m.flex-row(v.$spacing-md, center);
+}
+
+.price-original {
+  font-size: v.$font-size-sm;
+  color: v.$text-muted;
+  text-decoration: line-through;
+}
+
+.price-discounted {
+  font-size: v.$font-size-sm;
+  font-weight: v.$font-weight-bold;
+  color: v.$primary-gold;
+}
+
+// 市场预测
+.market-prediction {
+  @include m.flex-col(v.$spacing-md);
+}
+
+.prediction-item {
+  @include m.flex-row(v.$spacing-lg, center);
+  padding: v.$spacing-sm v.$spacing-md;
+  background-color: rgb(255 255 255 / 2%);
+  border-radius: v.$radius-md;
+}
+
+.prediction-label {
+  font-size: v.$font-size-sm;
+  color: v.$text-secondary;
+  width: 100px;
+}
+
+.prediction-value {
+  flex: 1;
+  @include m.value-text(v.$font-size-base);
+}
+
+.prediction-change {
+  font-size: v.$font-size-sm;
+  font-weight: v.$font-weight-semibold;
+  min-width: 60px;
+  text-align: right;
+
+  &.positive { color: v.$success; }
+  &.negative { color: v.$error; }
+}
+
+// 预测图表
+.prediction-chart {
+  margin-top: v.$spacing-sm;
+
+  svg {
+    width: 100%;
+    height: 100px;
+    background-color: rgb(255 255 255 / 2%);
+    border-radius: v.$radius-sm;
+    padding: v.$spacing-sm;
+  }
+}
+
+// 操作按钮
+.action-buttons {
+  @include m.flex-row(v.$spacing-md, center, flex-end);
+  margin-top: v.$spacing-sm;
+}
+
+// 皮肤特色展示
+.skin-features {
+  margin-top: v.$spacing-md;
+  background: v.$bg-light;
+  border-radius: v.$radius-md;
+  padding: v.$spacing-md;
+  border: 1px solid rgb(255 255 255 / 10%);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: v.$spacing-md;
+  margin-top: v.$spacing-sm;
+}
+
+.feature-item {
+  background: rgb(0 0 0 / 20%);
+  border-radius: v.$radius-sm;
+  padding: v.$spacing-md;
+  text-align: center;
+  transition: all v.$transition-normal;
+  border: 1px solid rgb(255 255 255 / 10%);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, v.$primary-gold, v.$success, v.$primary-blue, #8b5cf6);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    background: rgb(251 191 36 / 10%);
+    border-color: v.$primary-gold;
+    transform: translateY(-2px);
+    box-shadow: v.$shadow-gold;
+
+    &::before {
+      transform: scaleX(1);
+    }
+
+    .feature-icon {
+      transform: scale(1.1) rotate(10deg);
+    }
+  }
+}
+
+.feature-icon {
+  font-size: 32px;
+  margin-bottom: v.$spacing-sm;
+  display: block;
+  transition: transform 0.3s ease;
+  @include m.bounce;
+}
+
+.feature-desc {
+  font-size: v.$font-size-xs;
+  color: rgb(255 255 255 / 80%);
+  line-height: 1.4;
+}
+
+// 特色项颜色
+.feature-item-1 .feature-icon { color: v.$primary-gold; }
+.feature-item-2 .feature-icon { color: v.$success; }
+.feature-item-3 .feature-icon { color: v.$primary-blue; }
+.feature-item-4 .feature-icon { color: #8b5cf6; }
+.feature-item-5 .feature-icon { color: v.$error; }
+
+// ============================================
+// 响应式设计
+// ============================================
+
+@include m.mobile {
+  .panel-content {
+    padding: v.$spacing-md;
+    flex-direction: column;
+    height: auto;
+    min-height: auto;
+  }
+
+  .quality-tabs {
+    gap: v.$spacing-xs;
+  }
+
+  .quality-tab {
+    padding: v.$spacing-xs v.$spacing-sm;
+    gap: v.$spacing-xs;
+
+    .tab-icon {
+      font-size: 14px;
+    }
+
+    .tab-label {
+      font-size: v.$font-size-xs;
+    }
+  }
+
+  .skin-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: v.$spacing-md;
+  }
+
+  .skin-avatar-large {
+    font-size: 48px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@include m.landscape-mobile {
+  .panel-content {
+    padding: v.$spacing-sm;
+    gap: v.$spacing-md;
+    height: calc(100vh - 350px);
+    flex-direction: row;
+  }
+
+  .skin-item {
+    padding: v.$spacing-sm;
+    gap: v.$spacing-sm;
+  }
+
+  .skin-avatar {
+    font-size: 36px;
+  }
+
+  .detail-section {
+    padding: v.$spacing-md;
+    gap: v.$spacing-sm;
+  }
+
+  .skin-avatar-large {
+    font-size: 48px;
+  }
+
+  .setting-input,
+  .setting-select {
+    padding: v.$spacing-sm;
+    font-size: v.$font-size-xs;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: v.$spacing-sm;
+  }
+
+  .feature-item {
+    padding: v.$spacing-sm;
+  }
+
+  .feature-icon {
+    font-size: 24px;
+  }
+}

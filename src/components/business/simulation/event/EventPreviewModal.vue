@@ -4,24 +4,25 @@
     <div class="preview-content">
       <div class="preview-header">
         <h4>活动预览</h4>
-        <button class="preview-close" @click="closePreview">�?/button>
+        <button class="preview-close" @click="closePreview">✕</button>
       </div>
       <div class="preview-body">
         <div class="preview-section">
           <h5>活动信息</h5>
-          <p><strong>名称�?/strong>{{ previewConfig.name || '未设�? }}</p>
+          <p><strong>名称：</strong>{{ previewConfig.name || '未设置' }}</p>
           <p>
-            <strong>类型�?/strong>{{ getEventTypeLabel(previewConfig.type) }}
+            <strong>类型：</strong>{{ getEventTypeLabel(previewConfig.type) }}
           </p>
           <p>
-            <strong>时间�?/strong>{{ previewConfig.startDate }} �?            {{ previewConfig.endDate }}
+            <strong>时间：</strong>{{ previewConfig.startDate }} ~
+            {{ previewConfig.endDate }}
           </p>
         </div>
         <div class="preview-section">
           <h5>奖励设置</h5>
           <ul>
             <li v-for="(reward, index) in previewConfig.rewards" :key="index">
-              {{ reward.name }} ({{ reward.quantity }}�?
+              {{ reward.name }} ({{ reward.quantity }}个)
             </li>
             <li v-if="previewConfig.rewards.length === 0">暂无奖励</li>
           </ul>
@@ -30,10 +31,10 @@
           <h5>参与条件</h5>
           <ul>
             <li v-if="previewConfig.conditions.level">
-              等级 �?{{ previewConfig.levelRequirement }}
+              等级 ≥ {{ previewConfig.levelRequirement }}
             </li>
             <li v-if="previewConfig.conditions.rank">
-              段位 �?{{ previewConfig.rankRequirement }}
+              段位 ≥ {{ previewConfig.rankRequirement }}
             </li>
             <li
               v-if="
@@ -41,7 +42,8 @@
                 !previewConfig.conditions.rank
               "
             >
-              无特殊条�?            </li>
+              无特殊条件
+            </li>
           </ul>
         </div>
       </div>
@@ -49,7 +51,7 @@
   </div>
 </template>
 
-<script setup lang=ts>
+<script setup lang="ts">
 // 接收父组件传递的属�?const props = defineProps({
   showPreview: {
     type: Boolean,
@@ -74,7 +76,7 @@
   eventTypes: {
     type: Array,
     default: () => [
-      { label: '限时活动', value: 'limited', icon: '�? },
+      { label: '限时活动', value: 'limited', icon: '⏱️' },
       { label: '节日活动', value: 'holiday', icon: '🎄' },
       { label: '社区活动', value: 'community', icon: '👥' },
     ],
@@ -95,117 +97,108 @@ const closePreview = (): void => {
 };
 </script>
 
-<style lang=scss scoped>
-/* 预览弹窗 */
+<style lang="scss" scoped>
+
 .preview-modal {
-  position: fixed;
-  inset: 0;
-  background-color: rgb(0 0 0 / 80%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+  @include utils.modal-overlay;
   backdrop-filter: blur(10px);
-}
 
-.preview-content {
-  background-color: var(--bg-secondary);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-xl);
-  max-width: 500px;
-  width: 90%;
-  max-height: 80vh;
-  overflow-y: auto;
-  border: 1px solid var(--border-light);
-}
+  .preview-content {
+    @include utils.modal-content;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    border: 1px solid tokens.$border-light;
+  }
 
-.preview-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 25px;
-  border-bottom: 1px solid var(--border-light);
-  background-color: rgb(255 255 255 / 5%);
-}
+  .preview-header {
+    @include utils.modal-header;
 
-.preview-header h4 {
-  margin: 0;
-  font-size: var(--text-lg);
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
-}
+    h4 {
+      margin: 0;
+      font-size: tokens.$font-size-lg;
+      font-weight: tokens.$font-weight-semibold;
+      color: tokens.$text-primary;
+    }
+  }
 
-.preview-close {
-  background: none;
-  border: none;
-  font-size: 20px;
-  color: var(--text-muted);
-  cursor: pointer;
-  padding: 5px;
-  border-radius: var(--radius-sm);
-  transition: all var(--transition-fast);
-}
+  .preview-close {
+    background: none;
+    border: none;
+    font-size: tokens.$font-size-xl;
+    color: tokens.$text-muted;
+    cursor: pointer;
+    padding: tokens.$spacing-xs;
+    border-radius: tokens.$radius-sm;
+    transition: all tokens.$transition-fast;
 
-.preview-close:hover {
-  background-color: rgb(255 255 255 / 10%);
-  color: var(--text-primary);
-}
+    &:hover {
+      background-color: tokens.$bg-lighter;
+      color: tokens.$text-primary;
+    }
+  }
 
-.preview-body {
-  padding: 25px;
-}
+  .preview-body {
+    padding: tokens.$spacing-lg;
+  }
 
-.preview-section {
-  margin-bottom: 20px;
-}
+  .preview-section {
+    margin-bottom: tokens.$spacing-lg;
 
-.preview-section h5 {
-  margin: 0 0 10px;
-  font-size: var(--text-base);
-  font-weight: var(--font-semibold);
-  color: var(--primary-gold);
-}
+    &:last-child {
+      margin-bottom: 0;
+    }
 
-.preview-section p {
-  margin: 5px 0;
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-}
+    h5 {
+      margin: 0 0 tokens.$spacing-sm;
+      font-size: tokens.$font-size-base;
+      font-weight: tokens.$font-weight-semibold;
+      color: tokens.$primary-gold;
+    }
 
-.preview-section ul {
-  margin: 5px 0;
-  padding-left: 20px;
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-}
+    p {
+      margin: tokens.$spacing-xs 0;
+      font-size: tokens.$font-size-sm;
+      color: tokens.$text-secondary;
+    }
 
-.preview-section li {
-  margin: 3px 0;
+    ul {
+      margin: tokens.$spacing-xs 0;
+      padding-left: tokens.$spacing-lg;
+      font-size: tokens.$font-size-sm;
+      color: tokens.$text-secondary;
+    }
+
+    li {
+      margin: 3px 0;
+    }
+  }
 }
 
 /* 响应式设�? */
-@media (width <= 768px) {
-  .preview-content {
-    margin: 10px;
+@include utils.mobile {
+  .preview-modal {
+    .preview-content {
+      margin: tokens.$spacing-sm;
+    }
   }
 }
 
 /* 横屏手机适配 */
-@media (orientation: landscape) and (height <= 600px) {
-  .preview-content {
-    max-height: 90vh;
-  }
+@include utils.landscape-mobile {
+  .preview-modal {
+    .preview-content {
+      max-height: 90vh;
+    }
 
-  .preview-header {
-    padding: 15px 20px;
-  }
+    .preview-header {
+      padding: tokens.$spacing-md tokens.$spacing-lg;
+    }
 
-  .preview-body {
-    padding: 20px;
+    .preview-body {
+      padding: tokens.$spacing-lg;
+    }
   }
 }
 </style>
-
-
-
-

@@ -1,112 +1,132 @@
 <template>
-  <div class="hero-development-app">
-    <div class="app-header">
-      <h2>英雄</h2>
-      <p>英雄全生命周期管理</p>
-    </div>
+  <ApplicationWindow windowTitle="英雄开发">
+    <template #sidebar>
+      <div class="sidebar-menu">
+        <button
+          class="menu-item"
+          :class="{ active: activeTab === 'create' }"
+          @click="activeTab = 'create'"
+        >
+          <span class="menu-icon">📝</span>
+          <span class="menu-name">新建英雄</span>
+        </button>
+        <button
+          class="menu-item"
+          :class="{ active: activeTab === 'manage' }"
+          @click="activeTab = 'manage'"
+        >
+          <span class="menu-icon">📋</span>
+          <span class="menu-name">英雄管理</span>
+        </button>
+      </div>
+    </template>
 
-    <div class="app-content">
-      <!-- 新建英雄 -->
-      <div
-        v-if="activeModule === 'hero-new'"
-        class="tab-content"
-      >
-        <div class="section-card">
-          <h3>英雄立项</h3>
+    <template #content>
+      <div class="hero-development-content">
+        <!-- 新建英雄标签页 -->
+        <div
+          v-if="activeTab === 'create'"
+          class="tab-content"
+        >
+          <div class="section-card">
+            <h3 class="text-gold">英雄立项</h3>
 
-          <!-- 英雄职业选择 -->
-          <div class="form-section">
-            <h4>职业</h4>
-            <div class="option-buttons">
+            <!-- 英雄定位选择 -->
+            <div class="form-section">
+              <h4>英雄定位</h4>
+              <div class="option-buttons">
+                <button
+                  v-for="role in heroRoles"
+                  :key="role.id"
+                  class="option-btn"
+                  :class="{ active: selectedRole === role.id }"
+                  @click="selectedRole = role.id"
+                >
+                  <span class="option-icon">{{ role.icon }}</span>
+                  <span class="option-name">{{ role.name }}</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 英雄类型选择 -->
+            <div class="form-section">
+              <h4>英雄类型</h4>
+              <div class="option-buttons">
+                <button
+                  v-for="type in heroTypes"
+                  :key="type.id"
+                  class="option-btn"
+                  :class="{ active: selectedType === type.id }"
+                  @click="selectedType = type.id"
+                >
+                  <span class="option-name">{{ type.name }}</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 研发方式选择 -->
+            <div class="form-section">
+              <h4>研发方式</h4>
+              <div class="option-buttons">
+                <button
+                  v-for="method in developmentMethods"
+                  :key="method.id"
+                  class="option-btn"
+                  :class="{ active: selectedMethod === method.id }"
+                  @click="selectedMethod = method.id"
+                >
+                  <span class="option-name">{{ method.name }}</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 确认立项按钮 -->
+            <div class="action-section">
               <button
-                v-for="heroClass in heroClasses"
-                :key="heroClass.id"
-                class="option-btn"
-                :class="{ active: selectedClass.value === heroClass.id }"
-                @click="selectedClass.value = heroClass.id"
+                class="confirm-btn"
+                @click="confirmHeroCreation"
               >
-                <span class="option-icon">{{ heroClass.icon }}</span>
-                <span class="option-label">{{ heroClass.name }}</span>
+                确认立项
               </button>
             </div>
-          </div>
-
-          <!-- 英雄流派选择 -->
-          <div class="form-section">
-            <h4>流派</h4>
-            <div class="option-buttons">
-              <button
-                v-for="genre in genres"
-                :key="genre.id"
-                class="option-btn"
-                :class="{ active: selectedGenre.value === genre.id }"
-                @click="selectedGenre.value = genre.id"
-              >
-                <span class="option-label">{{ genre.name }}</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- 英雄难度选择 -->
-          <div class="form-section">
-            <h4>难度</h4>
-            <div class="option-buttons">
-              <button
-                v-for="difficulty in difficulties"
-                :key="difficulty.id"
-                class="option-btn"
-                :class="{ active: selectedDifficulty.value === difficulty.id }"
-                @click="selectedDifficulty.value = difficulty.id"
-              >
-                <span class="option-label">{{ difficulty.name }}</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- 英雄立项确认 -->
-          <div class="form-actions">
-            <button
-              class="confirm-btn"
-              @click="confirmHeroCreation"
-            >
-              确认立项
-            </button>
           </div>
         </div>
-      </div>
 
-      <!-- 英雄列表 -->
-      <div
-        v-else-if="activeModule === 'hero-list'"
-        class="tab-content"
-      >
-        <div class="section-card">
-          <h3>英雄列表</h3>
-
-          <div class="hero-grid">
+        <!-- 英雄管理标签页 -->
+        <div
+          v-else-if="activeTab === 'manage'"
+          class="tab-content"
+        >
+          <h3
+            class="text-gold"
+            style="margin-bottom: 20px"
+          >
+            英雄管理
+          </h3>
+          <div class="hero-list">
             <div
               v-for="hero in heroSkinStore.getAllHeroes"
               :key="hero.id"
               class="hero-card"
             >
               <div class="hero-header">
+                <div class="hero-icon">{{ hero.icon }}</div>
                 <div class="hero-info">
-                  <div class="hero-icon">{{ hero.icon }}</div>
-                  <div class="hero-details">
-                    <h4>{{ hero.name }}</h4>
-                    <p class="hero-class">{{ hero.class }}</p>
-                  </div>
+                  <h4 class="text-gold">{{ hero.name }}</h4>
+                  <p class="hero-role">{{ getRoleName(hero.role) }}</p>
                 </div>
-                <span
-                  v-if="hero.isDeveloping"
-                  class="status developing"
-                  >研发中</span
-                >
-                <span
-                  v-else
-                  class="status online"
-                  >已上线</span
-                >
+                <div class="hero-status">
+                  <span
+                    v-if="hero.isDeveloping"
+                    class="status developing"
+                    >研发中</span
+                  >
+                  <span
+                    v-else
+                    class="status online"
+                    >已上线</span
+                  >
+                </div>
               </div>
 
               <!-- 研发进度 -->
@@ -117,129 +137,111 @@
                 <div class="progress-bar">
                   <div
                     class="progress-fill"
-                    :style="{ width: `${hero.developmentProgress}%` }"
+                    :style="{ width: `${hero.progress}%` }"
                   ></div>
                 </div>
-                <div class="progress-text">研发进度: {{ hero.developmentProgress }}%</div>
+                <span class="progress-text">{{ hero.progress }}% 完成</span>
               </div>
 
-              <!-- 英雄数据统计 -->
+              <!-- 已上线英雄数据 -->
               <div
                 v-else
                 class="hero-stats"
               >
                 <div class="stat-item">
                   <span class="stat-label">胜率</span>
-                  <span class="stat-value">{{ hero.winRate }}%</span>
+                  <span class="stat-value text-gold">{{ hero.winRate }}%</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-label">出场率</span>
+                  <span class="stat-value text-gold">{{ hero.pickRate }}%</span>
                 </div>
                 <div class="stat-item">
                   <span class="stat-label">Ban率</span>
-                  <span class="stat-value">{{ hero.banRate }}%</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-label">登场率</span>
-                  <span class="stat-value">{{ hero.pickRate }}%</span>
+                  <span class="stat-value text-gold">{{ hero.banRate }}%</span>
                 </div>
               </div>
 
-              <!-- 体验服调整 -->
-              <div
-                v-if="!hero.isDeveloping"
-                class="experience-adjustment"
-              >
-                <h5>体验服调整</h5>
-                <div class="adjustment-buttons">
-                  <button
-                    class="adjust-btn"
-                    @click="adjustHero(hero.id, 'buff')"
-                  >
-                    加强
-                  </button>
-                  <button
-                    class="adjust-btn"
-                    @click="adjustHero(hero.id, 'nerf')"
-                  >
-                    削弱
-                  </button>
+              <!-- 英雄类型和研发方式 -->
+              <div class="hero-meta">
+                <div class="meta-item">
+                  <span class="meta-label">类型:</span>
+                  <span class="meta-value">{{ getTypeName(hero.type) }}</span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">研发方式:</span>
+                  <span class="meta-value">{{ hero.developmentMethod }}</span>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- 空状态 -->
-          <div
-            v-if="heroSkinStore.getAllHeroes.length === 0"
-            class="empty-state"
-          >
-            <p>暂无英雄，前往"新建英雄"页创建</p>
+            <div
+              v-if="heroSkinStore.getAllHeroes.length === 0"
+              class="empty-state"
+            >
+              <p>暂无英雄，前往"新建英雄"页创建</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </ApplicationWindow>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useHeroSkinStore } from '@/stores/heroSkinStore';
-
-// 英雄职业列表
-const heroClasses = [
-  { id: '射手', name: '射手', icon: '🏹', color: '#2196F3' },
-  { id: '法师', name: '法师', icon: '🧙', color: '#9C27B0' },
-  { id: '坦克', name: '坦克', icon: '🛡️', color: '#4CAF50' },
-  { id: '刺客', name: '刺客', icon: '🗡️', color: '#F44336' },
-  { id: '辅助', name: '辅助', icon: '💫', color: '#00BCD4' },
-  { id: '战士', name: '战士', icon: '⚔️', color: '#FF9800' },
-];
-
-// 流派列表
-const genres = [
-  { id: 'standalone', name: '站撸大核' },
-  { id: 'poke', name: 'POKE 消耗' },
-  { id: 'attack_speed', name: '攻速走 A' },
-  { id: 'functional', name: '功能性' },
-  { id: 'engage', name: '开团型' },
-];
-
-// 难度列表
-const difficulties = [
-  { id: 'easy', name: '简单' },
-  { id: 'medium', name: '中等' },
-  { id: 'hard', name: '高操作' },
-];
+import ApplicationWindow from '@/components/common/window/ApplicationWindow.vue';
 
 // 使用Pinia store
 const heroSkinStore = useHeroSkinStore();
 
 // 状态管理
-const activeModule = ref('hero-new');
-const selectedClass = ref('射手');
-const selectedGenre = ref('standalone');
-const selectedDifficulty = ref('easy');
+const activeTab = ref<string>('create');
+const selectedRole = ref<string>('warrior');
+const selectedType = ref<string>('physical');
+const selectedMethod = ref<string>('self');
+
+// 英雄定位列表
+const heroRoles = [
+  { id: 'warrior', name: '战士', icon: '⚔️' },
+  { id: 'mage', name: '法师', icon: '🔮' },
+  { id: 'archer', name: '射手', icon: '🏹' },
+  { id: 'assassin', name: '刺客', icon: '🗡️' },
+  { id: 'tank', name: '坦克', icon: '🛡️' },
+  { id: 'support', name: '辅助', icon: '💚' },
+];
+
+// 英雄类型列表
+const heroTypes = [
+  { id: 'physical', name: '物理' },
+  { id: 'magic', name: '法术' },
+  { id: 'hybrid', name: '混合' },
+];
+
+// 研发方式列表
+const developmentMethods = [
+  { id: 'self', name: '自研' },
+  { id: 'cooperation', name: '联动' },
+];
 
 // 随机英雄名称列表
 const heroNames = [
-  '亚瑟',
-  '孙悟空',
   '李白',
   '韩信',
-  '诸葛亮',
-  '貂蝉',
   '赵云',
-  '吕布',
-  '花木兰',
-  '哪吒',
-  '宫本武藏',
-  '典韦',
-  '夏侯惇',
-  '项羽',
-  '虞姬',
-  '鲁班七号',
+  '孙悟空',
   '后羿',
-  '伽罗',
-  '孙尚香',
-  '马可波罗',
+  '鲁班七号',
+  '妲己',
+  '王昭君',
+  '貂蝉',
+  '吕布',
+  '关羽',
+  '张飞',
+  '刘备',
+  '曹操',
+  '孙权',
 ];
 
 // 生成随机英雄名称
@@ -249,345 +251,392 @@ const generateRandomHeroName = (): string => {
 
 // 生成随机英雄图标
 const generateRandomIcon = (): string => {
-  const icons = ['🦸', '🦹', '⚔️', '🛡️', '🗡️', '🧙‍♂️', '🏹', '🤝', '🔥', '💧', '🌪️', '🌱', '🌟', '💀', '👻'];
+  const icons = ['⚔️', '🛡️', '🔮', '🏹', '🗡️', '💚', '🦸', '🦹', '🧙', '🧝', '🧛', '🧟'];
   return icons[Math.floor(Math.random() * icons.length)];
+};
+
+// 根据定位id获取定位名称
+const getRoleName = (roleId: string): string => {
+  const role = heroRoles.find((r) => r.id === roleId);
+  return role ? role.name : '未知定位';
+};
+
+// 根据类型id获取类型名称
+const getTypeName = (typeId: string): string => {
+  const type = heroTypes.find((t) => t.id === typeId);
+  return type ? type.name : '未知类型';
 };
 
 // 确认英雄立项
 const confirmHeroCreation = (): void => {
   // 创建英雄对象
-  const newHero = {
+  const newHero: any = {
     id: Date.now().toString(),
     name: generateRandomHeroName(),
     icon: generateRandomIcon(),
-    class: selectedClass.value,
-    genre: selectedGenre.value,
-    difficulty: selectedDifficulty.value,
+    role: selectedRole.value,
+    type: selectedType.value,
+    developmentMethod: selectedMethod.value === 'self' ? '自研' : '联动',
     isDeveloping: true,
-    developmentProgress: 0,
-    winRate: 50,
-    banRate: 0,
+    progress: 0,
+    winRate: 0,
     pickRate: 0,
+    banRate: 0,
   };
 
   // 添加到store
   heroSkinStore.addHero(newHero);
 
-  // 切换到英雄列表
-  activeModule.value = 'hero-list';
+  // 重置选择
+  selectedRole.value = 'warrior';
+  selectedType.value = 'physical';
+  selectedMethod.value = 'self';
+
+  alert(`英雄"${newHero.name}"立项成功！`);
 };
 
-// 体验服调整英雄
-const adjustHero = (heroId: string, adjustment: string): void => {
-  // 获取英雄
-  const hero = heroSkinStore.getHeroById(heroId);
-  if (hero) {
-    let winRateChange = 0;
-
-    // 根据调整类型计算胜率变化
-    switch (adjustment) {
-      case 'buff':
-        winRateChange = Math.floor(Math.random() * 3) + 3; // +3%~5%
-        break;
-      case 'nerf':
-        winRateChange = -(Math.floor(Math.random() * 3) + 3); // -3%~5%
-        break;
-      default:
-        winRateChange = 0;
-    }
-
-    // 更新英雄胜率
-    const updatedHero = {
-      ...hero,
-      winRate: Math.max(45, Math.min(55, hero.winRate + winRateChange)), // 保持在45-55%之间
-    };
-
-    heroSkinStore.updateHero(updatedHero);
-  }
-};
-
-// 初始化
+// 初始化数据
 onMounted(() => {
   heroSkinStore.initData();
 });
 </script>
 
 <style lang="scss" scoped>
-.hero-development-app {
+
+/* 侧边栏菜单 */
+.sidebar-menu {
+  @include utils.flex-col(0, stretch);
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  background-color: #1e1e2e;
-  color: #fff;
-  overflow: hidden;
-}
-
-.app-header {
-  padding: 16px;
-  background-color: #2a2a3a;
-  border-bottom: 1px solid #3a3a4a;
-
-  h2 {
-    margin: 0 0 4px;
-    font-size: 24px;
-    color: #fff;
-  }
-
-  p {
-    margin: 0;
-    font-size: 14px;
-    color: #a0a0b0;
-  }
-}
-
-.app-content {
-  flex: 1;
-  padding: 16px;
+  background-color: tokens.$bg-secondary;
+  padding: tokens.$spacing-md 0;
   overflow-y: auto;
-  background-color: #1e1e2e;
 }
 
-.tab-content {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.section-card {
-  background-color: #2a2a3a;
-  border: 1px solid #3a3a4a;
-  border-radius: 8px;
-  padding: 20px;
-}
-
-.form-section {
-  margin-bottom: 24px;
-}
-
-.form-section h4 {
-  margin: 0 0 12px;
-  font-size: 16px;
-  color: #fff;
-}
-
-.option-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.option-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  background-color: #3a3a4a;
-  border: 1px solid #4a4a5a;
-  border-radius: 6px;
-  color: #a0a0b0;
+.menu-item {
+  @include utils.flex-row(tokens.$spacing-md, center);
+  padding: tokens.$spacing-md tokens.$spacing-lg;
+  background: none;
+  border: none;
+  color: tokens.$text-secondary;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all tokens.$transition-fast;
+  text-align: left;
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-semibold;
 
   &:hover {
-    background-color: #4a4a5a;
-    border-color: #5a5a6a;
-    color: #fff;
+    background-color: tokens.$bg-light;
+    color: tokens.$primary-blue;
   }
 
   &.active {
-    background-color: #2196f3;
-    border-color: #2196f3;
-    color: #fff;
+    background-color: rgb(59 130 246 / 20%);
+    color: tokens.$primary-blue;
+    border-right: 3px solid tokens.$primary-blue;
+  }
+}
+
+.menu-icon {
+  font-size: 20px;
+}
+
+/* 英雄开发内容区域 */
+.hero-development-content {
+  width: 100%;
+  height: 100%;
+  padding: tokens.$spacing-lg;
+  background-color: tokens.$bg-primary;
+  color: tokens.$text-primary;
+  overflow-y: auto;
+  @include utils.custom-scrollbar;
+}
+
+/* 标签页内容样式 */
+.tab-content {
+  width: 100%;
+}
+
+/* 卡片样式 */
+.section-card {
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-lg;
+  box-shadow: tokens.$shadow-md;
+
+  h3 {
+    margin: 0 0 tokens.$spacing-lg;
+    font-size: tokens.$font-size-xl;
+    color: tokens.$primary-gold;
+    font-weight: tokens.$font-weight-bold;
+  }
+}
+
+/* 表单分组样式 */
+.form-section {
+  margin-bottom: tokens.$spacing-lg;
+  padding: tokens.$spacing-md;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  h4 {
+    margin: 0 0 tokens.$spacing-md;
+    font-size: tokens.$font-size-base;
+    color: tokens.$primary-blue;
+    font-weight: tokens.$font-weight-bold;
+  }
+}
+
+/* 选项按钮组样式 */
+.option-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: tokens.$spacing-md;
+}
+
+.option-btn {
+  @include utils.flex-col(tokens.$space-2, center, center);
+  padding: tokens.$spacing-md;
+  border: 2px solid tokens.$border-light;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  cursor: pointer;
+  transition: all tokens.$transition-fast;
+  color: tokens.$text-primary;
+  font-weight: tokens.$font-weight-bold;
+
+  &:hover {
+    background-color: tokens.$bg-lighter;
+    border-color: tokens.$primary-blue;
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-sm;
+  }
+
+  &.active {
+    background-color: rgb(59 130 246 / 30%);
+    border-color: tokens.$primary-blue;
+    box-shadow: tokens.$shadow-blue;
   }
 }
 
 .option-icon {
-  font-size: 18px;
+  font-size: 24px;
+  margin-bottom: tokens.$space-2;
 }
 
-.option-label {
-  font-size: 14px;
-  font-weight: 500;
+.option-name {
+  font-size: tokens.$font-size-sm;
 }
 
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 24px;
+/* 操作区域样式 */
+.action-section {
+  margin-top: tokens.$spacing-lg;
+  @include utils.flex-center;
 }
 
 .confirm-btn {
-  padding: 12px 24px;
-  background-color: #2196f3;
+  padding: tokens.$space-3 tokens.$space-9;
+  background-color: tokens.$primary-blue;
+  color: white;
   border: none;
-  border-radius: 6px;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 500;
+  border-radius: tokens.$radius-md;
   cursor: pointer;
-  transition: all 0.2s ease;
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-bold;
+  transition: all tokens.$transition-fast;
 
   &:hover {
-    background-color: #1976d2;
+    background-color: tokens.$primary-dark;
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-blue;
   }
 }
 
 /* 英雄列表样式 */
-.hero-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
+.hero-list {
+  @include utils.grid-auto-fill(300px, tokens.$spacing-lg);
 }
 
+/* 英雄卡片样式 */
 .hero-card {
-  background-color: #3a3a4a;
-  border: 1px solid #4a4a5a;
-  border-radius: 8px;
-  padding: 16px;
-  transition: all 0.2s ease;
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-md;
+  box-shadow: tokens.$shadow-md;
+  transition: all tokens.$transition-fast;
 
   &:hover {
-    border-color: #5a5a6a;
-    box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-lg;
   }
 }
 
 .hero-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.hero-info {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  @include utils.flex-row(tokens.$spacing-md, center);
+  margin-bottom: tokens.$spacing-md;
 }
 
 .hero-icon {
-  font-size: 32px;
+  font-size: 44px;
+  margin-right: tokens.$spacing-md;
+  background-color: rgb(59 130 246 / 20%);
+  border-radius: 50%;
+  width: 68px;
+  height: 68px;
+  @include utils.flex-center;
 }
 
-.hero-details h4 {
-  margin: 0 0 4px;
-  font-size: 16px;
-  color: #fff;
+.hero-info {
+  flex: 1;
+
+  h4 {
+    margin: 0 0 tokens.$space-1;
+    font-size: tokens.$font-size-base;
+    color: tokens.$primary-gold;
+    font-weight: tokens.$font-weight-bold;
+  }
 }
 
-.hero-class {
+.hero-role {
   margin: 0;
-  font-size: 12px;
-  color: #a0a0b0;
+  font-size: tokens.$font-size-xs;
+  color: tokens.$primary-blue;
+  font-weight: tokens.$font-weight-semibold;
+}
+
+.hero-status {
+  text-align: right;
 }
 
 .status {
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: 500;
+  display: block;
+  font-size: tokens.$font-size-xs;
+  font-weight: tokens.$font-weight-bold;
+  padding: tokens.$space-0 tokens.$space-1;
+  border-radius: tokens.$radius-full;
 
   &.developing {
-    background-color: #ff9800;
-    color: #fff;
+    background-color: rgb(245 158 11 / 20%);
+    color: tokens.$warning;
   }
 
   &.online {
-    background-color: #4caf50;
-    color: #fff;
+    background-color: rgb(16 185 129 / 20%);
+    color: tokens.$success;
   }
 }
 
+/* 研发进度样式 */
 .development-progress {
-  margin-top: 12px;
+  margin-bottom: tokens.$spacing-md;
 }
 
 .progress-bar {
+  width: 100%;
   height: 8px;
-  background-color: #4a4a5a;
-  border-radius: 4px;
+  background-color: tokens.$bg-tertiary;
+  border-radius: tokens.$radius-sm;
   overflow: hidden;
+  margin-bottom: tokens.$space-2;
 }
 
 .progress-fill {
   height: 100%;
-  background-color: #2196f3;
-  border-radius: 4px;
-  transition: width 0.3s ease;
+  background-color: tokens.$primary-blue;
+  border-radius: tokens.$radius-sm;
+  transition: width tokens.$transition-normal;
 }
 
 .progress-text {
-  margin-top: 4px;
-  font-size: 12px;
-  color: #a0a0b0;
+  display: block;
   text-align: right;
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
 }
 
+/* 英雄数据样式 */
 .hero-stats {
-  display: flex;
-  gap: 16px;
-  margin-top: 12px;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-sm;
+  padding: tokens.$spacing-md;
+  margin-bottom: tokens.$spacing-md;
 }
 
 .stat-item {
-  flex: 1;
-  text-align: center;
-}
+  @include utils.flex-between;
+  margin-bottom: tokens.$space-2;
+  font-size: tokens.$font-size-sm;
 
-.stat-label {
-  display: block;
-  font-size: 12px;
-  color: #a0a0b0;
-  margin-bottom: 4px;
-}
-
-.stat-value {
-  display: block;
-  font-size: 16px;
-  font-weight: 500;
-  color: #fff;
-}
-
-.experience-adjustment {
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid #4a4a5a;
-}
-
-.experience-adjustment h5 {
-  margin: 0 0 12px;
-  font-size: 14px;
-  color: #fff;
-}
-
-.adjustment-buttons {
-  display: flex;
-  gap: 12px;
-}
-
-.adjust-btn {
-  flex: 1;
-  padding: 8px 12px;
-  background-color: #3a3a4a;
-  border: 1px solid #4a4a5a;
-  border-radius: 4px;
-  color: #a0a0b0;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background-color: #4a4a5a;
-    border-color: #5a5a6a;
-    color: #fff;
+  &:last-child {
+    margin-bottom: 0;
   }
 }
 
+.stat-label {
+  color: tokens.$text-secondary;
+}
+
+.stat-value {
+  color: tokens.$primary-gold;
+  font-weight: tokens.$font-weight-bold;
+}
+
+/* 英雄元数据样式 */
+.hero-meta {
+  background-color: rgb(139 92 246 / 10%);
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-md;
+}
+
+.meta-item {
+  @include utils.flex-between;
+  margin-bottom: tokens.$space-2;
+  font-size: tokens.$font-size-sm;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.meta-label {
+  color: tokens.$text-secondary;
+}
+
+.meta-value {
+  color: tokens.$text-primary;
+  font-weight: tokens.$font-weight-semibold;
+}
+
+/* 空状态样式 */
 .empty-state {
+  grid-column: 1 / -1;
   text-align: center;
-  padding: 40px 0;
-  color: #a0a0b0;
-  font-size: 16px;
+  padding: tokens.$spacing-2xl;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  color: tokens.$text-secondary;
+}
+
+/* 响应式设计 */
+@include utils.mobile {
+  .option-buttons {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+
+  .hero-list {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-development-content {
+    padding: tokens.$spacing-md;
+  }
+
+  .section-card {
+    padding: tokens.$spacing-md;
+  }
 }
 </style>

@@ -84,7 +84,13 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        api: 'modern-compiler'
+        api: 'modern-compiler',
+        // 全局引入 SCSS 变量和工具
+        additionalData: `
+          @use 'sass:color';
+          @use '@/styles/tokens' as tokens;
+          @use '@/styles/utilities' as utils;
+        `
       }
     },
     // 启用CSS代码分割

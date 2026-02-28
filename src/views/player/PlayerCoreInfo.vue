@@ -1,6 +1,9 @@
 <template>
-  <div v-if="playerStore.player" class="character-core-info">
-    <!-- 角色名称和等�?-->
+  <div
+    v-if="playerStore.player"
+    class="character-core-info"
+  >
+    <!-- 角色名称和等级 -->
     <div class="core-info-header">
       <h2 class="character-name">{{ playerStore.player.name }}</h2>
       <div class="level-badge">
@@ -13,11 +16,11 @@
       </div>
     </div>
 
-    <!-- 生命�?-->
+    <!-- 生命值 -->
     <div class="stat-container health-container">
       <div class="stat-header">
         <span class="stat-icon health-icon">❤️</span>
-        <span class="stat-label">生命�?/span>
+        <span class="stat-label">生命值</span>
       </div>
       <div class="stat-bar-wrapper">
         <div class="stat-bar health-bar">
@@ -34,11 +37,11 @@
       </div>
     </div>
 
-    <!-- 经验�?-->
+    <!-- 经验值 -->
     <div class="stat-container exp-container">
       <div class="stat-header">
-        <span class="stat-icon exp-icon">�?/span>
-        <span class="stat-label">经验�?/span>
+        <span class="stat-icon exp-icon">⭐</span>
+        <span class="stat-label">经验值</span>
       </div>
       <div class="stat-bar-wrapper">
         <div class="stat-bar exp-bar">
@@ -55,13 +58,13 @@
       </div>
     </div>
 
-    <!-- 属性�?-->
+    <!-- 属性值 -->
     <div class="attributes-section">
-      <h3 class="section-title">能力属�?/h3>
+      <h3 class="section-title">能力属性</h3>
       <div class="attributes-grid">
         <div
           class="attribute-card"
-          @mouseenter="showTooltip('物理攻击力：影响普通攻击和物理技能伤�?)"
+          @mouseenter="showTooltip('物理攻击力：影响普通攻击和物理技能伤害')"
           @mouseleave="hideTooltip"
         >
           <div class="attribute-icon">⚔️</div>
@@ -72,10 +75,10 @@
         </div>
         <div
           class="attribute-card"
-          @mouseenter="showTooltip('防御力：减少受到的物理伤�?)""
+          @mouseenter="showTooltip('防御力：减少受到的物理伤害')"
           @mouseleave="hideTooltip"
         >
-          <div class="attribute-icon">🛡�?/div>
+          <div class="attribute-icon">🛡️</div>
           <div class="attribute-value">
             {{ playerStore.player.stats.defense }}
           </div>
@@ -83,10 +86,10 @@
         </div>
         <div
           class="attribute-card"
-          @mouseenter="showTooltip('魔法攻击力：影响魔法技能伤�?)""
+          @mouseenter="showTooltip('魔法攻击力：影响魔法技能伤害')"
           @mouseleave="hideTooltip"
         >
-          <div class="attribute-icon">�?/div>
+          <div class="attribute-icon">🔮</div>
           <div class="attribute-value">
             {{ playerStore.player.stats.magicAttack }}
           </div>
@@ -94,7 +97,7 @@
         </div>
         <div
           class="attribute-card"
-          @mouseenter="showTooltip('魔法防御力：减少受到的魔法伤�?)""
+          @mouseenter="showTooltip('魔法防御力：减少受到的魔法伤害')"
           @mouseleave="hideTooltip"
         >
           <div class="attribute-icon">🔮</div>
@@ -106,14 +109,21 @@
       </div>
     </div>
 
-    <!-- 悬浮提示�?-->
-    <div v-if="tooltipVisible" class="tooltip" :style="tooltipStyle">
+    <!-- 悬浮提示框 -->
+    <div
+      v-if="tooltipVisible"
+      class="tooltip"
+      :style="tooltipStyle"
+    >
       {{ tooltipText }}
       <div class="tooltip-arrow"></div>
     </div>
   </div>
 
-  <div v-else class="no-player">
+  <div
+    v-else
+    class="no-player"
+  >
     <div class="no-player-icon">👤</div>
     <p>角色未初始化</p>
   </div>
@@ -142,23 +152,20 @@ function hideTooltip(): void {
 }
 </script>
 
-<style lang=scss scoped>
+<style lang="scss" scoped>
+
 /* 核心信息区域 */
 .character-core-info {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  @include utils.flex-col(tokens.$spacing-lg);
 }
 
 /* 核心信息头部 */
 .core-info-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  padding: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 20px;
+  @include utils.flex-between;
+  gap: tokens.$spacing-md;
+  padding: tokens.$spacing-md;
+  background: linear-gradient(135deg, tokens.$skill-magic-border 0%, tokens.$skill-magic-dark 100%);
+  border-radius: tokens.$radius-xl;
   box-shadow: 0 10px 30px rgb(102 126 234 / 40%);
   animation: headerGlow 3s ease-in-out infinite alternate;
 }
@@ -176,9 +183,9 @@ function hideTooltip(): void {
 /* 角色名称 */
 .character-name {
   margin: 0;
-  font-size: 28px;
-  font-weight: 900;
-  color: white;
+  font-size: tokens.$font-size-2xl;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
   text-shadow: 2px 2px 4px rgb(0 0 0 / 30%);
   flex: 1;
   text-align: center;
@@ -186,37 +193,33 @@ function hideTooltip(): void {
 
 /* 等级徽章 */
 .level-badge {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background: rgb(255 255 255 / 20%);
+  @include utils.flex-row(tokens.$spacing-xs, center, center);
+  background: tokens.$bg-lighter;
   backdrop-filter: blur(10px);
-  padding: 10px 15px;
-  border-radius: 25px;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  border-radius: tokens.$radius-full;
   border: 2px solid rgb(255 255 255 / 30%);
   box-shadow: inset 0 0 20px rgb(255 255 255 / 20%);
 }
 
 .level-icon {
-  font-size: 20px;
+  font-size: tokens.$font-size-lg;
   animation: pulse 2s ease-in-out infinite;
 }
 
 .level-text {
-  font-size: 20px;
-  font-weight: bold;
-  color: white;
+  font-size: tokens.$font-size-lg;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
   text-shadow: 0 0 10px rgb(255 255 255 / 80%);
 }
 
 /* 金币显示 */
 .gold-display {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  @include utils.flex-row(tokens.$spacing-xs, center, center);
   background: linear-gradient(135deg, #f6e05e 0%, #d69e2e 100%);
-  padding: 12px 18px;
-  border-radius: 25px;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  border-radius: tokens.$radius-full;
   box-shadow: 0 5px 15px rgb(246 224 94 / 40%);
   animation: goldGlow 2s ease-in-out infinite alternate;
 }
@@ -232,9 +235,9 @@ function hideTooltip(): void {
 }
 
 .gold-icon {
-  font-size: 20px;
+  font-size: tokens.$font-size-lg;
   transform: rotate(0deg);
-  transition: transform 0.3s ease;
+  transition: transform tokens.$transition-normal;
 }
 
 .gold-display:hover .gold-icon {
@@ -242,42 +245,40 @@ function hideTooltip(): void {
 }
 
 .gold-text {
-  font-size: 18px;
-  font-weight: bold;
-  color: #2d3748;
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$gray-800;
   text-shadow: 1px 1px 2px rgb(255 255 255 / 80%);
 }
 
-/* 状态容�? */
+/* 状态容器 */
 .stat-container {
-  background: white;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 5px 20px rgb(0 0 0 / 10%);
-  border: 2px solid #e2e8f0;
-  transition: all 0.3s ease;
+  background: tokens.$text-primary;
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-md;
+  box-shadow: tokens.$shadow-md;
+  border: 2px solid tokens.$gray-200;
+  transition: all tokens.$transition-normal;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgb(0 0 0 / 15%);
+    border-color: tokens.$skill-magic-border;
+  }
 }
 
-.stat-container:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgb(0 0 0 / 15%);
-  border-color: #667eea;
-}
-
-/* 状态头�? */
+/* 状态头部 */
 .stat-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
+  @include utils.flex-row(tokens.$spacing-sm, center, flex-start);
+  margin-bottom: tokens.$spacing-sm;
 }
 
 .stat-icon {
-  font-size: 24px;
+  font-size: tokens.$font-size-xl;
 }
 
 .health-icon {
-  color: #ef4444;
+  color: tokens.$health-red;
   animation: heartbeat 1.5s ease-in-out infinite;
 }
 
@@ -293,7 +294,7 @@ function hideTooltip(): void {
 }
 
 .exp-icon {
-  color: #f59e0b;
+  color: tokens.$warning;
   animation: starSpin 3s linear infinite;
 }
 
@@ -308,49 +309,47 @@ function hideTooltip(): void {
 }
 
 .stat-label {
-  font-size: 18px;
-  font-weight: bold;
-  color: #475569;
+  font-size: tokens.$font-size-lg;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$gray-600;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 /* 状态条包装 */
 .stat-bar-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  @include utils.flex-col(tokens.$spacing-sm);
 }
 
 /* 状态条 */
 .stat-bar {
   height: 25px;
-  background: #f1f5f9;
-  border-radius: 12px;
+  background: tokens.$gray-100;
+  border-radius: tokens.$radius-md;
   overflow: hidden;
   position: relative;
-  border: 2px solid #e2e8f0;
+  border: 2px solid tokens.$gray-200;
   box-shadow: inset 0 2px 5px rgb(0 0 0 / 10%);
 }
 
-/* 状态填�? */
+/* 状态填充 */
 .stat-fill {
   height: 100%;
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 10px;
+  border-radius: tokens.$radius-sm;
   position: relative;
   z-index: 1;
 }
 
 .health-fill {
-  background: linear-gradient(90deg, #ef4444 0%, #f87171 100%);
+  background: linear-gradient(90deg, tokens.$health-red 0%, #f87171 100%);
 }
 
 .exp-fill {
-  background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+  background: linear-gradient(90deg, tokens.$warning 0%, #fbbf24 100%);
 }
 
-/* 状态发光效�? */
+/* 状态发光效果 */
 .stat-glow {
   position: absolute;
   inset: 0;
@@ -360,97 +359,87 @@ function hideTooltip(): void {
 }
 
 .health-glow {
-  background: linear-gradient(90deg, #ef4444 0%, #f87171 100%);
+  background: linear-gradient(90deg, tokens.$health-red 0%, #f87171 100%);
 }
 
 .exp-glow {
-  background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+  background: linear-gradient(90deg, tokens.$warning 0%, #fbbf24 100%);
 }
 
-/* 状态文�? */
+/* 状态文本 */
 .stat-text {
-  font-size: 14px;
-  font-weight: bold;
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-bold;
   text-align: center;
-  color: #475569;
+  color: tokens.$gray-600;
   text-shadow: 0 1px 2px rgb(255 255 255 / 80%);
 }
 
-/* 属性区�? */
+/* 属性区域 */
 .attributes-section {
-  background: white;
-  border-radius: 15px;
-  padding: 25px;
-  box-shadow: 0 5px 20px rgb(0 0 0 / 10%);
-  border: 2px solid #e2e8f0;
+  background: tokens.$text-primary;
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-lg;
+  box-shadow: tokens.$shadow-md;
+  border: 2px solid tokens.$gray-200;
 }
 
 .section-title {
-  font-size: 20px;
-  font-weight: bold;
-  color: #475569;
-  margin-bottom: 20px;
+  font-size: tokens.$font-size-lg;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$gray-600;
+  margin-bottom: tokens.$spacing-md;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 2px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, tokens.$skill-magic-border 0%, tokens.$skill-magic-dark 100%);
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* 属性网�? */
+/* 属性网格 */
 .attributes-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
+  @include utils.grid-layout(2, tokens.$spacing-md);
 }
 
-/* 属性卡�? */
+/* 属性卡片 */
 .attribute-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding: 20px;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  border-radius: 15px;
-  border: 2px solid #cbd5e1;
+  @include utils.flex-col(tokens.$spacing-sm, center, center);
+  padding: tokens.$spacing-md;
+  background: linear-gradient(135deg, tokens.$gray-50 0%, tokens.$gray-200 100%);
+  border-radius: tokens.$radius-lg;
+  border: 2px solid tokens.$gray-300;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: help;
   position: relative;
   overflow: hidden;
-}
 
-.attribute-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgb(255 255 255 / 40%),
-    transparent
-  );
-  transition: left 0.5s ease;
-}
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 40%), transparent);
+    transition: left 0.5s ease;
+  }
 
-.attribute-card:hover {
-  transform: translateY(-5px) scale(1.03);
-  box-shadow: 0 15px 35px rgb(0 0 0 / 15%);
-  border-color: #667eea;
-  background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
-}
+  &:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 15px 35px rgb(0 0 0 / 15%);
+    border-color: tokens.$skill-magic-border;
+    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+  }
 
-.attribute-card:hover::before {
-  left: 100%;
+  &:hover::before {
+    left: 100%;
+  }
 }
 
 .attribute-icon {
-  font-size: 40px;
-  transition: transform 0.3s ease;
+  font-size: tokens.$font-size-4xl;
+  transition: transform tokens.$transition-normal;
 }
 
 .attribute-card:hover .attribute-icon {
@@ -458,34 +447,34 @@ function hideTooltip(): void {
 }
 
 .attribute-value {
-  font-size: 24px;
-  font-weight: bold;
-  color: #475569;
+  font-size: tokens.$font-size-2xl;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$gray-600;
   text-shadow: 1px 1px 2px rgb(255 255 255 / 80%);
 }
 
 .attribute-label {
-  font-size: 14px;
-  color: #64748b;
+  font-size: tokens.$font-size-sm;
+  color: tokens.$gray-500;
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-weight: bold;
+  font-weight: tokens.$font-weight-bold;
 }
 
 /* 悬浮提示 */
 .tooltip {
   position: absolute;
   background: rgb(0 0 0 / 90%);
-  color: white;
-  padding: 15px 20px;
-  border-radius: 12px;
-  font-size: 14px;
-  z-index: 1000;
+  color: tokens.$text-primary;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  border-radius: tokens.$radius-lg;
+  font-size: tokens.$font-size-sm;
+  z-index: tokens.$z-tooltip;
   pointer-events: none;
   max-width: 250px;
-  box-shadow: 0 5px 20px rgb(0 0 0 / 30%);
+  box-shadow: tokens.$shadow-lg;
   animation: tooltipFadeIn 0.3s ease-out;
-  border: 2px solid #667eea;
+  border: 2px solid tokens.$skill-magic-border;
 }
 
 @keyframes tooltipFadeIn {
@@ -512,16 +501,12 @@ function hideTooltip(): void {
   border-top: 8px solid rgb(0 0 0 / 90%);
 }
 
-/* 无玩家状�? */
+/* 无玩家状态 */
 .no-player {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  padding: 50px;
+  @include utils.flex-col(tokens.$spacing-md, center, center);
+  padding: tokens.$spacing-2xl;
   text-align: center;
-  color: #94a3b8;
+  color: tokens.$gray-400;
 }
 
 .no-player-icon {

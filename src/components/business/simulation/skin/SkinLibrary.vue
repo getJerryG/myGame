@@ -1,6 +1,6 @@
 <template>
   <div class="skin-library">
-    <!-- 品质筛选标�?-->
+    <!-- 品质筛选标签 -->
     <div class="quality-tabs">
       <button
         v-for="quality in qualities"
@@ -11,9 +11,7 @@
       >
         <span class="tab-icon">{{ quality.icon }}</span>
         <span class="tab-label">{{ quality.label }}</span>
-        <span class="tab-count"
-          >({{ getSkinCountByQuality(quality.value) }})</span
-        >
+        <span class="tab-count">({{ getSkinCountByQuality(quality.value) }})</span>
       </button>
     </div>
 
@@ -28,7 +26,10 @@
       >
         <div class="skin-preview">
           <span class="skin-avatar">{{ skin.avatar }}</span>
-          <div class="skin-quality-badge" :class="skin.quality">
+          <div
+            class="skin-quality-badge"
+            :class="skin.quality"
+          >
             {{ getQualityLabel(skin.quality) }}
           </div>
         </div>
@@ -37,11 +38,11 @@
           <div class="skin-hero">{{ skin.heroName }}</div>
           <div class="skin-stats">
             <span class="stat-item">
-              <span class="stat-label">预计销�?/span>
-              <span class="stat-value">{{ skin.expected.sales }}�?/span>
+              <span class="stat-label">预计销量</span>
+              <span class="stat-value">{{ skin.expected.sales }}万</span>
             </span>
             <span class="stat-item">
-              <span class="stat-label">满意�?/span>
+              <span class="stat-label">满意度</span>
               <span class="stat-value">{{ skin.expected.satisfaction }}%</span>
             </span>
           </div>
@@ -51,7 +52,7 @@
   </div>
 </template>
 
-<script setup lang=ts>
+<script setup lang="ts">
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -76,7 +77,8 @@ const selectedQuality = computed({
   set: (value) => emit('quality-change', value),
 });
 
-// 筛选后的皮肤列�?const filteredSkins = computed(() => {
+// 筛选后的皮肤列表
+const filteredSkins = computed(() => {
   if (selectedQuality.value === 'all') {
     return props.skins;
   }
@@ -96,7 +98,7 @@ const selectSkin = (skin) => {
 // 获取品质标签
 const getQualityLabel = (quality) => {
   const labels = {
-    brave: '勇�?,
+    brave: '勇者',
     epic: '史诗',
     legend: '传说',
     limited: '限定',
@@ -113,87 +115,81 @@ const getSkinCountByQuality = (quality) => {
 };
 </script>
 
-<style lang=scss scoped>
-/* 品质筛选标�? */
+<style lang="scss" scoped>
+
+/* 品质筛选标签 */
 .quality-tabs {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  @include utils.flex-row(tokens.$spacing-sm, center);
+  margin-bottom: tokens.$spacing-lg;
   overflow-x: auto;
-  padding-bottom: 10px;
+  padding-bottom: tokens.$spacing-sm;
 }
 
 .quality-tab {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 15px;
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-md);
+  @include utils.flex-row(tokens.$spacing-sm, center);
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all tokens.$transition-fast;
   border: 1px solid transparent;
   white-space: nowrap;
-}
 
-.quality-tab:hover {
-  background-color: rgb(255 255 255 / 10%);
-  transform: translateY(-2px);
-}
+  &:hover {
+    background-color: tokens.$bg-lighter;
+    transform: translateY(-2px);
+  }
 
-.quality-tab.active {
-  background-color: rgb(251 191 36 / 20%);
-  border-color: var(--primary-gold);
-  box-shadow: 0 2px 8px rgb(251 191 36 / 30%);
+  &.active {
+    background-color: rgb(251 191 36 / 20%);
+    border-color: tokens.$primary-gold;
+    box-shadow: tokens.$shadow-gold;
+  }
 }
 
 .tab-icon {
-  font-size: 16px;
+  font-size: tokens.$font-size-base;
 }
 
 .tab-label {
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  color: var(--text-secondary);
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-medium;
+  color: tokens.$text-secondary;
 }
 
 .tab-count {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-muted;
 }
 
 /* 皮肤列表 */
 .skin-list {
   flex: 1;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding-right: 10px;
+  @include utils.flex-col(tokens.$spacing-md, stretch);
+  padding-right: tokens.$spacing-md;
 }
 
 .skin-item {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 15px;
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-md);
+  @include utils.flex-row(tokens.$spacing-md, center);
+  padding: tokens.$spacing-md;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all tokens.$transition-fast;
   border: 1px solid transparent;
-}
 
-.skin-item:hover {
-  background-color: rgb(255 255 255 / 10%);
-  transform: translateX(5px);
-  border-color: var(--border-light);
-}
+  &:hover {
+    background-color: tokens.$bg-lighter;
+    transform: translateX(5px);
+    border-color: tokens.$border-light;
+  }
 
-.skin-item.active {
-  background-color: rgb(251 191 36 / 20%);
-  border-color: var(--primary-gold);
-  box-shadow: 0 2px 8px rgb(251 191 36 / 30%);
+  &.active {
+    background-color: rgb(251 191 36 / 20%);
+    border-color: tokens.$primary-gold;
+    box-shadow: tokens.$shadow-gold;
+  }
 }
 
 .skin-preview {
@@ -202,7 +198,7 @@ const getSkinCountByQuality = (quality) => {
 }
 
 .skin-avatar {
-  font-size: 48px;
+  font-size: tokens.$font-size-3xl;
   display: block;
 }
 
@@ -210,73 +206,61 @@ const getSkinCountByQuality = (quality) => {
   position: absolute;
   top: -5px;
   right: -5px;
-  padding: 4px 8px;
-  border-radius: 10px;
-  font-size: var(--text-xs);
-  font-weight: var(--font-bold);
+  padding: tokens.$spacing-xs tokens.$spacing-sm;
+  border-radius: tokens.$radius-full;
+  font-size: tokens.$font-size-xs;
+  font-weight: tokens.$font-weight-bold;
   color: white;
   min-width: 40px;
   text-align: center;
-}
 
-.skin-quality-badge.brave {
-  background-color: #10b981;
-}
+  &.brave {
+    background-color: tokens.$success;
+  }
 
-.skin-quality-badge.epic {
-  background-color: #8b5cf6;
-}
+  &.epic {
+    background-color: tokens.$lottery-purple;
+  }
 
-.skin-quality-badge.legend {
-  background-color: #f59e0b;
-}
+  &.legend {
+    background-color: tokens.$warning;
+  }
 
-.skin-quality-badge.limited {
-  background-color: #ef4444;
+  &.limited {
+    background-color: tokens.$error;
+  }
 }
 
 .skin-info {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  @include utils.flex-col(tokens.$spacing-xs, stretch);
 }
 
 .skin-name {
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-semibold;
+  color: tokens.$text-primary;
 }
 
 .skin-hero {
-  font-size: var(--text-xs);
-  color: var(--text-secondary);
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
 }
 
 .skin-stats {
-  display: flex;
-  gap: 15px;
-  margin-top: 4px;
+  @include utils.flex-row(tokens.$spacing-md, center);
+  margin-top: tokens.$spacing-xs;
 }
 
 .stat-item {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+  @include utils.stat-item;
 }
 
 .stat-label {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
+  @include utils.stat-label;
 }
 
 .stat-value {
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--primary-gold);
+  @include utils.stat-value;
 }
 </style>
-
-
-
-

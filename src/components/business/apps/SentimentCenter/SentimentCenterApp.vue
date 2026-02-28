@@ -41,7 +41,7 @@
           <div class="stat-card positive">
             <div class="stat-label">正面舆情</div>
             <div class="stat-value">{{ realtimeStats.positive }}</div>
-            <div class="stat-change">+5%</div>
+            <div class="stat-change positive">+5%</div>
           </div>
           <div class="stat-card neutral">
             <div class="stat-label">中性舆情</div>
@@ -51,7 +51,7 @@
           <div class="stat-card negative">
             <div class="stat-label">负面舆情</div>
             <div class="stat-value">{{ realtimeStats.negative }}</div>
-            <div class="stat-change">-3%</div>
+            <div class="stat-change negative">-3%</div>
           </div>
         </div>
 
@@ -129,7 +129,7 @@
         </div>
       </div>
 
-      <!-- 玩家满意�?-->
+      <!-- 玩家满意度 -->
       <div
         v-else-if="activeTab === 'satisfaction'"
         class="tab-content"
@@ -309,285 +309,302 @@ const satisfactionDistribution = ref({
 
 // 导出舆情报告
 const exportReport = () => {
-  // 这里应该调用store来生成和导出报告
   console.log('导出舆情报告');
   alert('舆情报告导出成功');
 };
 </script>
 
 <style lang="scss" scoped>
+
 .sentiment-center-app {
-  display: flex;
-  flex-direction: column;
+  @include utils.flex-col(0, stretch);
   height: 100%;
-  background-color: rgb(26 26 46 / 50%);
-  color: var(--text-primary);
+  background-color: tokens.$bg-secondary;
+  color: tokens.$text-primary;
+}
+
+.app-header {
+  padding: tokens.$spacing-md tokens.$spacing-lg;
+  background-color: tokens.$bg-light;
+  border-bottom: 1px solid tokens.$border-light;
+
+  h2 {
+    margin: 0;
+    font-size: tokens.$font-size-xl;
+    color: tokens.$text-primary;
+  }
+}
+
+.app-tabs {
+  @include utils.tabs-container;
+}
+
+.tab-btn {
+  @include utils.tab-item;
+
+  &.active {
+    background-color: rgb(59 130 246 / 20%);
+    box-shadow: tokens.$shadow-blue;
+  }
+}
+
+.app-content {
+  flex: 1;
+  padding: tokens.$spacing-lg;
+  overflow-y: auto;
+  @include utils.custom-scrollbar;
 }
 
 // 实时舆情样式
 .sentiment-stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
+  gap: tokens.$spacing-md;
+  margin-bottom: tokens.$spacing-lg;
 }
 
 .stat-card {
-  padding: 16px;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  padding: tokens.$spacing-md;
+  border-radius: tokens.$radius-md;
+  @include utils.flex-col(tokens.$space-2, center);
 
   &.positive {
-    background-color: rgb(46 213 115 / 20%);
-    border: 1px solid rgb(46 213 115 / 30%);
+    background-color: rgb(16 185 129 / 20%);
+    border: 1px solid rgb(16 185 129 / 30%);
   }
 
   &.neutral {
-    background-color: rgb(255 215 0 / 20%);
-    border: 1px solid rgb(255 215 0 / 30%);
+    background-color: rgb(251 191 36 / 20%);
+    border: 1px solid rgb(251 191 36 / 30%);
   }
 
   &.negative {
-    background-color: rgb(255 71 87 / 20%);
-    border: 1px solid rgb(255 71 87 / 30%);
+    background-color: rgb(239 68 68 / 20%);
+    border: 1px solid rgb(239 68 68 / 30%);
   }
 
   .stat-label {
-    font-size: 14px;
-    color: #b0b0b0;
+    font-size: tokens.$font-size-sm;
+    color: tokens.$text-secondary;
   }
 
   .stat-value {
-    font-size: 24px;
-    font-weight: bold;
-    color: #fff;
+    font-size: tokens.$font-size-2xl;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$text-primary;
   }
 
   .stat-change {
-    font-size: 12px;
-    font-weight: bold;
+    font-size: tokens.$font-size-xs;
+    font-weight: tokens.$font-weight-bold;
 
     &.positive {
-      color: #2ed573;
+      color: tokens.$success;
     }
 
     &.negative {
-      color: #ff4757;
+      color: tokens.$error;
     }
   }
 }
 
 .comments-section {
-  background-color: rgb(0 0 0 / 10%);
-  border-radius: 8px;
-  padding: 16px;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-md;
 
   h3 {
-    margin: 0 0 16px;
-    font-size: 16px;
-    color: #4a9eff;
+    margin: 0 0 tokens.$spacing-md;
+    font-size: tokens.$font-size-base;
+    color: tokens.$primary-blue;
   }
 }
 
 .comments-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  @include utils.flex-col(tokens.$spacing-md);
 }
 
 .comment-item {
-  background-color: rgb(0 0 0 / 10%);
-  padding: 12px;
-  border-radius: 6px;
+  background-color: tokens.$bg-dark;
+  padding: tokens.$spacing-md;
+  border-radius: tokens.$radius-sm;
   border-left: 3px solid transparent;
 
   &.positive {
-    border-left-color: #2ed573;
+    border-left-color: tokens.$success;
   }
 
   &.neutral {
-    border-left-color: #ffd700;
+    border-left-color: tokens.$primary-gold;
   }
 
   &.negative {
-    border-left-color: #ff4757;
+    border-left-color: tokens.$error;
   }
 }
 
 .comment-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+  @include utils.flex-between;
+  margin-bottom: tokens.$space-2;
 
   .comment-user {
-    font-size: 14px;
-    font-weight: bold;
-    color: #fff;
+    font-size: tokens.$font-size-sm;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$text-primary;
   }
 
   .comment-time {
-    font-size: 12px;
-    color: #b0b0b0;
+    font-size: tokens.$font-size-xs;
+    color: tokens.$text-secondary;
   }
 }
 
 .comment-content {
-  font-size: 14px;
-  color: #fff;
-  margin-bottom: 8px;
-  line-height: 1.4;
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-primary;
+  margin-bottom: tokens.$space-2;
+  line-height: tokens.$line-height-normal;
 }
 
 .comment-sentiment {
   display: inline-block;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: bold;
+  padding: tokens.$space-0 tokens.$space-1;
+  border-radius: tokens.$radius-sm;
+  font-size: tokens.$font-size-xs;
+  font-weight: tokens.$font-weight-bold;
 
   &.positive {
-    background-color: rgb(46 213 115 / 20%);
-    color: #2ed573;
+    background-color: rgb(16 185 129 / 20%);
+    color: tokens.$success;
   }
 
   &.neutral {
-    background-color: rgb(255 215 0 / 20%);
-    color: #ffd700;
+    background-color: rgb(251 191 36 / 20%);
+    color: tokens.$primary-gold;
   }
 
   &.negative {
-    background-color: rgb(255 71 87 / 20%);
-    color: #ff4757;
+    background-color: rgb(239 68 68 / 20%);
+    color: tokens.$error;
   }
 }
 
 // 口碑变化样式
 .chart-section {
-  background-color: rgb(0 0 0 / 10%);
-  border-radius: 8px;
-  padding: 16px;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-md;
+  margin-bottom: tokens.$spacing-lg;
 
   h3 {
-    margin: 0 0 16px;
-    font-size: 16px;
-    color: #4a9eff;
+    margin: 0 0 tokens.$spacing-md;
+    font-size: tokens.$font-size-base;
+    color: tokens.$primary-blue;
   }
 }
 
 .chart-placeholder {
-  background-color: rgb(0 0 0 / 10%);
-  border-radius: 8px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+  background-color: tokens.$bg-dark;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-lg;
+  @include utils.flex-col(tokens.$spacing-lg, center);
 
   .chart-title {
-    font-size: 18px;
-    font-weight: bold;
-    color: #fff;
+    font-size: tokens.$font-size-lg;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$text-primary;
   }
 
   .chart-bars {
-    display: flex;
-    align-items: flex-end;
-    gap: 8px;
+    @include utils.flex-row(tokens.$spacing-md, flex-end, center);
     height: 200px;
     width: 100%;
   }
 
   .chart-bar {
     flex: 1;
-    background-color: #4a9eff;
-    border-radius: 4px 4px 0 0;
-    transition: height 0.3s ease;
+    background-color: tokens.$primary-blue;
+    border-radius: tokens.$radius-sm tokens.$radius-sm 0 0;
+    transition: height tokens.$transition-normal;
 
     &:hover {
-      background-color: #357abd;
+      background-color: tokens.$primary-dark;
     }
   }
 
   .chart-legend {
-    display: flex;
-    gap: 12px;
+    @include utils.flex-row(tokens.$spacing-md);
 
     .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      @include utils.flex-row(tokens.$space-2, center);
 
       .legend-color {
         width: 12px;
         height: 12px;
-        background-color: #4a9eff;
-        border-radius: 2px;
+        background-color: tokens.$primary-blue;
+        border-radius: tokens.$radius-sm;
       }
 
       .legend-text {
-        font-size: 14px;
-        color: #b0b0b0;
+        font-size: tokens.$font-size-sm;
+        color: tokens.$text-secondary;
       }
     }
   }
 }
 
 .reputation-details {
-  background-color: rgb(0 0 0 / 10%);
-  border-radius: 8px;
-  padding: 16px;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-md;
 
   h3 {
-    margin: 0 0 16px;
-    font-size: 16px;
-    color: #4a9eff;
+    margin: 0 0 tokens.$spacing-md;
+    font-size: tokens.$font-size-base;
+    color: tokens.$primary-blue;
   }
 }
 
 .detail-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
+  gap: tokens.$spacing-md;
 }
 
 .detail-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 12px;
-  background-color: rgb(0 0 0 / 10%);
-  border-radius: 6px;
+  @include utils.flex-col(tokens.$space-2, center);
+  padding: tokens.$spacing-md;
+  background-color: tokens.$bg-dark;
+  border-radius: tokens.$radius-sm;
 
   .detail-label {
-    font-size: 14px;
-    color: #b0b0b0;
+    font-size: tokens.$font-size-sm;
+    color: tokens.$text-secondary;
   }
 
   .detail-value {
-    font-size: 20px;
-    font-weight: bold;
-    color: #4a9eff;
+    font-size: tokens.$font-size-xl;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$primary-blue;
+
+    &.positive {
+      color: tokens.$success;
+    }
   }
 }
 
 // 玩家满意度样式
 .satisfaction-score {
-  background-color: rgb(0 0 0 / 10%);
-  border-radius: 8px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-lg;
+  @include utils.flex-col(tokens.$spacing-md, center);
+  margin-bottom: tokens.$spacing-lg;
 
   h3 {
     margin: 0;
-    font-size: 16px;
-    color: #4a9eff;
+    font-size: tokens.$font-size-base;
+    color: tokens.$primary-blue;
   }
 }
 
@@ -595,101 +612,91 @@ const exportReport = () => {
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background-color: rgb(74 158 255 / 20%);
-  border: 10px solid rgb(74 158 255 / 30%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  background-color: rgb(59 130 246 / 20%);
+  border: 10px solid rgb(59 130 246 / 30%);
+  @include utils.flex-col(tokens.$space-2, center, center);
 
   .score-number {
-    font-size: 32px;
-    font-weight: bold;
-    color: #4a9eff;
+    font-size: tokens.$font-size-3xl;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$primary-blue;
   }
 
   .score-label {
-    font-size: 14px;
-    color: #b0b0b0;
+    font-size: tokens.$font-size-sm;
+    color: tokens.$text-secondary;
   }
 }
 
 .satisfaction-details {
-  background-color: rgb(0 0 0 / 10%);
-  border-radius: 8px;
-  padding: 16px;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-md;
 
   h3 {
-    margin: 0 0 16px;
-    font-size: 16px;
-    color: #4a9eff;
+    margin: 0 0 tokens.$spacing-md;
+    font-size: tokens.$font-size-base;
+    color: tokens.$primary-blue;
   }
 }
 
 .satisfaction-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  @include utils.flex-col(tokens.$spacing-md);
 }
 
 .satisfaction-item {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  @include utils.flex-col(tokens.$space-2);
 
   .satisfaction-label {
-    font-size: 14px;
-    color: #b0b0b0;
+    font-size: tokens.$font-size-sm;
+    color: tokens.$text-secondary;
   }
 }
 
 .satisfaction-bar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  @include utils.flex-row(tokens.$spacing-md, center);
   height: 20px;
-  background-color: rgb(0 0 0 / 20%);
-  border-radius: 10px;
+  background-color: tokens.$bg-dark;
+  border-radius: tokens.$radius-full;
   overflow: hidden;
 }
 
 .satisfaction-fill {
   height: 100%;
-  background-color: #4a9eff;
-  border-radius: 10px;
-  transition: width 0.3s ease;
+  background-color: tokens.$primary-blue;
+  border-radius: tokens.$radius-full;
+  transition: width tokens.$transition-normal;
 }
 
 .satisfaction-percentage {
-  font-size: 14px;
-  font-weight: bold;
-  color: #fff;
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
   min-width: 40px;
 }
 
 // 导出报告按钮样式
 .action-section {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-  background-color: rgb(0 0 0 / 10%);
-  border-radius: 8px;
+  @include utils.flex-center;
+  padding: tokens.$spacing-lg;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  margin-top: tokens.$spacing-lg;
 }
 
 .export-btn {
-  padding: 12px 32px;
-  background-color: #4a9eff;
+  padding: tokens.$space-3 tokens.$space-8;
+  background-color: tokens.$primary-blue;
   border: none;
-  border-radius: 8px;
+  border-radius: tokens.$radius-md;
   color: white;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-bold;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all tokens.$transition-fast;
 
   &:hover {
-    background-color: #357abd;
+    background-color: tokens.$primary-dark;
     transform: translateY(-1px);
   }
 }

@@ -9,7 +9,7 @@
       @show-achievements="showAchievements"
     />
 
-    <!-- 背包和物品详情弹�?-->
+    <!-- 背包和物品详情弹窗 -->
     <InventoryModal
       :is-item-modal-visible="isItemModalVisible"
       :is-inventory-modal-visible="isInventoryModalVisible"
@@ -28,7 +28,8 @@ import CharacterCoreInfo from './CharacterCoreInfo.vue';
 import ActionButtons from './ActionButtons.vue';
 import InventoryModal from '../InventoryModal/index.vue';
 
-// 弹窗状�?const isItemModalVisible = ref(false);
+// 弹窗状态
+const isItemModalVisible = ref(false);
 const selectedItem = ref(null);
 const isInventoryModalVisible = ref(false);
 const isAchievementsModalVisible = ref(false);
@@ -56,21 +57,21 @@ const showAchievements = (): void => {
 </script>
 
 <style lang="scss" scoped>
+
 /* 基础样式重置 */
 * {
   box-sizing: border-box;
 }
 
-/* 主容�? */
+/* 主容器 */
 .character-info-container {
-  padding: 20px;
+  @include utils.flex-col(tokens.$spacing-lg, stretch, flex-start);
+
+  padding: tokens.$spacing-lg;
   font-family: 'Comic Sans MS', cursive, sans-serif;
   height: 100%;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  background: linear-gradient(135deg, tokens.$panel-bg-start 0%, tokens.$panel-bg-end 100%);
   position: relative;
 }
 </style>

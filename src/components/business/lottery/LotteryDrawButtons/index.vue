@@ -37,69 +37,73 @@ const handleTenDraws = (): void => {
 </script>
 
 <style lang="scss" scoped>
+// ============================================
+// LotteryDrawButtons 组件样式
+// ============================================
+
+
 .draw-buttons-panel {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin: 20px 0;
-  padding: 20px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
+  @include utils.flex-center;
+  gap: tokens.$spacing-lg;
+  margin: tokens.$spacing-lg 0;
+  padding: tokens.$spacing-lg;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
   flex-shrink: 0;
 }
 
 .draw-button {
-  padding: 15px 30px;
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
+  padding: tokens.$spacing-md tokens.$spacing-xl;
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
   border: none;
-  border-radius: 8px;
+  border-radius: tokens.$radius-md;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all tokens.$transition-fast;
   min-width: 200px;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+  box-shadow: tokens.$shadow-sm;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-md;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  &.single {
+    background: linear-gradient(135deg, tokens.$info 0%, color.adjust(tokens.$info, $lightness: -10%) 100%);
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, color.adjust(tokens.$info, $lightness: 5%) 0%, tokens.$info 100%);
+    }
+  }
+
+  &.ten {
+    background: linear-gradient(135deg, tokens.$warning 0%, color.adjust(tokens.$warning, $lightness: -10%) 100%);
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, color.adjust(tokens.$warning, $lightness: 5%) 0%, tokens.$warning 100%);
+    }
+  }
 }
 
-.draw-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgb(0 0 0 / 30%);
-}
-
-.draw-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.draw-button.single {
-  background-color: #2196f3;
-}
-
-.draw-button.single:hover:not(:disabled) {
-  background-color: #1976d2;
-}
-
-.draw-button.ten {
-  background-color: #ff9800;
-}
-
-.draw-button.ten:hover:not(:disabled) {
-  background-color: #f57c00;
-}
-
-/* 响应式设�? */
-@media (width <= 640px) {
+/* 响应式设计 */
+@include utils.mobile {
   .draw-buttons-panel {
     flex-direction: column;
-    gap: 8px;
+    gap: tokens.$spacing-sm;
   }
 
   .draw-button {
     width: 100%;
     min-width: auto;
-    padding: 10px;
-    font-size: 14px;
+    padding: tokens.$spacing-sm;
+    font-size: tokens.$font-size-sm;
   }
 }
 </style>

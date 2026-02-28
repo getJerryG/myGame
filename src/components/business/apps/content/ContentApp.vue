@@ -87,7 +87,7 @@ const emit = defineEmits(['update:activeModule']);
 
 // 当前激活的模块
 const currentModule = computed(() => {
-  return props.app.modules.find((m) => m.id === activeModule.value) || props.app.modules[0];
+  return props.app.modules.find((m) => utils.id === activeModule.value) || props.app.modules[0];
 });
 
 // 切换模块
@@ -117,120 +117,117 @@ const getCoreDataLabel = (key: string): string => {
 </script>
 
 <style lang="scss" scoped>
+
 .content-app {
-  display: flex;
+  @include utils.flex-row(0, stretch, flex-start);
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
-/* 左侧菜单栏样�? */
+/* 左侧菜单栏样式 */
 .modal-sidebar {
   width: 200px;
-  background-color: rgb(0 0 0 / 20%);
-  border-right: 1px solid #333;
+  background-color: tokens.$bg-light;
+  border-right: 1px solid tokens.$border-medium;
   overflow-y: auto;
+  @include utils.custom-scrollbar;
 }
 
 .sidebar-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
+  @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+  padding: tokens.$spacing-sm tokens.$spacing-md;
   cursor: pointer;
-  transition: all 0.2s ease;
-  color: #b0b0b0;
+  transition: all tokens.$transition-fast;
+  color: tokens.$text-muted;
   border-left: 3px solid transparent;
-}
 
-.sidebar-item:hover {
-  background-color: rgb(74 158 255 / 20%);
-  color: #fff;
-}
+  &:hover {
+    background-color: rgba(tokens.$primary-blue, 0.2);
+    color: tokens.$text-primary;
+  }
 
-.sidebar-item.active {
-  background-color: rgb(74 158 255 / 30%);
-  color: #fff;
-  border-left-color: #4a9eff;
+  &.active {
+    background-color: rgba(tokens.$primary-blue, 0.3);
+    color: tokens.$text-primary;
+    border-left-color: tokens.$primary-blue;
+  }
 }
 
 .sidebar-item-icon {
-  font-size: 18px;
+  font-size: tokens.$font-size-lg;
   width: 20px;
   text-align: center;
 }
 
 .sidebar-item-name {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-medium;
 }
 
 /* 右侧内容区域样式 */
 .modal-main {
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  @include utils.flex-col(0, stretch, flex-start);
   overflow: hidden;
-  background-color: rgb(26 26 46 / 50%);
+  background-color: tokens.$bg-light;
 }
 
 .content-header {
-  padding: 16px;
-  border-bottom: 1px solid #333;
-  background-color: rgb(0 0 0 / 10%);
-}
+  padding: tokens.$spacing-md;
+  border-bottom: 1px solid tokens.$border-medium;
+  background-color: tokens.$bg-light;
 
-.content-header h2 {
-  margin: 0 0 12px;
-  font-size: 20px;
-  color: #fff;
+  h2 {
+    margin: 0 0 tokens.$spacing-sm;
+    font-size: tokens.$font-size-xl;
+    color: tokens.$text-primary;
+  }
 }
 
 .module-core-data {
-  display: flex;
-  gap: 20px;
+  @include utils.flex-row(tokens.$spacing-lg, center, flex-start);
   flex-wrap: wrap;
 }
 
 .core-data-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
+  @include utils.flex-row(tokens.$spacing-sm);
+  font-size: tokens.$font-size-sm;
 }
 
 .core-data-label {
-  color: #b0b0b0;
+  color: tokens.$text-muted;
 }
 
 .core-data-value {
-  color: #4a9eff;
-  font-weight: bold;
+  color: tokens.$primary-blue;
+  font-weight: tokens.$font-weight-bold;
 }
 
 .content-body {
   flex: 1;
-  padding: 20px;
+  padding: tokens.$spacing-lg;
   overflow-y: auto;
-  color: #fff;
+  color: tokens.$text-primary;
+  @include utils.custom-scrollbar;
 }
 
 .module-content {
-  background-color: rgb(0 0 0 / 10%);
-  border-radius: 8px;
-  padding: 20px;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-lg;
   min-height: 200px;
-}
 
-.module-content h3 {
-  margin: 0 0 16px;
-  font-size: 18px;
-  color: #4a9eff;
-}
+  h3 {
+    margin: 0 0 tokens.$spacing-md;
+    font-size: tokens.$font-size-lg;
+    color: tokens.$primary-blue;
+  }
 
-.module-content p {
-  margin: 0 0 16px;
-  color: #b0b0b0;
-  line-height: 1.6;
+  p {
+    margin: 0 0 tokens.$spacing-md;
+    color: tokens.$text-muted;
+    line-height: tokens.$line-height-normal;
+  }
 }
 </style>

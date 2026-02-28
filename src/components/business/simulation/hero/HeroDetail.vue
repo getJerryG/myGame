@@ -238,265 +238,244 @@ const saveAdjustments = (): void => {
 };
 </script>
 
-<style lang=scss scoped>
+<style lang="scss" scoped>
+
 .hero-detail-container {
-  display: flex;
-  flex-direction: column;
+  @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
   height: 100%;
 }
 
 .hero-detail {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  @include utils.flex-col(tokens.$spacing-lg, stretch, flex-start);
   overflow-y: auto;
-  padding-right: 10px;
+  padding-right: tokens.$spacing-sm;
   height: 100%;
-}
+  @include utils.custom-scrollbar;
 
-.hero-detail.empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-md);
-  border: 2px dashed var(--border-light);
-  height: 100%;
+  &.empty {
+    @include utils.flex-center;
+    background-color: tokens.$bg-light;
+    border-radius: tokens.$radius-md;
+    border: 2px dashed tokens.$border-light;
+    height: 100%;
+  }
 }
 
 .empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  padding: 40px;
+  @include utils.flex-col(tokens.$spacing-md, center);
+  padding: tokens.$spacing-2xl;
   text-align: center;
 }
 
 .empty-icon {
-  font-size: 48px;
+  font-size: tokens.$font-size-4xl;
   opacity: 0.5;
 }
 
 .empty-text {
-  font-size: var(--text-base);
-  color: var(--text-muted);
+  font-size: tokens.$font-size-base;
+  color: tokens.$text-muted;
+}
+
+.section-title {
+  font-size: tokens.$font-size-lg;
+  font-weight: tokens.$font-weight-semibold;
+  color: tokens.$text-primary;
+  margin: 0;
 }
 
 .detail-section {
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-md);
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-md;
+  @include utils.flex-col(tokens.$spacing-3, stretch, flex-start);
 
-.detail-section h5 {
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--primary-gold);
-  margin: 0;
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--border-light);
+  h5 {
+    font-size: tokens.$font-size-sm;
+    font-weight: tokens.$font-weight-semibold;
+    color: tokens.$primary-gold;
+    margin: 0;
+    padding-bottom: tokens.$spacing-xs;
+    border-bottom: 1px solid tokens.$border-light;
+  }
 }
 
 /* 信息网格 */
 .info-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  @include utils.grid-layout(2, tokens.$spacing-sm);
 }
 
 .info-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include utils.flex-between(center);
 }
 
 .info-label {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-muted;
 }
 
 .info-value {
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  color: var(--text-primary);
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-medium;
+  color: tokens.$text-primary;
 }
 
-/* 趋势�? */
+/* 趋势图 */
 .trend-chart {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+  @include utils.flex-col(tokens.$spacing-sm, stretch, flex-start);
 
-.trend-chart svg {
-  width: 100%;
-  height: 100px;
-  background-color: rgb(255 255 255 / 2%);
-  border-radius: var(--radius-sm);
-  padding: 10px;
+  svg {
+    width: 100%;
+    height: 100px;
+    background-color: tokens.$bg-lighter;
+    border-radius: tokens.$radius-sm;
+    padding: tokens.$spacing-sm;
+  }
 }
 
 .trend-label {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-muted;
   text-align: center;
 }
 
 /* 调整工具 */
+.adjustment-tools {
+  @include utils.flex-col(tokens.$spacing-md, stretch, flex-start);
+}
+
 .adjustment-item {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  @include utils.flex-col(tokens.$spacing-sm, stretch, flex-start);
 }
 
 .adjustment-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include utils.flex-between(center);
 }
 
 .adjustment-label {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-secondary;
 }
 
 .adjustment-value {
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--primary-gold);
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-semibold;
+  color: tokens.$primary-gold;
 }
 
 .adjustment-controls {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+  @include utils.flex-row(tokens.$spacing-md, center);
 }
 
 .adjustment-slider {
+  @include utils.slider-base;
   flex: 1;
-  height: 6px;
-  background-color: rgb(255 255 255 / 10%);
-  border-radius: 3px;
-  outline: none;
-  appearance: none;
-}
-
-.adjustment-slider::-webkit-slider-thumb {
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  background: #3b82f6;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgb(59 130 246 / 40%);
-}
-
-.adjustment-slider::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  background: #3b82f6;
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-  box-shadow: 0 2px 6px rgb(59 130 246 / 40%);
 }
 
 .adjustment-input {
   width: 80px;
-  padding: 6px 10px;
-  background-color: rgb(255 255 255 / 5%);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-sm);
-  color: var(--text-primary);
-  font-size: var(--text-sm);
+  padding: tokens.$spacing-xs tokens.$spacing-sm;
+  background-color: tokens.$bg-light;
+  border: 1px solid tokens.$border-light;
+  border-radius: tokens.$radius-sm;
+  color: tokens.$text-primary;
+  font-size: tokens.$font-size-sm;
   text-align: center;
-}
 
-.adjustment-input:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgb(59 130 246 / 10%);
+  &:focus {
+    outline: none;
+    border-color: tokens.$primary-blue;
+    box-shadow: tokens.$shadow-blue;
+  }
 }
 
 .adjustment-impact {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  align-items: center;
+  @include utils.flex-row(tokens.$spacing-sm, center, flex-end);
 }
 
 .impact-label {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-muted;
 }
 
 .impact-value {
-  font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
+  font-size: tokens.$font-size-xs;
+  font-weight: tokens.$font-weight-semibold;
+
+  &.positive {
+    color: tokens.$success;
+  }
+
+  &.negative {
+    color: tokens.$error;
+  }
 }
 
-.impact-value.positive {
-  color: var(--success-green);
-}
-
-.impact-value.negative {
-  color: var(--danger-red);
-}
-
-/* 平衡性分�? */
+/* 平衡性分析 */
 .balance-analysis {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  @include utils.flex-col(tokens.$spacing-3, stretch, flex-start);
 }
 
 .analysis-item {
-  display: flex;
-  gap: 12px;
-  padding: 12px;
-  background-color: rgb(255 255 255 / 2%);
-  border-radius: var(--radius-md);
-  border-left: 4px solid #3b82f6;
+  @include utils.flex-row(tokens.$spacing-3, flex-start);
+  padding: tokens.$spacing-sm;
+  background-color: tokens.$bg-lighter;
+  border-radius: tokens.$radius-md;
+  border-left: 4px solid tokens.$primary-blue;
 }
 
 .analysis-icon {
-  font-size: 20px;
+  font-size: tokens.$font-size-xl;
   flex-shrink: 0;
   margin-top: 2px;
 }
 
 .analysis-content {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  @include utils.flex-col(tokens.$spacing-xs, stretch, flex-start);
 }
 
 .analysis-title {
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-semibold;
+  color: tokens.$text-primary;
 }
 
 .analysis-description {
-  font-size: var(--text-xs);
-  color: var(--text-secondary);
-  line-height: 1.4;
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
+  line-height: tokens.$line-height-normal;
 }
 
 /* 操作按钮 */
 .action-buttons {
-  display: flex;
-  gap: 12px;
-  margin-top: 10px;
+  @include utils.flex-row(tokens.$spacing-3, center);
+  margin-top: tokens.$spacing-sm;
+
+  .btn {
+    @include utils.btn-base;
+    flex: 1;
+
+    &.btn-primary {
+      @include utils.btn-primary;
+    }
+
+    &.btn-secondary {
+      @include utils.btn-secondary;
+    }
+  }
 }
 
-/* 响应式设�? */
-@media (width <= 768px) {
+.btn-icon {
+  font-size: tokens.$font-size-base;
+}
+
+.btn-text {
+  font-weight: tokens.$font-weight-medium;
+}
+
+/* 响应式设计 */
+@include utils.mobile {
   .hero-detail {
     height: 600px;
   }
@@ -507,27 +486,27 @@ const saveAdjustments = (): void => {
 
   .action-buttons {
     flex-direction: column;
-  }
 
-  .action-buttons .btn {
-    width: 100%;
+    .btn {
+      width: 100%;
+    }
   }
 }
 
 /* 横屏手机适配 */
-@media (orientation: landscape) and (height <= 600px) {
+@include utils.landscape-mobile {
   .detail-section {
-    padding: 10px;
-    gap: 10px;
+    padding: tokens.$spacing-sm;
+    gap: tokens.$spacing-sm;
   }
 
   .adjustment-controls {
-    gap: 10px;
+    gap: tokens.$spacing-sm;
   }
 
   .adjustment-input {
     width: 60px;
-    padding: 4px 8px;
+    padding: tokens.$spacing-xs;
   }
 }
 </style>

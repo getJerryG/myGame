@@ -35,65 +35,63 @@ defineEmits(['toggle-inventory', 'show-achievements', 'go-to-lottery']);
 </script>
 
 <style lang="scss" scoped>
+
 .action-section {
-  margin-top: var(--space-4);
+  margin-top: tokens.$space-4;
 }
 
 .section-title {
-  font-size: var(--text-lg);
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
-  margin-bottom: var(--space-3);
+  font-size: tokens.$font-size-lg;
+  font-weight: tokens.$font-weight-semibold;
+  color: tokens.$text-primary;
+  margin-bottom: tokens.$space-3;
 }
 
 .action-buttons {
-  display: flex;
-  gap: var(--space-3);
+  @include utils.flex-row(tokens.$space-3, center, flex-start);
 }
 
 .action-btn {
-  background-color: var(--bg-light);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-lg);
-  padding: var(--space-3) var(--space-4);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-1);
+  background-color: tokens.$bg-light;
+  border: 1px solid tokens.$border-light;
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$space-3 tokens.$space-4;
+  @include utils.flex-col(tokens.$space-1, center, center);
+
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all tokens.$transition-fast;
   min-width: 100px;
-}
 
-.action-btn:hover {
-  background-color: var(--border-light);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
+  &:hover {
+    background-color: tokens.$border-light;
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-md;
+  }
 
-.action-btn:active {
-  transform: translateY(0);
+  &:active {
+    transform: translateY(0);
+  }
 }
 
 .btn-icon {
-  font-size: var(--text-2xl);
+  font-size: tokens.$font-size-2xl;
 }
 
 .btn-text {
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  color: var(--text-primary);
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-medium;
+  color: tokens.$text-primary;
 }
 
 .inventory-btn {
-  color: var(--success-green);
+  color: tokens.$success-green;
 }
 
 .achievement-btn {
-  color: var(--primary-gold);
+  color: tokens.$primary-gold;
 }
 
 .lottery-btn {
-  color: #8b5cf6;
+  color: tokens.$lottery-purple;
 }
 </style>

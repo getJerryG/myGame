@@ -111,139 +111,128 @@ const claimCumulativeReward = (threshold: number): void => {
 </script>
 
 <style lang="scss" scoped>
+
 .cumulative-rewards-panel-vertical {
-  display: flex;
-  flex-direction: column;
+  @include utils.flex-col(tokens.$spacing-0);
   height: 100%;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-lg;
+  box-shadow: tokens.$shadow-md;
+  border: 1px solid tokens.$border-light;
   overflow: hidden;
 }
 
 .panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 15px;
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #e0e0e0;
-}
+  @include utils.flex-between;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  background-color: tokens.$bg-light;
+  border-bottom: 1px solid tokens.$border-light;
 
-.panel-header h3 {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 600;
+  h3 {
+    margin: 0;
+    font-size: tokens.$font-size-base;
+    font-weight: tokens.$font-weight-semibold;
+    color: tokens.$text-primary;
+  }
 }
 
 .draw-count-info {
-  font-size: 14px;
-  color: #666;
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-secondary;
 }
 
 .progress-bar-container {
-  padding: 10px 15px;
-  background-color: #f9f9f9;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  background-color: tokens.$bg-light;
 }
 
 .progress-info {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
-  font-size: 12px;
-  color: #666;
+  @include utils.flex-between;
+  margin-bottom: tokens.$spacing-xs;
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
 }
 
 .progress-bar {
-  height: 8px;
-  background-color: #e0e0e0;
-  border-radius: 4px;
-  overflow: hidden;
+  @include utils.progress-bar;
 }
 
 .progress-fill {
-  height: 100%;
-  background-color: #4caf50;
-  transition: width 0.3s ease;
+  @include utils.progress-fill(tokens.$success);
 }
 
 .vertical-rewards-list {
   flex: 1;
   overflow-y: auto;
-  padding: 0 15px 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  padding: 0 tokens.$spacing-md tokens.$spacing-md;
+  @include utils.flex-col(tokens.$spacing-md);
+  @include utils.custom-scrollbar;
 }
 
 .rewards-section {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+  @include utils.flex-col(tokens.$spacing-sm);
 
-.rewards-section h4 {
-  margin: 0;
-  font-size: 14px;
-  color: #333;
-  padding: 8px 0;
-  border-bottom: 1px solid #e0e0e0;
+  h4 {
+    margin: 0;
+    font-size: tokens.$font-size-sm;
+    color: tokens.$text-primary;
+    padding: tokens.$spacing-sm 0;
+    border-bottom: 1px solid tokens.$border-light;
+  }
 }
 
 .vertical-reward-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-}
+  @include utils.flex-between;
+  padding: tokens.$spacing-sm;
+  border-radius: tokens.$radius-sm;
+  transition: all tokens.$transition-fast;
 
-.vertical-reward-item.available {
-  background-color: #e8f5e8;
-  border: 1px solid #c8e6c9;
-}
+  &.available {
+    background-color: rgb(16 185 129 / 10%);
+    border: 1px solid tokens.$success;
+  }
 
-.vertical-reward-item.unreached {
-  background-color: #f9f9f9;
-  border: 1px solid #e0e0e0;
-  opacity: 0.7;
+  &.unreached {
+    background-color: tokens.$bg-light;
+    border: 1px solid tokens.$border-light;
+    opacity: 0.7;
+  }
 }
 
 .reward-info {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
+  @include utils.flex-col(3px, flex-start);
 }
 
 .threshold {
-  font-weight: bold;
-  color: #333;
-  font-size: 14px;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
+  font-size: tokens.$font-size-sm;
 }
 
 .reward-name {
-  color: #666;
-  font-size: 13px;
+  color: tokens.$text-secondary;
+  font-size: tokens.$font-size-xs;
 }
 
 .claim-button {
-  padding: 6px 12px;
-  background-color: #4caf50;
+  padding: tokens.$spacing-xs tokens.$spacing-sm;
+  background-color: tokens.$success;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: tokens.$radius-sm;
   cursor: pointer;
-  font-size: 12px;
-  transition: background-color 0.2s;
-}
+  font-size: tokens.$font-size-xs;
+  font-weight: tokens.$font-weight-medium;
+  transition: all tokens.$transition-fast;
 
-.claim-button:hover {
-  background-color: #45a049;
+  &:hover {
+    background-color: #059669;
+    transform: translateY(-1px);
+  }
 }
 
 .progress-text {
-  font-size: 12px;
-  color: #999;
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-muted;
 }
 </style>

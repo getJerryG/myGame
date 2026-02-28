@@ -299,182 +299,172 @@ const applyFilters = () => {
 </script>
 
 <style lang="scss" scoped>
+
 .event-log-app {
-  display: flex;
-  flex-direction: column;
+  @include utils.flex-col(0, stretch, flex-start);
   height: 100%;
-  background-color: rgb(26 26 46 / 50%);
-  color: #fff;
+  background-color: tokens.$bg-light;
+  color: tokens.$text-primary;
 
   .app-header {
-    padding: 16px;
-    border-bottom: 1px solid rgb(74 158 255 / 20%);
-    background-color: rgb(0 0 0 / 10%);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: tokens.$spacing-md;
+    border-bottom: 1px solid rgba(tokens.$primary-blue, 0.2);
+    background-color: tokens.$bg-light;
+    @include utils.flex-between;
 
     h2 {
       margin: 0;
-      font-size: 20px;
-      color: #fff;
+      font-size: tokens.$font-size-xl;
+      color: tokens.$text-primary;
     }
 
     .filter-btn {
-      padding: 8px 16px;
-      background-color: rgb(74 158 255 / 30%);
-      border: 1px solid rgb(74 158 255 / 50%);
-      color: #fff;
-      border-radius: 4px;
+      padding: tokens.$spacing-sm tokens.$spacing-md;
+      background-color: rgba(tokens.$primary-blue, 0.3);
+      border: 1px solid rgba(tokens.$primary-blue, 0.5);
+      color: tokens.$text-primary;
+      border-radius: tokens.$radius-sm;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all tokens.$transition-fast;
 
       &:hover {
-        background-color: rgb(74 158 255 / 50%);
+        background-color: rgba(tokens.$primary-blue, 0.5);
       }
     }
   }
 
   .app-tabs {
-    display: flex;
-    background-color: rgb(0 0 0 / 10%);
-    border-bottom: 1px solid rgb(74 158 255 / 20%);
+    @include utils.flex-row(0, center, flex-start);
+    background-color: tokens.$bg-light;
+    border-bottom: 1px solid rgba(tokens.$primary-blue, 0.2);
 
     .tab-btn {
       flex: 1;
-      padding: 12px;
+      padding: tokens.$spacing-md;
       background: transparent;
       border: none;
-      color: #b0b0b0;
-      font-size: 14px;
-      font-weight: 500;
+      color: tokens.$text-muted;
+      font-size: tokens.$font-size-sm;
+      font-weight: tokens.$font-weight-medium;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all tokens.$transition-fast;
 
       &:hover {
-        background-color: rgb(74 158 255 / 20%);
-        color: #fff;
+        background-color: rgba(tokens.$primary-blue, 0.2);
+        color: tokens.$text-primary;
       }
 
       &.active {
-        background-color: rgb(74 158 255 / 30%);
-        color: #fff;
-        border-bottom: 2px solid #4a9eff;
+        background-color: rgba(tokens.$primary-blue, 0.3);
+        color: tokens.$text-primary;
+        border-bottom: 2px solid tokens.$primary-blue;
       }
     }
   }
 
   .app-content {
     flex: 1;
-    padding: 16px;
+    padding: tokens.$spacing-md;
     overflow-y: auto;
 
     .empty-state {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      @include utils.flex-center;
       height: 200px;
-      color: #b0b0b0;
-      font-size: 16px;
+      color: tokens.$text-muted;
+      font-size: tokens.$font-size-base;
     }
 
     .event-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      @include utils.flex-col(tokens.$spacing-md);
 
       .event-item {
-        background-color: rgb(0 0 0 / 20%);
-        border: 1px solid rgb(74 158 255 / 20%);
-        border-radius: 8px;
-        padding: 16px;
-        transition: all 0.2s ease;
+        background-color: tokens.$bg-light;
+        border: 1px solid rgba(tokens.$primary-blue, 0.2);
+        border-radius: tokens.$radius-md;
+        padding: tokens.$spacing-md;
+        transition: all tokens.$transition-fast;
 
         &:hover {
-          border-color: rgb(74 158 255 / 50%);
-          box-shadow: 0 0 10px rgb(74 158 255 / 10%);
+          border-color: rgba(tokens.$primary-blue, 0.5);
+          box-shadow: 0 0 10px rgba(tokens.$primary-blue, 0.1);
         }
 
         .event-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 12px;
+          @include utils.flex-between;
+          margin-bottom: tokens.$spacing-md;
 
           .event-type {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 500;
+            padding: tokens.$spacing-xs tokens.$spacing-sm;
+            border-radius: tokens.$radius-sm;
+            font-size: tokens.$font-size-xs;
+            font-weight: tokens.$font-weight-medium;
 
             &.technical {
-              background-color: rgb(255 107 107 / 30%);
-              color: #ff6b6b;
+              background-color: rgba(tokens.$error, 0.3);
+              color: tokens.$error;
             }
 
             &.operation {
-              background-color: rgb(74 158 255 / 30%);
-              color: #4a9eff;
+              background-color: rgba(tokens.$primary-blue, 0.3);
+              color: tokens.$primary-blue;
             }
 
             &.market {
-              background-color: rgb(147 107 255 / 30%);
-              color: #936bff;
+              background-color: rgba(tokens.$lottery-purple, 0.3);
+              color: tokens.$lottery-purple;
             }
           }
 
           .event-date {
-            font-size: 12px;
-            color: #b0b0b0;
+            font-size: tokens.$font-size-xs;
+            color: tokens.$text-muted;
           }
         }
 
         .event-body {
-          margin-bottom: 12px;
+          margin-bottom: tokens.$spacing-md;
 
           .event-title {
-            margin: 0 0 8px;
-            font-size: 16px;
-            color: #fff;
+            margin: 0 0 tokens.$spacing-sm;
+            font-size: tokens.$font-size-base;
+            color: tokens.$text-primary;
           }
 
           .event-description {
             margin: 0;
-            font-size: 14px;
-            color: #b0b0b0;
-            line-height: 1.5;
+            font-size: tokens.$font-size-sm;
+            color: tokens.$text-muted;
+            line-height: tokens.$line-height-normal;
           }
         }
 
         .event-footer {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
+          @include utils.flex-col(tokens.$spacing-sm);
 
           .event-solution,
           .event-impact {
-            font-size: 14px;
+            font-size: tokens.$font-size-sm;
 
             strong {
-              color: #fff;
+              color: tokens.$text-primary;
             }
           }
 
           .event-impact {
             &.resolved {
-              color: #52c41a;
+              color: tokens.$success;
             }
 
             &.positive {
-              color: #52c41a;
+              color: tokens.$success;
             }
 
             &.negative {
-              color: #ff6b6b;
+              color: tokens.$error;
             }
 
             &.neutral {
-              color: #faad14;
+              color: tokens.$warning;
             }
           }
         }
@@ -485,90 +475,79 @@ const applyFilters = () => {
 
 /* 筛选弹窗样式 */
 .modal-overlay {
-  position: fixed;
-  inset: 0;
-  background-color: rgb(0 0 0 / 50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+  @include utils.modal-overlay;
 }
 
 .modal-content {
-  background-color: rgb(26 26 46 / 95%);
-  border: 1px solid rgb(74 158 255 / 30%);
-  border-radius: 8px;
+  background-color: tokens.$bg-secondary;
+  border: 1px solid rgba(tokens.$primary-blue, 0.3);
+  border-radius: tokens.$radius-md;
   width: 90%;
   max-width: 500px;
-  box-shadow: 0 4px 20px rgb(0 0 0 / 30%);
+  box-shadow: tokens.$shadow-xl;
 
   .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px;
-    border-bottom: 1px solid rgb(74 158 255 / 20%);
+    @include utils.flex-between;
+    padding: tokens.$spacing-md;
+    border-bottom: 1px solid rgba(tokens.$primary-blue, 0.2);
 
     h3 {
       margin: 0;
-      font-size: 18px;
-      color: #fff;
+      font-size: tokens.$font-size-lg;
+      color: tokens.$text-primary;
     }
 
     .close-btn {
       background: transparent;
       border: none;
-      color: #b0b0b0;
-      font-size: 24px;
+      color: tokens.$text-muted;
+      font-size: tokens.$font-size-2xl;
       cursor: pointer;
-      transition: color 0.2s ease;
+      transition: color tokens.$transition-fast;
 
       &:hover {
-        color: #fff;
+        color: tokens.$text-primary;
       }
     }
   }
 
   .modal-body {
-    padding: 16px;
+    padding: tokens.$spacing-md;
 
     .filter-options {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      @include utils.flex-col(tokens.$spacing-md);
 
       .filter-group {
         .filter-label {
           display: block;
-          margin-bottom: 8px;
-          font-size: 14px;
-          font-weight: 500;
-          color: #fff;
+          margin-bottom: tokens.$spacing-sm;
+          font-size: tokens.$font-size-sm;
+          font-weight: tokens.$font-weight-medium;
+          color: tokens.$text-primary;
         }
 
         .filter-buttons {
-          display: flex;
+          @include utils.flex-row(tokens.$spacing-sm, center, flex-start);
           flex-wrap: wrap;
-          gap: 8px;
 
           .filter-option-btn {
-            padding: 8px 16px;
-            background-color: rgb(0 0 0 / 30%);
-            border: 1px solid rgb(74 158 255 / 30%);
-            color: #b0b0b0;
-            border-radius: 4px;
+            padding: tokens.$spacing-sm tokens.$spacing-md;
+            background-color: tokens.$bg-light;
+            border: 1px solid rgba(tokens.$primary-blue, 0.3);
+            color: tokens.$text-muted;
+            border-radius: tokens.$radius-sm;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all tokens.$transition-fast;
 
             &:hover {
-              border-color: rgb(74 158 255 / 50%);
-              color: #fff;
+              border-color: rgba(tokens.$primary-blue, 0.5);
+              color: tokens.$text-primary;
             }
 
             &.active {
-              background-color: rgb(74 158 255 / 30%);
-              border-color: rgb(74 158 255 / 50%);
-              color: #fff;
+              background-color: rgba(tokens.$primary-blue, 0.3);
+              border-color: rgba(tokens.$primary-blue, 0.5);
+              color: tokens.$text-primary;
             }
           }
         }
@@ -577,40 +556,38 @@ const applyFilters = () => {
   }
 
   .modal-footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-    padding: 16px;
-    border-top: 1px solid rgb(74 158 255 / 20%);
+    @include utils.flex-row(tokens.$spacing-sm, center, flex-end);
+    padding: tokens.$spacing-md;
+    border-top: 1px solid rgba(tokens.$primary-blue, 0.2);
 
     .reset-btn,
     .apply-btn {
-      padding: 8px 16px;
-      border-radius: 4px;
-      font-size: 14px;
-      font-weight: 500;
+      padding: tokens.$spacing-sm tokens.$spacing-md;
+      border-radius: tokens.$radius-sm;
+      font-size: tokens.$font-size-sm;
+      font-weight: tokens.$font-weight-medium;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all tokens.$transition-fast;
     }
 
     .reset-btn {
-      background-color: rgb(0 0 0 / 30%);
-      border: 1px solid rgb(74 158 255 / 30%);
-      color: #b0b0b0;
+      background-color: tokens.$bg-light;
+      border: 1px solid rgba(tokens.$primary-blue, 0.3);
+      color: tokens.$text-muted;
 
       &:hover {
-        border-color: rgb(74 158 255 / 50%);
-        color: #fff;
+        border-color: rgba(tokens.$primary-blue, 0.5);
+        color: tokens.$text-primary;
       }
     }
 
     .apply-btn {
-      background-color: rgb(74 158 255 / 30%);
-      border: 1px solid rgb(74 158 255 / 50%);
-      color: #fff;
+      background-color: rgba(tokens.$primary-blue, 0.3);
+      border: 1px solid rgba(tokens.$primary-blue, 0.5);
+      color: tokens.$text-primary;
 
       &:hover {
-        background-color: rgb(74 158 255 / 50%);
+        background-color: rgba(tokens.$primary-blue, 0.5);
       }
     }
   }

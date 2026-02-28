@@ -1,671 +1,515 @@
 <template>
-  <ApplicationWindow
-    title="游戏发布"
-    title-icon="📦"
-    :sidebar-items="sidebarItems"
-    :active-item-id="activeModule"
-    @update:active-item-id="activeModule = $event"
-    @item-click="handleModuleClick"
-  >
-    <template #header-actions>
+  <div class="game-release-app">
+    <!-- 应用头部 -->
+    <div class="app-header">
+      <h2 class="app-title">游戏发布</h2>
       <button
-        class="btn-primary"
-        @click="createNewVersion"
+        class="close-btn"
+        @click="closeApp"
       >
-        发布新版本
+        ×
       </button>
-    </template>
+    </div>
 
-    <!-- 版本管理 -->
-    <section
-      v-if="activeModule === 'version-management'"
-      class="module-section"
-    >
-      <div class="section-header">
-        <h2>版本管理</h2>
+    <!-- 应用内容 -->
+    <div class="app-content">
+      <!-- 发布状态 -->
+      <div class="release-status">
+        <div
+          class="status-card"
+          :class="releaseStatus"
+        >
+          <div class="status-icon">{{ getStatusIcon() }}</div>
+          <div class="status-text">{{ getStatusText() }}</div>
+        </div>
       </div>
 
-      <div class="version-info">
-        <div class="version-details">
-          <p class="version-change">
-            <strong>发布版本</strong>{{ currentVersion.oldVersion }} →
-            <span class="text-gold">{{ currentVersion.newVersion }}</span>
-          </p>
-          <p><strong>游戏时间</strong>{{ currentVersion.gameDate }}</p>
-          <p class="update-description-title">
-            <strong>更新说明</strong>
-          </p>
-          <div class="update-description-list">
-            <span class="update-description-item">
-              <span class="text-gold">{{ currentVersion.description.heroes }}</span>
-              个英雄
-            </span>
-            <span class="update-description-item">
-              <span class="text-gold">{{ currentVersion.description.skins }}</span>
-              个皮肤
-            </span>
-            <span class="update-description-item">
-              <span class="text-gold">{{ currentVersion.description.activities }}</span>
-              个活动
-            </span>
-            <span class="update-description-item">
-              <span class="text-gold">{{ currentVersion.description.optimizations }}</span>
-              项优化
-            </span>
+      <!-- 发布配置 -->
+      <div class="release-config">
+        <h3 class="section-title">发布配置</h3>
+
+        <div class="config-form">
+          <div class="form-group">
+            <label class="form-label">游戏版本</label>
+            <input
+              v-model="releaseConfig.version"
+              type="text"
+              class="form-input"
+              placeholder="例如: 1.0.0"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">更新说明</label>
+            <textarea
+              v-model="releaseConfig.changelog"
+              class="form-textarea"
+              rows="4"
+              placeholder="输入本次更新的说明..."
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">发布渠道</label>
+            <div class="channel-list">
+              <label
+                v-for="channel in channels"
+                :key="channel.id"
+                class="channel-item"
+              >
+                <input
+                  v-model="releaseConfig.selectedChannels"
+                  type="checkbox"
+                  :value="channel.id"
+                  class="channel-checkbox"
+                />
+                <span class="channel-name">{{ channel.name }}</span>
+              </label>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="version-history">
-        <h3>历史版本</h3>
-        <table class="version-table">
-          <thead>
-            <tr>
-              <th>版本号</th>
-              <th>版本变更</th>
-              <th>游戏时间</th>
-              <th>更新说明</th>
-              <th>操作</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-if="versionHistory.length > 0">
-              <td>{{ versionHistory[0].version }}</td>
-              <td>
-                {{ versionHistory[0].oldVersion }} →
-                {{ versionHistory[0].newVersion }}
-              </td>
-              <td>{{ versionHistory[0].gameDate }}</td>
-              <td>
-                <div class="compact-description">
-                  {{ versionHistory[0].description.heroes }}英雄 / {{ versionHistory[0].description.skins }}皮肤 /
-                  {{ versionHistory[0].description.activities }}活动 /
-                  {{ versionHistory[0].description.optimizations }}优化
-                </div>
-              </td>
-              <td>
-                <button
-                  class="btn-compare"
-                  @click="compareVersion(versionHistory[0])"
-                >
-                  对比
-                </button>
-                <button
-                  class="btn-rollback"
-                  @click="rollbackVersion(versionHistory[0])"
-                >
-                  回滚
-                </button>
-              </td>
-            </tr>
-            <tr v-else>
-              <td
-                colspan="5"
-                style="text-align: center; color: var(--app-text-secondary)"
-              >
-                暂无历史版本
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- 发布结果展示 -->
-    <section
-      v-if="activeModule === 'release-results'"
-      class="module-section"
-    >
-      <div class="section-header">
-        <h2>发布结果展示</h2>
-        <select
-          class="select-filter"
-          v-model="releaseFilter"
-        >
-          <option value="all">全部</option>
-          <option value="success">成功</option>
-          <option value="failed">失败</option>
-          <option value="pending">待发布</option>
-        </select>
-      </div>
-
-      <div class="release-stats">
-        <div class="stat-card">
-          <h3>{{ releaseStats.total }}</h3>
-          <p>总发布项</p>
-        </div>
-        <div class="stat-card success">
-          <h3>{{ releaseStats.success }}</h3>
-          <p>成功</p>
-        </div>
-        <div class="stat-card failed">
-          <h3>{{ releaseStats.failed }}</h3>
-          <p>失败</p>
-        </div>
-        <div class="stat-card pending">
-          <h3>{{ releaseStats.pending }}</h3>
-          <p>待发布</p>
-        </div>
-      </div>
-
+      <!-- 发布历史 -->
       <div class="release-history">
-        <table class="release-table">
-          <thead>
-            <tr>
-              <th>项目类型</th>
-              <th>项目名称</th>
-              <th>版本</th>
-              <th>状态</th>
-              <th>发布时间</th>
-              <th>操作员</th>
-              <th>操作</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="release in filteredReleases"
-              :key="release.id"
-            >
-              <td>{{ release.type }}</td>
-              <td>{{ release.name }}</td>
-              <td>{{ release.version }}</td>
-              <td>
-                <span
-                  class="status-badge"
-                  :class="release.status"
-                  >{{ release.status }}</span
-                >
-              </td>
-              <td>{{ release.releaseTime }}</td>
-              <td>{{ release.operator }}</td>
-              <td>
-                <button
-                  class="btn-preview"
-                  @click="viewReleaseDetail(release)"
-                >
-                  详情
-                </button>
-                <button
-                  class="btn-logs"
-                  @click="viewReleaseLogs(release)"
-                >
-                  日志
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <h3 class="section-title">发布历史</h3>
+        <div class="history-list">
+          <div
+            v-for="release in releaseHistory"
+            :key="release.id"
+            class="history-item"
+          >
+            <div class="history-header">
+              <span class="history-version">v{{ release.version }}</span>
+              <span class="history-date">{{ release.date }}</span>
+            </div>
+            <div class="history-channels">
+              <span
+                v-for="channel in release.channels"
+                :key="channel"
+                class="channel-tag"
+              >
+                {{ channel }}
+              </span>
+            </div>
+            <div class="history-changelog">{{ release.changelog }}</div>
+          </div>
+        </div>
       </div>
-    </section>
-  </ApplicationWindow>
+
+      <!-- 操作按钮 -->
+      <div class="app-actions">
+        <button
+          class="action-btn primary"
+          :disabled="isReleasing"
+          @click="startRelease"
+        >
+          {{ isReleasing ? '发布中...' : '开始发布' }}
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, inject } from 'vue';
-import { useHeroSkinStore } from '@/stores/heroSkinStore';
-import { useSimulationCareerSystemStore } from '@/stores/simulation/simulationCareerSystemStore';
-import { useSimulationStore } from '@/stores/simulationStore';
-import { useSimulationGameStateStore } from '@/stores/simulation/simulationGameStateStore';
-import ApplicationWindow from '@/components/common/window/ApplicationWindow.vue';
-import type { SidebarItem } from '@/components/common/window/ApplicationWindow.vue';
+import { ref } from 'vue';
 
-interface Version {
+// 发布状态
+const releaseStatus = ref<'idle' | 'releasing' | 'success' | 'failed'>('idle');
+const isReleasing = ref(false);
+
+// 发布配置
+const releaseConfig = ref({
+  version: '1.0.0',
+  changelog: '',
+  selectedChannels: [] as string[],
+});
+
+// 发布渠道
+const channels = ref([
+  { id: 'appstore', name: 'App Store' },
+  { id: 'googleplay', name: 'Google Play' },
+  { id: 'steam', name: 'Steam' },
+  { id: 'epic', name: 'Epic Games' },
+  { id: 'tap', name: 'TapTap' },
+]);
+
+// 发布历史
+interface Release {
+  id: number;
   version: string;
-  oldVersion: string;
-  newVersion: string;
-  gameDate: string;
-  description: {
-    heroes: number;
-    skins: number;
-    activities: number;
-    optimizations: number;
-  };
+  date: string;
+  channels: string[];
+  changelog: string;
 }
 
-interface ReleaseItem {
-  id: string;
-  type: string;
-  name: string;
-  version: string;
-  status: 'success' | 'failed' | 'pending';
-  releaseTime: string;
-  operator: string;
-}
-
-const heroSkinStore = useHeroSkinStore();
-const _careerSystemStore = useSimulationCareerSystemStore();
-
-const sidebarItems: SidebarItem[] = [
-  { id: 'version-management', name: '版本管理', icon: '📦' },
-  { id: 'release-results', name: '发布结果展示', icon: '📊' },
-];
-
-const activeModule = ref('version-management');
-const releaseFilter = ref('all');
-
-const updateDescription = computed(() => {
-  return {
-    heroes: heroSkinStore.heroes.length,
-    skins: heroSkinStore.skins.length,
-    activities: 0,
-    optimizations: 0,
-  };
-});
-
-const currentVersion = ref<Version>({
-  version: '1.1.0',
-  oldVersion: '1.0.1',
-  newVersion: '1.1.0',
-  gameDate: '2024-01-01',
-  description: updateDescription.value,
-});
-
-watch(
-  updateDescription,
-  (newDescription) => {
-    currentVersion.value.description = newDescription;
-  },
-  { deep: true }
-);
-
-const nextVersionInfo = computed(() => {
-  const currentVer = currentVersion.value.newVersion;
-  const parts = currentVer.split('.').map(Number);
-
-  parts[2] = (parts[2] || 0) + 1;
-  const nextVer = parts.join('.');
-
-  return {
-    version: nextVer,
-    newVersion: nextVer,
-    oldVersion: currentVer,
-  };
-});
-
-const versionHistory = ref<Version[]>([]);
-
-const releaseHistory = ref<ReleaseItem[]>([
+const releaseHistory = ref<Release[]>([
   {
-    id: '1',
-    type: '英雄',
-    name: '弓箭手',
-    version: '1.1.0',
-    status: 'success',
-    releaseTime: '2024-02-01 10:00:00',
-    operator: '管理员',
+    id: 1,
+    version: '0.9.0',
+    date: '2024-01-15',
+    channels: ['App Store', 'Google Play'],
+    changelog: 'Beta版本发布，包含基础游戏功能',
   },
   {
-    id: '2',
-    type: '皮肤',
-    name: '剑圣-传说皮肤',
-    version: '1.0.0',
-    status: 'success',
-    releaseTime: '2024-01-15 14:30:00',
-    operator: '管理员',
-  },
-  {
-    id: '3',
-    type: '活动',
-    name: '新版本更新活动',
-    version: '1.1.0',
-    status: 'failed',
-    releaseTime: '2024-02-01 09:00:00',
-    operator: '管理员',
-  },
-  {
-    id: '4',
-    type: '英雄',
-    name: '法师',
-    version: '1.0.0',
-    status: 'success',
-    releaseTime: '2024-01-15 10:00:00',
-    operator: '管理员',
-  },
-  {
-    id: '5',
-    type: '活动',
-    name: '春节活动',
-    version: '1.0.0',
-    status: 'pending',
-    releaseTime: '2024-02-01 00:00:00',
-    operator: '管理员',
+    id: 2,
+    version: '0.8.0',
+    date: '2024-01-01',
+    channels: ['TestFlight'],
+    changelog: 'Alpha测试版本',
   },
 ]);
 
-const filteredReleases = computed(() => {
-  if (releaseFilter.value === 'all') {
-    return releaseHistory.value;
-  }
-  return releaseHistory.value.filter((release) => release.status === releaseFilter.value);
-});
-
-const releaseStats = computed(() => {
-  return {
-    total: releaseHistory.value.length,
-    success: releaseHistory.value.filter((r) => r.status === 'success').length,
-    failed: releaseHistory.value.filter((r) => r.status === 'failed').length,
-    pending: releaseHistory.value.filter((r) => r.status === 'pending').length,
+// 获取状态图标
+const getStatusIcon = (): string => {
+  const icons: Record<string, string> = {
+    idle: '📦',
+    releasing: '🚀',
+    success: '✅',
+    failed: '❌',
   };
-});
-
-const viewReleaseDetail = (release: ReleaseItem): void => {
-  alert(
-    `查看${release.name}的发布详情\n版本: ${release.version}\n状�? ${release.status}\n发布时间: ${release.releaseTime}`
-  );
+  return icons[releaseStatus.value] || '📦';
 };
 
-const viewReleaseLogs = (release: ReleaseItem): void => {
-  alert(
-    `查看${release.name}的发布日志\n发布时间: ${release.releaseTime}\n操作�? ${release.operator}\n状�? ${release.status}`
-  );
-};
-
-const compareVersion = (version: Version): void => {
-  alert(
-    `对比版本\n当前版本: ${currentVersion.value.version}\n对比版本: ${version.version}\n\n当前版本变更: ${currentVersion.value.oldVersion} �?${currentVersion.value.newVersion}\n对比版本变更: ${version.oldVersion} �?${version.newVersion}\n\n当前版本游戏时间: ${currentVersion.value.gameDate}\n对比版本游戏时间: ${version.gameDate}\n\n当前版本更新说明:\n${currentVersion.value.description.heroes}个英�?/ ${currentVersion.value.description.skins}个皮�?/ ${currentVersion.value.description.activities}个活�?/ ${currentVersion.value.description.optimizations}项优化\n\n对比版本更新说明:\n${version.description.heroes}个英�?/ ${version.description.skins}个皮�?/ ${version.description.activities}个活�?/ ${version.description.optimizations}项优化`
-  );
-};
-
-const rollbackVersion = (version: Version): void => {
-  if (confirm(`确定要回滚到版本 ${version.version} 吗？`)) {
-    currentVersion.value = { ...version };
-    alert(`已回滚到版本 ${version.version}`);
-  }
-};
-
-const addExp = inject('addExp', (_amount: number) => {});
-
-const simulationStore = useSimulationStore();
-const gameStateStore = useSimulationGameStateStore();
-
-const createNewVersion = (): void => {
-  simulationStore.nextDay();
-
-  const gameDate = gameStateStore.currentDate;
-  const formattedDate = `${gameDate.year}-${String(gameDate.month).padStart(2, '0')}-${String(gameDate.day).padStart(2, '0')}`;
-
-  const newVersion: Version = {
-    version: nextVersionInfo.value.version,
-    oldVersion: nextVersionInfo.value.oldVersion,
-    newVersion: nextVersionInfo.value.newVersion,
-    gameDate: formattedDate,
-    description: updateDescription.value,
+// 获取状态文本
+const getStatusText = (): string => {
+  const texts: Record<string, string> = {
+    idle: '准备发布',
+    releasing: '正在发布...',
+    success: '发布成功',
+    failed: '发布失败',
   };
-
-  currentVersion.value = newVersion;
-
-  versionHistory.value.unshift(newVersion);
-
-  addExp(100);
+  return texts[releaseStatus.value] || '准备发布';
 };
 
-const handleModuleClick = (item: SidebarItem): void => {
-  activeModule.value = item.id;
+// 开始发布
+const startRelease = () => {
+  if (releaseConfig.value.selectedChannels.length === 0) {
+    alert('请至少选择一个发布渠道');
+    return;
+  }
+
+  isReleasing.value = true;
+  releaseStatus.value = 'releasing';
+
+  // 模拟发布过程
+  setTimeout(() => {
+    isReleasing.value = false;
+    releaseStatus.value = 'success';
+
+    // 添加到历史记录
+    const selectedChannelNames = channels.value
+      .filter((c) => releaseConfig.value.selectedChannels.includes(c.id))
+      .map((c) => c.name);
+
+    releaseHistory.value.unshift({
+      id: Date.now(),
+      version: releaseConfig.value.version,
+      date: new Date().toISOString().split('T')[0],
+      channels: selectedChannelNames,
+      changelog: releaseConfig.value.changelog || '无更新说明',
+    });
+
+    // 重置状态
+    setTimeout(() => {
+      releaseStatus.value = 'idle';
+    }, 3000);
+  }, 3000);
+};
+
+// 关闭应用
+const closeApp = () => {
+  window.history.back();
 };
 </script>
 
 <style lang="scss" scoped>
-.module-section {
-  background-color: rgb(26 26 46 / 95%);
-  border-radius: var(--app-radius-md);
-  padding: 1.5rem;
-  box-shadow: var(--app-shadow-secondary);
-  border: 1px solid var(--app-border-secondary);
-  color: var(--app-text-primary);
+
+.game-release-app {
+  @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
+  height: 100%;
+  background-color: tokens.$bg-lighter;
+  border-radius: tokens.$radius-lg;
+  overflow: hidden;
 }
 
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--app-border-secondary);
+.app-header {
+  @include utils.flex-between;
+  padding: tokens.$spacing-md tokens.$spacing-lg;
+  background: linear-gradient(135deg, tokens.$success 0%, #059669 100%);
+  color: tokens.$text-primary;
+
+  .app-title {
+    margin: 0;
+    font-size: tokens.$font-size-xl;
+    font-weight: tokens.$font-weight-bold;
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    color: tokens.$text-primary;
+    font-size: tokens.$font-size-2xl;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    @include utils.flex-center;
+    border-radius: 50%;
+    transition: all tokens.$transition-normal;
+
+    &:hover {
+      background-color: rgb(255 255 255 / 20%);
+    }
+  }
 }
 
-.section-header h2 {
-  margin: 0;
-  font-size: 1.3rem;
-  color: var(--app-text-primary);
+.app-content {
+  @include utils.flex-col(tokens.$spacing-lg, stretch, flex-start);
+  flex: 1;
+  padding: tokens.$spacing-xl;
+  overflow-y: auto;
 }
 
-.btn-primary {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.2s;
-  background-color: #4a9eff;
-  color: white;
+.release-status {
+  @include utils.flex-center;
+
+  .status-card {
+    @include utils.flex-col(tokens.$spacing-md, center, center);
+    padding: tokens.$spacing-xl;
+    border-radius: tokens.$radius-xl;
+    min-width: 200px;
+    transition: all tokens.$transition-normal;
+
+    &.idle {
+      background: linear-gradient(135deg, tokens.$bg-light 0%, tokens.$bg-lighter 100%);
+      border: 2px solid tokens.$border-light;
+    }
+
+    &.releasing {
+      background: linear-gradient(135deg, tokens.$primary 0%, tokens.$primary-dark 100%);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    &.success {
+      background: linear-gradient(135deg, tokens.$success 0%, #059669 100%);
+    }
+
+    &.failed {
+      background: linear-gradient(135deg, tokens.$error 0%, #dc2626 100%);
+    }
+
+    .status-icon {
+      font-size: 48px;
+    }
+
+    .status-text {
+      font-size: tokens.$font-size-lg;
+      font-weight: tokens.$font-weight-bold;
+      color: tokens.$text-primary;
+    }
+  }
 }
 
-.btn-primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px rgb(74 158 255 / 40%);
+  }
+
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgb(74 158 255 / 60%);
+  }
 }
 
-.version-info {
-  background-color: rgb(26 26 46 / 95%);
-  border: 1px solid var(--app-border-secondary);
-  border-radius: var(--app-radius-md);
-  padding: 1.5rem;
-  margin-bottom: 0;
+.release-config {
+  .section-title {
+    margin: 0 0 tokens.$spacing-md;
+    font-size: tokens.$font-size-lg;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$text-primary;
+  }
 }
 
-.version-info p {
-  margin: 0.25rem 0;
-  color: var(--app-text-secondary);
+.config-form {
+  @include utils.flex-col(tokens.$spacing-md, stretch, flex-start);
 }
 
-.version-change {
-  font-weight: bold;
+.form-group {
+  @include utils.flex-col(tokens.$spacing-sm, stretch, flex-start);
 }
 
-.update-description-title {
-  margin: 0.75rem 0 0.5rem;
-  font-weight: bold;
-  color: var(--app-text-primary);
+.form-label {
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-semibold;
+  color: tokens.$text-primary;
 }
 
-.update-description-list {
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-  margin: 0;
-  padding: 0;
-}
-
-.update-description-item {
-  display: inline-flex;
-  align-items: center;
-  color: var(--app-text-secondary);
-  margin: 0.25rem 0;
-}
-
-.update-description-item .text-gold {
-  margin-right: 0.25rem;
-}
-
-.version-history {
-  margin-top: 1.5rem;
-}
-
-.version-history h3 {
-  margin: 0 0 1rem;
-  color: var(--app-text-primary);
-}
-
-.version-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.version-table th,
-.version-table td {
-  padding: 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid var(--app-border-secondary);
-  color: var(--app-text-secondary);
-}
-
-.version-table th {
-  background-color: rgb(26 26 46 / 95%);
-  font-weight: bold;
-  color: var(--app-text-primary);
-}
-
-.version-table td {
-  background-color: rgb(26 26 46 / 95%);
-}
-
-.btn-compare,
-.btn-rollback,
-.btn-preview,
-.btn-logs {
-  padding: 0.4rem 0.8rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  transition: all 0.2s;
-  margin-right: 0.5rem;
-}
-
-.btn-compare {
-  background-color: #4a9eff;
-  color: white;
-}
-
-.btn-rollback {
-  background-color: #ff6b6b;
-  color: white;
-}
-
-.btn-preview {
-  background-color: #95a5a6;
-  color: white;
-}
-
-.btn-logs {
-  background-color: #f39c12;
-  color: white;
-}
-
-.btn-compare:hover,
-.btn-rollback:hover,
-.btn-preview:hover,
-.btn-logs:hover {
-  opacity: 0.9;
-}
-
-.select-filter {
-  padding: 0.5rem;
-  border: 1px solid var(--app-border-secondary);
-  border-radius: var(--app-radius-sm);
-  font-size: 0.9rem;
-  background-color: var(--app-bg-quaternary);
-  color: var(--app-text-primary);
+.form-input,
+.form-textarea {
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  font-size: tokens.$font-size-base;
+  border: 2px solid tokens.$border-light;
+  border-radius: tokens.$radius-md;
+  background-color: tokens.$bg-light;
+  color: tokens.$text-primary;
   outline: none;
+  transition: all tokens.$transition-normal;
+
+  &:focus {
+    border-color: tokens.$success;
+    box-shadow: 0 0 0 3px rgb(16 185 129 / 20%);
+  }
+
+  &::placeholder {
+    color: tokens.$text-muted;
+  }
 }
 
-.select-filter:focus {
-  border-color: var(--app-border-primary);
-  box-shadow: 0 0 0 2px rgb(74 158 255 / 20%);
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 
-.release-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+.channel-list {
+  @include utils.flex-row(tokens.$spacing-sm, center, flex-start);
+  flex-wrap: wrap;
 }
 
-.stat-card {
-  background-color: rgb(26 26 46 / 95%);
-  border: 1px solid var(--app-border-secondary);
-  border-radius: var(--app-radius-md);
-  padding: 1.5rem;
-  text-align: center;
-  transition: all 0.2s;
-}
+.channel-item {
+  @include utils.flex-row(tokens.$spacing-sm, center, flex-start);
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  background-color: tokens.$bg-light;
+  border: 2px solid tokens.$border-light;
+  border-radius: tokens.$radius-md;
+  cursor: pointer;
+  transition: all tokens.$transition-normal;
 
-.stat-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--app-shadow-secondary);
-}
+  &:hover {
+    border-color: tokens.$success;
+  }
 
-.stat-card.success {
-  border-color: #67c23a;
-}
+  &:has(.channel-checkbox:checked) {
+    background-color: rgb(16 185 129 / 20%);
+    border-color: tokens.$success;
+  }
 
-.stat-card.failed {
-  border-color: #ff6b6b;
-}
+  .channel-checkbox {
+    width: 18px;
+    height: 18px;
+    accent-color: tokens.$success;
+  }
 
-.stat-card.pending {
-  border-color: #f39c12;
-}
-
-.stat-card h3 {
-  margin: 0 0 0.5rem;
-  font-size: 2rem;
-  color: var(--app-text-primary);
-}
-
-.stat-card p {
-  margin: 0;
-  color: var(--app-text-secondary);
-  font-size: 0.9rem;
+  .channel-name {
+    font-size: tokens.$font-size-sm;
+    color: tokens.$text-primary;
+  }
 }
 
 .release-history {
-  margin-top: 1.5rem;
+  .section-title {
+    margin: 0 0 tokens.$spacing-md;
+    font-size: tokens.$font-size-lg;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$text-primary;
+  }
 }
 
-.release-table {
-  width: 100%;
-  border-collapse: collapse;
+.history-list {
+  @include utils.flex-col(tokens.$spacing-md, stretch, flex-start);
 }
 
-.release-table th,
-.release-table td {
-  padding: 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid var(--app-border-secondary);
-  color: var(--app-text-secondary);
-  background-color: rgb(26 26 46 / 95%);
+.history-item {
+  padding: tokens.$spacing-md;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  border: 1px solid tokens.$border-light;
+  transition: all tokens.$transition-normal;
+
+  &:hover {
+    border-color: tokens.$success;
+    box-shadow: 0 4px 15px rgb(16 185 129 / 20%);
+  }
+
+  .history-header {
+    @include utils.flex-between;
+    margin-bottom: tokens.$spacing-sm;
+
+    .history-version {
+      font-size: tokens.$font-size-lg;
+      font-weight: tokens.$font-weight-bold;
+      color: tokens.$success;
+    }
+
+    .history-date {
+      font-size: tokens.$font-size-sm;
+      color: tokens.$text-muted;
+    }
+  }
+
+  .history-channels {
+    @include utils.flex-row(tokens.$spacing-xs, center, flex-start);
+    margin-bottom: tokens.$spacing-sm;
+
+    .channel-tag {
+      padding: tokens.$spacing-xs tokens.$spacing-sm;
+      background-color: tokens.$bg-lighter;
+      border-radius: tokens.$radius-sm;
+      font-size: tokens.$font-size-xs;
+      color: tokens.$text-muted;
+    }
+  }
+
+  .history-changelog {
+    font-size: tokens.$font-size-sm;
+    color: tokens.$text-primary;
+    line-height: tokens.$line-height-normal;
+  }
 }
 
-.release-table th {
-  background-color: rgb(26 26 46 / 95%);
-  font-weight: bold;
-  color: var(--app-text-primary);
+.app-actions {
+  margin-top: auto;
+
+  .action-btn {
+    width: 100%;
+    padding: tokens.$spacing-md tokens.$spacing-xl;
+    font-size: tokens.$font-size-lg;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$text-primary;
+    background: linear-gradient(135deg, tokens.$success 0%, #059669 100%);
+    border: none;
+    border-radius: tokens.$radius-md;
+    cursor: pointer;
+    transition: all tokens.$transition-normal;
+    box-shadow: 0 4px 15px rgb(16 185 129 / 40%);
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgb(16 185 129 / 60%);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
 }
 
-.release-table tr:hover {
-  background-color: rgb(74 158 255 / 20%);
-}
+/* 响应式设计 */
+@media (width <= 768px) {
+  .app-content {
+    padding: tokens.$spacing-lg tokens.$spacing-md;
+  }
 
-.status-badge {
-  padding: 0.25rem 0.75rem;
-  border-radius: 12px;
-  font-size: 0.8rem;
-  font-weight: bold;
-}
+  .channel-list {
+    flex-direction: column;
+    align-items: stretch;
+  }
 
-.status-badge.success {
-  background-color: #67c23a;
-  color: white;
-}
-
-.status-badge.failed {
-  background-color: #ff6b6b;
-  color: white;
-}
-
-.status-badge.pending {
-  background-color: #f39c12;
-  color: white;
+  .channel-item {
+    width: 100%;
+  }
 }
 </style>

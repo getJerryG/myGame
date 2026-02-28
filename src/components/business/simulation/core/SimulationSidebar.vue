@@ -298,28 +298,28 @@ const toggleSubMenu = (menuName) => {
 };
 </script>
 
-<style lang=scss scoped>
+<style lang="scss" scoped>
+
 .sidebar {
-  width: 250px;
-  background-color: var(--bg-dark);
-  color: white;
+  width: tokens.$sidebar-width;
+  background-color: tokens.$bg-dark;
+  color: tokens.$text-primary;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 2px 0 5px rgb(0 0 0 / 10%);
+  @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
+  box-shadow: tokens.$shadow-md;
 }
 
 .sidebar-header {
-  padding: 20px;
-  background-color: var(--primary-dark-blue);
-  border-bottom: 1px solid var(--bg-medium);
+  padding: tokens.$spacing-lg;
+  background-color: tokens.$bg-tertiary;
+  border-bottom: 1px solid tokens.$border-medium;
 }
 
 .sidebar-title {
   margin: 0;
-  font-size: 20px;
-  font-weight: bold;
-  color: white;
+  font-size: tokens.$font-size-xl;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
 }
 
 .menu {
@@ -328,83 +328,82 @@ const toggleSubMenu = (menuName) => {
   margin: 0;
   flex: 1;
   overflow-y: auto;
+  @include utils.custom-scrollbar;
 }
 
 .menu-item {
-  border-bottom: 1px solid var(--bg-medium);
+  border-bottom: 1px solid tokens.$border-medium;
 }
 
 .menu-link {
-  display: flex;
-  align-items: center;
-  padding: 15px 20px;
+  @include utils.flex-row(tokens.$spacing-sm, center);
+  padding: tokens.$spacing-md tokens.$spacing-lg;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color tokens.$transition-normal;
   position: relative;
-}
 
-.menu-link:hover {
-  background-color: var(--bg-medium);
-}
+  &:hover {
+    background-color: tokens.$bg-medium;
+  }
 
-.menu-link.active {
-  background-color: var(--primary-dark-blue);
-  border-left: 4px solid var(--primary-color);
+  &.active {
+    background-color: tokens.$bg-tertiary;
+    border-left: 4px solid tokens.$primary;
+  }
 }
 
 .menu-icon {
-  margin-right: 10px;
-  font-size: 18px;
+  margin-right: tokens.$spacing-sm;
+  font-size: tokens.$font-size-lg;
 }
 
 .menu-text {
   flex: 1;
-  font-size: 16px;
+  font-size: tokens.$font-size-base;
 }
 
 .menu-arrow {
-  transition: transform 0.3s;
-  font-size: 12px;
-}
+  transition: transform tokens.$transition-normal;
+  font-size: tokens.$font-size-xs;
 
-.menu-arrow.rotated {
-  transform: rotate(90deg);
+  &.rotated {
+    transform: rotate(90deg);
+  }
 }
 
 .sub-menu {
   list-style: none;
   padding: 0;
   margin: 0;
-  background-color: var(--bg-medium);
+  background-color: tokens.$bg-medium;
 }
 
 .sub-menu-item {
-  border-bottom: 1px solid var(--bg-dark);
+  border-bottom: 1px solid tokens.$border-dark;
 }
 
 .sub-menu-link {
-  display: flex;
-  align-items: center;
-  padding: 12px 20px 12px 45px;
+  @include utils.flex-row(tokens.$spacing-sm, center);
+  padding: tokens.$spacing-sm tokens.$spacing-lg tokens.$spacing-sm 45px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color tokens.$transition-normal;
   text-decoration: none;
-  color: white;
-  font-size: 14px;
-}
+  color: tokens.$text-primary;
+  font-size: tokens.$font-size-sm;
 
-.sub-menu-link:hover {
-  background-color: var(--bg-dark);
-}
+  &:hover {
+    background-color: tokens.$bg-dark;
+  }
 
-.sub-menu-link.active {
-  background-color: var(--primary-dark-blue);
-  border-left: 4px solid var(--primary-color);
+  &.active {
+    background-color: tokens.$bg-tertiary;
+    border-left: 4px solid tokens.$primary;
+  }
 }
 
 .sub-menu-icon {
-  margin-right: 10px;
-  font-size: 14px;
+  margin-right: tokens.$spacing-sm;
+  font-size: tokens.$font-size-sm;
 }
 
 .sub-menu-text {

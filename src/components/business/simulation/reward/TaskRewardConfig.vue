@@ -63,65 +63,54 @@ function editTask(task) {
 </script>
 
 <style lang="scss" scoped>
+
 .task-reward-config {
   padding: 0;
 }
 
 /* 配置区块 */
 .config-section {
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-md);
-  padding: 20px;
+  @include utils.config-section;
 }
 
 .section-title {
-  font-size: var(--text-base);
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
-  margin: 0 0 8px;
+  @include utils.section-title;
 }
 
 .section-description {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-  margin: 0 0 20px;
+  @include utils.section-description;
 }
 
 /* 任务列表 */
 .task-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  @include utils.flex-col(tokens.$spacing-md, stretch);
 }
 
 .task-item {
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-md);
-  padding: 15px;
-  transition: all var(--transition-fast);
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-md;
+  transition: all tokens.$transition-fast;
   border: 1px solid transparent;
-}
 
-.task-item:hover {
-  background-color: rgb(255 255 255 / 10%);
-  border-color: var(--border-light);
+  &:hover {
+    background-color: tokens.$bg-lighter;
+    border-color: tokens.$border-light;
+  }
 }
 
 .task-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 15px;
+  @include utils.flex-between(flex-start);
+  margin-bottom: tokens.$spacing-md;
 }
 
 .task-info {
-  display: flex;
-  gap: 12px;
+  @include utils.flex-row(tokens.$spacing-sm, center);
   flex: 1;
 }
 
 .task-icon {
-  font-size: 20px;
+  font-size: tokens.$font-size-xl;
   flex-shrink: 0;
 }
 
@@ -130,15 +119,15 @@ function editTask(task) {
 }
 
 .task-name {
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
-  margin-bottom: 4px;
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-semibold;
+  color: tokens.$text-primary;
+  margin-bottom: tokens.$spacing-xs;
 }
 
 .task-description {
-  font-size: var(--text-xs);
-  color: var(--text-secondary);
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
   line-height: 1.4;
 }
 
@@ -146,48 +135,52 @@ function editTask(task) {
   flex-shrink: 0;
 }
 
-.task-rewards {
-  margin-top: 10px;
+.btn-secondary {
+  @include utils.btn-secondary;
+  padding: tokens.$spacing-xs tokens.$spacing-sm;
+  font-size: tokens.$font-size-xs;
 }
 
-.task-rewards h6 {
-  font-size: var(--text-xs);
-  font-weight: var(--font-medium);
-  color: var(--text-secondary);
-  margin: 0 0 8px;
+.task-rewards {
+  margin-top: tokens.$spacing-sm;
+
+  h6 {
+    font-size: tokens.$font-size-xs;
+    font-weight: tokens.$font-weight-medium;
+    color: tokens.$text-secondary;
+    margin: 0 0 tokens.$spacing-sm;
+  }
 }
 
 .rewards-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: tokens.$spacing-sm;
 }
 
 .reward-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
-  background-color: rgb(255 255 255 / 10%);
-  border-radius: 12px;
-  font-size: var(--text-xs);
-  color: var(--text-secondary);
+  @include utils.flex-row(tokens.$spacing-xs, center);
+  padding: tokens.$spacing-xs tokens.$spacing-sm;
+  background-color: tokens.$bg-lighter;
+  border-radius: tokens.$radius-full;
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
 }
 
-/* 响应式设�? */
-@media (width <= 768px) {
+/* 响应式设计 */
+@include utils.mobile {
   .task-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: tokens.$spacing-sm;
   }
 
   .task-actions {
     width: 100%;
-  }
 
-  .task-actions .btn {
-    width: 100%;
+    .btn {
+      width: 100%;
+    }
   }
 
   .rewards-list {

@@ -54,7 +54,7 @@
               class="locked-btn"
               disabled
             >
-              未解�?
+              未解锁
             </button>
             <div
               v-else-if="isDownloading(app.id)"
@@ -73,7 +73,7 @@
               class="installed-btn"
               disabled
             >
-              已安�?
+              已安装
             </button>
           </div>
         </div>
@@ -397,6 +397,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+
 .app-store-content {
   flex: 1;
   height: 100%;
@@ -406,133 +407,120 @@ onMounted(() => {
 .app-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  padding: 20px;
+  gap: tokens.$spacing-lg;
+  padding: tokens.$spacing-lg;
 }
 
 .app-item {
-  display: flex;
-  flex-direction: column;
-  background-color: rgb(26 26 46 / 95%);
-  border: 1px solid rgb(74 158 255 / 20%);
-  border-radius: 8px;
-  padding: var(--space-3);
-  gap: var(--space-3);
-  box-shadow: var(--shadow-sm);
-  transition: all var(--transition-normal);
-}
+  @include utils.flex-col(tokens.$space-3, flex-start);
+  background-color: tokens.$bg-secondary;
+  border: 1px solid tokens.$border-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$space-3;
+  box-shadow: tokens.$shadow-sm;
+  transition: all tokens.$transition-normal;
 
-.app-item:hover {
-  box-shadow: 0 4px 12px rgb(74 158 255 / 30%);
-  transform: translateY(-2px);
-  border-color: var(--color-border-primary);
+  &:hover {
+    box-shadow: tokens.$shadow-blue;
+    transform: translateY(-2px);
+    border-color: tokens.$primary-blue;
+  }
 }
 
 .app-info {
-  display: flex;
-  gap: var(--space-3);
-  align-items: flex-start;
+  @include utils.flex-row(tokens.$space-3, flex-start);
 }
 
 .app-icon {
   font-size: 48px;
   width: 60px;
   height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--bg-hover);
-  border-radius: var(--radius-md);
+  @include utils.flex-center;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
 }
 
 .app-details {
   flex: 1;
-}
 
-.app-details h3 {
-  margin: 0 0 var(--space-2) 0;
-  font-size: var(--text-lg);
-  color: var(--app-text-primary);
+  h3 {
+    margin: 0 0 tokens.$space-2 0;
+    font-size: tokens.$font-size-lg;
+    color: tokens.$text-primary;
+  }
 }
 
 .app-description {
-  margin: 0 0 var(--space-3) 0;
-  font-size: var(--text-sm);
-  color: var(--app-text-secondary);
-  line-height: var(--line-height-sm);
+  margin: 0 0 tokens.$space-3 0;
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-secondary;
+  line-height: tokens.$line-height-normal;
 }
 
 .app-memory {
-  font-size: var(--text-xs);
-  color: var(--color-border-primary);
+  font-size: tokens.$font-size-xs;
+  color: tokens.$primary-gold;
 }
 
 .app-status {
-  margin-top: var(--space-1);
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--text-xs);
+  margin-top: tokens.$space-1;
+  @include utils.flex-row(tokens.$space-2, center);
+  font-size: tokens.$font-size-xs;
 }
 
 .status-locked {
-  color: var(--danger-red);
-  font-weight: var(--font-bold);
+  color: tokens.$error;
+  font-weight: tokens.$font-weight-bold;
 }
 
 .status-available {
-  color: var(--success-green);
-  font-weight: var(--font-bold);
+  color: tokens.$success;
+  font-weight: tokens.$font-weight-bold;
 }
 
 .status-installed {
-  color: var(--color-border-primary);
-  font-weight: var(--font-bold);
+  color: tokens.$primary-blue;
+  font-weight: tokens.$font-weight-bold;
 }
 
 .lock-reason {
-  color: var(--app-text-tertiary);
-  font-size: var(--text-xs);
+  color: tokens.$text-muted;
+  font-size: tokens.$font-size-xs;
 }
 
 .app-actions {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: var(--space-2);
+  @include utils.flex-row(tokens.$space-2, center, flex-end);
 }
 
 .download-btn {
-  padding: var(--space-2) var(--space-4);
-  background-color: var(--color-border-primary);
-  color: white;
+  padding: tokens.$space-2 tokens.$space-4;
+  background-color: tokens.$primary-blue;
+  color: tokens.$text-primary;
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: tokens.$radius-sm;
   cursor: pointer;
-  font-size: var(--text-sm);
-  transition: all var(--transition-fast);
-}
+  font-size: tokens.$font-size-sm;
+  transition: all tokens.$transition-fast;
 
-.download-btn:hover {
-  background-color: var(--color-primary-light-blue);
-  transform: translateY(-1px);
+  &:hover {
+    background-color: tokens.$primary-light;
+    transform: translateY(-1px);
+  }
 }
 
 .locked-btn,
 .installed-btn {
-  padding: var(--space-2) var(--space-4);
-  background-color: var(--app-bg-tertiary);
-  color: var(--app-text-tertiary);
-  border: var(--border-width-1) solid var(--app-border-secondary);
-  border-radius: var(--radius-sm);
+  padding: tokens.$space-2 tokens.$space-4;
+  background-color: tokens.$bg-tertiary;
+  color: tokens.$text-muted;
+  border: 1px solid tokens.$border-medium;
+  border-radius: tokens.$radius-sm;
   cursor: not-allowed;
-  font-size: var(--text-sm);
+  font-size: tokens.$font-size-sm;
 }
 
 .download-progress {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
+  @include utils.flex-row(tokens.$space-2, center);
   width: 100%;
   max-width: 150px;
 }
@@ -540,21 +528,21 @@ onMounted(() => {
 .progress-bar {
   flex: 1;
   height: 8px;
-  background-color: var(--app-bg-tertiary);
-  border-radius: var(--radius-sm);
+  background-color: tokens.$bg-tertiary;
+  border-radius: tokens.$radius-sm;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background-color: var(--color-border-primary);
-  border-radius: var(--radius-sm);
-  transition: width var(--transition-normal);
+  background-color: tokens.$primary-blue;
+  border-radius: tokens.$radius-sm;
+  transition: width tokens.$transition-normal;
 }
 
 .progress-text {
-  font-size: var(--text-xs);
-  color: var(--color-border-primary);
+  font-size: tokens.$font-size-xs;
+  color: tokens.$primary-blue;
   min-width: 40px;
 }
 </style>

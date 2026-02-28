@@ -8,7 +8,8 @@
 <script setup lang="ts"></script>
 
 <style lang="scss" scoped>
+
 .test-app {
-  padding: 20px;
+  padding: tokens.$spacing-lg;
 }
 </style>

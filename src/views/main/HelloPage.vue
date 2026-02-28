@@ -228,56 +228,43 @@ watch(showGuide, (newVal) => {
 </script>
 
 <style lang="scss" scoped>
+
 .hello-modal {
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  @include utils.flex-center;
+  font-family: tokens.$font-family-base;
   position: relative;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-  border-radius: 20px;
+  background: linear-gradient(135deg, tokens.$bg-dark 0%, tokens.$bg-secondary 50%, tokens.$bg-tertiary 100%);
+  border-radius: tokens.$radius-xl;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgb(0 0 0 / 50%);
-  max-width: 1200px;
+  box-shadow: tokens.$shadow-xl;
+  max-width: tokens.$max-content-width;
   max-height: 90vh;
 }
 
 /* 关闭按钮样式 */
 .close-button {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background: rgb(255 255 255 / 10%);
+  top: tokens.$spacing-md;
+  right: tokens.$spacing-md;
+  background: tokens.$bg-lighter;
   border: 2px solid rgb(255 255 255 / 30%);
-  color: white;
-  font-size: 24px;
+  color: tokens.$text-primary;
+  font-size: tokens.$font-size-2xl;
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include utils.flex-center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all tokens.$transition-normal;
   z-index: 10;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(tokens.$spacing-xs);
 
   &:hover {
-    background: rgb(255 255 255 / 20%);
-    border-color: #4a9eff;
+    background: tokens.$bg-light;
+    border-color: tokens.$primary;
     transform: rotate(90deg);
-  }
-}
-
-@keyframes backgroundPulse {
-  from {
-    opacity: 0.8;
-  }
-
-  to {
-    opacity: 1;
   }
 }
 
@@ -285,23 +272,21 @@ watch(showGuide, (newVal) => {
   display: flex;
   align-items: stretch;
   justify-content: center;
-  gap: 60px;
+  gap: tokens.$spacing-2xl;
   z-index: 1;
-  max-width: 1200px;
+  max-width: tokens.$max-content-width;
   width: 100%;
-  padding: 20px;
+  padding: tokens.$spacing-md;
 }
 
 .left-column,
 .right-column {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  @include utils.flex-col(tokens.$spacing-md, stretch, center);
   flex: 1;
   width: 50%;
   min-width: 300px;
   max-width: 500px;
-  padding: 40px;
+  padding: tokens.$spacing-xl;
 }
 
 .left-column {
@@ -315,42 +300,42 @@ watch(showGuide, (newVal) => {
 
 /* 欢迎信息样式 */
 .welcome-section {
-  color: white;
+  color: tokens.$text-primary;
 }
 
 .welcome-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin: 0 0 10px;
+  font-size: tokens.$font-size-4xl;
+  font-weight: tokens.$font-weight-bold;
+  margin: 0 0 tokens.$spacing-sm;
   opacity: 0.9;
 }
 
 .game-name {
-  font-size: 3.5rem;
-  font-weight: bold;
-  color: #4a9eff;
+  font-size: tokens.$font-size-5xl;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$primary;
   text-shadow: 0 0 20px rgb(74 158 255 / 50%);
-  margin: 0 0 15px;
+  margin: 0 0 tokens.$spacing-sm;
   animation: titleGlow 2s ease-in-out infinite alternate;
-  line-height: 1.2;
+  line-height: tokens.$line-height-tight;
 }
 
 .welcome-subtitle {
-  font-size: 1.3rem;
-  color: #fff;
-  margin: 0 0 30px;
+  font-size: tokens.$font-size-xl;
+  color: tokens.$text-primary;
+  margin: 0 0 tokens.$spacing-xl;
   opacity: 0.9;
-  font-weight: 500;
+  font-weight: tokens.$font-weight-medium;
 }
 
 .welcome-description {
-  color: #fff;
+  color: tokens.$text-primary;
   opacity: 0.85;
-  font-size: 1.1rem;
-  line-height: 1.8;
+  font-size: tokens.$font-size-lg;
+  line-height: tokens.$line-height-relaxed;
 
   p {
-    margin: 0 0 15px;
+    margin: 0 0 tokens.$spacing-sm;
 
     &:last-child {
       margin-bottom: 0;
@@ -372,107 +357,101 @@ watch(showGuide, (newVal) => {
 
 /* 表单容器样式 */
 .form-container {
-  background-color: rgb(255 255 255 / 10%);
+  background-color: tokens.$bg-lighter;
   backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 40px;
+  border-radius: tokens.$radius-xl;
+  padding: tokens.$spacing-xl;
   width: 100%;
-  box-shadow: 0 10px 40px rgb(0 0 0 / 30%);
+  box-shadow: tokens.$shadow-lg;
   border: 1px solid rgb(255 255 255 / 20%);
 }
 
 .form-title {
-  color: white;
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin: 0 0 30px;
+  color: tokens.$text-primary;
+  font-size: tokens.$font-size-2xl;
+  font-weight: tokens.$font-weight-bold;
+  margin: 0 0 tokens.$spacing-xl;
   text-align: center;
   text-shadow: 0 2px 10px rgb(0 0 0 / 30%);
 }
 
 /* 表单样式 */
 .user-form {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
+  @include utils.flex-col(tokens.$spacing-lg);
 }
 
 .form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  @include utils.flex-col(tokens.$spacing-xs);
 }
 
 .form-label {
-  color: white;
-  font-size: 1rem;
-  font-weight: 600;
+  color: tokens.$text-primary;
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-semibold;
   opacity: 0.9;
 }
 
 .form-input {
-  padding: 15px 20px;
-  font-size: 1rem;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  font-size: tokens.$font-size-base;
   border: 2px solid rgb(255 255 255 / 20%);
-  border-radius: 12px;
-  background-color: rgb(255 255 255 / 15%);
-  color: white;
-  transition: all 0.3s ease;
+  border-radius: tokens.$radius-md;
+  background-color: tokens.$bg-lighter;
+  color: tokens.$text-primary;
+  transition: all tokens.$transition-normal;
   outline: none;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(tokens.$spacing-xs);
 
   &::placeholder {
-    color: rgb(255 255 255 / 50%);
+    color: tokens.$text-muted;
   }
 
   &:focus {
-    border-color: #4a9eff;
-    background-color: rgb(255 255 255 / 20%);
+    border-color: tokens.$primary;
+    background-color: tokens.$bg-light;
     box-shadow: 0 0 0 3px rgb(74 158 255 / 20%);
   }
 
   &.error {
-    border-color: #ff4757;
-    background-color: rgb(255 71 87 / 10%);
+    border-color: tokens.$error;
+    background-color: rgb(239 68 68 / 10%);
   }
 }
 
 .char-count {
   align-self: flex-end;
-  font-size: 0.85rem;
-  color: rgb(255 255 255 / 60%);
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-muted;
   margin-top: -5px;
 }
 
 .error-message {
-  color: #ff4757;
-  font-size: 0.85rem;
-  font-weight: 500;
+  color: tokens.$error;
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-medium;
 }
 
 /* 提交按钮样式 */
 .submit-button {
-  padding: 18px 40px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #fff;
-  background: linear-gradient(135deg, #4a9eff 0%, #357abd 100%);
+  padding: tokens.$spacing-md tokens.$spacing-xl;
+  font-size: tokens.$font-size-xl;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
+  background: linear-gradient(135deg, tokens.$primary 0%, tokens.$primary-dark 100%);
   border: none;
-  border-radius: 50px;
+  border-radius: tokens.$radius-full;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all tokens.$transition-normal;
   box-shadow: 0 4px 15px rgb(74 158 255 / 40%);
   width: 100%;
   min-height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 10px;
+  @include utils.flex-center;
+  margin-top: tokens.$spacing-sm;
 
   &:hover:not(:disabled) {
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgb(74 158 255 / 60%);
-    background: linear-gradient(135deg, #357abd 0%, #4a9eff 100%);
+    background: linear-gradient(135deg, tokens.$primary-dark 0%, tokens.$primary 100%);
   }
 
   &:active:not(:disabled) {
@@ -489,25 +468,25 @@ watch(showGuide, (newVal) => {
 
 /* 提交结果反馈样式 */
 .submit-result {
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-size: 0.95rem;
-  font-weight: 500;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  border-radius: tokens.$radius-md;
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-medium;
   text-align: center;
-  margin-top: 10px;
-  transition: all 0.3s ease;
+  margin-top: tokens.$spacing-sm;
+  transition: all tokens.$transition-normal;
   animation: fadeIn 0.5s ease;
 
   &.success {
-    background-color: rgb(46 204 113 / 20%);
-    color: #2ecc71;
-    border: 1px solid rgb(46 204 113 / 40%);
+    background-color: rgb(16 185 129 / 20%);
+    color: tokens.$success;
+    border: 1px solid rgb(16 185 129 / 40%);
   }
 
   &.error {
-    background-color: rgb(231 76 60 / 20%);
-    color: #e74c3c;
-    border: 1px solid rgb(231 76 60 / 40%);
+    background-color: rgb(239 68 68 / 20%);
+    color: tokens.$error;
+    border: 1px solid rgb(239 68 68 / 40%);
   }
 }
 
@@ -527,14 +506,14 @@ watch(showGuide, (newVal) => {
 @media (width <= 992px) {
   .hello-content {
     flex-direction: column;
-    gap: 40px;
+    gap: tokens.$spacing-xl;
   }
 
   .left-column,
   .right-column {
     width: 100%;
     max-width: 600px;
-    padding: 30px 20px;
+    padding: tokens.$spacing-lg tokens.$spacing-md;
   }
 
   .left-column {
@@ -545,76 +524,76 @@ watch(showGuide, (newVal) => {
 
 @media (width <= 768px) {
   .welcome-title {
-    font-size: 2rem;
+    font-size: tokens.$font-size-3xl;
   }
 
   .game-name {
-    font-size: 2.5rem;
+    font-size: tokens.$font-size-4xl;
   }
 
   .welcome-subtitle {
-    font-size: 1.1rem;
+    font-size: tokens.$font-size-lg;
   }
 
   .welcome-description {
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: tokens.$font-size-base;
+    line-height: tokens.$line-height-normal;
   }
 
   .form-container {
-    padding: 30px 20px;
+    padding: tokens.$spacing-lg tokens.$spacing-md;
   }
 
   .form-title {
-    font-size: 1.5rem;
+    font-size: tokens.$font-size-xl;
   }
 
   .form-input {
-    padding: 12px 16px;
-    font-size: 0.95rem;
+    padding: tokens.$spacing-sm;
+    font-size: tokens.$font-size-sm;
   }
 
   .submit-button {
-    padding: 15px 30px;
-    font-size: 1.1rem;
+    padding: tokens.$spacing-sm tokens.$spacing-xl;
+    font-size: tokens.$font-size-lg;
     min-height: 55px;
   }
 }
 
 @media (width <= 480px) {
   .welcome-title {
-    font-size: 1.8rem;
+    font-size: tokens.$font-size-2xl;
   }
 
   .game-name {
-    font-size: 2rem;
+    font-size: tokens.$font-size-3xl;
   }
 
   .welcome-subtitle {
-    font-size: 1rem;
+    font-size: tokens.$font-size-base;
   }
 
   .left-column,
   .right-column {
-    padding: 20px 15px;
+    padding: tokens.$spacing-md tokens.$spacing-xs;
   }
 
   .form-container {
-    padding: 25px 15px;
+    padding: tokens.$spacing-lg tokens.$spacing-xs;
   }
 
   .form-title {
-    font-size: 1.3rem;
+    font-size: tokens.$font-size-lg;
   }
 
   .form-input {
-    padding: 10px 14px;
-    font-size: 0.9rem;
+    padding: tokens.$spacing-xs tokens.$spacing-sm;
+    font-size: tokens.$font-size-sm;
   }
 
   .submit-button {
-    padding: 12px 25px;
-    font-size: 1rem;
+    padding: tokens.$spacing-xs tokens.$spacing-lg;
+    font-size: tokens.$font-size-base;
     min-height: 50px;
   }
 }

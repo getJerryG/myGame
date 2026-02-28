@@ -14,11 +14,11 @@
         </div>
         <div class="history-stats">
           <div class="stat-item">
-            <span class="stat-label">参与�?/span>
+            <span class="stat-label">参与率</span>
             <span class="stat-value">{{ event.participationRate }}%</span>
           </div>
           <div class="stat-item">
-            <span class="stat-label">好评�?/span>
+            <span class="stat-label">好评率</span>
             <span class="stat-value">{{ event.rating }}%</span>
           </div>
           <div class="stat-item">
@@ -31,7 +31,7 @@
   </div>
 </template>
 
-<script setup lang=ts>
+<script setup lang="ts">
 // 接收父组件传递的属�?defineProps({
   historicalEvents: {
     type: Array,
@@ -41,27 +41,27 @@
         name: '春节限时活动',
         type: 'holiday',
         icon: '🎄',
-        date: '2026-01-20 �?2026-02-05',
+        date: '2026-01-20 ~ 2026-02-05',
         participationRate: 85,
         rating: 92,
         revenueIncrease: 35,
       },
       {
         id: 2,
-        name: '周末双倍经�?,
+        name: '周末双倍经验',
         type: 'limited',
-        icon: '�?,
-        date: '2026-01-15 �?2026-01-17',
+        icon: '⏱️',
+        date: '2026-01-15 ~ 2026-01-17',
         participationRate: 78,
         rating: 85,
         revenueIncrease: 15,
       },
       {
         id: 3,
-        name: '社区挑战�?,
+        name: '社区挑战赛',
         type: 'community',
         icon: '👥',
-        date: '2026-01-10 �?2026-01-20',
+        date: '2026-01-10 ~ 2026-01-20',
         participationRate: 65,
         rating: 88,
         revenueIncrease: 20,
@@ -71,89 +71,78 @@
 });
 </script>
 
-<style lang=scss scoped>
+<style lang="scss" scoped>
+
 .history-effects {
-  margin-top: 25px;
-}
+  margin-top: tokens.$spacing-lg;
 
-.history-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-height: 300px;
-  overflow-y: auto;
-  padding-right: 10px;
-}
+  .history-list {
+    @include utils.flex-col(tokens.$spacing-md, stretch, flex-start);
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: tokens.$spacing-sm;
+  }
 
-.history-item {
-  padding: 15px;
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-md);
-  border-left: 4px solid #3b82f6;
-  transition: all var(--transition-fast);
-}
+  .history-item {
+    padding: tokens.$spacing-md;
+    background-color: tokens.$bg-light;
+    border-radius: tokens.$radius-md;
+    border-left: 4px solid tokens.$primary-blue;
+    transition: all tokens.$transition-fast;
 
-.history-item:hover {
-  background-color: rgb(255 255 255 / 10%);
-  transform: translateX(5px);
-}
+    &:hover {
+      background-color: tokens.$bg-lighter;
+      transform: translateX(5px);
+    }
+  }
 
-.history-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
-}
+  .history-header {
+    @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+    margin-bottom: tokens.$spacing-sm;
+  }
 
-.history-icon {
-  font-size: 18px;
-  flex-shrink: 0;
-}
+  .history-icon {
+    font-size: tokens.$font-size-lg;
+    flex-shrink: 0;
+  }
 
-.history-name {
-  flex: 1;
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  color: var(--text-primary);
-}
+  .history-name {
+    flex: 1;
+    font-size: tokens.$font-size-sm;
+    font-weight: tokens.$font-weight-medium;
+    color: tokens.$text-primary;
+  }
 
-.history-date {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-  flex-shrink: 0;
-}
+  .history-date {
+    font-size: tokens.$font-size-xs;
+    color: tokens.$text-muted;
+    flex-shrink: 0;
+  }
 
-.history-stats {
-  display: flex;
-  gap: 20px;
-}
+  .history-stats {
+    @include utils.flex-row(tokens.$spacing-xl, flex-start, flex-start);
+  }
 
-.stat-item {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
+  .stat-item {
+    @include utils.stat-item;
 
-.stat-label {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-}
+    .stat-label {
+      @include utils.stat-label;
+    }
 
-.stat-value {
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--primary-gold);
+    .stat-value {
+      @include utils.stat-value(tokens.$primary-gold);
+    }
+  }
 }
 
 /* 响应式设�? */
 @media (width <= 768px) {
-  .history-stats {
-    flex-wrap: wrap;
-    gap: 15px;
+  .history-effects {
+    .history-stats {
+      flex-wrap: wrap;
+      gap: tokens.$spacing-md;
+    }
   }
 }
 </style>
-
-
-
-

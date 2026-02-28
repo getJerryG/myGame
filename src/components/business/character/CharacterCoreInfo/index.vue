@@ -1,6 +1,6 @@
 <template>
   <div class="character-core-info">
-    <!-- 角色名称和等�?-->
+    <!-- 角色名称和等级 -->
     <div class="core-info-header">
       <h2 class="character-name">{{ player.name }}</h2>
       <div class="level-badge">
@@ -8,16 +8,16 @@
         <span class="level-text">{{ player.level }}</span>
       </div>
       <div class="gold-display">
-        <span class="resource-icon gold-icon">�?/span>
+        <span class="resource-icon gold-icon">💰</span>
         <span class="gold-text">{{ player.gold }}</span>
       </div>
     </div>
 
-    <!-- 生命�?-->
+    <!-- 生命值 -->
     <div class="stat-container health-container">
       <div class="stat-header">
         <span class="stat-icon health-icon">❤️</span>
-        <span class="stat-label">生命�?/span>
+        <span class="stat-label">生命值</span>
       </div>
       <div class="stat-bar-wrapper">
         <div class="stat-bar health-bar">
@@ -34,11 +34,11 @@
       </div>
     </div>
 
-    <!-- 经验�?-->
+    <!-- 经验值 -->
     <div class="stat-container exp-container">
       <div class="stat-header">
-        <span class="stat-icon exp-icon">�?/span>
-        <span class="stat-label">经验�?/span>
+        <span class="stat-icon exp-icon">⭐</span>
+        <span class="stat-label">经验值</span>
       </div>
       <div class="stat-bar-wrapper">
         <div class="stat-bar exp-bar">
@@ -57,7 +57,7 @@
   </div>
 </template>
 
-<script setup lang=ts>
+<script setup lang="ts">
 defineProps({
   player: {
     type: Object,
@@ -74,87 +74,80 @@ defineProps({
 });
 </script>
 
-<style lang=scss scoped>
+<style lang="scss" scoped>
+
 .character-core-info {
-  background-color: var(--bg-secondary);
-  border-radius: var(--radius-lg);
-  padding: var(--space-4);
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--border-light);
+  @include utils.panel-base;
+
+  padding: tokens.$space-4;
 }
 
 .core-info-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--space-4);
+  @include utils.flex-between;
+
+  margin-bottom: tokens.$space-4;
 }
 
 .character-name {
-  font-size: var(--text-2xl);
-  font-weight: var(--font-bold);
-  color: var(--text-primary);
+  font-size: tokens.$font-size-2xl;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
   margin: 0;
 }
 
 .level-badge {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
+  @include utils.flex-row(tokens.$space-2, center, flex-start);
+
   background-color: rgb(251 191 36 / 20%);
-  color: var(--primary-gold);
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-full);
-  font-weight: var(--font-bold);
+  color: tokens.$primary-gold;
+  padding: tokens.$space-1 tokens.$space-3;
+  border-radius: tokens.$radius-full;
+  font-weight: tokens.$font-weight-bold;
 }
 
 .gold-display {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-weight: var(--font-semibold);
-  color: var(--primary-gold);
+  @include utils.flex-row(tokens.$space-2, center, flex-start);
+
+  font-weight: tokens.$font-weight-semibold;
+  color: tokens.$primary-gold;
 }
 
 .stat-container {
-  margin-bottom: var(--space-3);
+  margin-bottom: tokens.$space-3;
 }
 
 .stat-header {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  margin-bottom: var(--space-2);
+  @include utils.flex-row(tokens.$space-2, center, flex-start);
+
+  margin-bottom: tokens.$space-2;
 }
 
 .stat-icon {
-  font-size: var(--text-lg);
+  font-size: tokens.$font-size-lg;
 }
 
 .stat-label {
-  font-weight: var(--font-medium);
-  color: var(--text-secondary);
+  font-weight: tokens.$font-weight-medium;
+  color: tokens.$text-secondary;
 }
 
 .stat-bar-wrapper {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
+  @include utils.flex-row(tokens.$space-3, center, flex-start);
 }
 
 .stat-bar {
   flex: 1;
   height: 12px;
-  background-color: rgb(255 255 255 / 10%);
-  border-radius: var(--radius-full);
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-full;
   overflow: hidden;
   position: relative;
 }
 
 .stat-fill {
   height: 100%;
-  transition: width 0.3s ease;
-  border-radius: var(--radius-full);
+  transition: width tokens.$transition-normal;
+  border-radius: tokens.$radius-full;
 }
 
 .stat-glow {
@@ -163,12 +156,7 @@ defineProps({
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgb(255 255 255 / 30%),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 30%), transparent);
   animation: glow 2s infinite;
 }
 
@@ -183,19 +171,19 @@ defineProps({
 }
 
 .health-fill {
-  background-color: #ef4444;
-  background-image: linear-gradient(90deg, #dc2626, #ef4444);
+  background-color: tokens.$health-red;
+  background-image: linear-gradient(90deg, tokens.$health-red-dark, tokens.$health-red);
 }
 
 .exp-fill {
-  background-color: #3b82f6;
-  background-image: linear-gradient(90deg, #2563eb, #3b82f6);
+  background-color: tokens.$exp-blue;
+  background-image: linear-gradient(90deg, tokens.$exp-blue-dark, tokens.$exp-blue);
 }
 
 .stat-text {
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-semibold;
+  color: tokens.$text-primary;
   min-width: 80px;
   text-align: right;
 }

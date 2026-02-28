@@ -35,56 +35,52 @@ const lotteryStore = useLotteryStore();
 </script>
 
 <style lang="scss" scoped>
+
 .data-panel {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-2);
-  background-color: var(--app-bg-secondary);
-  padding: var(--space-4);
-  border-radius: var(--radius-md);
-  margin-bottom: var(--space-5);
+  @include utils.grid-layout(3, tokens.$space-2);
+  background-color: tokens.$bg-secondary;
+  padding: tokens.$space-4;
+  border-radius: tokens.$radius-md;
+  margin-bottom: tokens.$space-5;
   height: 60px;
   flex-shrink: 0;
+  border: 1px solid tokens.$border-light;
 }
 
 .data-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include utils.flex-between;
   height: 30px;
 }
 
 .label {
-  font-weight: var(--font-bold);
-  color: var(--app-text-primary);
-  font-size: var(--text-sm);
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
+  font-size: tokens.$font-size-sm;
 }
 
 .value {
-  color: var(--app-text-secondary);
-  font-size: var(--text-sm);
+  color: tokens.$text-secondary;
+  font-size: tokens.$font-size-sm;
 }
 
 .info-button {
   background-color: transparent;
   border: none;
-  color: var(--success-green);
+  color: tokens.$success;
   cursor: pointer;
-  font-size: var(--text-sm);
+  font-size: tokens.$font-size-sm;
   width: 20px;
   height: 20px;
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color var(--transition-fast);
-}
+  border-radius: tokens.$radius-full;
+  @include utils.flex-center;
+  transition: background-color tokens.$transition-fast;
 
-.info-button:hover {
-  background-color: var(--bg-hover);
+  &:hover {
+    background-color: tokens.$bg-light;
+  }
 }
 
 .info-icon {
-  font-weight: var(--font-bold);
+  font-weight: tokens.$font-weight-bold;
 }
 </style>

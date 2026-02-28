@@ -2,12 +2,9 @@
   <div class="season-reward-config">
     <div class="config-section">
       <h4 class="section-title">赛季奖励配置</h4>
-      <p class="section-description">
-        设置不同段位的赛季结算奖�?/p>
+      <p class="section-description">设置不同段位的赛季结算奖励</p>
 
-        <!-- 段位奖励配置 -->
-      </p>
-
+      <!-- 段位奖励配置 -->
       <div class="rank-rewards">
         <div
           v-for="rank in ranks"
@@ -57,80 +54,92 @@ const editRankReward = (rank) => {
 </script>
 
 <style lang="scss" scoped>
+
+.season-reward-config {
+  padding: 0;
+}
+
+/* 配置区块 */
+.config-section {
+  @include utils.config-section;
+}
+
+.section-title {
+  @include utils.section-title;
+}
+
+.section-description {
+  @include utils.section-description;
+}
+
 /* 段位奖励配置 */
 .rank-rewards {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  @include utils.flex-col(tokens.$spacing-md, stretch);
 }
 
 .rank-item {
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-md);
-  padding: 15px;
-  transition: all var(--transition-fast);
-}
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-md;
+  transition: all tokens.$transition-fast;
 
-.rank-item:hover {
-  background-color: rgb(255 255 255 / 10%);
+  &:hover {
+    background-color: tokens.$bg-lighter;
+  }
 }
 
 .rank-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
+  @include utils.flex-row(tokens.$spacing-sm, center);
+  margin-bottom: tokens.$spacing-md;
 }
 
 .rank-icon {
-  font-size: 20px;
+  font-size: tokens.$font-size-xl;
 }
 
 .rank-name {
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-semibold;
+  color: tokens.$text-primary;
 }
 
 .rank-rewards-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 12px;
+  gap: tokens.$spacing-sm;
+  margin-bottom: tokens.$spacing-md;
 }
 
 .rank-reward-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-sm);
-  font-size: var(--text-xs);
-}
+  @include utils.flex-row(tokens.$spacing-sm, center);
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  background-color: tokens.$bg-lighter;
+  border-radius: tokens.$radius-sm;
+  font-size: tokens.$font-size-xs;
 
-.rank-reward-item .reward-name {
-  color: var(--text-secondary);
-}
+  .reward-name {
+    color: tokens.$text-secondary;
+  }
 
-.rank-reward-item .reward-amount {
-  font-weight: var(--font-semibold);
-  color: var(--primary-gold);
+  .reward-amount {
+    font-weight: tokens.$font-weight-semibold;
+    color: tokens.$primary-gold;
+  }
 }
 
 .edit-btn {
-  padding: 6px 12px;
-  background-color: rgb(255 255 255 / 10%);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-sm);
-  font-size: var(--text-xs);
-  color: var(--text-secondary);
+  padding: tokens.$spacing-xs tokens.$spacing-sm;
+  background-color: tokens.$bg-lighter;
+  border: 1px solid tokens.$border-light;
+  border-radius: tokens.$radius-sm;
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
   cursor: pointer;
-  transition: all var(--transition-fast);
-}
+  transition: all tokens.$transition-fast;
 
-.edit-btn:hover {
-  background-color: rgb(59 130 246 / 20%);
-  color: var(--text-primary);
+  &:hover {
+    background-color: rgb(59 130 246 / 20%);
+    color: tokens.$text-primary;
+  }
 }
 </style>

@@ -23,7 +23,7 @@
 
     <template #content>
       <div class="skin-development-content">
-        <!-- 新建皮肤标签�?-->
+        <!-- 新建皮肤标签页 -->
         <div
           v-if="activeTab === 'new'"
           class="tab-content"
@@ -122,7 +122,7 @@
           </div>
         </div>
 
-        <!-- 皮肤管理标签�?-->
+        <!-- 皮肤管理标签页 -->
         <div
           v-else-if="activeTab === 'manage'"
           class="tab-content"
@@ -179,7 +179,7 @@
                 <span class="progress-text">{{ skin.progress }}% 完成</span>
               </div>
 
-              <!-- 已上线皮肤数�?-->
+              <!-- 已上线皮肤数据 -->
               <div
                 v-else
                 class="skin-stats"
@@ -198,7 +198,7 @@
                 </div>
               </div>
 
-              <!-- 风格和研发方�?-->
+              <!-- 风格和研发方式 -->
               <div class="skin-meta">
                 <div class="meta-item">
                   <span class="meta-label">风格:</span>
@@ -232,7 +232,8 @@ import ApplicationWindow from '@/components/common/window/ApplicationWindow.vue'
 // 使用Pinia store
 const heroSkinStore = useHeroSkinStore();
 
-// 状态管�?const activeTab = ref<string>('new');
+// 状态管理
+const activeTab = ref<string>('new');
 const selectedHeroId = ref<string>('');
 const selectedQuality = ref<string>('伴生');
 const selectedStyle = ref<string>('古风');
@@ -379,245 +380,235 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-/* 侧边栏菜�? */
+
+/* 侧边栏菜单 */
 .sidebar-menu {
-  display: flex;
-  flex-direction: column;
+  @include utils.flex-col(0, stretch);
   width: 100%;
   height: 100%;
-  background-color: var(--sidebar-bg, #2a2a3a);
-  padding: 16px 0;
+  background-color: tokens.$bg-secondary;
+  padding: tokens.$spacing-md 0;
   overflow-y: auto;
 }
 
 .menu-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 24px;
+  @include utils.flex-row(tokens.$spacing-md, center);
+  padding: tokens.$spacing-md tokens.$spacing-lg;
   background: none;
   border: none;
-  color: var(--sidebar-text, #aaa);
+  color: tokens.$text-secondary;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all tokens.$transition-fast;
   text-align: left;
-  font-size: 16px;
-  font-weight: var(--font-semibold, 600);
-}
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-semibold;
 
-.menu-item:hover {
-  background-color: var(--sidebar-hover, rgb(74 158 255 / 10%));
-  color: var(--sidebar-hover-text, #4a9eff);
-}
+  &:hover {
+    background-color: tokens.$bg-light;
+    color: tokens.$primary-blue;
+  }
 
-.menu-item.active {
-  background-color: var(--sidebar-active, rgb(74 158 255 / 20%));
-  color: var(--sidebar-active-text, #4a9eff);
-  border-right: 3px solid var(--sidebar-active-border, #4a9eff);
+  &.active {
+    background-color: rgb(59 130 246 / 20%);
+    color: tokens.$primary-blue;
+    border-right: 3px solid tokens.$primary-blue;
+  }
 }
 
 .menu-icon {
   font-size: 20px;
 }
 
-/* 皮肤开发内容区�? */
+/* 皮肤开发内容区域 */
 .skin-development-content {
   width: 100%;
   height: 100%;
-  padding: 24px;
-  background-color: var(--content-bg, #1e1e2e);
-  color: var(--text-primary, #fff);
+  padding: tokens.$spacing-lg;
+  background-color: tokens.$bg-primary;
+  color: tokens.$text-primary;
   overflow-y: auto;
+  @include utils.custom-scrollbar;
 }
 
-/* 标签页内容样�? */
+/* 标签页内容样式 */
 .tab-content {
   width: 100%;
 }
 
 /* 卡片样式 */
 .section-card {
-  background-color: var(--card-bg, #2a2a3a);
-  border-radius: 8px;
-  padding: 24px;
-  box-shadow: 0 2px 12px rgb(0 0 0 / 30%);
-}
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-lg;
+  box-shadow: tokens.$shadow-md;
 
-.section-card h3 {
-  margin: 0 0 24px;
-  font-size: 22px;
-  color: var(--primary-gold, #ffd700);
-  font-weight: var(--font-bold, 700);
+  h3 {
+    margin: 0 0 tokens.$spacing-lg;
+    font-size: tokens.$font-size-xl;
+    color: tokens.$primary-gold;
+    font-weight: tokens.$font-weight-bold;
+  }
 }
 
 /* 表单分组样式 */
 .form-section {
-  margin-bottom: 24px;
-  padding: 20px;
-  background-color: var(--card-hover, rgb(0 0 0 / 20%));
-  border-radius: 8px;
+  margin-bottom: tokens.$spacing-lg;
+  padding: tokens.$spacing-md;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  h4 {
+    margin: 0 0 tokens.$spacing-md;
+    font-size: tokens.$font-size-base;
+    color: tokens.$primary-blue;
+    font-weight: tokens.$font-weight-bold;
+  }
 }
 
-.form-section:last-child {
-  margin-bottom: 0;
-}
-
-.form-section h4 {
-  margin: 0 0 16px;
-  font-size: 16px;
-  color: var(--primary-color, #4a9eff);
-  font-weight: var(--font-bold, 700);
-}
-
-/* 选项按钮组样�? */
+/* 选项按钮组样式 */
 .option-buttons {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 12px;
+  gap: tokens.$spacing-md;
 }
 
 .option-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 12px;
+  @include utils.flex-col(tokens.$space-2, center, center);
+  padding: tokens.$spacing-md;
   border: none;
-  border-radius: 8px;
+  border-radius: tokens.$radius-md;
   cursor: pointer;
-  transition: all 0.2s ease;
-  color: var(--text-primary, #fff);
-  font-weight: var(--font-bold, 700);
-}
+  transition: all tokens.$transition-fast;
+  color: tokens.$text-primary;
+  font-weight: tokens.$font-weight-bold;
 
-.option-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgb(0 0 0 / 30%);
-}
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-md;
+  }
 
-.option-btn.active {
-  box-shadow: 0 4px 12px rgb(0 0 0 / 40%);
-  transform: translateY(-2px);
+  &.active {
+    box-shadow: tokens.$shadow-lg;
+    transform: translateY(-2px);
+  }
 }
 
 .option-icon {
   font-size: 24px;
-  margin-bottom: 8px;
+  margin-bottom: tokens.$space-2;
 }
 
 .option-name {
-  font-size: 14px;
+  font-size: tokens.$font-size-sm;
 }
 
 /* 英雄按钮样式 */
 .hero-btn {
-  border: 2px solid var(--border-color, rgb(74 158 255 / 20%));
-  background-color: var(--button-bg, rgb(74 158 255 / 10%));
-}
+  border: 2px solid tokens.$border-light;
+  background-color: tokens.$bg-light;
 
-.hero-btn.active {
-  background-color: var(--button-active, rgb(74 158 255 / 30%));
-  border-color: var(--primary-color, #4a9eff);
+  &.active {
+    background-color: rgb(59 130 246 / 30%);
+    border-color: tokens.$primary-blue;
+  }
 }
 
 /* 暂无英雄提示 */
 .no-heroes-message {
   text-align: center;
-  color: var(--danger-color, #ff6b6b);
-  font-size: 14px;
-  padding: 20px;
-  background-color: var(--danger-bg, rgb(255 107 107 / 10%));
-  border: 1px solid var(--danger-border, rgb(255 107 107 / 30%));
-  border-radius: 8px;
-  margin: 10px 0;
+  color: tokens.$error;
+  font-size: tokens.$font-size-sm;
+  padding: tokens.$spacing-lg;
+  background-color: rgb(239 68 68 / 10%);
+  border: 1px solid rgb(239 68 68 / 30%);
+  border-radius: tokens.$radius-md;
+  margin: tokens.$space-2 0;
 }
 
 /* 操作区域样式 */
 .action-section {
-  margin-top: 24px;
-  display: flex;
-  justify-content: center;
+  margin-top: tokens.$spacing-lg;
+  @include utils.flex-center;
 }
 
 .confirm-btn {
-  padding: 14px 36px;
-  background-color: var(--primary-color, #4a9eff);
+  padding: tokens.$space-3 tokens.$space-9;
+  background-color: tokens.$primary-blue;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: tokens.$radius-md;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: var(--font-bold, 700);
-  transition: all 0.2s ease;
-}
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-bold;
+  transition: all tokens.$transition-fast;
 
-.confirm-btn:hover:not(:disabled) {
-  background-color: var(--primary-hover, #357abd);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgb(74 158 255 / 40%);
-}
+  &:hover:not(:disabled) {
+    background-color: tokens.$primary-dark;
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-blue;
+  }
 
-.confirm-btn:disabled {
-  background-color: var(--disabled-bg, #666);
-  cursor: not-allowed;
-  opacity: 0.7;
+  &:disabled {
+    background-color: tokens.$bg-tertiary;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
 }
 
 /* 皮肤列表样式 */
 .skin-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+  @include utils.grid-auto-fill(280px, tokens.$spacing-lg);
 }
 
 /* 皮肤卡片样式 */
 .skin-card {
-  background-color: var(--card-bg, #2a2a3a);
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 12px rgb(0 0 0 / 30%);
-  transition: all 0.2s ease;
-}
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-md;
+  box-shadow: tokens.$shadow-md;
+  transition: all tokens.$transition-fast;
 
-.skin-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgb(0 0 0 / 40%);
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-lg;
+  }
 }
 
 .skin-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 16px;
+  @include utils.flex-row(tokens.$spacing-md, center);
+  margin-bottom: tokens.$spacing-md;
 }
 
 .skin-icon {
   font-size: 44px;
-  margin-right: 16px;
-  background-color: var(--primary-color, rgb(74 158 255 / 20%));
+  margin-right: tokens.$spacing-md;
+  background-color: rgb(59 130 246 / 20%);
   border-radius: 50%;
   width: 68px;
   height: 68px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include utils.flex-center;
 }
 
 .skin-info {
   flex: 1;
-}
 
-.skin-info h4 {
-  margin: 0 0 4px;
-  font-size: 16px;
-  color: var(--primary-gold, #ffd700);
-  font-weight: var(--font-bold, 700);
+  h4 {
+    margin: 0 0 tokens.$space-1;
+    font-size: tokens.$font-size-base;
+    color: tokens.$primary-gold;
+    font-weight: tokens.$font-weight-bold;
+  }
 }
 
 .skin-hero {
   margin: 0;
-  font-size: 13px;
-  color: var(--primary-color, #4a9eff);
-  font-weight: var(--font-semibold, 600);
+  font-size: tokens.$font-size-xs;
+  color: tokens.$primary-blue;
+  font-weight: tokens.$font-weight-semibold;
 }
 
 .skin-status {
@@ -626,146 +617,125 @@ onMounted(() => {
 
 .status-badge {
   display: inline-block;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: var(--font-bold, 700);
+  padding: tokens.$space-1 tokens.$space-2;
+  border-radius: tokens.$radius-full;
+  font-size: tokens.$font-size-xs;
+  font-weight: tokens.$font-weight-bold;
   color: white;
-  margin-bottom: 4px;
+  margin-bottom: tokens.$space-1;
 }
 
 .status {
   display: block;
-  font-size: 12px;
-  font-weight: var(--font-bold, 700);
-  padding: 2px 6px;
-  border-radius: 12px;
-}
+  font-size: tokens.$font-size-xs;
+  font-weight: tokens.$font-weight-bold;
+  padding: tokens.$space-0 tokens.$space-1;
+  border-radius: tokens.$radius-full;
 
-.status.developing {
-  background-color: var(--warning-bg, rgb(255 217 61 / 20%));
-  color: var(--warning-color, #ffd93d);
-}
+  &.developing {
+    background-color: rgb(245 158 11 / 20%);
+    color: tokens.$warning;
+  }
 
-.status.online {
-  background-color: var(--success-bg, rgb(76 175 80 / 20%));
-  color: var(--success-color, #4caf50);
+  &.online {
+    background-color: rgb(16 185 129 / 20%);
+    color: tokens.$success;
+  }
 }
 
 /* 研发进度样式 */
 .development-progress {
-  margin-bottom: 16px;
+  margin-bottom: tokens.$spacing-md;
 }
 
 .progress-bar {
   width: 100%;
   height: 8px;
-  background-color: var(--border-color, rgb(0 0 0 / 30%));
-  border-radius: 4px;
+  background-color: tokens.$bg-tertiary;
+  border-radius: tokens.$radius-sm;
   overflow: hidden;
-  margin-bottom: 8px;
+  margin-bottom: tokens.$space-2;
 }
 
 .progress-fill {
   height: 100%;
-  background-color: var(--primary-color, #4a9eff);
-  border-radius: 4px;
-  transition: width 0.3s ease;
+  background-color: tokens.$primary-blue;
+  border-radius: tokens.$radius-sm;
+  transition: width tokens.$transition-normal;
 }
 
 .progress-text {
   display: block;
   text-align: right;
-  font-size: 12px;
-  color: var(--text-secondary, #aaa);
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
 }
 
 /* 皮肤数据样式 */
 .skin-stats {
-  background-color: var(--card-hover, rgb(0 0 0 / 20%));
-  border-radius: 6px;
-  padding: 14px;
-  margin-bottom: 16px;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-sm;
+  padding: tokens.$spacing-md;
+  margin-bottom: tokens.$spacing-md;
 }
 
 .stat-item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  font-size: 14px;
-}
+  @include utils.flex-between;
+  margin-bottom: tokens.$space-2;
+  font-size: tokens.$font-size-sm;
 
-.stat-item:last-child {
-  margin-bottom: 0;
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .stat-label {
-  color: var(--text-secondary, #aaa);
+  color: tokens.$text-secondary;
 }
 
 .stat-value {
-  color: var(--primary-gold, #ffd700);
-  font-weight: var(--font-bold, 700);
+  color: tokens.$primary-gold;
+  font-weight: tokens.$font-weight-bold;
 }
 
-/* 皮肤元数据样�? */
+/* 皮肤元数据样式 */
 .skin-meta {
-  background-color: var(--card-hover, rgb(156 39 176 / 10%));
-  border-radius: 8px;
-  padding: 14px;
+  background-color: rgb(139 92 246 / 10%);
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-md;
 }
 
 .meta-item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  font-size: 14px;
-}
+  @include utils.flex-between;
+  margin-bottom: tokens.$space-2;
+  font-size: tokens.$font-size-sm;
 
-.meta-item:last-child {
-  margin-bottom: 0;
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .meta-label {
-  color: var(--text-secondary, #aaa);
+  color: tokens.$text-secondary;
 }
 
 .meta-value {
-  color: var(--text-primary, #fff);
-  font-weight: var(--font-semibold, 600);
+  color: tokens.$text-primary;
+  font-weight: tokens.$font-weight-semibold;
 }
 
-/* 空状态样�? */
+/* 空状态样式 */
 .empty-state {
   grid-column: 1 / -1;
   text-align: center;
-  padding: 48px;
-  background-color: var(--card-hover, rgb(0 0 0 / 10%));
-  border-radius: 8px;
-  color: var(--text-secondary, #aaa);
+  padding: tokens.$spacing-2xl;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  color: tokens.$text-secondary;
 }
 
-/* 滚动条样�? */
-.skin-development-content::-webkit-scrollbar {
-  width: 8px;
-}
-
-.skin-development-content::-webkit-scrollbar-track {
-  background: var(--scrollbar-track, rgb(0 0 0 / 10%));
-  border-radius: 4px;
-}
-
-.skin-development-content::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb, rgb(74 158 255 / 50%));
-  border-radius: 4px;
-}
-
-.skin-development-content::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover, rgb(74 158 255 / 70%));
-}
-
-/* 响应式设�? */
-@media (width <= 768px) {
+/* 响应式设计 */
+@include utils.mobile {
   .option-buttons {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   }
@@ -775,11 +745,11 @@ onMounted(() => {
   }
 
   .skin-development-content {
-    padding: 16px;
+    padding: tokens.$spacing-md;
   }
 
   .section-card {
-    padding: 20px;
+    padding: tokens.$spacing-md;
   }
 }
 </style>

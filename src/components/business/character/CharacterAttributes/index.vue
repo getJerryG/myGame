@@ -1,12 +1,10 @@
 <template>
   <div class="attributes-section">
-    <h3 class="section-title">能力属�?/h3>
+    <h3 class="section-title">能力属性</h3>
     <div class="attributes-grid">
       <div
         class="attribute-card"
-        @mouseenter="
-          $emit('show-tooltip', '物理攻击力：影响普通攻击和物理技能伤�?)
-        "
+        @mouseenter="$emit('show-tooltip', '物理攻击力：影响普通攻击和物理技能伤害')"
         @mouseleave="$emit('hide-tooltip')"
       >
         <div class="attribute-icon">⚔️</div>
@@ -17,10 +15,10 @@
       </div>
       <div
         class="attribute-card"
-        @mouseenter="$emit('show-tooltip', '防御力：减少受到的物理伤�?)"
+        @mouseenter="$emit('show-tooltip', '防御力：减少受到的物理伤害')"
         @mouseleave="$emit('hide-tooltip')"
       >
-        <div class="attribute-icon">🛡�?/div>
+        <div class="attribute-icon">🛡️</div>
         <div class="attribute-value">
           {{ player.stats.defense }}
         </div>
@@ -28,10 +26,10 @@
       </div>
       <div
         class="attribute-card"
-        @mouseenter="$emit('show-tooltip', '魔法攻击力：影响魔法技能伤�?)"
+        @mouseenter="$emit('show-tooltip', '魔法攻击力：影响魔法技能伤害')"
         @mouseleave="$emit('hide-tooltip')"
       >
-        <div class="attribute-icon">�?/div>
+        <div class="attribute-icon">🔥</div>
         <div class="attribute-value">
           {{ player.stats.magicAttack }}
         </div>
@@ -39,7 +37,7 @@
       </div>
       <div
         class="attribute-card"
-        @mouseenter="$emit('show-tooltip', '魔法防御力：减少受到的魔法伤�?)"
+        @mouseenter="$emit('show-tooltip', '魔法防御力：减少受到的魔法伤害')"
         @mouseleave="$emit('hide-tooltip')"
       >
         <div class="attribute-icon">🔮</div>
@@ -52,7 +50,7 @@
   </div>
 </template>
 
-<script setup lang=ts>
+<script setup lang="ts">
 defineProps({
   player: {
     type: Object,
@@ -63,57 +61,56 @@ defineProps({
 defineEmits(['show-tooltip', 'hide-tooltip']);
 </script>
 
-<style lang=scss scoped>
+<style lang="scss" scoped>
+
 .attributes-section {
-  margin-top: var(--space-4);
+  margin-top: tokens.$space-4;
 }
 
 .section-title {
-  font-size: var(--text-lg);
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
-  margin-bottom: var(--space-3);
+  font-size: tokens.$font-size-lg;
+  font-weight: tokens.$font-weight-semibold;
+  color: tokens.$text-primary;
+  margin-bottom: tokens.$space-3;
 }
 
 .attributes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: var(--space-3);
+  gap: tokens.$space-3;
 }
 
 .attribute-card {
-  background-color: rgb(255 255 255 / 5%);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-lg);
-  padding: var(--space-3);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-1);
-  transition: all var(--transition-fast);
-  cursor: help;
-}
+  @include utils.flex-col(tokens.$space-1, center, flex-start);
 
-.attribute-card:hover {
-  background-color: rgb(255 255 255 / 10%);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  background-color: tokens.$bg-light;
+  border: 1px solid tokens.$border-light;
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$space-3;
+  transition: all tokens.$transition-fast;
+  cursor: help;
+
+  &:hover {
+    background-color: tokens.$bg-lighter;
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-md;
+  }
 }
 
 .attribute-icon {
-  font-size: var(--text-2xl);
-  margin-bottom: var(--space-1);
+  font-size: tokens.$font-size-2xl;
+  margin-bottom: tokens.$space-1;
 }
 
 .attribute-value {
-  font-size: var(--text-xl);
-  font-weight: var(--font-bold);
-  color: var(--text-primary);
+  font-size: tokens.$font-size-xl;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
 }
 
 .attribute-label {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-secondary;
   text-transform: capitalize;
 }
 </style>

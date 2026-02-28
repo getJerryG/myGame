@@ -45,18 +45,24 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
+
 /* 抽奖结果面板 */
 .result-panel {
-  background-color: #e8f5e8;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  border: 1px solid #4caf50;
+  background-color: tokens.$bg-secondary;
+  padding: tokens.$spacing-md;
+  border-radius: tokens.$radius-lg;
+  margin-bottom: tokens.$spacing-lg;
+  border: 1px solid tokens.$success;
   flex: 1;
   min-height: 200px;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
+  @include utils.flex-col(tokens.$spacing-0);
+  @include utils.custom-scrollbar;
+
+  h3 {
+    margin-top: 0;
+    color: tokens.$success;
+  }
 }
 
 /* 抽奖结果空白区域 */
@@ -66,43 +72,44 @@ defineProps({
   flex-shrink: 0;
 }
 
-.result-panel h3 {
-  margin-top: 0;
-  color: #4caf50;
-}
-
 /* 奖励列表 */
 .rewards {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
-  margin-top: 10px;
+  gap: tokens.$spacing-md;
+  margin-top: tokens.$spacing-sm;
   overflow-y: auto;
   flex: 1;
   min-height: 0;
+  @include utils.custom-scrollbar;
 }
 
-/* 奖励�? */
+/* 奖励项 */
 .reward-item {
-  background-color: white;
-  padding: 12px 16px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  background-color: tokens.$bg-secondary;
+  padding: tokens.$spacing-md;
+  border-radius: tokens.$radius-lg;
+  box-shadow: tokens.$shadow-md;
+  border: 1px solid tokens.$border-light;
+  @include utils.flex-col(tokens.$spacing-xs, center);
   min-width: 120px;
   opacity: 0;
   transform: scale(0.5);
-  transition: all 0.3s ease-out;
+  transition: all tokens.$transition-normal;
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: tokens.$shadow-lg;
+    border-color: tokens.$border-medium;
+  }
 }
 
-/* 动画�? */
+/* 动画类 */
 .reward-item-animated {
   animation: rewardScaleIn 0.5s ease-out forwards;
 }
 
-/* 从小到大的动�? */
+/* 从小到大的动画 */
 @keyframes rewardScaleIn {
   0% {
     opacity: 0;
@@ -116,28 +123,29 @@ defineProps({
 }
 
 .reward-name {
-  font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 5px;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-base;
+  margin-bottom: tokens.$spacing-xs;
   text-align: center;
+  color: tokens.$text-primary;
 }
 
 .reward-value {
-  color: #4caf50;
-  font-size: 14px;
-  font-weight: bold;
+  color: tokens.$success;
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-bold;
 }
 
 /* 皮肤类型样式 */
 .reward-type {
   display: block;
-  color: #2196f3;
-  font-size: 14px;
-  font-weight: bold;
-  margin-top: 5px;
+  color: tokens.$primary-blue;
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-bold;
+  margin-top: tokens.$spacing-xs;
   text-align: center;
-  padding: 2px 8px;
-  border-radius: 4px;
-  background-color: rgb(33 150 243 / 10%);
+  padding: 2px tokens.$spacing-sm;
+  border-radius: tokens.$radius-sm;
+  background-color: rgb(59 130 246 / 10%);
 }
 </style>

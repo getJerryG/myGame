@@ -24,46 +24,38 @@ function toggleCollapse(): void {
 </script>
 
 <style lang="scss" scoped>
+
 .panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 10px 10px 0 0;
-  color: white;
-  box-shadow: 0 4px 15px rgb(102 126 234 / 30%);
+  @include utils.flex-between(center);
+  padding: tokens.$spacing-md tokens.$spacing-lg;
+  background: linear-gradient(135deg, tokens.$primary-blue 0%, #764ba2 100%);
+  border-radius: tokens.$radius-md tokens.$radius-md 0 0;
+  color: tokens.$text-primary;
+  box-shadow: tokens.$shadow-lg;
 }
 
 .panel-title {
   margin: 0;
-  font-size: 18px;
-  font-weight: bold;
+  font-size: tokens.$font-size-lg;
+  font-weight: tokens.$font-weight-bold;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .collapse-btn {
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 5px;
+  @include utils.collapse-btn;
+  color: tokens.$text-primary;
+  font-size: tokens.$font-size-base;
   border-radius: 50%;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.collapse-btn:hover {
-  background: rgb(255 255 255 / 20%);
-  transform: scale(1.1);
+  &:hover {
+    background: tokens.$bg-lighter;
+    transform: scale(1.1);
+  }
 }
 
 .collapse-icon {
   display: inline-block;
-  transition: transform 0.3s ease;
+  transition: transform tokens.$transition-normal;
 }
 </style>

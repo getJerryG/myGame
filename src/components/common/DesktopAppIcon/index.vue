@@ -186,228 +186,197 @@ const handleCancelDownload = () => {
 </script>
 
 <style lang="scss" scoped>
+// ============================================
+// DesktopAppIcon 组件样式
+// ============================================
+
+
 .desktop-app-icon {
-  position: absolute;
-  width: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  user-select: none;
-  padding: 10px;
-  border-radius: 8px;
-}
+  @include utils.desktop-app-icon;
 
-.desktop-app-icon:hover {
-  background-color: rgb(74 158 255 / 10%);
-}
+  &.downloading {
+    cursor: wait;
+  }
 
-.icon-container {
-  position: relative;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 8px;
-}
+  &.download-completed {
+    /* 移除了边框动画效果 */
+  }
 
-.app-icon {
-  font-size: 32px;
-  text-shadow: 0 0 10px rgb(0 0 0 / 50%);
-}
+  .icon-container {
+    @include utils.icon-container(60px);
+    margin-bottom: tokens.$spacing-sm;
 
-.app-badge {
-  position: absolute;
-  bottom: -5px;
-  right: -5px;
-  background-color: #ff6b6b;
-  color: white;
-  border-radius: 10px;
-  padding: 2px 8px;
-  font-size: 10px;
-  font-weight: bold;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 30%);
-}
+    .app-icon {
+      font-size: 32px;
+      text-shadow: 0 0 10px rgb(0 0 0 / 50%);
+    }
 
-.app-name {
-  color: white;
-  font-size: 12px;
-  text-align: center;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+    .app-badge {
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      @include utils.badge-notification;
+      box-shadow: tokens.$shadow-md;
+    }
+  }
 
-/* 下载进度覆盖层 */
-.download-progress-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgb(0 0 0 / 50%);
-  border-radius: 50%;
-}
+  .app-name {
+    color: tokens.$text-primary;
+    font-size: tokens.$font-size-xs;
+    text-align: center;
+    max-width: 100%;
+    @include utils.text-truncate;
+  }
 
-.progress-circle {
-  position: relative;
-  width: 50px;
-  height: 50px;
-}
+  /* 下载进度覆盖层 */
+  .download-progress-overlay {
+    position: absolute;
+    inset: 0;
+    @include utils.flex-center;
+    background-color: rgb(0 0 0 / 50%);
+    border-radius: 50%;
 
-.progress-circle svg {
-  width: 100%;
-  height: 100%;
-  transform: rotate(-90deg);
-}
+    .progress-circle {
+      position: relative;
+      width: 50px;
+      height: 50px;
 
-.progress-bg {
-  fill: none;
-  stroke: rgb(255 255 255 / 30%);
-  stroke-width: 8;
-}
+      svg {
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg);
+      }
 
-.progress-fill {
-  fill: none;
-  stroke: #4a9eff;
-  stroke-width: 8;
-  stroke-linecap: round;
-  stroke-dasharray: 283;
-  stroke-dashoffset: 283;
-  transition: stroke-dashoffset 0.3s ease;
-}
+      .progress-bg {
+        fill: none;
+        stroke: rgb(255 255 255 / 30%);
+        stroke-width: 8;
+      }
 
-.progress-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-}
+      .progress-fill {
+        fill: none;
+        stroke: tokens.$primary-blue;
+        stroke-width: 8;
+        stroke-linecap: round;
+        stroke-dasharray: 283;
+        stroke-dashoffset: 283;
+        transition: stroke-dashoffset tokens.$transition-normal;
+      }
 
-/* 下载状态样式 */
-.downloading {
-  cursor: wait;
-}
+      .progress-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: tokens.$text-primary;
+        font-size: tokens.$font-size-xs;
+        font-weight: tokens.$font-weight-bold;
+      }
+    }
+  }
 
-.download-completed {
-  /* 移除了边框动画效果 */
-}
+  /* 上下文菜单样式 */
+  .app-context-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: tokens.$spacing-xs;
+    background-color: tokens.$bg-secondary;
+    border-radius: tokens.$radius-md;
+    box-shadow: tokens.$shadow-lg;
+    z-index: tokens.$z-dropdown;
+    min-width: 120px;
+    overflow: hidden;
 
-/* 上下文菜单样式 */
-.app-context-menu {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: 5px;
-  background-color: rgb(26 26 46 / 95%);
-  border-radius: 6px;
-  box-shadow: 0 0 20px rgb(0 0 0 / 50%);
-  z-index: 1000;
-  min-width: 120px;
-  overflow: hidden;
-}
+    .menu-item {
+      display: block;
+      width: 100%;
+      padding: tokens.$spacing-sm tokens.$spacing-md;
+      background: none;
+      border: none;
+      color: tokens.$text-primary;
+      text-align: left;
+      font-size: tokens.$font-size-sm;
+      cursor: pointer;
+      transition: all tokens.$transition-fast;
 
-.menu-item {
-  display: block;
-  width: 100%;
-  padding: 8px 16px;
-  background: none;
-  border: none;
-  color: white;
-  text-align: left;
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
+      &:hover {
+        background-color: rgb(74 158 255 / 30%);
+      }
+    }
+  }
 
-.menu-item:hover {
-  background-color: rgb(74 158 255 / 30%);
-}
+  /* 删除确认模态框样式 */
+  .delete-confirm-overlay {
+    @include utils.modal-overlay;
+    z-index: tokens.$z-max;
 
-/* 删除确认模态框样式 */
-.delete-confirm-overlay {
-  position: fixed;
-  inset: 0;
-  background-color: rgb(0 0 0 / 80%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
-}
+    .confirm-modal {
+      background-color: tokens.$bg-secondary;
+      border-radius: tokens.$radius-lg;
+      padding: tokens.$spacing-lg;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: tokens.$shadow-xl;
 
-.confirm-modal {
-  background-color: rgb(26 26 46 / 95%);
-  border-radius: 8px;
-  padding: 20px;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0 0 30px rgb(0 0 0 / 50%);
-}
+      .confirm-modal-header {
+        margin-bottom: tokens.$spacing-md;
 
-.confirm-modal-header {
-  margin-bottom: 15px;
-}
+        h3 {
+          margin: 0;
+          color: tokens.$primary-blue;
+          font-size: tokens.$font-size-lg;
+          font-weight: tokens.$font-weight-bold;
+        }
+      }
 
-.confirm-modal-header h3 {
-  margin: 0;
-  color: #4a9eff;
-  font-size: 16px;
-  font-weight: bold;
-}
+      .confirm-modal-content {
+        margin-bottom: tokens.$spacing-lg;
 
-.confirm-modal-content {
-  margin-bottom: 20px;
-}
+        p {
+          margin: 0;
+          color: tokens.$text-primary;
+          font-size: tokens.$font-size-sm;
+          line-height: tokens.$line-height-normal;
+        }
+      }
 
-.confirm-modal-content p {
-  margin: 0;
-  color: white;
-  font-size: 14px;
-  line-height: 1.5;
-}
+      .confirm-modal-footer {
+        display: flex;
+        gap: tokens.$spacing-md;
+        justify-content: flex-end;
 
-.confirm-modal-footer {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-}
+        .btn-cancel,
+        .btn-delete {
+          padding: tokens.$spacing-sm tokens.$spacing-md;
+          border: none;
+          border-radius: tokens.$radius-sm;
+          cursor: pointer;
+          font-size: tokens.$font-size-sm;
+          font-weight: tokens.$font-weight-bold;
+          transition: all tokens.$transition-fast;
+        }
 
-.btn-cancel,
-.btn-delete {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: bold;
-  transition: all 0.2s ease;
-}
+        .btn-cancel {
+          background-color: tokens.$bg-light;
+          color: tokens.$text-primary;
 
-.btn-cancel {
-  background-color: rgb(255 255 255 / 20%);
-  color: white;
-}
+          &:hover {
+            background-color: tokens.$bg-lighter;
+          }
+        }
 
-.btn-cancel:hover {
-  background-color: rgb(255 255 255 / 30%);
-}
+        .btn-delete {
+          background-color: tokens.$error;
+          color: white;
 
-.btn-delete {
-  background-color: #ff6b6b;
-  color: white;
-}
-
-.btn-delete:hover {
-  background-color: #ff5252;
+          &:hover {
+            background-color: color.adjust(tokens.$error, $lightness: -10%);
+          }
+        }
+      }
+    }
+  }
 }
 </style>

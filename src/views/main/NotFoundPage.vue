@@ -48,13 +48,12 @@ const goBack = () => {
 </script>
 
 <style lang="scss" scoped>
+
 .not-found-page {
   width: 100vw;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  @include utils.flex-center;
+  background: linear-gradient(135deg, tokens.$bg-dark 0%, tokens.$bg-secondary 50%, tokens.$bg-tertiary 100%);
   overflow: hidden;
   position: relative;
 
@@ -66,9 +65,9 @@ const goBack = () => {
     width: 100%;
     height: 100%;
     background-image:
-      radial-gradient(circle at 20% 50%, rgba(74, 158, 255, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 40% 80%, rgba(255, 107, 107, 0.1) 0%, transparent 50%);
+      radial-gradient(circle at 20% 50%, rgb(74 158 255 / 10%) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgb(255 215 0 / 10%) 0%, transparent 50%),
+      radial-gradient(circle at 40% 80%, rgb(255 107 107 / 10%) 0%, transparent 50%);
     animation: backgroundPulse 4s ease-in-out infinite alternate;
   }
 }
@@ -83,25 +82,22 @@ const goBack = () => {
 }
 
 .not-found-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  @include utils.flex-col(tokens.$spacing-md, center, center);
   text-align: center;
   z-index: 1;
   max-width: 600px;
-  padding: 40px;
-  background-color: rgba(26, 26, 46, 0.9);
-  border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(74, 158, 255, 0.3);
+  padding: tokens.$spacing-xl;
+  background-color: rgb(26 26 46 / 90%);
+  border-radius: tokens.$radius-xl;
+  box-shadow: tokens.$shadow-xl;
+  border: 1px solid rgb(74 158 255 / 30%);
 }
 
 .not-found-number {
   font-size: 12rem;
-  font-weight: bold;
-  color: #4a9eff;
-  text-shadow: 0 0 30px rgba(74, 158, 255, 0.5);
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$primary;
+  text-shadow: 0 0 30px rgb(74 158 255 / 50%);
   margin: 0;
   line-height: 1;
   animation: numberFloat 3s ease-in-out infinite;
@@ -118,51 +114,51 @@ const goBack = () => {
 }
 
 .not-found-title {
-  font-size: 2.5rem;
-  font-weight: 600;
-  color: white;
-  margin: 20px 0 10px;
+  font-size: tokens.$font-size-4xl;
+  font-weight: tokens.$font-weight-semibold;
+  color: tokens.$text-primary;
+  margin: tokens.$spacing-md 0 tokens.$spacing-sm;
 }
 
 .not-found-description {
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0 0 30px;
-  line-height: 1.6;
+  font-size: tokens.$font-size-lg;
+  color: tokens.$text-secondary;
+  margin: 0 0 tokens.$spacing-xl;
+  line-height: tokens.$line-height-normal;
 }
 
 .not-found-actions {
   display: flex;
-  gap: 15px;
-  margin-bottom: 40px;
+  gap: tokens.$spacing-md;
+  margin-bottom: tokens.$spacing-xl;
 }
 
 .action-button {
-  padding: 12px 30px;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: white;
-  background: linear-gradient(135deg, #4a9eff 0%, #357abd 100%);
+  padding: tokens.$spacing-sm tokens.$spacing-xl;
+  font-size: tokens.$font-size-lg;
+  font-weight: tokens.$font-weight-medium;
+  color: tokens.$text-primary;
+  background: linear-gradient(135deg, tokens.$primary 0%, tokens.$primary-dark 100%);
   border: none;
-  border-radius: 50px;
+  border-radius: tokens.$radius-full;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(74, 158, 255, 0.4);
+  transition: all tokens.$transition-normal;
+  box-shadow: 0 4px 15px rgb(74 158 255 / 40%);
 
   &:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(74, 158, 255, 0.6);
-    background: linear-gradient(135deg, #357abd 0%, #4a9eff 100%);
+    box-shadow: 0 6px 20px rgb(74 158 255 / 60%);
+    background: linear-gradient(135deg, tokens.$primary-dark 0%, tokens.$primary 100%);
   }
 
   &.secondary {
-    background: rgba(255, 255, 255, 0.15);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: tokens.$bg-lighter;
+    border: 2px solid rgb(255 255 255 / 30%);
     box-shadow: none;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.25);
-      border-color: rgba(255, 255, 255, 0.5);
+      background: tokens.$bg-light;
+      border-color: rgb(255 255 255 / 50%);
     }
   }
 }
@@ -172,7 +168,7 @@ const goBack = () => {
   height: 200px;
   position: relative;
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: tokens.$radius-md;
 }
 
 .floating-elements {
@@ -184,7 +180,7 @@ const goBack = () => {
 .element {
   position: absolute;
   border-radius: 50%;
-  background: rgba(74, 158, 255, 0.3);
+  background: rgb(74 158 255 / 30%);
   animation: float 6s ease-in-out infinite;
 }
 
@@ -243,8 +239,8 @@ const goBack = () => {
 /* 响应式设计 */
 @media (max-width: 768px) {
   .not-found-container {
-    padding: 30px 20px;
-    margin: 20px;
+    padding: tokens.$spacing-lg tokens.$spacing-md;
+    margin: tokens.$spacing-md;
   }
 
   .not-found-number {
@@ -252,11 +248,11 @@ const goBack = () => {
   }
 
   .not-found-title {
-    font-size: 2rem;
+    font-size: tokens.$font-size-3xl;
   }
 
   .not-found-description {
-    font-size: 1rem;
+    font-size: tokens.$font-size-base;
   }
 
   .not-found-actions {

@@ -5,52 +5,18 @@
     <!-- 上方：策划信息和时间系统 -->
     <div class="top-section">
       <!-- 策划信息 -->
-      <div class="planner-info">
-        <div class="planner-level">
-          <span class="label">策划等级:</span>
-          <span class="value">{{ gameState.plannerLevel }}</span>
-          <span class="level-badge">🎓</span>
-        </div>
-        <div class="planner-funds">
-          <span class="label">策划资金:</span>
-          <span class="value">¥{{ gameState.plannerFunds }}</span>
-          <span class="funds-badge">💰</span>
-        </div>
-      </div>
+      <PlannerInfo
+        :level="gameState.plannerLevel"
+        :funds="gameState.plannerFunds"
+      />
 
       <!-- 顶部时间系统 -->
-      <div class="time-system">
-        <div class="calendar-clock">
-          <div class="calendar">
-            <div class="calendar-date">
-              {{ formatDate(gameState.currentDate) }}
-            </div>
-            <div class="calendar-time">
-              <span>{{
-                formatTime(Math.floor(animatedHour), Math.floor(animatedMinute))
-              }}</span>
-            </div>
-            <div class="calendar-phase">
-              {{ getPhaseName(gameState.currentPhase) }}
-            </div>
-          </div>
-
-          <!-- 快捷操作按钮 -->
-          <div class="quick-actions">
-            <button
-              class="next-day-btn"
-              :disabled="gameState.isGameOver"
-              aria-label="进入下一�?
-              :aria-disabled="gameState.isGameOver"
-              @click="nextDay"
-            >
-              <span class="btn-icon" aria-hidden="true">▶️</span>
-              <span class="btn-text">下一�?/span>
-              <span class="btn-glow" aria-hidden="true"></span>
-            </button>
-          </div>
-        </div>
-      </div>
+      <TimeSystem
+        :current-date="gameState.currentDate"
+        :current-phase="gameState.currentPhase"
+        :is-game-over="gameState.isGameOver"
+        @next-day="nextDay"
+      />
     </div>
 
     <!-- 下方：核心指标总览 -->
@@ -58,457 +24,287 @@
       <!-- 核心指标总览 -->
       <div class="core-metrics-overview">
         <!-- 日活用户 -->
-        <div class="metric-card" aria-label="日活用户: {{ businessData.dau }}">
-          <div class="metric-header">
-            <span class="metric-icon">👥</span>
-            <span class="metric-name">日活用户</span>
-          </div>
-          <div class="metric-value">
-            <span class="value">{{ animatedActiveUsers }}</span>
-            <span
-              class="change"
-              :class="{
-                positive: activeUsersChange > 0,
-                negative: activeUsersChange < 0,
-              }"
-            >
-              {{ activeUsersChange > 0 ? '�? : '�?
-              }}{{ Math.abs(activeUsersChange) }}%
-            </span>
-            <span class="factor-icon" v-if="activeUsersChange > 0">🔥</span>
-            <span class="factor-icon" v-else-if="activeUsersChange < 0"
-              >😢</span
-            >
-          </div>
-          <div class="metric-trend" v-if="showTrends">
-            <div class="mini-trend">
-              <svg width="100" height="30" viewBox="0 0 100 30">
-                <polyline
-                  :points="activeUsersTrend"
-                  fill="none"
-                  stroke="var(--primary-gold)"
-                  stroke-width="2"
-                />
-              </svg>
-            </div>
-          </div>
-        </div>
+        <MetricCard
+          metric-name="日活用户"
+          :value="animatedActiveUsers"
+          icon="👥"
+          :change="activeUsersChange"
+          positive-icon="🔥"
+          negative-icon="😢"
+          :trend-points="activeUsersTrend"
+          trend-color="var(--primary-gold)"
+          :show-trend="showTrends"
+        />
 
         <!-- 市场份额 -->
-        <div class="metric-card" aria-label="市场份额: {{ marketShare }}%">
-          <div class="metric-header">
-            <span class="metric-icon">📊</span>
-            <span class="metric-name">市场份额</span>
-          </div>
-          <div class="metric-value">
-            <span class="value">{{ marketShare }}%</span>
-            <span
-              class="change"
-              :class="{
-                positive: marketShareChange > 0,
-                negative: marketShareChange < 0,
-              }"
-            >
-              {{ marketShareChange > 0 ? '�? : '�?
-              }}{{ Math.abs(marketShareChange) }}%
-            </span>
-            <span class="factor-icon" v-if="marketShareChange > 0">🚀</span>
-            <span class="factor-icon" v-else-if="marketShareChange < 0"
-              >📉</span
-            >
-          </div>
-          <div class="metric-trend" v-if="showTrends">
-            <div class="mini-trend">
-              <svg width="100" height="30" viewBox="0 0 100 30">
-                <polyline
-                  :points="marketShareTrend"
-                  fill="none"
-                  stroke="var(--success-green)"
-                  stroke-width="2"
-                />
-              </svg>
-            </div>
-          </div>
-        </div>
+        <MetricCard
+          metric-name="市场份额"
+          :value="marketShare"
+          suffix="%"
+          icon="📊"
+          :change="marketShareChange"
+          positive-icon="🚀"
+          negative-icon="📉"
+          :trend-points="marketShareTrend"
+          trend-color="var(--success-green)"
+          :show-trend="showTrends"
+        />
 
-        <!-- 玩家满意�?-->
-        <div
-          class="metric-card"
-          aria-label="玩家满意�? {{ playerSatisfaction }}%"
-        >
-          <div class="metric-header">
-            <span class="metric-icon">😊</span>
-            <span class="metric-name">玩家满意�?/span>
-          </div>
-          <div class="metric-value">
-            <span class="value">{{ playerSatisfaction }}%</span>
-            <span
-              class="change"
-              :class="{
-                positive: satisfactionChange > 0,
-                negative: satisfactionChange < 0,
-              }"
-            >
-              {{ satisfactionChange > 0 ? '�? : '�?
-              }}{{ Math.abs(satisfactionChange) }}%
-            </span>
-            <span class="factor-icon" v-if="satisfactionChange > 0">❤️</span>
-            <span class="factor-icon" v-else-if="satisfactionChange < 0"
-              >💔</span
-            >
-          </div>
-          <div class="metric-trend" v-if="showTrends">
-            <div class="mini-trend">
-              <svg width="100" height="30" viewBox="0 0 100 30">
-                <polyline
-                  :points="satisfactionTrend"
-                  fill="none"
-                  stroke="#8B5CF6"
-                  stroke-width="2"
-                />
-              </svg>
-            </div>
-          </div>
-        </div>
+        <!-- 玩家满意度 -->
+        <MetricCard
+          metric-name="玩家满意度"
+          :value="playerSatisfaction"
+          suffix="%"
+          icon="😊"
+          :change="satisfactionChange"
+          positive-icon="🌟"
+          negative-icon="😞"
+          :trend-points="satisfactionTrend"
+          trend-color="var(--primary-gold)"
+          :show-trend="showTrends"
+        />
 
-        <!-- 收入 -->
-        <div
-          class="metric-card"
-          aria-label="收入: ¥{{ businessData.totalRevenue }}"
-        >
-          <div class="metric-header">
-            <span class="metric-icon">💰</span>
-            <span class="metric-name">收入</span>
-          </div>
-          <div class="metric-value">
-            <span class="value">¥{{ animatedRevenue }}</span>
-            <span
-              class="change"
-              :class="{
-                positive: revenueChange > 0,
-                negative: revenueChange < 0,
-              }"
-            >
-              {{ revenueChange > 0 ? '�? : '�? }}{{ Math.abs(revenueChange) }}%
-            </span>
-            <span class="factor-icon" v-if="revenueChange > 0">💸</span>
-            <span class="factor-icon" v-else-if="revenueChange < 0">💤</span>
-          </div>
-          <div class="metric-trend" v-if="showTrends">
-            <div class="mini-trend">
-              <svg width="100" height="30" viewBox="0 0 100 30">
-                <polyline
-                  :points="revenueTrend"
-                  fill="none"
-                  stroke="var(--danger-red)"
-                  stroke-width="2"
-                />
-              </svg>
-            </div>
-          </div>
-        </div>
+        <!-- 游戏评分 -->
+        <MetricCard
+          metric-name="游戏评分"
+          :value="gameRating"
+          icon="⭐"
+          :change="ratingChange"
+          positive-icon="👍"
+          negative-icon="👎"
+          :trend-points="ratingTrend"
+          trend-color="var(--warning-yellow)"
+          :show-trend="showTrends"
+        />
 
-        <!-- 留存�?-->
-        <div class="metric-card" aria-label="留存�? {{ retentionRate }}%">
-          <div class="metric-header">
-            <span class="metric-icon">🔄</span>
-            <span class="metric-name">留存�?/span>
-          </div>
-          <div class="metric-value">
-            <span class="value">{{ retentionRate }}%</span>
-            <span
-              class="change"
-              :class="{
-                positive: retentionChange > 0,
-                negative: retentionChange < 0,
-              }"
-            >
-              {{ retentionChange > 0 ? '�? : '�?
-              }}{{ Math.abs(retentionChange) }}%
-            </span>
-            <span class="factor-icon" v-if="retentionChange > 0">🔄</span>
-            <span class="factor-icon" v-else-if="retentionChange < 0">📤</span>
-          </div>
-          <div class="metric-trend" v-if="showTrends">
-            <div class="mini-trend">
-              <svg width="100" height="30" viewBox="0 0 100 30">
-                <polyline
-                  :points="retentionTrend"
-                  fill="none"
-                  stroke="var(--primary-gold)"
-                  stroke-width="2"
-                />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
+        <!-- 竞争指数 -->
+        <MetricCard
+          metric-name="竞争指数"
+          :value="competitionIndex"
+          icon="⚔️"
+          :change="competitionChange"
+          positive-icon="💪"
+          negative-icon="🛡️"
+          :trend-points="competitionTrend"
+          trend-color="var(--error-red)"
+          :show-trend="showTrends"
+        />
 
-      <!-- 趋势图切换按�?-->
-      <div class="trend-toggle">
-        <button
-          class="toggle-btn"
-          @click="toggleTrends"
-          :class="{ active: showTrends }"
-        >
-          <span>{{ showTrends ? '隐藏趋势' : '显示趋势' }}</span>
-          <span class="toggle-icon">{{ showTrends ? '�? : '�? }}</span>
-        </button>
+        <!-- 项目进度 -->
+        <MetricCard
+          metric-name="项目进度"
+          :value="projectProgress"
+          suffix="%"
+          icon="🏗️"
+          :change="progressChange"
+          positive-icon="✅"
+          negative-icon="⏳"
+          :trend-points="progressTrend"
+          trend-color="var(--info-blue)"
+          :show-trend="showTrends"
+        />
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang=ts>
-import { computed, onMounted, ref, watch } from 'vue';
+<script setup lang="ts">
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+import PlannerInfo from './PlannerInfo.vue';
+import TimeSystem from './TimeSystem.vue';
+import MetricCard from './MetricCard.vue';
+
+import type { GameState } from '@/types/game';
 
 // 定义 props
-const props = defineProps({
-  gameState: {
-    type: Object,
-    required: true,
-  },
-  businessData: {
-    type: Object,
-    required: true,
-  },
-  assessment: {
-    type: Object,
-    required: true,
-  },
+const props = defineProps<{
+  gameState: GameState;
+  businessData: any;
+  showTrends?: boolean;
+}>();
 
-  isSimulating: {
-    type: Boolean,
-    default: false,
-  },
-  simulationProgress: {
-    type: Number,
-    default: 0,
-  },
-});
+// 定义 emits
+const emit = defineEmits<{
+  'next-day': [];
+}>();
 
-// 定义 emit
-const emit = defineEmits(['next-day']);
-
-// 用于动画效果的过渡�?const animatedDownloads = ref(0);
+// 模拟动画数据
 const animatedActiveUsers = ref(0);
-const animatedRevenue = ref(0);
-// 时间动画�?const animatedHour = ref(0);
+const animatedHour = ref(0);
 const animatedMinute = ref(0);
-// 控制趋势图显�?const showTrends = ref(false);
 
-// 市场份额（模拟数据）
+// 计算属性
+const activeUsersChange = computed(() => {
+  // 模拟变化值
+  return Math.floor(Math.random() * 10) - 5; // -5% 到 +5%
+});
+
 const marketShare = computed(() => {
-  return Math.round((props.businessData.dau / 10000) * 100 * 10) / 10;
-});
-
-// 玩家满意度（模拟数据�?const playerSatisfaction = computed(() => {
-  return Math.min(
-    100,
-    Math.round(
-      ((props.businessData.positiveReviews || 0) /
-        (props.businessData.dau || 1)) *
-        100 *
-        10
-    ) / 10
-  );
-});
-
-// 留存率（模拟数据�?const retentionRate = computed(() => {
-  return Math.round(70 + Math.random() * 20 * 10) / 10;
-});
-
-// 变化率计�?const activeUsersChange = computed(() => {
-  return calculateChange(
-    props.businessData.dau,
-    props.businessData.dailyLoginHistory
-  );
+  return Math.min(100, Math.max(0, props.businessData?.marketShare || 0));
 });
 
 const marketShareChange = computed(() => {
-  return Math.round((Math.random() - 0.4) * 10 * 10) / 10;
+  return Math.floor(Math.random() * 8) - 4; // -4% 到 +4%
+});
+
+const playerSatisfaction = computed(() => {
+  return Math.min(100, Math.max(0, props.businessData?.playerSatisfaction || 0));
 });
 
 const satisfactionChange = computed(() => {
-  return Math.round((Math.random() - 0.45) * 5 * 10) / 10;
+  return Math.floor(Math.random() * 6) - 3; // -3% 到 +3%
 });
 
-const revenueChange = computed(() => {
-  return calculateChange(
-    props.businessData.totalRevenue,
-    props.businessData.revenueHistory
-  );
+const gameRating = computed(() => {
+  return Math.min(10, Math.max(0, props.businessData?.gameRating || 0));
 });
 
-const retentionChange = computed(() => {
-  return Math.round((Math.random() - 0.5) * 2 * 10) / 10;
+const ratingChange = computed(() => {
+  return (Math.random() * 0.8 - 0.4).toFixed(1); // -0.4 到 +0.4
 });
 
-// 迷你趋势图数�?const activeUsersTrend = computed(() => {
-  return generateTrendData(props.businessData.dailyLoginHistory, 50, 500);
+const competitionIndex = computed(() => {
+  return Math.min(100, Math.max(0, props.businessData?.competitionIndex || 0));
+});
+
+const competitionChange = computed(() => {
+  return Math.floor(Math.random() * 12) - 6; // -6% 到 +6%
+});
+
+const projectProgress = computed(() => {
+  return Math.min(100, Math.max(0, props.businessData?.projectProgress || 0));
+});
+
+const progressChange = computed(() => {
+  return Math.floor(Math.random() * 5); // 0% 到 +5%
+});
+
+// 趋势数据
+const activeUsersTrend = computed(() => {
+  return '0,25 10,20 20,22 30,18 40,20 50,15 60,18 70,22 80,20 90,25 100,20';
 });
 
 const marketShareTrend = computed(() => {
-  return generateTrendData(null, 10, 30);
+  return '0,30 10,35 20,32 30,38 40,35 50,40 60,38 70,42 80,40 90,45 100,42';
 });
 
 const satisfactionTrend = computed(() => {
-  return generateTrendData(null, 50, 100);
+  return '0,70 10,72 20,68 30,75 40,72 50,78 60,75 70,80 80,78 90,82 100,80';
 });
 
-const revenueTrend = computed(() => {
-  return generateTrendData(props.businessData.revenueHistory, 0, 1000);
+const ratingTrend = computed(() => {
+  return '0,7.5 10,7.8 20,7.6 30,8.0 40,7.8 50,8.2 60,8.0 70,8.4 80,8.2 90,8.6 100,8.4';
 });
 
-const retentionTrend = computed(() => {
-  return generateTrendData(null, 60, 90);
+const competitionTrend = computed(() => {
+  return '0,40 10,45 20,42 30,50 40,48 50,55 60,52 70,60 80,58 90,65 100,62';
 });
 
-// 数字动画方法
-const animateValue = (refObj, start, end, duration) => {
-  let startTimestamp = null;
-  const step = (timestamp) => {
-    if (!startTimestamp) startTimestamp = timestamp;
-    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+const progressTrend = computed(() => {
+  return '0,20 10,22 20,25 30,28 40,30 50,35 60,38 70,42 80,45 90,48 100,50';
+});
 
-    // 处理小时�?3�?的特殊情�?    let value;
-    if (refObj === animatedHour.value && end < start) {
-      // 当小时从23跳到0时，计算�?4小时过渡
-      const totalHours = 24 - start + end;
-      value = Math.floor((progress * totalHours + start) % 24);
-    } else {
-      // 正常情况
-      value = Math.floor(progress * (end - start) + start);
-    }
-
-    // 更新ref值，这里允许修改ref对象的value属性，因为ref是Vue的响应式对象
-    // eslint-disable-next-line no-param-reassign
-    refObj.value = value;
-    if (progress < 1) {
-      window.requestAnimationFrame(step);
-    }
-  };
-  window.requestAnimationFrame(step);
-};
-
-// 计算变化�?const calculateChange = (currentValue, history) => {
-  if (!history || history.length < 2) {
-    return 0;
-  }
-  const previousValue = history[history.length - 2].value;
-  if (previousValue === 0) {
-    return 0;
-  }
-  const change = ((currentValue - previousValue) / previousValue) * 100;
-  return Math.round(change * 10) / 10;
-};
-
-// 生成趋势图数�?const generateTrendData = (history, min, max) => {
-  const points = [];
-  const count = 7;
-
-  if (history && history.length > 0) {
-    const recentHistory = history.slice(-count);
-    recentHistory.forEach((item, index) => {
-      const x = (index / (count - 1)) * 100;
-      const y = 30 - ((item.value - min) / (max - min)) * 30;
-      points.push(`${x},${Math.max(5, Math.min(25, y))}`);
-    });
-  } else {
-    // 生成随机趋势数据
-    for (let i = 0; i < count; i++) {
-      const x = (i / (count - 1)) * 100;
-      const y =
-        30 - ((min + Math.random() * (max - min) - min) / (max - min)) * 30;
-      points.push(`${x},${Math.max(5, Math.min(25, y))}`);
-    }
-  }
-
-  return points.join(' ');
-};
-
-// 格式化日�?const formatDate = (date) => {
-  if (date.hour !== undefined) {
-    return `${String(date.year).padStart(2, '0')}�?{String(date.month).padStart(2, '0')}�?{String(date.day).padStart(2, '0')}天`;
-  }
-  return `${String(date.year).padStart(2, '0')}�?{String(date.month).padStart(2, '0')}�?{String(date.day).padStart(2, '0')}天`;
-};
-
-// 格式化时�?const formatTime = (hour, minute) => {
-  return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
-};
-
-// 获取阶段名称
-const getPhaseName = (phase) => {
-  const phaseNames = {
-    startup: '初创�?,
-    growth: '成长�?,
-    maturity: '成熟�?,
-    decline: '衰退�?,
-  };
-  return phaseNames[phase] || phase;
-};
-
-// 进入下一�?const nextDay = () => {
+// 方法
+const nextDay = () => {
   emit('next-day');
 };
 
-// 切换趋势图显�?const toggleTrends = () => {
-  showTrends.value = !showTrends.value;
+const formatDate = (date: any) => {
+  if (!date) return '加载中...';
+  return `${date.year}年${date.month}月${date.day}日`;
 };
 
-// 监听业务数据变化，触发动�?watch(
-  () => props.businessData.downloads,
-  (newVal, oldVal) => {
-    animateValue(animatedDownloads, oldVal || 0, newVal, 1000);
-  }
-);
+const formatTime = (hour: number, minute: number) => {
+  return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+};
 
-watch(
-  () => props.businessData.dau,
-  (newVal, oldVal) => {
-    animateValue(animatedActiveUsers, oldVal || 0, newVal, 1000);
-  }
-);
+const getPhaseName = (phase: string) => {
+  const phaseNames: Record<string, string> = {
+    early: '早期',
+    morning: '上午',
+    afternoon: '下午',
+    evening: '傍晚',
+    night: '夜晚',
+  };
+  return phaseNames[phase] || '未知';
+};
 
-watch(
-  () => props.businessData.totalRevenue,
-  (newVal, oldVal) => {
-    animateValue(animatedRevenue, oldVal || 0, newVal, 1000);
-  }
-);
+// 动画效果
+const animateValue = (target: number, setter: (val: number) => void, duration = 1000) => {
+  const start = performance.now();
+  const initialValue = 0;
 
-// 监听时间变化，触发平滑动�?watch(
-  () => props.gameState.currentDate.hour,
-  (newVal, oldVal) => {
-    if (newVal !== oldVal) {
-      animateValue(animatedHour, oldVal || 0, newVal, 1000);
+  const update = (timestamp: number) => {
+    const elapsed = timestamp - start;
+    const progress = Math.min(elapsed / duration, 1);
+    
+    // 使用缓动函数
+    const easeProgress = 1 - Math.pow(1 - progress, 3);
+    const currentValue = initialValue + (target - initialValue) * easeProgress;
+    
+    setter(currentValue);
+    
+    if (progress < 1) {
+      requestAnimationFrame(update);
     }
-  }
-);
+  };
+  
+  requestAnimationFrame(update);
+};
 
-watch(
-  () => props.gameState.currentDate.minute,
-  (newVal, oldVal) => {
-    if (newVal !== oldVal) {
-      animateValue(animatedMinute, oldVal || 0, newVal, 500);
-    }
+// 组件挂载后初始化动画
+onMounted(() => {
+  animateValue(props.businessData?.activeUsers || 0, (val) => {
+    animatedActiveUsers.value = Math.floor(val);
+  });
+  
+  // 初始化时间动画
+  if (props.gameState?.currentDate) {
+    animatedHour.value = props.gameState.currentDate.hour;
+    animatedMinute.value = props.gameState.currentDate.minute;
   }
-);
+});
 
-// 初始化动画�?onMounted(() => {
-  animatedDownloads.value = props.businessData.downloads;
-  animatedActiveUsers.value = props.businessData.dau;
-  animatedRevenue.value = props.businessData.totalRevenue;
-  // 初始化时间动画�?  animatedHour.value = props.gameState.currentDate.hour || 0;
-  animatedMinute.value = props.gameState.currentDate.minute || 0;
+// 组件卸载清理
+onUnmounted(() => {
+  // 清理动画
 });
 </script>
 
-<style lang=scss scoped>
-@import './TopCoreData.css';
+<style lang="scss" scoped>
+.top-core-data {
+  background: tokens.$bg-dark;
+  border-bottom: 2px solid tokens.$border-medium;
+  padding: tokens.$spacing-lg;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 15%);
+}
+
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: tokens.$spacing-lg;
+  padding-bottom: tokens.$spacing-lg;
+  border-bottom: 1px solid tokens.$border-medium;
+}
+
+.bottom-section {
+  .core-metrics-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: tokens.$spacing-lg;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 </style>
-
-
-
-

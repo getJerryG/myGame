@@ -65,21 +65,20 @@ const closeModal = (): void => {
 </script>
 
 <style lang="scss" scoped>
+
 .modal-overlay {
   position: fixed;
   inset: 0;
   background: rgb(0 0 0 / 85%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
+  @include utils.flex-center;
+  z-index: tokens.$z-modal;
   animation: modalFadeIn 0.4s ease;
   backdrop-filter: blur(5px);
 }
 
 .modal-content {
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  border-radius: 20px;
+  background: linear-gradient(135deg, tokens.$gray-50 0%, tokens.$gray-200 100%);
+  border-radius: tokens.$radius-xl;
   box-shadow:
     0 10px 40px rgb(0 0 0 / 30%),
     0 0 0 4px rgb(102 126 234 / 30%),
@@ -87,43 +86,41 @@ const closeModal = (): void => {
   width: 90%;
   max-width: 550px;
   animation: modalSlideUp 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  border: 3px solid #667eea;
+  border: 3px solid tokens.$primary;
   position: relative;
   overflow: hidden;
-}
 
-.modal-content::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 20%), transparent);
-  transition: left 0.5s ease;
-  z-index: 0;
-}
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 20%), transparent);
+    transition: left 0.5s ease;
+    z-index: 0;
+  }
 
-.modal-content:hover::before {
-  left: 100%;
+  &:hover::before {
+    left: 100%;
+  }
 }
 
 .modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 25px;
-  border-bottom: 3px solid #cbd5e1;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 15px 15px 0 0;
+  @include utils.flex-between;
+  padding: tokens.$spacing-5 tokens.$spacing-6;
+  border-bottom: 3px solid tokens.$gray-300;
+  background: linear-gradient(135deg, tokens.$primary 0%, #764ba2 100%);
+  border-radius: tokens.$radius-lg tokens.$radius-lg 0 0;
   position: relative;
   z-index: 1;
 }
 
 .modal-title {
-  font-size: 24px;
-  font-weight: 900;
-  color: white;
+  font-size: tokens.$font-size-2xl;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
   margin: 0;
   text-shadow:
     0 0 10px rgb(255 255 255 / 80%),
@@ -133,43 +130,41 @@ const closeModal = (): void => {
 }
 
 .close-btn {
-  background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
-  border: 2px solid white;
-  font-size: 20px;
-  color: white;
+  background: linear-gradient(135deg, tokens.$error 0%, #e53e3e 100%);
+  border: 2px solid tokens.$text-primary;
+  font-size: tokens.$font-size-lg;
+  color: tokens.$text-primary;
   cursor: pointer;
-  padding: 8px;
+  padding: tokens.$spacing-2;
   width: 40px;
   height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 15px rgb(245 101 101 / 40%);
+  @include utils.flex-center;
+  border-radius: tokens.$radius-full;
+  transition: all tokens.$transition-normal;
+  box-shadow: 0 4px 15px rgb(239 68 68 / 40%);
   position: relative;
   z-index: 1;
-}
 
-.close-btn:hover {
-  transform: rotate(90deg) scale(1.1);
-  box-shadow: 0 6px 20px rgb(245 101 101 / 60%);
-  background: linear-gradient(135deg, #e53e3e 0%, #f56565 100%);
-}
+  &:hover {
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 6px 20px rgb(239 68 68 / 60%);
+    background: linear-gradient(135deg, #e53e3e 0%, tokens.$error 100%);
+  }
 
-.close-btn:active {
-  transform: rotate(90deg) scale(0.95);
+  &:active {
+    transform: rotate(90deg) scale(0.95);
+  }
 }
 
 .close-icon {
-  font-size: 22px;
+  font-size: tokens.$font-size-xl;
   line-height: 1;
 }
 
 .modal-body {
-  padding: 25px;
-  color: #4a5568;
-  line-height: 1.6;
+  padding: tokens.$spacing-6;
+  color: tokens.$gray-700;
+  line-height: tokens.$line-height-relaxed;
   font-family: 'Comic Sans MS', cursive, sans-serif;
   position: relative;
   z-index: 1;
@@ -177,25 +172,23 @@ const closeModal = (): void => {
 }
 
 .modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  padding: 20px 25px;
-  border-top: 3px solid #cbd5e1;
-  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-  border-radius: 0 0 15px 15px;
+  @include utils.flex-row(tokens.$spacing-3, center, flex-end);
+  padding: tokens.$spacing-5 tokens.$spacing-6;
+  border-top: 3px solid tokens.$gray-300;
+  background: linear-gradient(135deg, tokens.$gray-100 0%, tokens.$gray-200 100%);
+  border-radius: 0 0 tokens.$radius-lg tokens.$radius-lg;
   position: relative;
   z-index: 1;
 }
 
 .modal-btn {
-  padding: 12px 24px;
+  padding: tokens.$spacing-3 tokens.$spacing-6;
   border: 2px solid transparent;
-  border-radius: 12px;
+  border-radius: tokens.$radius-lg;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-bold;
+  transition: all tokens.$transition-normal;
   font-family: 'Comic Sans MS', cursive, sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -203,64 +196,64 @@ const closeModal = (): void => {
   overflow: hidden;
   box-shadow: 0 4px 15px rgb(0 0 0 / 15%);
   z-index: 1;
-}
 
-.modal-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 40%), transparent);
-  transition: left 0.5s ease;
-  z-index: -1;
-}
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 40%), transparent);
+    transition: left 0.5s ease;
+    z-index: -1;
+  }
 
-.modal-btn:hover::before {
-  left: 100%;
-}
+  &:hover::before {
+    left: 100%;
+  }
 
-.modal-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgb(0 0 0 / 25%);
-}
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgb(0 0 0 / 25%);
+  }
 
-.modal-btn:active {
-  transform: translateY(-1px);
-}
+  &:active {
+    transform: translateY(-1px);
+  }
 
-.modal-btn.primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border-color: #667eea;
-  box-shadow: 0 4px 15px rgb(102 126 234 / 40%);
-}
+  &.primary {
+    background: linear-gradient(135deg, tokens.$primary 0%, #764ba2 100%);
+    color: tokens.$text-primary;
+    border-color: tokens.$primary;
+    box-shadow: 0 4px 15px rgb(102 126 234 / 40%);
 
-.modal-btn.primary:hover {
-  box-shadow: 0 8px 25px rgb(102 126 234 / 60%);
-}
+    &:hover {
+      box-shadow: 0 8px 25px rgb(102 126 234 / 60%);
+    }
+  }
 
-.modal-btn.secondary {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  color: white;
-  border-color: #f59e0b;
-  box-shadow: 0 4px 15px rgb(245 158 11 / 40%);
-}
+  &.secondary {
+    background: linear-gradient(135deg, tokens.$warning 0%, #d97706 100%);
+    color: tokens.$text-primary;
+    border-color: tokens.$warning;
+    box-shadow: 0 4px 15px rgb(245 158 11 / 40%);
 
-.modal-btn.secondary:hover {
-  box-shadow: 0 8px 25px rgb(245 158 11 / 60%);
-}
+    &:hover {
+      box-shadow: 0 8px 25px rgb(245 158 11 / 60%);
+    }
+  }
 
-.modal-btn.danger {
-  background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
-  color: white;
-  border-color: #f56565;
-  box-shadow: 0 4px 15px rgb(245 101 101 / 40%);
-}
+  &.danger {
+    background: linear-gradient(135deg, tokens.$error 0%, #e53e3e 100%);
+    color: tokens.$text-primary;
+    border-color: tokens.$error;
+    box-shadow: 0 4px 15px rgb(239 68 68 / 40%);
 
-.modal-btn.danger:hover {
-  box-shadow: 0 8px 25px rgb(245 101 101 / 60%);
+    &:hover {
+      box-shadow: 0 8px 25px rgb(239 68 68 / 60%);
+    }
+  }
 }
 
 @keyframes modalFadeIn {

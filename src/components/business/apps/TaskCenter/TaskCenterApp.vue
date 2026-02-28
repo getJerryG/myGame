@@ -5,7 +5,7 @@
       <h2>任务中心</h2>
     </div>
 
-    <!-- 标签页导�?-->
+    <!-- 标签页导航-->
     <div class="app-tabs">
       <button
         class="tab-btn"
@@ -30,7 +30,7 @@
       </button>
     </div>
 
-    <!-- 标签页内�?-->
+    <!-- 标签页内容-->
     <div class="app-content">
       <!-- 任务列表 -->
       <div class="task-list">
@@ -100,14 +100,14 @@
         </div>
       </div>
 
-      <!-- 一键领取按�?-->
+      <!-- 一键领取按钮-->
       <div class="action-section">
         <button
           class="claim-all-btn"
           :disabled="!hasCompletedTasks"
           @click="claimAllTasks"
         >
-          一键领取所有奖�?
+          一键领取所有奖励
         </button>
       </div>
     </div>
@@ -220,211 +220,219 @@ const claimAllTasks = () => {
 </script>
 
 <style lang="scss" scoped>
+
 .task-center-app {
-  display: flex;
-  flex-direction: column;
+  @include utils.flex-col(0, stretch);
   height: 100%;
-  background-color: rgb(26 26 46 / 50%);
-  color: var(--text-primary);
+  background-color: tokens.$bg-secondary;
+  color: tokens.$text-primary;
+}
+
+.app-header {
+  padding: tokens.$spacing-md tokens.$spacing-lg;
+  background-color: tokens.$bg-light;
+  border-bottom: 1px solid tokens.$border-light;
+
+  h2 {
+    margin: 0;
+    font-size: tokens.$font-size-xl;
+    color: tokens.$text-primary;
+  }
+}
+
+.app-tabs {
+  @include utils.tabs-container;
+}
+
+.tab-btn {
+  @include utils.tab-item;
+
+  &.active {
+    background-color: rgb(59 130 246 / 20%);
+    box-shadow: tokens.$shadow-blue;
+  }
+}
+
+.app-content {
+  flex: 1;
+  padding: tokens.$spacing-lg;
+  overflow-y: auto;
+  @include utils.custom-scrollbar;
 }
 
 // 任务列表样式
 .task-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  @include utils.flex-col(tokens.$spacing-md);
 }
 
 .task-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgb(0 0 0 / 10%);
-  padding: 16px;
-  border-radius: 8px;
-  border: 1px solid rgb(74 158 255 / 20%);
-  transition: all 0.2s ease;
+  @include utils.flex-between;
+  background-color: tokens.$bg-light;
+  padding: tokens.$spacing-md;
+  border-radius: tokens.$radius-md;
+  border: 1px solid tokens.$border-light;
+  transition: all tokens.$transition-fast;
 
   &:hover {
-    border-color: rgb(74 158 255 / 50%);
+    border-color: tokens.$primary-blue;
     transform: translateY(-2px);
   }
 
   &.completed {
-    border-color: rgb(46 213 115 / 30%);
-    background-color: rgb(46 213 115 / 5%);
+    border-color: rgb(16 185 129 / 30%);
+    background-color: rgb(16 185 129 / 5%);
   }
 
   &.claimed {
     opacity: 0.7;
-    border-color: rgb(176 176 176 / 30%);
+    border-color: tokens.$border-medium;
   }
 }
 
 .task-info {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  @include utils.flex-col(tokens.$space-2);
 }
 
 .task-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include utils.flex-between;
 
   .task-name {
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff;
+    font-size: tokens.$font-size-base;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$text-primary;
   }
 
   .task-status {
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: bold;
+    padding: tokens.$space-1 tokens.$space-2;
+    border-radius: tokens.$radius-sm;
+    font-size: tokens.$font-size-xs;
+    font-weight: tokens.$font-weight-bold;
 
     &.pending {
-      background-color: rgb(255 215 0 / 20%);
-      color: #ffd700;
+      background-color: rgb(251 191 36 / 20%);
+      color: tokens.$primary-gold;
     }
 
     &.completed {
-      background-color: rgb(46 213 115 / 20%);
-      color: #2ed573;
+      background-color: rgb(16 185 129 / 20%);
+      color: tokens.$success;
     }
 
     &.claimed {
-      background-color: rgb(176 176 176 / 20%);
-      color: #b0b0b0;
+      background-color: tokens.$bg-tertiary;
+      color: tokens.$text-muted;
     }
   }
 }
 
 .task-description {
-  font-size: 14px;
-  color: #b0b0b0;
-  line-height: 1.4;
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-secondary;
+  line-height: tokens.$line-height-normal;
 }
 
 .task-progress {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  @include utils.flex-col(tokens.$space-1);
 }
 
 .progress-bar {
-  height: 6px;
-  background-color: rgb(0 0 0 / 20%);
-  border-radius: 3px;
-  overflow: hidden;
+  @include utils.progress-bar;
 
   .progress-fill {
-    height: 100%;
-    background-color: #4a9eff;
-    border-radius: 3px;
-    transition: width 0.3s ease;
+    @include utils.progress-fill(tokens.$primary-blue);
   }
 }
 
 .progress-text {
-  font-size: 12px;
-  color: #b0b0b0;
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
   text-align: right;
 }
 
 .task-rewards {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 12px;
+  @include utils.flex-col(tokens.$spacing-md, flex-end);
 }
 
 .rewards-list {
-  display: flex;
-  gap: 8px;
+  @include utils.flex-row(tokens.$space-2);
 }
 
 .reward-item {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
-  background-color: rgb(0 0 0 / 20%);
-  border-radius: 4px;
+  @include utils.flex-row(tokens.$space-1, center);
+  padding: tokens.$space-1 tokens.$space-2;
+  background-color: tokens.$bg-dark;
+  border-radius: tokens.$radius-sm;
 
   .reward-icon {
-    font-size: 16px;
+    font-size: tokens.$font-size-base;
   }
 
   .reward-amount {
-    font-size: 14px;
-    font-weight: bold;
-    color: #fff;
+    font-size: tokens.$font-size-sm;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$text-primary;
   }
 }
 
 .claim-btn {
-  padding: 8px 16px;
-  background-color: #2ed573;
+  padding: tokens.$space-2 tokens.$space-4;
+  background-color: tokens.$success;
   border: none;
-  border-radius: 6px;
+  border-radius: tokens.$radius-md;
   color: white;
-  font-size: 14px;
-  font-weight: bold;
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-bold;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all tokens.$transition-fast;
 
   &:hover {
-    background-color: #20c997;
+    background-color: tokens.$secondary-dark;
     transform: translateY(-1px);
   }
 }
 
 .empty-state {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include utils.flex-center;
   height: 200px;
-  background-color: rgb(0 0 0 / 10%);
-  border: 1px dashed rgb(74 158 255 / 20%);
-  border-radius: 8px;
+  background-color: tokens.$bg-light;
+  border: 1px dashed tokens.$border-light;
+  border-radius: tokens.$radius-md;
 
   p {
     margin: 0;
-    color: #b0b0b0;
-    font-size: 16px;
+    color: tokens.$text-secondary;
+    font-size: tokens.$font-size-base;
   }
 }
 
 // 一键领取按钮样式
 .action-section {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-  background-color: rgb(0 0 0 / 10%);
-  border-radius: 8px;
+  @include utils.flex-center;
+  padding: tokens.$spacing-lg;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  margin-top: tokens.$spacing-lg;
 }
 
 .claim-all-btn {
-  padding: 12px 32px;
-  background-color: #4a9eff;
+  padding: tokens.$space-3 tokens.$space-8;
+  background-color: tokens.$primary-blue;
   border: none;
-  border-radius: 8px;
+  border-radius: tokens.$radius-md;
   color: white;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-bold;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all tokens.$transition-fast;
 
   &:hover:not(:disabled) {
-    background-color: #357abd;
+    background-color: tokens.$primary-dark;
     transform: translateY(-1px);
   }
 
   &:disabled {
-    background-color: #b0b0b0;
+    background-color: tokens.$bg-tertiary;
     cursor: not-allowed;
     opacity: 0.7;
   }

@@ -1,0 +1,272 @@
+// ============================================
+// 样式系统主入口文件
+// ============================================
+// 使用说明：
+// 1. 在 main.ts 中导入: import '@/styles/index.scss'
+// 2. 在组件中使用: @use '@/styles/tokens' as tokens; @use '@/styles/utilities' as utils;
+// ============================================
+
+// 1. 基础变量和CSS自定义属性
+@forward 'tokens';
+
+// 2. 公共混入
+@forward 'utilities';
+
+// ============================================
+// 全局基础样式
+// ============================================
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100vh;
+  font-family: tokens.$font-family-base;
+  background-color: tokens.$bg-primary;
+  color: tokens.$text-primary;
+  line-height: tokens.$line-height-normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+  min-height: 100vh;
+  overflow: auto;
+}
+
+// ============================================
+// 通用工具类
+// ============================================
+
+// Flexbox 工具类
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+// 间距工具类
+.gap-xs { gap: tokens.$spacing-xs; }
+.gap-sm { gap: tokens.$spacing-sm; }
+.gap-md { gap: tokens.$spacing-md; }
+.gap-lg { gap: tokens.$spacing-lg; }
+.gap-xl { gap: tokens.$spacing-xl; }
+
+.p-xs { padding: tokens.$spacing-xs; }
+.p-sm { padding: tokens.$spacing-sm; }
+.p-md { padding: tokens.$spacing-md; }
+.p-lg { padding: tokens.$spacing-lg; }
+.p-xl { padding: tokens.$spacing-xl; }
+
+.m-xs { margin: tokens.$spacing-xs; }
+.m-sm { margin: tokens.$spacing-sm; }
+.m-md { margin: tokens.$spacing-md; }
+.m-lg { margin: tokens.$spacing-lg; }
+.m-xl { margin: tokens.$spacing-xl; }
+
+// 文本工具类
+.text-xs { font-size: tokens.$font-size-xs; }
+.text-sm { font-size: tokens.$font-size-sm; }
+.text-base { font-size: tokens.$font-size-base; }
+.text-lg { font-size: tokens.$font-size-lg; }
+.text-xl { font-size: tokens.$font-size-xl; }
+
+.text-primary { color: tokens.$text-primary; }
+.text-secondary { color: tokens.$text-secondary; }
+.text-muted { color: tokens.$text-muted; }
+.text-gold { color: tokens.$primary-gold; }
+.text-success { color: tokens.$success; }
+.text-error { color: tokens.$error; }
+
+.font-normal { font-weight: tokens.$font-weight-normal; }
+.font-medium { font-weight: tokens.$font-weight-medium; }
+.font-semibold { font-weight: tokens.$font-weight-semibold; }
+.font-bold { font-weight: tokens.$font-weight-bold; }
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// 布局工具类
+.container {
+  width: 100%;
+  max-width: tokens.$max-content-width;
+  margin: 0 auto;
+  padding: 0 tokens.$spacing-md;
+}
+
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+
+// 显示/隐藏
+.hidden { display: none; }
+.block { display: block; }
+.inline { display: inline; }
+.inline-block { display: inline-block; }
+
+// 滚动条样式
+.scrollbar-thin {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: tokens.$bg-dark;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: tokens.$border-light;
+    border-radius: 3px;
+
+    &:hover {
+      background: tokens.$text-muted;
+    }
+  }
+}
+
+// ============================================
+// 通用组件样式
+// ============================================
+
+// 卡片基础样式
+.card {
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-lg;
+  box-shadow: tokens.$shadow-md;
+  border: 1px solid tokens.$border-light;
+  overflow: hidden;
+  transition: all tokens.$transition-normal;
+
+  &:hover {
+    box-shadow: tokens.$shadow-xl;
+    transform: translateY(-2px);
+  }
+}
+
+// 按钮基础样式
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: tokens.$spacing-sm;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  border-radius: tokens.$radius-md;
+  font-weight: tokens.$font-weight-medium;
+  font-size: tokens.$font-size-sm;
+  cursor: pointer;
+  transition: all tokens.$transition-normal;
+  border: none;
+  outline: none;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, tokens.$primary-gold 0%, tokens.$warning 100%);
+  color: tokens.$bg-dark;
+  font-weight: tokens.$font-weight-bold;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-gold-lg;
+  }
+}
+
+.btn-secondary {
+  background-color: tokens.$bg-light;
+  color: tokens.$text-secondary;
+  border: 1px solid tokens.$border-light;
+
+  &:hover:not(:disabled) {
+    background-color: tokens.$bg-lighter;
+    color: tokens.$text-primary;
+  }
+}
+
+.btn-danger {
+  background-color: tokens.$error;
+  color: white;
+
+  &:hover:not(:disabled) {
+    background-color: #dc2626;
+    transform: translateY(-2px);
+  }
+}
+
+// 输入框基础样式
+.input {
+  width: 100%;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  background-color: tokens.$bg-light;
+  border: 1px solid tokens.$border-light;
+  border-radius: tokens.$radius-md;
+  color: tokens.$text-primary;
+  font-size: tokens.$font-size-sm;
+  transition: all tokens.$transition-fast;
+
+  &:focus {
+    outline: none;
+    border-color: tokens.$primary-gold;
+    box-shadow: 0 0 0 3px rgb(251 191 36 / 10%);
+  }
+
+  &::placeholder {
+    color: tokens.$text-muted;
+  }
+}
+
+// ============================================
+// 响应式工具类
+// ============================================
+
+@media (max-width: tokens.$breakpoint-md) {
+  .hidden-mobile {
+    display: none !important;
+  }
+
+  .container {
+    padding: 0 tokens.$spacing-sm;
+  }
+}
+
+@media (min-width: tokens.$breakpoint-md) {
+  .hidden-desktop {
+    display: none !important;
+  }
+}

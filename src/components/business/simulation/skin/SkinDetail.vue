@@ -1,16 +1,17 @@
 <template>
-  <div v-if="skin" class="skin-detail">
+  <div
+    v-if="skin"
+    class="skin-detail"
+  >
     <!-- 皮肤基本信息 -->
     <div class="detail-section">
       <div class="skin-header">
         <div class="skin-avatar-large">{{ skin.avatar }}</div>
         <div class="skin-basic-info">
           <h4 class="skin-title">{{ skin.name }}</h4>
-          <div class="skin-subtitle">
-            {{ skin.heroName }} - {{ getQualityLabel(skin.quality) }}
-          </div>
+          <div class="skin-subtitle">{{ skin.heroName }} - {{ getQualityLabel(skin.quality) }}</div>
           <div class="skin-price">
-            <span class="price-label">预计价格�?/span>
+            <span class="price-label">预计价格：</span>
             <span class="price-value">{{ skin.price }}点券</span>
           </div>
         </div>
@@ -38,7 +39,7 @@
       <div class="release-settings">
         <!-- 快速配置选项 -->
         <div class="setting-item">
-          <label class="setting-label">快速配�?/label>
+          <label class="setting-label">快速配置</label>
           <select
             v-model="quickConfig"
             class="setting-select"
@@ -61,11 +62,14 @@
         </div>
 
         <div class="setting-item">
-          <label class="setting-label">销售周�?/label>
-          <select v-model="releaseConfig.duration" class="setting-select">
-            <option value="7">7�?/option>
-            <option value="14">14�?/option>
-            <option value="30">30�?/option>
+          <label class="setting-label">销售周期</label>
+          <select
+            v-model="releaseConfig.duration"
+            class="setting-select"
+          >
+            <option value="7">7天</option>
+            <option value="14">14天</option>
+            <option value="30">30天</option>
             <option value="permanent">永久</option>
           </select>
         </div>
@@ -96,36 +100,49 @@
       <h5>市场预测</h5>
       <div class="market-prediction">
         <div class="prediction-item">
-          <div class="prediction-label">预计销�?/div>
-          <div class="prediction-value">{{ getPredictedSales() }}�?/div>
-          <div class="prediction-change" :class="getSalesChangeClass()">
+          <div class="prediction-label">预计销量</div>
+          <div class="prediction-value">{{ getPredictedSales() }}万</div>
+          <div
+            class="prediction-change"
+            :class="getSalesChangeClass()"
+          >
             {{ getSalesChange() }}
           </div>
         </div>
 
         <div class="prediction-item">
           <div class="prediction-label">预计收入</div>
-          <div class="prediction-value">{{ getPredictedRevenue() }}�?/div>
-          <div class="prediction-change" :class="getRevenueChangeClass()">
+          <div class="prediction-value">{{ getPredictedRevenue() }}万</div>
+          <div
+            class="prediction-change"
+            :class="getRevenueChangeClass()"
+          >
             {{ getRevenueChange() }}
           </div>
         </div>
 
         <div class="prediction-item">
-          <div class="prediction-label">玩家满意�?/div>
+          <div class="prediction-label">玩家满意度</div>
           <div class="prediction-value">{{ getPredictedSatisfaction() }}%</div>
-          <div class="prediction-change" :class="getSatisfactionChangeClass()">
+          <div
+            class="prediction-change"
+            :class="getSatisfactionChangeClass()"
+          >
             {{ getSatisfactionChange() }}
           </div>
         </div>
 
         <div class="prediction-chart">
-          <h6>预计销量趋�?/h6>
-          <svg width="100%" height="100" viewBox="0 0 400 100">
+          <h6>预计销量趋势</h6>
+          <svg
+            width="100%"
+            height="100"
+            viewBox="0 0 400 100"
+          >
             <polyline
               :points="getTrendPoints(predictedTrend)"
               fill="none"
-              stroke="#FBBF24"
+              :stroke="tokens.$primary - gold"
               stroke-width="2"
             />
             <circle
@@ -134,7 +151,7 @@
               :cx="(index / (predictedTrend.length - 1)) * 400"
               :cy="100 - (point / 100) * 80"
               r="3"
-              fill="#FBBF24"
+              :fill="tokens.$primary - gold"
             />
           </svg>
         </div>
@@ -143,11 +160,17 @@
 
     <!-- 操作按钮 -->
     <div class="action-buttons">
-      <button class="btn btn-secondary" @click="resetReleaseConfig">
+      <button
+        class="btn btn-secondary"
+        @click="resetReleaseConfig"
+      >
         <span class="btn-icon">🔄</span>
         <span class="btn-text">重置设置</span>
       </button>
-      <button class="btn btn-primary" @click="confirmRelease">
+      <button
+        class="btn btn-primary"
+        @click="confirmRelease"
+      >
         <span class="btn-icon">📅</span>
         <span class="btn-text">确认发布</span>
       </button>
@@ -155,16 +178,20 @@
   </div>
 
   <!-- 未选择皮肤提示 -->
-  <div v-else class="skin-detail empty">
+  <div
+    v-else
+    class="skin-detail empty"
+  >
     <div class="empty-state">
       <span class="empty-icon">🎨</span>
-      <span class="empty-text">请从左侧选择一个皮肤进行发布设�?/span>
+      <span class="empty-text">请从左侧选择一个皮肤进行发布设置</span>
     </div>
   </div>
 </template>
 
-<script setup lang=ts>
+<script setup lang="ts">
 import { ref, watch } from 'vue';
+import * as v from '@/styles/variables';
 
 const props = defineProps({
   skin: {
@@ -190,7 +217,8 @@ const releaseConfig = ref({
   discount: 80,
 });
 
-// 快速配置方�?const configPresets = {
+// 快速配置方案
+const configPresets = {
   standard: {
     duration: 'permanent',
     isLimited: false,
@@ -208,7 +236,8 @@ const releaseConfig = ref({
   },
 };
 
-// 监听皮肤变化，重置发布配�?watch(
+// 监听皮肤变化，重置发布配置
+watch(
   () => props.skin,
   () => {
     resetReleaseConfig();
@@ -226,7 +255,8 @@ const resetReleaseConfig = () => {
   };
 };
 
-// 应用快速配�?const applyQuickConfig = () => {
+// 应用快速配置
+const applyQuickConfig = () => {
   if (quickConfig.value && configPresets[quickConfig.value]) {
     releaseConfig.value = {
       ...releaseConfig.value,
@@ -238,7 +268,7 @@ const resetReleaseConfig = () => {
 // 获取品质标签
 const getQualityLabel = (quality) => {
   const labels = {
-    brave: '勇�?,
+    brave: '勇者',
     epic: '史诗',
     legend: '传说',
     limited: '限定',
@@ -252,7 +282,8 @@ const getDiscountedPrice = () => {
   return Math.round((props.skin.price * releaseConfig.value.discount) / 100);
 };
 
-// 获取预测销�?const getPredictedSales = () => {
+// 获取预测销量
+const getPredictedSales = () => {
   if (!props.skin) return 0;
   const baseSales = props.skin.expected.sales;
   const discountFactor = 1 + (100 - releaseConfig.value.discount) * 0.01;
@@ -268,12 +299,14 @@ const getPredictedRevenue = () => {
   return Math.round((sales * price) / 10000);
 };
 
-// 获取预测满意�?const getPredictedSatisfaction = () => {
+// 获取预测满意度
+const getPredictedSatisfaction = () => {
   if (!props.skin) return 0;
   return props.skin.expected.satisfaction;
 };
 
-// 获取销量变�?const getSalesChange = () => {
+// 获取销量变化
+const getSalesChange = () => {
   if (!props.skin) return '';
   const baseSales = props.skin.expected.sales;
   const predictedSales = getPredictedSales();
@@ -281,15 +314,12 @@ const getPredictedRevenue = () => {
   return change > 0 ? `+${change}%` : `${change}%`;
 };
 
-// 获取销量变化样�?const getSalesChangeClass = () => {
+// 获取销量变化样式
+const getSalesChangeClass = () => {
   if (!props.skin) return '';
   const baseSales = props.skin.expected.sales;
   const predictedSales = getPredictedSales();
-  return predictedSales > baseSales
-    ? 'positive'
-    : predictedSales < baseSales
-      ? 'negative'
-      : '';
+  return predictedSales > baseSales ? 'positive' : predictedSales < baseSales ? 'negative' : '';
 };
 
 // 获取收入变化
@@ -297,10 +327,7 @@ const getRevenueChange = () => {
   if (!props.skin) return '';
   const baseRevenue = (props.skin.expected.sales * props.skin.price) / 10000;
   const predictedRevenue = getPredictedRevenue();
-  const change = (
-    ((predictedRevenue - baseRevenue) / baseRevenue) *
-    100
-  ).toFixed(0);
+  const change = (((predictedRevenue - baseRevenue) / baseRevenue) * 100).toFixed(0);
   return change > 0 ? `+${change}%` : `${change}%`;
 };
 
@@ -309,18 +336,16 @@ const getRevenueChangeClass = () => {
   if (!props.skin) return '';
   const baseRevenue = (props.skin.expected.sales * props.skin.price) / 10000;
   const predictedRevenue = getPredictedRevenue();
-  return predictedRevenue > baseRevenue
-    ? 'positive'
-    : predictedRevenue < baseRevenue
-      ? 'negative'
-      : '';
+  return predictedRevenue > baseRevenue ? 'positive' : predictedRevenue < baseRevenue ? 'negative' : '';
 };
 
-// 获取满意度变�?const getSatisfactionChange = () => {
+// 获取满意度变化
+const getSatisfactionChange = () => {
   return '0%';
 };
 
-// 获取满意度变化样�?const getSatisfactionChangeClass = () => {
+// 获取满意度变化样式
+const getSatisfactionChangeClass = () => {
   return '';
 };
 
@@ -346,328 +371,258 @@ const confirmRelease = () => {
 };
 </script>
 
-<style lang=scss scoped>
+<style lang="scss" scoped>
+
 /* 皮肤详情 */
 .skin-detail {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  @include utils.flex-col(tokens.$spacing-lg, stretch);
   overflow-y: auto;
-  padding-right: 10px;
-}
+  padding-right: tokens.$spacing-md;
 
-.skin-detail.empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-md);
-  border: 2px dashed var(--border-light);
+  &.empty {
+    @include utils.flex-center;
+    background-color: tokens.$bg-light;
+    border-radius: tokens.$radius-md;
+    border: 2px dashed tokens.$border-light;
+  }
 }
 
 .empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  padding: 40px;
+  @include utils.flex-col(tokens.$spacing-md, center);
+  padding: tokens.$spacing-2xl;
   text-align: center;
 }
 
 .empty-icon {
-  font-size: 48px;
+  font-size: tokens.$font-size-4xl;
   opacity: 0.5;
 }
 
 .empty-text {
-  font-size: var(--text-base);
-  color: var(--text-muted);
+  font-size: tokens.$font-size-base;
+  color: tokens.$text-muted;
 }
 
 /* 详情区块 */
 .detail-section {
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-md);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
+  @include utils.config-section;
+  @include utils.flex-col(tokens.$spacing-md, stretch);
 
-.detail-section h5 {
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--primary-gold);
-  margin: 0;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--border-light);
-}
+  h5 {
+    @include utils.subsection-title;
+    padding-bottom: tokens.$spacing-sm;
+    border-bottom: 1px solid tokens.$border-light;
+  }
 
-.detail-section h6 {
-  font-size: var(--text-xs);
-  font-weight: var(--font-medium);
-  color: var(--text-secondary);
-  margin: 0 0 10px;
+  h6 {
+    font-size: tokens.$font-size-xs;
+    font-weight: tokens.$font-weight-medium;
+    color: tokens.$text-secondary;
+    margin: 0 0 tokens.$spacing-sm;
+  }
 }
 
 /* 皮肤头部信息 */
 .skin-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+  @include utils.flex-row(tokens.$spacing-lg, center);
 }
 
 .skin-avatar-large {
-  font-size: 64px;
+  font-size: tokens.$font-size-5xl;
   flex-shrink: 0;
 }
 
 .skin-basic-info {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  @include utils.flex-col(tokens.$spacing-xs, stretch);
 }
 
 .skin-title {
-  font-size: var(--text-lg);
-  font-weight: var(--font-bold);
-  color: var(--text-primary);
+  font-size: tokens.$font-size-lg;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
   margin: 0;
 }
 
 .skin-subtitle {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-secondary;
 }
 
 .skin-price {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  @include utils.flex-row(tokens.$spacing-sm, center);
 }
 
 .price-label {
-  font-size: var(--text-sm);
-  color: var(--text-muted);
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-muted;
 }
 
 .price-value {
-  font-size: var(--text-base);
-  font-weight: var(--font-bold);
-  color: var(--primary-gold);
+  @include utils.value-text(tokens.$font-size-base);
 }
 
 /* 皮肤特效 */
 .skin-effects {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  @include utils.flex-col(tokens.$spacing-sm, stretch);
 }
 
 .effects-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  @include utils.flex-col(tokens.$spacing-xs, stretch);
 }
 
 .effect-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
+  @include utils.flex-row(tokens.$spacing-sm, center);
+  padding: tokens.$spacing-sm tokens.$spacing-md;
   background-color: rgb(255 255 255 / 2%);
-  border-radius: var(--radius-sm);
+  border-radius: tokens.$radius-sm;
 }
 
 .effect-icon {
-  font-size: 16px;
+  font-size: tokens.$font-size-base;
   flex-shrink: 0;
 }
 
 .effect-description {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-secondary;
   flex: 1;
 }
 
 /* 发布设置 */
 .release-settings {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  @include utils.flex-col(tokens.$spacing-md, stretch);
 }
 
 .setting-item {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  @include utils.flex-col(tokens.$spacing-xs, stretch);
 }
 
 .setting-label {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-  font-weight: var(--font-medium);
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-secondary;
+  font-weight: tokens.$font-weight-medium;
 }
 
 .setting-input,
 .setting-select {
-  padding: 10px 12px;
-  background-color: rgb(255 255 255 / 5%);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  font-size: var(--text-sm);
-  transition: all var(--transition-fast);
-}
-
-.setting-input:focus,
-.setting-select:focus {
-  outline: none;
-  border-color: var(--primary-gold);
-  box-shadow: 0 0 0 3px rgb(251 191 36 / 10%);
+  @include utils.input-base;
 }
 
 .setting-checkbox {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+  @include utils.flex-row(tokens.$spacing-sm, center);
 
-.setting-checkbox input[type='checkbox'] {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--primary-gold);
-}
+  input[type='checkbox'] {
+    width: 16px;
+    height: 16px;
+    accent-color: tokens.$primary-gold;
+  }
 
-.setting-checkbox label {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-  cursor: pointer;
+  label {
+    font-size: tokens.$font-size-sm;
+    color: tokens.$text-secondary;
+    cursor: pointer;
+  }
 }
 
 /* 折扣控制 */
 .discount-control {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 8px;
+  @include utils.flex-row(tokens.$spacing-lg, center);
+  margin-bottom: tokens.$spacing-sm;
 }
 
 .discount-slider {
-  flex: 1;
-  height: 6px;
-  background-color: rgb(255 255 255 / 10%);
-  border-radius: 3px;
-  outline: none;
-  appearance: none;
-}
-
-.discount-slider::-webkit-slider-thumb {
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  background: var(--primary-gold);
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgb(251 191 36 / 40%);
-}
-
-.discount-slider::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  background: var(--primary-gold);
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-  box-shadow: 0 2px 6px rgb(251 191 36 / 40%);
+  @include utils.slider-base;
 }
 
 .discount-value {
-  font-size: var(--text-sm);
-  font-weight: var(--font-bold);
-  color: var(--primary-gold);
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$primary-gold;
   min-width: 40px;
   text-align: center;
 }
 
 /* 价格预览 */
 .price-preview {
-  display: flex;
-  gap: 12px;
-  align-items: center;
+  @include utils.flex-row(12px, center);
 }
 
 .price-original {
-  font-size: var(--text-sm);
-  color: var(--text-muted);
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-muted;
   text-decoration: line-through;
 }
 
 .price-discounted {
-  font-size: var(--text-sm);
-  font-weight: var(--font-bold);
-  color: var(--primary-gold);
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$primary-gold;
 }
 
 /* 市场预测 */
 .market-prediction {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  @include utils.flex-col(tokens.$spacing-md, stretch);
 }
 
 .prediction-item {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 12px 15px;
+  @include utils.flex-row(tokens.$spacing-md, center);
+  padding: tokens.$spacing-md;
   background-color: rgb(255 255 255 / 2%);
-  border-radius: var(--radius-md);
+  border-radius: tokens.$radius-md;
 }
 
 .prediction-label {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-secondary;
   width: 100px;
 }
 
 .prediction-value {
   flex: 1;
-  font-size: var(--text-base);
-  font-weight: var(--font-bold);
-  color: var(--primary-gold);
+  @include utils.value-text(tokens.$font-size-base);
 }
 
 .prediction-change {
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-semibold;
   min-width: 60px;
   text-align: right;
-}
 
-.prediction-change.positive {
-  color: var(--success-green);
-}
+  &.positive {
+    color: tokens.$success-green;
+  }
 
-.prediction-change.negative {
-  color: var(--danger-red);
+  &.negative {
+    color: tokens.$danger-red;
+  }
 }
 
 /* 预测图表 */
 .prediction-chart {
-  margin-top: 10px;
+  margin-top: tokens.$spacing-sm;
+
+  svg {
+    width: 100%;
+    height: 100px;
+    background-color: rgb(255 255 255 / 2%);
+    border-radius: tokens.$radius-sm;
+    padding: tokens.$spacing-md;
+  }
 }
 
-.prediction-chart svg {
-  width: 100%;
-  height: 100px;
-  background-color: rgb(255 255 255 / 2%);
-  border-radius: var(--radius-sm);
-  padding: 10px;
+/* 操作按钮 */
+.action-buttons {
+  @include utils.flex-row(tokens.$spacing-md, center, flex-end);
+
+  .btn {
+    &-primary {
+      @include utils.btn-primary;
+    }
+
+    &-secondary {
+      @include utils.btn-secondary;
+    }
+  }
 }
 </style>
-
-
-
-

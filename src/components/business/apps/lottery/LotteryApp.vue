@@ -1,720 +1,679 @@
 <template>
-  <div class="lottery-app">
-    <!-- 左侧菜单 -->
-    <div class="modal-sidebar">
-      <div
-        class="sidebar-item"
-        v-for="module in app.modules"
-        :key="module.id"
-        :class="{ active: activeModule === module.id }"
-        @click="switchModule(module.id)"
-      >
-        <span class="sidebar-item-icon">{{ getModuleIcon(module.id) }}</span>
-        <span class="sidebar-item-name">{{ module.name }}</span>
-      </div>
-    </div>
-
-    <!-- 右侧内容 -->
-    <div class="modal-main">
-      <!-- 核心数据概览 -->
-      <div class="content-header">
-        <h2>{{ currentModule.name }}</h2>
-        <div
-          class="module-core-data"
-          v-if="app.coreData"
+  <ApplicationWindow windowTitle="抽奖中心">
+    <template #sidebar>
+      <div class="sidebar-menu">
+        <button
+          class="menu-item"
+          :class="{ active: activeTab === 'draw' }"
+          @click="activeTab = 'draw'"
         >
-          <div
-            class="core-data-item"
-            v-for="(value, key) in app.coreData"
-            :key="key"
-          >
-            <span class="core-data-label">{{ getCoreDataLabel(key) }}:</span>
-            <span class="core-data-value">{{ value }}</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 模块内容 -->
-      <div class="content-body">
-        <!-- 抽奖主界�?-->
-        <div
-          v-if="activeModule === 'lottery-main'"
-          class="module-content"
+          <span class="menu-icon">🎰</span>
+          <span class="menu-name">抽奖</span>
+        </button>
+        <button
+          class="menu-item"
+          :class="{ active: activeTab === 'history' }"
+          @click="activeTab = 'history'"
         >
-          <div class="lottery-main-container">
-            <!-- 顶部数据面板 -->
-            <LotteryDataPanel @show-consumption-info="showConsumptionInfo = true" />
+          <span class="menu-icon">📜</span>
+          <span class="menu-name">抽奖记录</span>
+        </button>
+        <button
+          class="menu-item"
+          :class="{ active: activeTab === 'prizes' }"
+          @click="activeTab = 'prizes'"
+        >
+          <span class="menu-icon">🎁</span>
+          <span class="menu-name">奖品列表</span>
+        </button>
+      </div>
+    </template>
 
-            <!-- 消费说明弹窗 -->
-            <div
-              v-if="showConsumptionInfo"
-              class="modal-overlay"
-              @click="showConsumptionInfo = false"
-            >
+    <template #content>
+      <div class="lottery-content">
+        <!-- 抽奖标签页 -->
+        <div
+          v-if="activeTab === 'draw'"
+          class="tab-content"
+        >
+          <div class="lottery-machine">
+            <div class="machine-header">
+              <h3 class="text-gold">幸运抽奖</h3>
+              <div class="ticket-info">
+                <span class="ticket-label">剩余抽奖券:</span>
+                <span class="ticket-count">{{ tickets }}</span>
+              </div>
+            </div>
+
+            <div class="lottery-wheel">
               <div
-                class="modal-content"
-                @click.stop
+                class="wheel-container"
+                :class="{ spinning: isSpinning }"
               >
-                <div class="modal-header">
-                  <h3>消费说明</h3>
-                  <button
-                    class="close-button"
-                    @click="showConsumptionInfo = false"
-                  >
-                    ×
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <div class="consumption-rules">
-                    <div class="rule-item">
-                      <span class="rule-label">10连抽：</span>
-                      <span class="rule-value">10祈愿币</span>
-                    </div>
-                    <div class="rule-item">
-                      <span class="rule-label">初始赠送：</span>
-                      <span class="rule-value">9祈愿币</span>
-                    </div>
-                    <div class="rule-item">
-                      <span class="rule-label">首次单抽：</span>
-                      <span class="rule-value">1币</span>
-                    </div>
-                    <div class="rule-item">
-                      <span class="rule-label">10连抽：</span>
-                      <span class="rule-value">91币</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 操作按钮 -->
-            <div class="button-panel">
-              <button
-                class="exchange-button"
-                :disabled="!lotteryStore.canExchange"
-                @click="handleExchange"
-              >
-                兑换无相皮肤 (998积分)
-              </button>
-              <button
-                class="reset-button"
-                @click="handleReset"
-              >
-                重置数据
-              </button>
-            </div>
-
-            <!-- 开发调试：充值祈愿石 -->
-            <div class="debug-panel">
-              <input
-                v-model.number="addStones"
-                type="number"
-                placeholder="充值祈愿石数量"
-              />
-              <button @click="handleAddStones">充值</button>
-            </div>
-
-            <!-- 抽奖结果展示 -->
-            <LotteryResultPanel
-              :last-result="lastResult"
-              :is-animating="isAnimating"
-            />
-
-            <!-- 抽奖按钮 -->
-            <LotteryDrawButtons
-              @single-draw="handleSingleDraw"
-              @ten-draws="handleTenDraws"
-            />
-          </div>
-        </div>
-
-        <!-- 抽奖历史模块 -->
-        <div
-          v-else-if="activeModule === 'lottery-history'"
-          class="module-content"
-        >
-          <div class="history-button-container">
-            <button
-              class="history-button"
-              @click="showHistoryModal = true"
-            >
-              查看抽奖历史
-              <span
-                v-if="lotteryStore.history.length > 0"
-                class="history-count"
-                >{{ lotteryStore.history.length }}</span
-              >
-            </button>
-          </div>
-
-          <!-- 抽奖历史弹窗 -->
-          <div
-            v-if="showHistoryModal"
-            class="modal-overlay"
-            @click="showHistoryModal = false"
-          >
-            <div
-              class="modal-content"
-              @click.stop
-            >
-              <div class="modal-header">
-                <h3>抽奖历史</h3>
-                <button
-                  class="close-button"
-                  @click="showHistoryModal = false"
+                <div
+                  v-for="(prize, index) in prizes"
+                  :key="index"
+                  class="wheel-item"
+                  :class="{ active: currentIndex === index }"
+                  :style="getWheelItemStyle(index)"
                 >
-                  ×
-                </button>
+                  <span class="prize-icon">{{ prize.icon }}</span>
+                  <span class="prize-name">{{ prize.name }}</span>
+                </div>
               </div>
-              <div class="modal-body">
-                <div class="modal-action-bar">
-                  <button
-                    class="clear-history"
-                    @click="clearHistory"
-                  >
-                    清空历史
-                  </button>
-                  <span class="history-count-info"> {{ lotteryStore.history.length }}条记�?</span>
-                </div>
-                <div class="history-list-modal">
-                  <div
-                    v-if="lotteryStore.history.length === 0"
-                    class="empty-message"
-                  >
-                    暂无抽奖记录
-                  </div>
-                  <div
-                    v-for="record in lotteryStore.history"
-                    v-else
-                    :key="record.id"
-                    class="history-item"
-                  >
-                    <div class="history-header">
-                      <span class="history-time">{{ formatTime(record.timestamp) }}</span>
-                      <span class="history-type">{{ record.type === 'single' ? '单抽' : '10连抽' }}</span>
-                    </div>
-                    <div class="history-rewards">
-                      <div
-                        v-for="(reward, index) in record.rewards"
-                        :key="index"
-                        class="history-reward"
-                      >
-                        {{ reward.name }}{{ reward.type.includes('points') ? ` (+${reward.value}积分)` : '' }}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div class="wheel-pointer"></div>
+            </div>
+
+            <div class="lottery-controls">
+              <button
+                class="draw-btn"
+                :disabled="isSpinning || tickets <= 0"
+                @click="startDraw"
+              >
+                {{ isSpinning ? '抽奖中...' : '开始抽奖' }}
+              </button>
+              <button
+                class="buy-btn"
+                @click="buyTickets"
+              >
+                购买抽奖券
+              </button>
+            </div>
+
+            <div
+              v-if="lastPrize"
+              class="prize-result"
+            >
+              <div class="result-title">恭喜获得</div>
+              <div class="result-prize">
+                <span class="result-icon">{{ lastPrize.icon }}</span>
+                <span class="result-name">{{ lastPrize.name }}</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 累抽奖励模块 -->
+        <!-- 抽奖记录标签页 -->
         <div
-          v-else-if="activeModule === 'lottery-rewards'"
-          class="module-content"
+          v-else-if="activeTab === 'history'"
+          class="tab-content"
         >
-          <LotteryCumulativeRewards />
+          <h3
+            class="text-gold"
+            style="margin-bottom: 20px"
+          >
+            抽奖记录
+          </h3>
+          <div class="history-list">
+            <div
+              v-for="(record, index) in drawHistory"
+              :key="index"
+              class="history-item"
+            >
+              <div class="history-prize">
+                <span class="prize-icon">{{ record.prize.icon }}</span>
+                <span class="prize-name">{{ record.prize.name }}</span>
+              </div>
+              <div class="history-time">{{ record.time }}</div>
+            </div>
+
+            <div
+              v-if="drawHistory.length === 0"
+              class="empty-state"
+            >
+              <p>暂无抽奖记录</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 奖品列表标签页 -->
+        <div
+          v-else-if="activeTab === 'prizes'"
+          class="tab-content"
+        >
+          <h3
+            class="text-gold"
+            style="margin-bottom: 20px"
+          >
+            奖品列表
+          </h3>
+          <div class="prizes-grid">
+            <div
+              v-for="(prize, index) in prizes"
+              :key="index"
+              class="prize-card"
+              :class="prize.rarity"
+            >
+              <div class="prize-icon-large">{{ prize.icon }}</div>
+              <div class="prize-info">
+                <div class="prize-name">{{ prize.name }}</div>
+                <div class="prize-rarity">{{ getRarityLabel(prize.rarity) }}</div>
+                <div class="prize-probability">概率: {{ prize.probability }}%</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </ApplicationWindow>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import LotteryDataPanel from '@/components/business/lottery/LotteryDataPanel/index.vue';
-import LotteryDrawButtons from '@/components/business/lottery/LotteryDrawButtons/index.vue';
-import LotteryResultPanel from '@/components/business/lottery/LotteryResultPanel/index.vue';
-import LotteryCumulativeRewards from '@/components/business/lottery/LotteryCumulativeRewards/index.vue';
+import { ref } from 'vue';
+import ApplicationWindow from '@/components/common/window/ApplicationWindow.vue';
 
-const props = defineProps({
-  app: {
-    type: Object,
-    required: true,
-  },
-  gameData: {
-    type: Object,
-    default: () => ({}),
-  },
-});
+// 状态管理
+const activeTab = ref<string>('draw');
+const tickets = ref<number>(10);
+const isSpinning = ref<boolean>(false);
+const currentIndex = ref<number>(0);
+const lastPrize = ref<{ icon: string; name: string } | null>(null);
 
-const emit = defineEmits(['update:activeModule']);
+// 奖品列表
+const prizes = ref([
+  { icon: '💎', name: '钻石x1000', rarity: 'legendary', probability: 1 },
+  { icon: '👑', name: '皇冠', rarity: 'epic', probability: 5 },
+  { icon: '💰', name: '金币x500', rarity: 'rare', probability: 15 },
+  { icon: '🎁', name: '神秘礼包', rarity: 'rare', probability: 20 },
+  { icon: '⭐', name: '星星x50', rarity: 'common', probability: 25 },
+  { icon: '💎', name: '钻石x100', rarity: 'common', probability: 34 },
+]);
 
-// 抽奖相关状�?const lotteryStore = useLotteryStore();
-const lastResult = ref(null);
-const addStones = ref(0);
-const isAnimating = ref(false);
-const showHistoryModal = ref(false);
-const showConsumptionInfo = ref(false);
+// 抽奖记录
+const drawHistory = ref<
+  Array<{
+    prize: { icon: string; name: string };
+    time: string;
+  }>
+>([
+  { prize: { icon: '💰', name: '金币x500' }, time: '2026-02-14 15:30' },
+  { prize: { icon: '⭐', name: '星星x50' }, time: '2026-02-14 15:25' },
+  { prize: { icon: '💎', name: '钻石x100' }, time: '2026-02-14 15:20' },
+]);
 
-// 活跃模块状�?const activeModule = ref(props.app.modules[0].id);
-
-// 当前激活的模块
-const currentModule = computed(() => {
-  return props.app.modules.find((m) => m.id === activeModule.value) || props.app.modules[0];
-});
-
-/**
- * 处理单抽
- */
-const handleSingleDraw = (): void => {
-  const result = lotteryStore.singleDraw();
-  if (result.success) {
-    isAnimating.value = false;
-    setTimeout(() => {
-      lastResult.value = { rewards: [result.reward] };
-      isAnimating.value = true;
-    }, 100);
-  } else {
-    alert(result.message);
-  }
-};
-
-/**
- * 处理10连抽
- */
-const handleTenDraws = (): void => {
-  const result = lotteryStore.tenDraws();
-  if (result.success) {
-    isAnimating.value = false;
-    setTimeout(() => {
-      lastResult.value = { rewards: result.rewards };
-      isAnimating.value = true;
-    }, 100);
-  } else {
-    alert(result.message);
-  }
-};
-
-/**
- * 处理兑换皮肤
- */
-const handleExchange = (): void => {
-  const success = lotteryStore.exchangeSkin();
-  if (success) {
-    alert('兑换成功！');
-  }
-};
-
-/**
- * 处理重置数据
- */
-const handleReset = (): void => {
-  if (confirm('确定要重置所有数据吗？')) {
-    lotteryStore.resetData();
-    lastResult.value = null;
-  }
-};
-
-/**
- * 处理充值祈愿石
- */
-const handleAddStones = (): void => {
-  if (addStones.value > 0) {
-    lotteryStore.stones += addStones.value * 10;
-    addStones.value = 0;
-  }
-};
-
-/**
- * 清空抽奖历史
- */
-const clearHistory = (): void => {
-  if (confirm('确定要清空抽奖历史吗？')) {
-    lotteryStore.history = [];
-  }
-};
-
-/**
- * 格式化时�? */
-const formatTime = (timestamp: number): string => {
-  const date = new Date(timestamp);
-  return date.toLocaleString();
-};
-
-// 切换模块
-const switchModule = (moduleId: string): void => {
-  activeModule.value = moduleId;
-  emit('update:activeModule', moduleId);
-};
-
-// 获取模块图标
-const getModuleIcon = (moduleId: string): string => {
-  const icons = {
-    'lottery-main': '🎰',
-    'lottery-history': '📜',
-    'lottery-rewards': '🎁',
+// 获取转盘项目样式
+const getWheelItemStyle = (index: number) => {
+  const angle = (360 / prizes.value.length) * index;
+  return {
+    transform: `rotate(${angle}deg) translateY(-120px)`,
   };
-  return icons[moduleId] || '📦';
 };
 
-// 获取核心数据标签
-const getCoreDataLabel = (key: string): string => {
-  const labels = {
-    stones: '祈愿石',
-    points: '积分',
+// 获取稀有度标签
+const getRarityLabel = (rarity: string): string => {
+  const rarityMap: Record<string, string> = {
+    common: '普通',
+    rare: '稀有',
+    epic: '史诗',
+    legendary: '传说',
   };
-  return labels[key] || key;
+  return rarityMap[rarity] || '未知';
+};
+
+// 开始抽奖
+const startDraw = (): void => {
+  if (isSpinning.value || tickets.value <= 0) return;
+
+  isSpinning.value = true;
+  tickets.value--;
+
+  // 模拟抽奖过程
+  let spins = 0;
+  const maxSpins = 20 + Math.floor(Math.random() * 10);
+  const interval = setInterval(() => {
+    currentIndex.value = (currentIndex.value + 1) % prizes.value.length;
+    spins++;
+
+    if (spins >= maxSpins) {
+      clearInterval(interval);
+      isSpinning.value = false;
+
+      // 确定奖品
+      const random = Math.random() * 100;
+      let cumulativeProbability = 0;
+      let selectedPrize = prizes.value[0];
+
+      for (const prize of prizes.value) {
+        cumulativeProbability += prize.probability;
+        if (random <= cumulativeProbability) {
+          selectedPrize = prize;
+          break;
+        }
+      }
+
+      // 找到选中的奖品索引
+      const prizeIndex = prizes.value.findIndex((p) => p.name === selectedPrize.name);
+      currentIndex.value = prizeIndex;
+      lastPrize.value = selectedPrize;
+
+      // 添加到历史记录
+      drawHistory.value.unshift({
+        prize: selectedPrize,
+        time: new Date().toLocaleString('zh-CN'),
+      });
+
+      alert(`恭喜获得: ${selectedPrize.name}!`);
+    }
+  }, 100);
+};
+
+// 购买抽奖券
+const buyTickets = (): void => {
+  const amount = prompt('请输入要购买的抽奖券数量:', '10');
+  if (amount && !isNaN(Number(amount))) {
+    tickets.value += Number(amount);
+    alert(`成功购买 ${amount} 张抽奖券!`);
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-.lottery-app {
-  display: flex;
+
+/* 侧边栏菜单 */
+.sidebar-menu {
+  @include utils.flex-col(0, stretch);
   width: 100%;
   height: 100%;
-  overflow: hidden;
-}
-
-/* 左侧菜单栏样�? */
-.modal-sidebar {
-  width: 200px;
-  background-color: rgb(0 0 0 / 20%);
-  border-right: 1px solid #333;
+  background-color: tokens.$bg-secondary;
+  padding: tokens.$spacing-md 0;
   overflow-y: auto;
 }
 
-.sidebar-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  color: #b0b0b0;
-  border-left: 3px solid transparent;
-}
-
-.sidebar-item:hover {
-  background-color: rgb(74 158 255 / 20%);
-  color: #fff;
-}
-
-.sidebar-item.active {
-  background-color: rgb(74 158 255 / 30%);
-  color: #fff;
-  border-left-color: #4a9eff;
-}
-
-.sidebar-item-icon {
-  font-size: 18px;
-  width: 20px;
-  text-align: center;
-}
-
-.sidebar-item-name {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-/* 右侧内容区域样式 */
-.modal-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  background-color: rgb(26 26 46 / 50%);
-}
-
-.content-header {
-  padding: 16px;
-  border-bottom: 1px solid #333;
-  background-color: rgb(0 0 0 / 10%);
-}
-
-.content-header h2 {
-  margin: 0 0 12px;
-  font-size: 20px;
-  color: #fff;
-}
-
-.module-core-data {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.core-data-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-}
-
-.core-data-label {
-  color: #b0b0b0;
-}
-
-.core-data-value {
-  color: #4a9eff;
-  font-weight: bold;
-}
-
-.content-body {
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
-  color: #fff;
-}
-
-.module-content {
-  background-color: rgb(0 0 0 / 10%);
-  border-radius: 8px;
-  padding: 20px;
-  min-height: 200px;
-}
-
-.module-content h3 {
-  margin: 0 0 16px;
-  font-size: 18px;
-  color: #4a9eff;
-}
-
-.module-content h4 {
-  margin: 0 0 12px;
-  font-size: 16px;
-  color: #fff;
-}
-
-.module-content p {
-  margin: 0 0 16px;
-  color: #b0b0b0;
-  line-height: 1.6;
-}
-
-/* 抽奖应用特定样式 */
-.lottery-main-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  padding: 20px;
-}
-
-.button-panel {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.exchange-button {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.exchange-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.reset-button {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.debug-panel {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.debug-panel input {
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  width: 150px;
-}
-
-.debug-panel button {
-  background-color: #2196f3;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-/* 历史记录按钮 */
-.history-button-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.history-button {
-  background-color: #2196f3;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
-  position: relative;
-}
-
-.history-count {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background-color: #f44336;
-  color: white;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* 弹窗样式 */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background-color: rgb(0 0 0 / 50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 80%;
-  max-width: 600px;
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-.modal-header h3 {
-  margin: 0;
-  color: #333;
-}
-
-.close-button {
+.menu-item {
+  @include utils.flex-row(tokens.$spacing-md, center);
+  padding: tokens.$spacing-md tokens.$spacing-lg;
   background: none;
   border: none;
-  font-size: 24px;
+  color: tokens.$text-secondary;
   cursor: pointer;
-  color: #999;
+  transition: all tokens.$transition-fast;
+  text-align: left;
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-semibold;
+
+  &:hover {
+    background-color: tokens.$bg-light;
+    color: tokens.$primary-blue;
+  }
+
+  &.active {
+    background-color: rgb(59 130 246 / 20%);
+    color: tokens.$primary-blue;
+    border-right: 3px solid tokens.$primary-blue;
+  }
 }
 
-.modal-body {
-  color: #333;
+.menu-icon {
+  font-size: 20px;
 }
 
-.modal-action-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
+/* 抽奖内容区域 */
+.lottery-content {
+  width: 100%;
+  height: 100%;
+  padding: tokens.$spacing-lg;
+  background-color: tokens.$bg-primary;
+  color: tokens.$text-primary;
+  overflow-y: auto;
+  @include utils.custom-scrollbar;
 }
 
-.clear-history {
-  background-color: #f44336;
+/* 标签页内容样式 */
+.tab-content {
+  width: 100%;
+}
+
+/* 抽奖机样式 */
+.lottery-machine {
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-xl;
+  box-shadow: tokens.$shadow-md;
+  @include utils.flex-col(tokens.$spacing-lg, center);
+}
+
+.machine-header {
+  @include utils.flex-between;
+  width: 100%;
+  margin-bottom: tokens.$spacing-lg;
+
+  h3 {
+    margin: 0;
+    font-size: tokens.$font-size-xl;
+    color: tokens.$primary-gold;
+  }
+}
+
+.ticket-info {
+  @include utils.flex-row(tokens.$space-2, center);
+
+  .ticket-label {
+    font-size: tokens.$font-size-sm;
+    color: tokens.$text-secondary;
+  }
+
+  .ticket-count {
+    font-size: tokens.$font-size-lg;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$primary-blue;
+  }
+}
+
+/* 转盘样式 */
+.lottery-wheel {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: tokens.$spacing-xl 0;
+}
+
+.wheel-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: tokens.$bg-light;
+  border: 8px solid tokens.$primary-gold;
+  position: relative;
+  transition: transform tokens.$transition-normal;
+
+  &.spinning {
+    animation: spin 0.1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.wheel-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  @include utils.flex-col(tokens.$space-1, center, center);
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-primary;
+  width: 80px;
+  height: 60px;
+  margin-left: -40px;
+  margin-top: -30px;
+
+  &.active {
+    .prize-icon {
+      transform: scale(1.2);
+      filter: drop-shadow(0 0 10px tokens.$primary-gold);
+    }
+  }
+}
+
+.prize-icon {
+  font-size: 28px;
+  transition: all tokens.$transition-fast;
+}
+
+.prize-name {
+  font-size: tokens.$font-size-xs;
+  text-align: center;
+  font-weight: tokens.$font-weight-bold;
+}
+
+.wheel-pointer {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 30px solid tokens.$error;
+  z-index: 10;
+}
+
+/* 控制按钮样式 */
+.lottery-controls {
+  @include utils.flex-row(tokens.$spacing-md, center);
+  margin-top: tokens.$spacing-lg;
+}
+
+.draw-btn {
+  padding: tokens.$space-3 tokens.$space-8;
+  background-color: tokens.$primary-gold;
+  color: tokens.$bg-dark;
+  border: none;
+  border-radius: tokens.$radius-md;
+  cursor: pointer;
+  font-size: tokens.$font-size-lg;
+  font-weight: tokens.$font-weight-bold;
+  transition: all tokens.$transition-fast;
+
+  &:hover:not(:disabled) {
+    background-color: #f59e0b;
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-gold;
+  }
+
+  &:disabled {
+    background-color: tokens.$bg-tertiary;
+    color: tokens.$text-muted;
+    cursor: not-allowed;
+  }
+}
+
+.buy-btn {
+  padding: tokens.$space-3 tokens.$space-6;
+  background-color: tokens.$primary-blue;
   color: white;
   border: none;
-  padding: 8px 16px;
+  border-radius: tokens.$radius-md;
   cursor: pointer;
-  border-radius: 5px;
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-bold;
+  transition: all tokens.$transition-fast;
+
+  &:hover {
+    background-color: tokens.$primary-dark;
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-blue;
+  }
 }
 
-.history-count-info {
-  color: #666;
+/* 抽奖结果样式 */
+.prize-result {
+  margin-top: tokens.$spacing-lg;
+  padding: tokens.$spacing-lg;
+  background-color: rgb(251 191 36 / 20%);
+  border: 2px solid tokens.$primary-gold;
+  border-radius: tokens.$radius-md;
+  text-align: center;
+  animation: pulse 1s ease-in-out;
 }
 
-/* 消费规则样式 */
-.consumption-rules {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
-.rule-item {
-  display: flex;
-  gap: 10px;
-  align-items: center;
+.result-title {
+  font-size: tokens.$font-size-base;
+  color: tokens.$text-secondary;
+  margin-bottom: tokens.$space-2;
 }
 
-.rule-label {
-  font-weight: bold;
-  width: 120px;
-}
+.result-prize {
+  @include utils.flex-row(tokens.$space-2, center, center);
 
-.rule-value {
-  color: #2196f3;
+  .result-icon {
+    font-size: 36px;
+  }
+
+  .result-name {
+    font-size: tokens.$font-size-xl;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$primary-gold;
+  }
 }
 
 /* 历史记录样式 */
-.history-list-modal {
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-.empty-message {
-  text-align: center;
-  color: #999;
-  padding: 20px;
+.history-list {
+  @include utils.flex-col(tokens.$spacing-md);
 }
 
 .history-item {
-  margin-bottom: 15px;
-  padding: 15px;
-  background-color: #f9f9f9;
-  border-radius: 5px;
+  @include utils.flex-between;
+  background-color: tokens.$bg-light;
+  padding: tokens.$spacing-md;
+  border-radius: tokens.$radius-md;
+  box-shadow: tokens.$shadow-sm;
+  transition: all tokens.$transition-fast;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-md;
+  }
 }
 
-.history-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
+.history-prize {
+  @include utils.flex-row(tokens.$space-2, center);
+
+  .prize-icon {
+    font-size: 24px;
+  }
+
+  .prize-name {
+    font-size: tokens.$font-size-base;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$text-primary;
+  }
 }
 
 .history-time {
-  color: #666;
-  font-size: 14px;
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-secondary;
 }
 
-.history-type {
-  font-weight: bold;
-  color: #2196f3;
+/* 奖品列表样式 */
+.prizes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: tokens.$spacing-lg;
 }
 
-.history-rewards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+.prize-card {
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-lg;
+  text-align: center;
+  box-shadow: tokens.$shadow-md;
+  transition: all tokens.$transition-fast;
+  border: 2px solid transparent;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-lg;
+  }
+
+  &.common {
+    border-color: tokens.$border-medium;
+  }
+
+  &.rare {
+    border-color: tokens.$primary-blue;
+  }
+
+  &.epic {
+    border-color: rgb(139 92 246 / 50%);
+  }
+
+  &.legendary {
+    border-color: tokens.$primary-gold;
+  }
 }
 
-.history-reward {
-  background-color: #e3f2fd;
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-size: 14px;
-  color: #1976d2;
+.prize-icon-large {
+  font-size: 48px;
+  margin-bottom: tokens.$spacing-md;
+}
+
+.prize-info {
+  @include utils.flex-col(tokens.$space-1);
+
+  .prize-name {
+    font-size: tokens.$font-size-base;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$text-primary;
+  }
+
+  .prize-rarity {
+    font-size: tokens.$font-size-sm;
+    color: tokens.$text-secondary;
+  }
+
+  .prize-probability {
+    font-size: tokens.$font-size-xs;
+    color: tokens.$primary-gold;
+    font-weight: tokens.$font-weight-bold;
+  }
+}
+
+/* 空状态样式 */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: tokens.$spacing-2xl;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  color: tokens.$text-secondary;
+}
+
+/* 响应式设计 */
+@include utils.mobile {
+  .lottery-wheel {
+    width: 250px;
+    height: 250px;
+  }
+
+  .wheel-item {
+    width: 60px;
+    height: 50px;
+    margin-left: -30px;
+    margin-top: -25px;
+  }
+
+  .prize-icon {
+    font-size: 20px;
+  }
+
+  .lottery-controls {
+    flex-direction: column;
+    gap: tokens.$spacing-md;
+  }
+
+  .draw-btn,
+  .buy-btn {
+    width: 100%;
+  }
+
+  .prizes-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .lottery-content {
+    padding: tokens.$spacing-md;
+  }
+
+  .lottery-machine {
+    padding: tokens.$spacing-md;
+  }
 }
 </style>

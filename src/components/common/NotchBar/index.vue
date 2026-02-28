@@ -17,10 +17,7 @@
         <div class="exp-container">
           <span class="notch-value">{{ currentExp }}/{{ maxExp }}</span>
           <div class="exp-progress-bar">
-            <div
-              class="exp-progress"
-              :style="{ width: `${expProgressPercent}%` }"
-            ></div>
+            <div class="exp-progress" :style="{ width: `${expProgressPercent}%` }"></div>
           </div>
         </div>
       </div>
@@ -55,141 +52,125 @@ const expProgressPercent = computed(() => {
 </script>
 
 <style scoped lang="scss">
-/* 刘海栏样式 */
+// 刘海栏容器
 .notch-bar {
-  height: 60px;
-  background: linear-gradient(135deg, #0a1027 0%, #1a2332 100%);
+  height: tokens.$notch-bar-height;
+  background: linear-gradient(135deg, tokens.$bg-dark 0%, tokens.$bg-medium 100%);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  z-index: 9999;
+  padding: 0 tokens.$spacing-lg;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   width: 100%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+  z-index: tokens.$z-max;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 50%);
+  border-bottom: 2px solid rgb(255 215 0 / 30%);
+
+  // 左侧信息区
+  .notch-info-left {
+    @include utils.flex-row(tokens.$spacing-lg);
+  }
+
+  // 右侧信息区
+  .notch-info-right {
+    @include utils.flex-row(tokens.$spacing-lg);
+    margin-right: tokens.$spacing-lg;
+  }
 }
 
-.notch-info-left {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.notch-info-right {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-/* 用户信息样式 */
+// 用户信息
 .user-info {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+  @include utils.flex-row(tokens.$spacing-md);
 }
 
 .user-avatar {
   width: 40px;
   height: 40px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.5);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: tokens.$radius-md;
+  background: linear-gradient(135deg, tokens.$primary-gold 0%, tokens.$warning 100%);
+  @include utils.flex-center;
+  box-shadow: 0 2px 8px rgb(255 215 0 / 50%);
+  border: 2px solid rgb(255 255 255 / 30%);
 }
 
 .avatar-placeholder {
   font-size: 18px;
-  font-weight: bold;
-  color: #0a1027;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$bg-dark;
 }
 
 .user-name {
-  font-size: 16px;
-  font-weight: bold;
-  color: #fff;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 50%);
 }
 
-/* 调整后的notch-item样式 - 上下布局 */
+// 信息项
 .notch-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  padding: 8px 16px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-  border-radius: 20px;
-  font-size: 14px;
-  border: 1px solid rgba(255, 215, 0, 0.2);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  @include utils.flex-col(tokens.$spacing-xs, center);
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  background: linear-gradient(135deg, rgb(255 255 255 / 10%) 0%, rgb(255 255 255 / 5%) 100%);
+  border-radius: tokens.$radius-full;
+  font-size: tokens.$font-size-sm;
+  border: 1px solid rgb(255 215 0 / 20%);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 30%);
   min-width: 100px;
 }
 
-/* 移除notch-label，只显示数值 */
 .notch-label {
   display: none;
 }
 
 .notch-value {
-  color: #ffd700;
-  font-weight: bold;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  color: tokens.$primary-gold;
+  font-weight: tokens.$font-weight-bold;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 50%);
 }
 
-/* 经验条样式 - 王者荣耀风格，字体大小12px */
+// 经验条容器
 .exp-container {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+  @include utils.flex-col(tokens.$spacing-xs, center);
   width: 100%;
-  align-items: center;
-}
 
-.exp-container .notch-value {
-  font-size: 12px;
+  .notch-value {
+    font-size: tokens.$font-size-xs;
+  }
 }
 
 .exp-progress-bar {
   width: 100%;
   height: 8px;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+  background-color: rgb(255 255 255 / 10%);
+  border-radius: tokens.$radius-sm;
   overflow: hidden;
-  border: 1px solid rgba(255, 215, 0, 0.3);
+  border: 1px solid rgb(255 215 0 / 30%);
 }
 
 .exp-progress {
   height: 100%;
-  background: linear-gradient(90deg, #ffd700 0%, #ffa500 100%);
+  background: linear-gradient(90deg, tokens.$primary-gold 0%, tokens.$warning 100%);
   border-radius: 3px;
   transition: width 0.3s ease;
-  box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+  box-shadow: 0 0 8px rgb(255 215 0 / 50%);
 }
 
-/* 响应式设计 */
-@media (max-width: 768px) {
+@include utils.mobile {
   .notch-bar {
-    padding: 0 10px;
+    padding: 0 tokens.$spacing-sm;
     height: 50px;
   }
 
-  .notch-info-left {
-    gap: 10px;
-  }
-
+  .notch-info-left,
   .notch-info-right {
-    gap: 10px;
+    gap: tokens.$spacing-sm;
   }
 
   .user-info {
-    gap: 10px;
+    gap: tokens.$spacing-sm;
   }
 
   .user-avatar {
@@ -202,13 +183,13 @@ const expProgressPercent = computed(() => {
   }
 
   .user-name {
-    font-size: 14px;
+    font-size: tokens.$font-size-sm;
   }
 
   .notch-item {
-    padding: 6px 12px;
-    font-size: 12px;
-    gap: 8px;
+    padding: tokens.$spacing-xs tokens.$spacing-sm;
+    font-size: tokens.$font-size-xs;
+    gap: tokens.$spacing-xs;
   }
 
   .exp-container {

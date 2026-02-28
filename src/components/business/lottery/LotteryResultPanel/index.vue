@@ -57,23 +57,24 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+
 .result-panel {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
-  padding: 15px;
-  margin-top: 20px;
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-lg;
+  box-shadow: tokens.$shadow-md;
+  border: 1px solid tokens.$border-light;
+  padding: tokens.$spacing-md;
+  margin-top: tokens.$spacing-lg;
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  @include utils.flex-col(tokens.$spacing-0);
   overflow: hidden;
   min-height: 300px;
-}
 
-.result-panel h3 {
-  margin: 0 0 15px;
-  font-size: 18px;
-  color: #333;
+  h3 {
+    margin: 0 0 tokens.$spacing-md;
+    font-size: tokens.$font-size-lg;
+    color: tokens.$text-primary;
+  }
 }
 
 .result-spacer {
@@ -84,21 +85,28 @@ watch(
   flex: 1;
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: tokens.$spacing-md;
   overflow-y: auto;
-  padding: 10px;
+  padding: tokens.$spacing-sm;
   align-content: flex-start;
+  @include utils.custom-scrollbar;
 }
 
 .reward-item {
-  background-color: #f0f8ff;
-  border: 1px solid #add8e6;
-  border-radius: 8px;
-  padding: 12px;
+  background-color: tokens.$bg-light;
+  border: 1px solid tokens.$border-light;
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-md;
   min-width: 150px;
   text-align: center;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
-  transition: all 0.3s ease;
+  box-shadow: tokens.$shadow-sm;
+  transition: all tokens.$transition-normal;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-md;
+    border-color: tokens.$border-medium;
+  }
 }
 
 .reward-item-animated {
@@ -121,27 +129,27 @@ watch(
 
 .reward-name {
   display: block;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 5px;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
+  margin-bottom: tokens.$spacing-xs;
 }
 
 .reward-type {
   display: block;
-  font-size: 12px;
-  color: #666;
-  margin-bottom: 5px;
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
+  margin-bottom: tokens.$spacing-xs;
 }
 
 .reward-value {
   display: block;
-  font-size: 14px;
-  color: #ff6b35;
-  font-weight: bold;
+  font-size: tokens.$font-size-sm;
+  color: tokens.$warning;
+  font-weight: tokens.$font-weight-bold;
 }
 
-/* 响应式设�? */
-@media (width <= 1024px) {
+/* 响应式设计 */
+@include utils.tablet {
   .result-panel {
     height: auto;
     min-height: 200px;

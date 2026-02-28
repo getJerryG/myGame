@@ -124,199 +124,192 @@ function claimCumulativeReward(threshold: number): void {
 </script>
 
 <style lang="scss" scoped>
-/* 右侧栏竖向累抽奖励样�? */
+
+/* 右侧栏竖向累抽奖励样式 */
 .cumulative-rewards-panel-vertical {
-  background-color: #fff3e0;
-  border-radius: 8px;
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-lg;
   overflow: hidden;
-  border: 1px solid #ffcc80;
+  border: 1px solid tokens.$border-light;
   height: 100%;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
+
+  .panel-header {
+    padding: tokens.$spacing-md;
+    background-color: tokens.$bg-light;
+    border-bottom: 1px solid tokens.$border-light;
+    @include utils.flex-col(tokens.$spacing-xs, flex-start);
+    height: auto;
+    min-height: 50px;
+    flex-shrink: 0;
+
+    h3 {
+      margin: 0;
+      color: tokens.$warning;
+      font-size: tokens.$font-size-base;
+      line-height: 20px;
+    }
+  }
+
+  .draw-count-info {
+    font-size: tokens.$font-size-xs;
+    color: tokens.$text-secondary;
+    margin-top: 2px;
+    line-height: 16px;
+  }
 }
 
-.cumulative-rewards-panel-vertical .panel-header {
-  padding: 12px;
-  background-color: #ffe0b2;
-  border-bottom: 1px solid #ffcc80;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  height: auto;
-  min-height: 50px;
-  flex-shrink: 0;
-}
-
-.cumulative-rewards-panel-vertical .panel-header h3 {
-  margin: 0;
-  color: #e65100;
-  font-size: 16px;
-  line-height: 20px;
-}
-
-.cumulative-rewards-panel-vertical .draw-count-info {
-  font-size: 12px;
-  color: #666;
-  margin-top: 2px;
-  line-height: 16px;
-}
-
-/* 累抽进度�? */
+/* 累抽进度条 */
 .progress-bar-container {
-  margin-bottom: 15px;
+  margin-bottom: tokens.$spacing-md;
   position: relative;
-  padding: 0 12px;
+  padding: 0 tokens.$spacing-md;
 }
 
 .progress-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px;
-  font-size: 12px;
-  color: #666;
+  @include utils.flex-between;
+  margin-bottom: tokens.$spacing-xs;
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
 }
 
 .progress-bar {
   position: relative;
   height: 10px;
-  background-color: #f5f5f5;
-  border-radius: 5px;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
   overflow: hidden;
-  margin-bottom: 5px;
+  margin-bottom: tokens.$spacing-xs;
 }
 
 .progress-fill {
   height: 100%;
-  background-color: #ffb74d;
-  border-radius: 5px;
-  transition: width 0.3s ease;
+  background-color: tokens.$warning;
+  border-radius: tokens.$radius-md;
+  transition: width tokens.$transition-normal;
 }
 
-/* 竖向滚动的累抽奖励区�? */
+/* 竖向滚动的累抽奖励区域 */
 .vertical-rewards-list {
   flex: 1;
   overflow-y: auto;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  padding: tokens.$spacing-md;
+  @include utils.flex-col(tokens.$spacing-md);
   min-height: 0;
+  @include utils.custom-scrollbar;
 }
 
 .rewards-section {
-  background-color: rgb(255 255 255 / 80%);
-  border-radius: 6px;
-  padding: 10px;
-  border: 1px solid rgb(255 193 7 / 30%);
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-sm;
+  border: 1px solid tokens.$border-light;
   flex-shrink: 0;
+
+  h4 {
+    margin: 0 0 tokens.$spacing-sm;
+    color: tokens.$warning;
+    font-size: tokens.$font-size-sm;
+    font-weight: tokens.$font-weight-bold;
+    line-height: 18px;
+  }
 }
 
-.rewards-section h4 {
-  margin: 0 0 8px;
-  color: #f57c00;
-  font-size: 14px;
-  font-weight: bold;
-  line-height: 18px;
-}
-
-/* 竖向奖励�? */
+/* 竖向奖励项 */
 .vertical-reward-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px;
-  border-radius: 4px;
-  margin-bottom: 6px;
-  font-size: 13px;
+  @include utils.flex-between;
+  padding: tokens.$spacing-sm;
+  border-radius: tokens.$radius-sm;
+  margin-bottom: tokens.$spacing-xs;
+  font-size: tokens.$font-size-sm;
   border: 1px solid;
   height: 50px;
   flex-shrink: 0;
-}
 
-.vertical-reward-item:last-child {
-  margin-bottom: 0;
-}
+  &:last-child {
+    margin-bottom: 0;
+  }
 
-.vertical-reward-item.available {
-  background-color: #fff3cd;
-  border-color: #ffeeba;
-  animation: pulse 1s infinite;
-}
+  &.available {
+    background-color: rgb(251 191 36 / 10%);
+    border-color: tokens.$warning;
+    animation: pulse 1s infinite;
+  }
 
-.vertical-reward-item.unreached {
-  background-color: #f5f5f5;
-  border-color: #e0e0e0;
-  opacity: 0.7;
-}
+  &.unreached {
+    background-color: tokens.$bg-light;
+    border-color: tokens.$border-light;
+    opacity: 0.7;
+  }
 
-.vertical-reward-item .reward-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  align-items: flex-start;
-  margin-bottom: 0;
-}
+  .reward-info {
+    @include utils.flex-col(2px, flex-start);
+    margin-bottom: 0;
+  }
 
-.vertical-reward-item .threshold {
-  font-weight: bold;
-  color: #e65100;
-  font-size: 12px;
-  line-height: 14px;
-}
+  .threshold {
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$warning;
+    font-size: tokens.$font-size-xs;
+    line-height: 14px;
+  }
 
-.vertical-reward-item .reward-name {
-  font-size: 11px;
-  color: #333;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 120px;
-  line-height: 13px;
+  .reward-name {
+    font-size: tokens.$font-size-xs;
+    color: tokens.$text-primary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+    line-height: 13px;
+  }
 }
 
 /* 领取按钮 */
 .claim-button {
-  background-color: #4caf50;
+  background-color: tokens.$success;
   color: white;
   border: none;
-  padding: 3px 8px;
-  border-radius: 3px;
+  padding: 3px tokens.$spacing-sm;
+  border-radius: tokens.$radius-sm;
   cursor: pointer;
-  font-size: 11px;
-  transition: background-color 0.3s;
+  font-size: tokens.$font-size-xs;
+  font-weight: tokens.$font-weight-medium;
+  transition: all tokens.$transition-fast;
   flex-shrink: 0;
-  margin-top: 4px;
+  margin-top: tokens.$spacing-xs;
+
+  &:hover {
+    background-color: #059669;
+    transform: translateY(-1px);
+  }
 }
 
-.claim-button:hover {
-  background-color: #45a049;
-}
-
-/* 状态徽�? */
+/* 状态徽章 */
 .status-badge {
-  font-size: 10px;
+  font-size: tokens.$font-size-xs;
   padding: 2px 6px;
-  border-radius: 10px;
-  background-color: #c8e6c9;
-  color: #2e7d32;
+  border-radius: tokens.$radius-full;
+  background-color: rgb(16 185 129 / 20%);
+  color: tokens.$success;
   flex-shrink: 0;
-  margin-top: 4px;
+  margin-top: tokens.$spacing-xs;
 }
 
 /* 脉冲动画 */
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgb(255 193 7 / 40%);
+    box-shadow: 0 0 0 0 rgb(251 191 36 / 40%);
   }
 
   70% {
-    box-shadow: 0 0 0 2px rgb(255 193 7 / 0%);
+    box-shadow: 0 0 0 2px rgb(251 191 36 / 0%);
   }
 
   100% {
-    box-shadow: 0 0 0 0 rgb(255 193 7 / 0%);
+    box-shadow: 0 0 0 0 rgb(251 191 36 / 0%);
   }
 }
 </style>

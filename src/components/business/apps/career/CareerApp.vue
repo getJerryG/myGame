@@ -228,69 +228,63 @@ const rewardsHistory = ref([
 </script>
 
 <style lang="scss" scoped>
+
 .module-section {
-  background-color: rgb(26 26 46 / 95%);
-  border-radius: var(--app-radius-md);
-  padding: 1.5rem;
-  box-shadow: var(--app-shadow-secondary);
-  border: 1px solid var(--app-border-secondary);
-  color: var(--app-text-primary);
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-lg;
+  box-shadow: tokens.$shadow-md;
+  border: 1px solid tokens.$border-light;
+  color: tokens.$text-primary;
 }
 
 .section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--app-border-secondary);
+  @include utils.flex-between;
+  margin-bottom: tokens.$spacing-lg;
+  padding-bottom: tokens.$spacing-md;
+  border-bottom: 1px solid tokens.$border-light;
+
+  h2 {
+    margin: 0;
+    font-size: tokens.$font-size-xl;
+    color: tokens.$text-primary;
+  }
+
+  p {
+    margin: 0;
+    color: tokens.$text-secondary;
+    font-size: tokens.$font-size-sm;
+  }
 }
 
-.section-header h2 {
-  margin: 0;
-  font-size: 1.3rem;
-  color: var(--app-text-primary);
-}
-
-.section-header p {
-  margin: 0;
-  color: var(--app-text-secondary);
-  font-size: 0.9rem;
-}
-
-/* 等级信息�? */
+/* 等级信息区 */
 .level-section {
-  margin-bottom: 24px;
+  margin-bottom: tokens.$spacing-lg;
 }
 
 .level-card {
-  background-color: rgb(26 26 46 / 95%);
-  border-radius: var(--app-radius-md);
-  padding: 20px;
-  box-shadow: var(--app-shadow-secondary);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  border: 1px solid var(--app-border-secondary);
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-lg;
+  box-shadow: tokens.$shadow-md;
+  @include utils.flex-col(tokens.$spacing-lg, center, center);
+  border: 1px solid tokens.$border-light;
 }
 
 .level-info {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+  @include utils.flex-row(tokens.$spacing-md);
 }
 
 .rank-badge {
-  font-size: 32px;
-  font-weight: bold;
-  color: #4a9eff;
+  font-size: tokens.$font-size-3xl;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$primary-blue;
   text-align: center;
 }
 
 .sub-level {
-  font-size: 48px;
-  font-weight: bold;
+  font-size: tokens.$font-size-4xl;
+  font-weight: tokens.$font-weight-bold;
   line-height: 1;
 }
 
@@ -300,102 +294,95 @@ const rewardsHistory = ref([
 }
 
 .progress-title {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 8px;
-  color: var(--app-text-primary);
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-bold;
+  margin-bottom: tokens.$spacing-sm;
+  color: tokens.$text-primary;
 }
 
 .progress-bar {
   width: 100%;
   height: 12px;
-  background-color: rgb(0 0 0 / 30%);
-  border-radius: var(--app-radius-sm);
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-sm;
   overflow: hidden;
-  margin-bottom: 4px;
+  margin-bottom: tokens.$spacing-xs;
 }
 
 .progress-fill {
   height: 100%;
-  background-color: #4a9eff;
-  border-radius: var(--app-radius-sm);
-  transition: width 0.3s ease;
+  background-color: tokens.$primary-blue;
+  border-radius: tokens.$radius-sm;
+  transition: width tokens.$transition-normal;
 }
 
 .progress-text {
-  font-size: 12px;
-  color: var(--app-text-secondary);
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
   text-align: right;
 }
 
-/* 升级条件�? */
+/* 升级条件区 */
 .conditions-section {
-  margin-bottom: 24px;
-}
+  margin-bottom: tokens.$spacing-lg;
 
-.conditions-section h3 {
-  margin: 0 0 16px;
-  font-size: 20px;
-  color: var(--app-text-primary);
+  h3 {
+    margin: 0 0 tokens.$spacing-md;
+    font-size: tokens.$font-size-xl;
+    color: tokens.$text-primary;
+  }
 }
 
 .conditions-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
+  @include utils.grid-auto-fill(280px, tokens.$spacing-md);
 }
 
 .condition-card {
-  background-color: rgb(26 26 46 / 95%);
-  border-radius: var(--app-radius-md);
-  padding: 16px;
-  box-shadow: var(--app-shadow-secondary);
-  display: flex;
-  gap: 12px;
-  transition: all 0.2s ease;
-  border-left: 4px solid rgb(74 158 255 / 30%);
-  border: 1px solid var(--app-border-secondary);
-}
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-md;
+  box-shadow: tokens.$shadow-md;
+  @include utils.flex-row(tokens.$spacing-md);
+  transition: all tokens.$transition-fast;
+  border-left: 4px solid rgba(tokens.$primary-blue, 0.3);
+  border: 1px solid tokens.$border-light;
 
-.condition-card.completed {
-  border-left-color: #4caf50;
-  background-color: rgb(76 175 80 / 10%);
-}
+  &.completed {
+    border-left-color: tokens.$success;
+    background-color: rgba(tokens.$success, 0.1);
+  }
 
-.condition-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--app-shadow-primary);
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-lg;
+  }
 }
 
 .condition-icon {
-  font-size: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: tokens.$font-size-3xl;
+  @include utils.flex-center;
   width: 60px;
   height: 60px;
-  background-color: rgb(74 158 255 / 20%);
+  background-color: rgba(tokens.$primary-blue, 0.2);
   border-radius: 50%;
   flex-shrink: 0;
 }
 
 .condition-content {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  @include utils.flex-col(tokens.$spacing-xs);
 }
 
 .condition-title {
-  font-size: 16px;
-  font-weight: bold;
-  color: var(--app-text-primary);
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
 }
 
 .condition-desc {
-  font-size: 14px;
-  color: var(--app-text-secondary);
-  margin-bottom: 8px;
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-secondary;
+  margin-bottom: tokens.$spacing-sm;
 }
 
 .condition-progress {
@@ -404,48 +391,41 @@ const rewardsHistory = ref([
 
 /* 已解锁权限区 */
 .permissions-section {
-  margin-bottom: 24px;
-}
+  margin-bottom: tokens.$spacing-lg;
 
-.permissions-section h3 {
-  margin: 0 0 16px;
-  font-size: 20px;
-  color: var(--app-text-primary);
+  h3 {
+    margin: 0 0 tokens.$spacing-md;
+    font-size: tokens.$font-size-xl;
+    color: tokens.$text-primary;
+  }
 }
 
 .permissions-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
+  @include utils.grid-auto-fill(200px, tokens.$spacing-md);
 }
 
 .permission-card {
-  background-color: rgb(26 26 46 / 95%);
-  border-radius: var(--app-radius-md);
-  padding: 16px;
-  box-shadow: var(--app-shadow-secondary);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  transition: all 0.2s ease;
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-md;
+  box-shadow: tokens.$shadow-md;
+  @include utils.flex-col(tokens.$spacing-md, center, center);
+  transition: all tokens.$transition-fast;
   text-align: center;
-  border: 1px solid var(--app-border-secondary);
-}
+  border: 1px solid tokens.$border-light;
 
-.permission-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--app-shadow-primary);
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-lg;
+  }
 }
 
 .permission-icon {
-  font-size: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: tokens.$font-size-3xl;
+  @include utils.flex-center;
   width: 60px;
   height: 60px;
-  background-color: rgb(74 158 255 / 20%);
+  background-color: rgba(tokens.$primary-blue, 0.2);
   border-radius: 50%;
 }
 
@@ -454,80 +434,77 @@ const rewardsHistory = ref([
 }
 
 .permission-title {
-  font-size: 16px;
-  font-weight: bold;
-  color: var(--app-text-primary);
-  margin-bottom: 4px;
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
+  margin-bottom: tokens.$spacing-xs;
 }
 
 .permission-desc {
-  font-size: 14px;
-  color: var(--app-text-secondary);
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-secondary;
 }
 
-/* 奖励记录�? */
+/* 奖励记录区 */
 .rewards-section {
-  margin-bottom: 24px;
-}
+  margin-bottom: tokens.$spacing-lg;
 
-.rewards-section h3 {
-  margin: 0 0 16px;
-  font-size: 20px;
-  color: var(--app-text-primary);
+  h3 {
+    margin: 0 0 tokens.$spacing-md;
+    font-size: tokens.$font-size-xl;
+    color: tokens.$text-primary;
+  }
 }
 
 .rewards-btn {
   width: 100%;
-  padding: 12px;
-  background-color: rgb(26 26 46 / 95%);
-  border: 2px solid rgb(74 158 255 / 20%);
-  color: #4a9eff;
-  font-size: 16px;
-  font-weight: bold;
-  border-radius: var(--app-radius-md);
+  padding: tokens.$spacing-sm;
+  background-color: tokens.$bg-secondary;
+  border: 2px solid rgba(tokens.$primary-blue, 0.2);
+  color: tokens.$primary-blue;
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-bold;
+  border-radius: tokens.$radius-lg;
   cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-}
+  transition: all tokens.$transition-fast;
+  @include utils.flex-center;
+  gap: tokens.$spacing-sm;
 
-.rewards-btn:hover {
-  background-color: rgb(74 158 255 / 10%);
-  border-color: #4a9eff;
-  transform: translateY(-1px);
+  &:hover {
+    background-color: rgba(tokens.$primary-blue, 0.1);
+    border-color: tokens.$primary-blue;
+    transform: translateY(-1px);
+  }
 }
 
 .rewards-list {
-  margin-top: 16px;
-  background-color: rgb(26 26 46 / 95%);
-  border-radius: var(--app-radius-md);
+  margin-top: tokens.$spacing-md;
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-lg;
   overflow: hidden;
-  box-shadow: var(--app-shadow-secondary);
-  border: 1px solid var(--app-border-secondary);
+  box-shadow: tokens.$shadow-md;
+  border: 1px solid tokens.$border-light;
 }
 
 .reward-item {
-  padding: 16px;
-  border-bottom: 1px solid var(--app-border-secondary);
-  display: flex;
-  gap: 16px;
+  padding: tokens.$spacing-md;
+  border-bottom: 1px solid tokens.$border-light;
+  @include utils.flex-row(tokens.$spacing-md);
   align-items: center;
-  transition: background-color 0.2s ease;
-}
+  transition: background-color tokens.$transition-fast;
 
-.reward-item:last-child {
-  border-bottom: none;
-}
+  &:last-child {
+    border-bottom: none;
+  }
 
-.reward-item:hover {
-  background-color: rgb(0 0 0 / 20%);
+  &:hover {
+    background-color: tokens.$bg-light;
+  }
 }
 
 .reward-date {
-  font-size: 12px;
-  color: var(--app-text-secondary);
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
   flex-shrink: 0;
   width: 100px;
 }
@@ -537,40 +514,38 @@ const rewardsHistory = ref([
 }
 
 .reward-title {
-  font-size: 16px;
-  font-weight: bold;
-  color: var(--app-text-primary);
-  margin-bottom: 4px;
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
+  margin-bottom: tokens.$spacing-xs;
 }
 
 .reward-desc {
-  font-size: 14px;
-  color: var(--app-text-secondary);
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-secondary;
 }
 
 .reward-amounts {
-  display: flex;
-  gap: 12px;
+  @include utils.flex-row(tokens.$spacing-md);
   align-items: center;
 }
 
 .amount-item {
-  display: flex;
+  @include utils.flex-row(tokens.$spacing-xs);
   align-items: center;
-  gap: 4px;
-  font-weight: bold;
+  font-weight: tokens.$font-weight-bold;
 }
 
 .amount-icon {
-  font-size: 16px;
+  font-size: tokens.$font-size-base;
 }
 
 .amount-value {
-  color: #4caf50;
+  color: tokens.$success;
 }
 
-/* 响应式设�? */
-@media (width <= 768px) {
+/* 响应式设计 */
+@include utils.mobile {
   .conditions-grid,
   .permissions-grid {
     grid-template-columns: 1fr;
@@ -585,7 +560,7 @@ const rewardsHistory = ref([
   .reward-item {
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
+    gap: tokens.$spacing-sm;
   }
 
   .reward-date {

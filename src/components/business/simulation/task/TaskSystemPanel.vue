@@ -1,21 +1,36 @@
 <template>
-  <section class="task-panel" aria-labelledby="task-system-title">
+  <section
+    class="task-panel"
+    aria-labelledby="task-system-title"
+  >
     <div class="panel-header">
-      <h2 id="task-system-title" class="panel-title">任务</h2>
+      <h2
+        id="task-system-title"
+        class="panel-title"
+      >
+        任务
+      </h2>
       <button
         class="collapse-btn"
         aria-expanded="!isCollapsed"
         @click="toggleCollapse"
       >
-        <span class="collapse-icon">{{ isCollapsed ? '▶️' : '�? }}</span>
+        <span class="collapse-icon">{{ isCollapsed ? '▶️' : '▼' }}</span>
       </button>
     </div>
 
-    <div class="panel-content" :class="{ collapsed: isCollapsed }">
+    <div
+      class="panel-content"
+      :class="{ collapsed: isCollapsed }"
+    >
       <!-- 每日任务 -->
       <div class="task-section">
         <h3 class="section-title">每日任务</h3>
-        <div v-if="dailyTasks.length === 0" class="empty-tasks" aria-label="暂无每日任务">
+        <div
+          v-if="dailyTasks.length === 0"
+          class="empty-tasks"
+          aria-label="暂无每日任务"
+        >
           <p>暂无每日任务</p>
         </div>
         <div
@@ -23,50 +38,55 @@
           :key="task.id"
           class="task-bubble"
           :class="{ completed: task.completed }"
-          :aria-label="
-            task.title +
-            (task.completed
-              ? ' 已完�?
-              : ' 进度: ' + task.progress + '/' + task.target)
-          "
+          :aria-label="task.title + (task.completed ? ' 已完成' : ' 进度: ' + task.progress + '/' + task.target)"
         >
-          <span class="task-icon" aria-hidden="true">{{ task.icon || '📋' }}</span>
+          <span
+            class="task-icon"
+            aria-hidden="true"
+            >{{ task.icon || '📋' }}</span
+          >
           <h4 class="task-title">{{ task.title }}</h4>
           <span class="task-progress-text">{{ task.progress }}/{{ task.target }}</span>
-          <button class="task-status-btn">{{ task.completed ? '已完�? : '未完�? }}</button>
+          <button class="task-status-btn">{{ task.completed ? '已完成' : '未完成' }}</button>
         </div>
       </div>
 
-      <!-- 周任�?-->
+      <!-- 周任务 -->
       <div class="task-section">
-        <h3 class="section-title">周任�?/h3>
-        <div v-if="weeklyTasks.length === 0" class="empty-tasks" aria-label="暂无周任�?
+        <h3 class="section-title">周任务</h3>
+        <div
+          v-if="weeklyTasks.length === 0"
+          class="empty-tasks"
+          aria-label="暂无周任务"
         >
-          <p>暂无周任�?/p>
+          <p>暂无周任务</p>
         </div>
         <div
           v-for="task in weeklyTasks"
           :key="task.id"
           class="task-bubble"
           :class="{ completed: task.completed }"
-          :aria-label="
-            task.title +
-            (task.completed
-              ? ' 已完�?
-              : ' 进度: ' + task.progress + '/' + task.target)
-          "
+          :aria-label="task.title + (task.completed ? ' 已完成' : ' 进度: ' + task.progress + '/' + task.target)"
         >
-          <span class="task-icon" aria-hidden="true">{{ task.icon || '📅' }}</span>
+          <span
+            class="task-icon"
+            aria-hidden="true"
+            >{{ task.icon || '📅' }}</span
+          >
           <h4 class="task-title">{{ task.title }}</h4>
           <span class="task-progress-text">{{ task.progress }}/{{ task.target }}</span>
-          <button class="task-status-btn">{{ task.completed ? '已完�? : '未完�? }}</button>
+          <button class="task-status-btn">{{ task.completed ? '已完成' : '未完成' }}</button>
         </div>
       </div>
 
       <!-- 月度任务 -->
       <div class="task-section">
         <h3 class="section-title">月度任务</h3>
-        <div v-if="monthlyTasks.length === 0" class="empty-tasks" aria-label="暂无月度任务">
+        <div
+          v-if="monthlyTasks.length === 0"
+          class="empty-tasks"
+          aria-label="暂无月度任务"
+        >
           <p>暂无月度任务</p>
         </div>
         <div
@@ -74,24 +94,23 @@
           :key="task.id"
           class="task-bubble"
           :class="{ completed: task.completed }"
-          :aria-label="
-            task.title +
-            (task.completed
-              ? ' 已完�?
-              : ' 进度: ' + task.progress + '/' + task.target)
-          "
+          :aria-label="task.title + (task.completed ? ' 已完成' : ' 进度: ' + task.progress + '/' + task.target)"
         >
-          <span class="task-icon" aria-hidden="true">{{ task.icon || '📊' }}</span>
+          <span
+            class="task-icon"
+            aria-hidden="true"
+            >{{ task.icon || '📊' }}</span
+          >
           <h4 class="task-title">{{ task.title }}</h4>
           <span class="task-progress-text">{{ task.progress }}/{{ task.target }}</span>
-          <button class="task-status-btn">{{ task.completed ? '已完�? : '未完�? }}</button>
+          <button class="task-status-btn">{{ task.completed ? '已完成' : '未完成' }}</button>
         </div>
       </div>
     </div>
   </section>
 </template>
 
-<script lang=ts>
+<script lang="ts">
 export default {
   name: 'TaskSystemPanel',
   props: {
@@ -124,260 +143,208 @@ export default {
 };
 </script>
 
-<style lang=scss scoped>
+<style lang="scss" scoped>
+
 /* 任务面板 */
 .task-panel {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
+  background: tokens.$bg-secondary;
+  border-radius: tokens.$radius-lg;
+  box-shadow: tokens.$shadow-md;
   overflow: hidden;
-  border: 1px solid #e2e8f0;
+  border: 1px solid tokens.$border-light;
 }
 
 /* 面板头部 */
 .panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  background: white;
-  border-bottom: 1px solid #e2e8f0;
-  border-radius: 8px 8px 0 0;
+  @include utils.panel-header;
 }
 
 .panel-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: #1e293b;
-  margin: 0;
+  @include utils.panel-title;
 }
 
 .collapse-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 5px;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-}
-
-.collapse-btn:hover {
-  background-color: #f1f5f9;
+  @include utils.collapse-btn;
 }
 
 .collapse-icon {
-  font-size: 14px;
+  font-size: tokens.$font-size-sm;
 }
 
 /* 面板内容 */
 .panel-content {
-  padding: 20px;
-  background: white;
-  border-radius: 0 0 8px;
-  transition: all 0.3s ease;
-  overflow: hidden;
-}
+  @include utils.panel-content;
 
-.panel-content.collapsed {
-  max-height: 0;
-  padding: 0;
-  overflow: hidden;
+  &.collapsed {
+    max-height: 0;
+    padding: 0;
+    overflow: hidden;
+  }
 }
 
 /* 任务区域 */
 .task-section {
-  margin-bottom: 20px;
-}
+  margin-bottom: tokens.$spacing-lg;
 
-.task-section:last-child {
-  margin-bottom: 0;
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .section-title {
-  font-size: 14px;
-  font-weight: 500;
-  color: #64748b;
-  margin-bottom: 12px;
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-medium;
+  color: tokens.$text-muted;
+  margin-bottom: tokens.$spacing-md;
 }
 
 /* 任务卡片 */
 .task-bubble {
-  display: flex;
-  align-items: center;
-  background: #f8fafc;
-  border-radius: 8px;
-  padding: 10px 15px;
-  border: 1px solid #e2e8f0;
-  transition: all 0.3s ease;
-  margin-bottom: 10px;
-  gap: 12px;
-}
+  @include utils.flex-row(tokens.$spacing-md, center);
+  background: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  border: 1px solid tokens.$border-light;
+  transition: all tokens.$transition-normal;
+  margin-bottom: tokens.$spacing-sm;
 
-.task-bubble:hover {
-  background: white;
-  box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
-  transform: translateY(-1px);
-}
+  &:hover {
+    background: tokens.$bg-lighter;
+    box-shadow: tokens.$shadow-md;
+    transform: translateY(-1px);
+  }
 
-.task-bubble.completed {
-  background: #f0fdf4;
-  border-color: #dcfce7;
+  &.completed {
+    background: rgb(16 185 129 / 10%);
+    border-color: tokens.$success;
+  }
 }
 
 .task-icon {
-  font-size: 16px;
-  background: #e2e8f0;
-  border-radius: 6px;
-  padding: 6px;
-  color: #64748b;
+  font-size: tokens.$font-size-base;
+  background: tokens.$border-light;
+  border-radius: tokens.$radius-sm;
+  padding: tokens.$spacing-xs;
+  color: tokens.$text-muted;
   flex-shrink: 0;
-}
 
-.task-bubble.completed .task-icon {
-  background: #dcfce7;
-  color: #16a34a;
+  .task-bubble.completed & {
+    background: tokens.$success;
+    color: white;
+  }
 }
 
 .task-title {
-  font-size: 14px;
-  font-weight: 500;
-  color: #1e293b;
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-medium;
+  color: tokens.$text-primary;
   margin: 0;
   flex: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  @include utils.text-truncate;
 }
 
 /* 任务进度文本 */
 .task-progress-text {
-  font-size: 12px;
-  color: #64748b;
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-muted;
   flex-shrink: 0;
 }
 
-/* 任务状态按�? */
+/* 任务状态按钮 */
 .task-status-btn {
-  padding: 4px 12px;
+  padding: tokens.$spacing-xs tokens.$spacing-md;
   border: none;
-  border-radius: 16px;
-  font-size: 12px;
-  font-weight: 500;
+  border-radius: tokens.$radius-full;
+  font-size: tokens.$font-size-xs;
+  font-weight: tokens.$font-weight-medium;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all tokens.$transition-fast;
   flex-shrink: 0;
 }
 
 .task-bubble:not(.completed) .task-status-btn {
-  background-color: #3b82f6;
+  background-color: tokens.$primary-blue;
   color: white;
-}
 
-.task-bubble:not(.completed) .task-status-btn:hover {
-  background-color: #2563eb;
+  &:hover {
+    background-color: tokens.$primary-dark;
+  }
 }
 
 .task-bubble.completed .task-status-btn {
-  background-color: #10b981;
+  background-color: tokens.$success;
   color: white;
-}
 
-.task-bubble.completed .task-status-btn:hover {
-  background-color: #059669;
+  &:hover {
+    background-color: tokens.$success-green;
+  }
 }
 
 .empty-tasks {
   text-align: center;
-  padding: 30px 20px;
-  color: #94a3b8;
-  background: #f8fafc;
-  border-radius: 8px;
-  border: 1px dashed #cbd5e1;
+  padding: tokens.$spacing-xl tokens.$spacing-lg;
+  color: tokens.$text-muted;
+  background: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  border: 1px dashed tokens.$border-light;
+
+  p {
+    margin: 0;
+  }
 }
 
-.empty-tasks p {
-  margin: 0;
-}
-
-/* 响应式设�? */
-@media (width <= 768px) {
+/* 响应式设计 */
+@include utils.mobile {
   .panel-header {
-    padding: 12px 15px;
+    padding: tokens.$spacing-sm tokens.$spacing-md;
   }
 
   .panel-content {
-    padding: 15px;
+    padding: tokens.$spacing-md;
   }
 
   .task-bubble {
-    padding: 12px;
+    padding: tokens.$spacing-sm;
   }
 
   .task-title {
-    font-size: 13px;
-  }
-
-  .task-description {
-    font-size: 12px;
-    margin-bottom: 8px;
+    font-size: tokens.$font-size-xs;
   }
 }
 
 /* 横屏手机适配 */
-@media (orientation: landscape) and (height <= 600px) {
+@include utils.landscape-mobile {
   .panel-header {
-    padding: 10px 12px;
+    padding: tokens.$spacing-sm;
   }
 
   .panel-title {
-    font-size: 14px;
+    font-size: tokens.$font-size-sm;
   }
 
   .panel-content {
-    padding: 12px;
+    padding: tokens.$spacing-sm;
   }
 
   .task-section {
-    margin-bottom: 15px;
+    margin-bottom: tokens.$spacing-md;
   }
 
   .section-title {
-    font-size: 13px;
-    margin-bottom: 8px;
+    font-size: tokens.$font-size-xs;
+    margin-bottom: tokens.$spacing-sm;
   }
 
   .task-bubble {
-    padding: 12px;
+    padding: tokens.$spacing-sm;
   }
 
   .task-title {
-    font-size: 13px;
-  }
-
-  .task-description {
-    font-size: 12px;
-    margin-bottom: 8px;
-  }
-
-  .progress-track {
-    height: 4px;
-  }
-
-  .progress-text {
-    font-size: 11px;
-  }
-
-  .task-reward {
-    margin-top: 8px;
-    padding-top: 8px;
-  }
-
-  .reward-text {
-    font-size: 11px;
+    font-size: tokens.$font-size-xs;
   }
 
   .empty-tasks {
-    padding: 20px 15px;
+    padding: tokens.$spacing-lg tokens.$spacing-md;
   }
 }
 </style>

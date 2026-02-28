@@ -4,7 +4,7 @@
     <form class="config-form">
       <!-- 预设事件模板 -->
       <div class="form-group">
-        <label class="form-label">快速配�?/label>
+        <label class="form-label">快速配置</label>
         <select
           v-model="selectedTemplate"
           class="form-select"
@@ -14,7 +14,7 @@
           <option value="dailyCheckIn">每日签到活动</option>
           <option value="weekendEvent">周末狂欢活动</option>
           <option value="holidayCelebration">节日庆典活动</option>
-          <option value="newHeroLaunch">新英雄上线活�?/option>
+          <option value="newHeroLaunch">新英雄上线活动</option>
         </select>
       </div>
 
@@ -33,7 +33,7 @@
       <!-- 时间范围设置 -->
       <div class="form-row">
         <div class="form-group">
-          <label for="start-date" class="form-label">开始日�?/label>
+          <label for="start-date" class="form-label">开始日期</label>
           <input
             id="start-date"
             v-model="localConfig.startDate"
@@ -64,7 +64,7 @@
             <select v-model="reward.type" class="form-select">
               <option value="skin">皮肤</option>
               <option value="hero">英雄</option>
-              <option value="currency">游戏�?/option>
+              <option value="currency">游戏币</option>
               <option value="item">道具</option>
             </select>
             <select
@@ -95,10 +95,11 @@
               class="remove-btn"
               @click="removeReward(index)"
             >
-              �?            </button>
+              ✕
+            </button>
           </div>
           <button type="button" class="add-reward-btn" @click="addReward">
-            <span class="btn-icon">�?/span>
+            <span class="btn-icon">+</span>
             <span class="btn-text">添加奖励</span>
           </button>
         </div>
@@ -119,7 +120,7 @@
               type="number"
               class="form-input small"
               min="1"
-              placeholder="最低等�?
+              placeholder="最低等级"
             />
           </div>
         </div>
@@ -128,7 +129,7 @@
       <!-- 预览按钮 -->
       <div class="form-actions">
         <button type="button" class="btn btn-secondary" @click="previewEvent">
-          <span class="btn-icon">👁�?/span>
+          <span class="btn-icon">👁️</span>
           <span class="btn-text">预览活动</span>
         </button>
         <button type="button" class="btn btn-primary" @click="saveEvent">
@@ -140,7 +141,7 @@
   </div>
 </template>
 
-<script setup lang=ts>
+<script setup lang="ts">
 import { ref, watch } from 'vue';
 
 // 接收父组件传递的属�?const props = defineProps({
@@ -191,7 +192,7 @@ const eventTemplates = {
       .split('T')[0],
     rewards: [
       { type: 'currency', name: '钻石', quantity: 50 },
-      { type: 'item', name: '经验�?, quantity: 5 },
+      { type: 'item', name: '经验卡', quantity: 5 },
     ],
     conditions: {
       level: false,
@@ -214,14 +215,14 @@ const eventTemplates = {
     levelRequirement: 20,
   },
   newHeroLaunch: {
-    name: '新英雄上线活�?,
+    name: '新英雄上线活动',
     startDate: new Date().toISOString().split('T')[0],
     endDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
       .toISOString()
       .split('T')[0],
     rewards: [
-      { type: 'hero', name: '新英�?, quantity: 1 },
-      { type: 'item', name: '英雄体验�?, quantity: 7 },
+      { type: 'hero', name: '新英雄', quantity: 1 },
+      { type: 'item', name: '英雄体验卡', quantity: 7 },
     ],
     conditions: {
       level: true,
@@ -269,220 +270,185 @@ const saveEvent = (): void => {
 };
 </script>
 
-<style lang=scss scoped>
+<style lang="scss" scoped>
+
 .event-config {
-  margin-bottom: 25px;
-}
+  margin-bottom: tokens.$spacing-lg;
 
-.config-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
+  .config-form {
+    @include utils.flex-col(tokens.$spacing-lg, stretch, flex-start);
+  }
 
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.form-label {
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  color: var(--text-secondary);
-}
-
-.form-input {
-  padding: 10px 12px;
-  background-color: rgb(255 255 255 / 5%);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  font-size: var(--text-sm);
-  transition: all var(--transition-fast);
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgb(59 130 246 / 10%);
-}
-
-.form-input.small {
-  max-width: 120px;
-}
-
-.form-input:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.form-select {
-  padding: 10px 12px;
-  background-color: rgb(255 255 255 / 5%);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  font-size: var(--text-sm);
-  transition: all var(--transition-fast);
-  cursor: pointer;
-}
-
-.form-select:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgb(59 130 246 / 10%);
-}
-
-.form-select.small {
-  max-width: 150px;
-}
-
-/* 奖励设置 */
-.rewards-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.reward-item {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  padding: 12px;
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-md);
-}
-
-.reward-item .form-select {
-  flex: 0 0 120px;
-}
-
-.reward-item .form-input {
-  flex: 1;
-}
-
-.remove-btn {
-  padding: 6px 10px;
-  background-color: rgb(239 68 68 / 20%);
-  border: 1px solid var(--danger-red);
-  border-radius: var(--radius-md);
-  color: var(--danger-red);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  font-size: var(--text-sm);
-}
-
-.remove-btn:hover {
-  background-color: rgb(239 68 68 / 30%);
-}
-
-.add-reward-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px;
-  background-color: rgb(16 185 129 / 20%);
-  border: 1px dashed var(--success-green);
-  border-radius: var(--radius-md);
-  color: var(--success-green);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-}
-
-.add-reward-btn:hover {
-  background-color: rgb(16 185 129 / 30%);
-  border-style: solid;
-}
-
-/* 参与条件 */
-.conditions-container {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.condition-item {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 12px;
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-md);
-}
-
-.checkbox-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  flex: 1;
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-}
-
-.checkbox-label input[type='checkbox'] {
-  width: 16px;
-  height: 16px;
-  accent-color: #3b82f6;
-}
-
-/* 表单操作按钮 */
-.form-actions {
-  display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-  margin-top: 10px;
-}
-
-/* 响应式设�? */
-@media (width <= 768px) {
   .form-row {
-    grid-template-columns: 1fr;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: tokens.$spacing-md;
   }
 
-  .reward-item {
-    flex-direction: column;
-    align-items: stretch;
+  .form-group {
+    @include utils.flex-col(tokens.$spacing-xs, stretch, flex-start);
   }
 
-  .reward-item .form-select,
-  .reward-item .form-input,
-  .reward-item .form-input.small {
-    width: 100%;
-    max-width: none;
+  .form-label {
+    font-size: tokens.$font-size-sm;
+    font-weight: tokens.$font-weight-medium;
+    color: tokens.$text-secondary;
   }
 
-  .condition-item {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
+  .form-input {
+    @include utils.input-base;
+
+    &.small {
+      max-width: 120px;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 
-  .condition-item .form-input.small,
-  .condition-item .form-select.small {
-    width: 100%;
-    max-width: none;
+  .form-select {
+    @include utils.select-base;
+
+    &.small {
+      max-width: 150px;
+    }
+  }
+
+  .rewards-container {
+    @include utils.flex-col(tokens.$spacing-sm, stretch, flex-start);
+
+    .reward-item {
+      @include utils.flex-row(tokens.$spacing-sm, center, flex-start);
+      padding: tokens.$spacing-sm;
+      background-color: tokens.$bg-light;
+      border-radius: tokens.$radius-md;
+
+      .form-select {
+        flex: 0 0 120px;
+      }
+
+      .form-input {
+        flex: 1;
+      }
+    }
+
+    .remove-btn {
+      padding: 6px 10px;
+      background-color: rgb(239 68 68 / 20%);
+      border: 1px solid tokens.$danger-red;
+      border-radius: tokens.$radius-md;
+      color: tokens.$danger-red;
+      cursor: pointer;
+      transition: all tokens.$transition-fast;
+      font-size: tokens.$font-size-sm;
+
+      &:hover {
+        background-color: rgb(239 68 68 / 30%);
+      }
+    }
+
+    .add-reward-btn {
+      @include utils.flex-row(tokens.$spacing-sm, center, center);
+      padding: tokens.$spacing-sm;
+      background-color: rgb(16 185 129 / 20%);
+      border: 1px dashed tokens.$success-green;
+      border-radius: tokens.$radius-md;
+      color: tokens.$success-green;
+      cursor: pointer;
+      transition: all tokens.$transition-fast;
+      font-size: tokens.$font-size-sm;
+      font-weight: tokens.$font-weight-medium;
+
+      &:hover {
+        background-color: rgb(16 185 129 / 30%);
+        border-style: solid;
+      }
+    }
+  }
+
+  .conditions-container {
+    @include utils.flex-col(tokens.$spacing-md, stretch, flex-start);
+
+    .condition-item {
+      @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+      padding: tokens.$spacing-sm;
+      background-color: tokens.$bg-light;
+      border-radius: tokens.$radius-md;
+    }
+
+    .checkbox-label {
+      @include utils.flex-row(tokens.$spacing-sm, center, flex-start);
+      cursor: pointer;
+      flex: 1;
+      font-size: tokens.$font-size-sm;
+      color: tokens.$text-secondary;
+
+      input[type='checkbox'] {
+        width: 16px;
+        height: 16px;
+        accent-color: tokens.$primary-blue;
+      }
+    }
   }
 
   .form-actions {
-    flex-direction: column;
-  }
+    @include utils.flex-row(tokens.$spacing-md, center, flex-end);
+    margin-top: tokens.$spacing-sm;
 
-  .form-actions .btn {
-    width: 100%;
+    .btn {
+      @include utils.btn-base;
+
+      &.btn-primary {
+        @include utils.btn-primary;
+      }
+
+      &.btn-secondary {
+        @include utils.btn-secondary;
+      }
+    }
+  }
+}
+
+/* 响应式设�? */
+@include utils.mobile {
+  .event-config {
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+
+    .reward-item {
+      flex-direction: column;
+      align-items: stretch;
+
+      .form-select,
+      .form-input,
+      .form-input.small {
+        width: 100%;
+        max-width: none;
+      }
+    }
+
+    .condition-item {
+      flex-direction: column;
+      align-items: stretch;
+      gap: tokens.$spacing-sm;
+
+      .form-input.small,
+      .form-select.small {
+        width: 100%;
+        max-width: none;
+      }
+    }
+
+    .form-actions {
+      flex-direction: column;
+
+      .btn {
+        width: 100%;
+      }
+    }
   }
 }
 </style>
-
-
-
-

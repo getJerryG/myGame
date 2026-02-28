@@ -203,7 +203,7 @@ const sidebarItems = computed((): SidebarItem[] => {
 
 // 当前激活的模块
 const currentModule = computed(() => {
-  return props.app.modules.find((m) => m.id === activeModule.value) || props.app.modules[0];
+  return props.app.modules.find((m) => utils.id === activeModule.value) || props.app.modules[0];
 });
 
 // 核心数据概览
@@ -256,118 +256,107 @@ const handleItemClick = (item: SidebarItem): void => {
 </script>
 
 <style lang="scss" scoped>
+
 .module-content {
-  background-color: rgb(0 0 0 / 10%);
-  border-radius: 8px;
-  padding: 20px;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-lg;
   min-height: 200px;
-}
 
-.module-content h3 {
-  margin: 0 0 16px;
-  font-size: 18px;
-  color: #4a9eff;
-}
+  h3 {
+    margin: 0 0 tokens.$spacing-md;
+    font-size: tokens.$font-size-lg;
+    color: tokens.$primary-blue;
+  }
 
-.module-content h4 {
-  margin: 0 0 12px;
-  font-size: 16px;
-  color: #fff;
-}
+  h4 {
+    margin: 0 0 tokens.$spacing-sm;
+    font-size: tokens.$font-size-base;
+    color: tokens.$text-primary;
+  }
 
-.module-content p {
-  margin: 0 0 16px;
-  color: #b0b0b0;
-  line-height: 1.6;
+  p {
+    margin: 0 0 tokens.$spacing-md;
+    color: tokens.$text-muted;
+    line-height: tokens.$line-height-normal;
+  }
 }
 
 .data-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px;
-  margin-top: 16px;
+  @include utils.grid-auto-fill(250px, tokens.$spacing-md);
+  margin-top: tokens.$spacing-md;
 }
 
 .data-card {
-  background-color: rgb(0 0 0 / 20%);
-  border-radius: 8px;
-  padding: 16px;
-  border: 1px solid rgb(74 158 255 / 20%);
-  transition: all 0.2s ease;
-}
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-md;
+  border: 1px solid rgba(tokens.$primary-blue, 0.2);
+  transition: all tokens.$transition-fast;
 
-.data-card:hover {
-  border-color: rgb(74 158 255 / 50%);
-  transform: translateY(-2px);
+  &:hover {
+    border-color: rgba(tokens.$primary-blue, 0.5);
+    transform: translateY(-2px);
+  }
 }
 
 .data-card-header {
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgb(74 158 255 / 20%);
+  margin-bottom: tokens.$spacing-sm;
+  padding-bottom: tokens.$spacing-sm;
+  border-bottom: 1px solid rgba(tokens.$primary-blue, 0.2);
 }
 
 .data-card-body {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  @include utils.flex-col(tokens.$spacing-md);
 }
 
 .data-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 0;
+  @include utils.flex-between;
+  padding: tokens.$spacing-sm 0;
 }
 
 .data-label {
-  color: #b0b0b0;
-  font-size: 14px;
+  color: tokens.$text-muted;
+  font-size: tokens.$font-size-sm;
 }
 
 .data-value {
-  color: var(--primary-gold, #ffd700);
-  font-weight: bold;
-  font-size: 16px;
+  color: tokens.$primary-gold;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-base;
 }
 
 .chart-placeholder {
-  background-color: rgb(0 0 0 / 20%);
-  border-radius: 8px;
-  padding: 20px;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-lg;
   text-align: center;
   min-height: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @include utils.flex-col(tokens.$spacing-md, center, center);
 }
 
 .trend-data {
-  margin-top: 20px;
+  margin-top: tokens.$spacing-lg;
   width: 100%;
   max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  @include utils.flex-col(tokens.$spacing-sm);
 }
 
 .trend-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 12px;
-  background-color: rgb(0 0 0 / 20%);
-  border-radius: 4px;
+  @include utils.flex-between;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-sm;
 }
 
 .trend-date {
-  color: #b0b0b0;
-  font-size: 14px;
+  color: tokens.$text-muted;
+  font-size: tokens.$font-size-sm;
 }
 
 .trend-value {
-  color: var(--primary-gold, #ffd700);
-  font-weight: bold;
-  font-size: 14px;
+  color: tokens.$primary-gold;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-sm;
 }
 </style>

@@ -159,161 +159,178 @@ const handleDecomposeAll = (): void => {
 </script>
 
 <style lang="scss" scoped>
+
 .storage-box-panel {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-lg;
+  box-shadow: tokens.$shadow-md;
+  border: 1px solid tokens.$border-light;
 }
 
 .panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 15px;
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #e0e0e0;
+  @include utils.flex-between;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  background-color: tokens.$bg-light;
+  border-bottom: 1px solid tokens.$border-light;
   cursor: pointer;
   user-select: none;
-}
 
-.panel-header h3 {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 600;
+  h3 {
+    margin: 0;
+    font-size: tokens.$font-size-base;
+    font-weight: tokens.$font-weight-semibold;
+    color: tokens.$text-primary;
+  }
 }
 
 .total-decompose-points {
-  font-size: 14px;
-  color: #666;
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-secondary;
 }
 
 .points-value {
-  color: #ff6b35;
-  font-weight: bold;
+  color: tokens.$warning;
+  font-weight: tokens.$font-weight-bold;
 }
 
 .toggle-icon {
-  font-size: 12px;
-  color: #666;
-  transition: transform 0.2s;
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
+  transition: transform tokens.$transition-fast;
 }
 
 .decompose-all-button {
-  margin: 10px 15px;
-  padding: 8px;
-  background-color: #ff6b35;
-  color: white;
+  margin: tokens.$spacing-sm tokens.$spacing-md;
+  padding: tokens.$spacing-sm;
+  background-color: tokens.$warning;
+  color: tokens.$bg-dark;
   border: none;
-  border-radius: 4px;
+  border-radius: tokens.$radius-sm;
   cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.2s;
-}
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-medium;
+  transition: all tokens.$transition-fast;
 
-.decompose-all-button:hover:not(:disabled) {
-  background-color: #ff5722;
-}
+  &:hover:not(:disabled) {
+    background-color: #d97706;
+    transform: translateY(-1px);
+  }
 
-.decompose-all-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+  &:disabled {
+    background-color: tokens.$gray-400;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
 }
 
 .storage-list {
   flex: 1;
   overflow-y: auto;
-  padding: 0 15px 15px;
+  padding: 0 tokens.$spacing-md tokens.$spacing-md;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: tokens.$spacing-sm;
+  @include utils.custom-scrollbar;
 }
 
 .empty-message {
   text-align: center;
-  color: #999;
-  padding: 20px 0;
+  color: tokens.$text-muted;
+  padding: tokens.$spacing-lg 0;
   font-style: italic;
 }
 
 .storage-item {
-  background-color: #f9f9f9;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  padding: 10px;
+  background-color: tokens.$bg-light;
+  border: 1px solid tokens.$border-light;
+  border-radius: tokens.$radius-sm;
+  padding: tokens.$spacing-sm;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: tokens.$spacing-xs;
+  transition: all tokens.$transition-fast;
+
+  &:hover {
+    border-color: tokens.$border-medium;
+    transform: translateY(-1px);
+  }
 }
 
 .storage-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include utils.flex-between;
 }
 
 .storage-name {
-  font-weight: 500;
-  color: #333;
+  font-weight: tokens.$font-weight-medium;
+  color: tokens.$text-primary;
 }
 
 .storage-value {
-  color: #666;
-  font-weight: bold;
+  color: tokens.$text-secondary;
+  font-weight: tokens.$font-weight-bold;
 }
 
 .decompose-section {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: tokens.$spacing-xs;
 }
 
 .decompose-controls {
-  display: flex;
-  gap: 8px;
-  align-items: center;
+  @include utils.flex-row(tokens.$spacing-sm, center);
 }
 
 .decompose-quantity {
   width: 60px;
-  padding: 5px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
+  padding: tokens.$spacing-xs;
+  border: 1px solid tokens.$border-light;
+  border-radius: tokens.$radius-sm;
+  font-size: tokens.$font-size-sm;
   text-align: center;
+  background-color: tokens.$bg-primary;
+  color: tokens.$text-primary;
+
+  &:focus {
+    outline: none;
+    border-color: tokens.$primary-gold;
+  }
 }
 
 .decompose-button {
-  padding: 5px 12px;
-  background-color: #4caf50;
+  padding: tokens.$spacing-xs tokens.$spacing-sm;
+  background-color: tokens.$success;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: tokens.$radius-sm;
   cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.2s;
-}
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-medium;
+  transition: all tokens.$transition-fast;
 
-.decompose-button:hover:not(:disabled) {
-  background-color: #45a049;
-}
+  &:hover:not(:disabled) {
+    background-color: #059669;
+    transform: translateY(-1px);
+  }
 
-.decompose-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+  &:disabled {
+    background-color: tokens.$gray-400;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
 }
 
 .decompose-reward {
-  font-size: 12px;
-  color: #666;
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
 }
 
 .reward-points {
-  color: #ff6b35;
-  font-weight: bold;
+  color: tokens.$warning;
+  font-weight: tokens.$font-weight-bold;
 }
 </style>

@@ -210,33 +210,29 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+
 .game-release-app {
-  display: flex;
-  flex-direction: column;
+  @include utils.flex-col(0, stretch, flex-start);
   height: 100%;
-  background-color: rgb(26 26 46 / 50%);
-  color: var(--text-primary);
+  background-color: tokens.$bg-light;
+  color: tokens.$text-primary;
 }
 
 // 待发布内容样式
 .content-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  @include utils.flex-col(tokens.$spacing-md);
 }
 
 .content-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  background-color: rgb(0 0 0 / 10%);
-  padding: 16px;
-  border-radius: 8px;
-  border: 1px solid rgb(74 158 255 / 20%);
-  transition: all 0.2s ease;
+  @include utils.flex-between(flex-start);
+  background-color: tokens.$bg-light;
+  padding: tokens.$spacing-md;
+  border-radius: tokens.$radius-md;
+  border: 1px solid rgba(tokens.$primary-blue, 0.2);
+  transition: all tokens.$transition-fast;
 
   &:hover {
-    border-color: rgb(74 158 255 / 50%);
+    border-color: rgba(tokens.$primary-blue, 0.5);
     transform: translateY(-2px);
   }
 }
@@ -246,175 +242,159 @@ onMounted(() => {
 
   .content-type {
     display: inline-block;
-    padding: 4px 8px;
-    background-color: rgb(74 158 255 / 20%);
-    border-radius: 4px;
-    font-size: 12px;
-    color: #4a9eff;
-    margin-bottom: 8px;
+    padding: tokens.$spacing-xs tokens.$spacing-sm;
+    background-color: rgba(tokens.$primary-blue, 0.2);
+    border-radius: tokens.$radius-sm;
+    font-size: tokens.$font-size-xs;
+    color: tokens.$primary-blue;
+    margin-bottom: tokens.$spacing-sm;
   }
 
   .content-name {
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff;
-    margin-bottom: 4px;
+    font-size: tokens.$font-size-base;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$text-primary;
+    margin-bottom: tokens.$spacing-xs;
   }
 
   .content-meta {
-    display: flex;
-    gap: 12px;
+    @include utils.flex-row(tokens.$spacing-md, center, flex-start);
 
     .content-status {
-      font-size: 12px;
-      color: #2ed573;
+      font-size: tokens.$font-size-xs;
+      color: tokens.$success;
     }
 
     .content-date {
-      font-size: 12px;
-      color: #b0b0b0;
+      font-size: tokens.$font-size-xs;
+      color: tokens.$text-muted;
     }
   }
 }
 
 .content-release-options {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: flex-end;
+  @include utils.flex-col(tokens.$spacing-md, flex-end);
 }
 
 .release-option {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  @include utils.flex-col(tokens.$spacing-sm);
 
   .option-label {
-    font-size: var(--text-sm);
-    color: var(--text-muted);
+    font-size: tokens.$font-size-sm;
+    color: tokens.$text-muted;
   }
 }
 
 .radio-group {
-  display: flex;
-  gap: 16px;
+  @include utils.flex-row(tokens.$spacing-lg);
 }
 
 .radio-option {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  @include utils.flex-row(tokens.$spacing-xs);
   cursor: pointer;
 
   input[type='radio'] {
-    accent-color: #4a9eff;
+    accent-color: tokens.$primary-blue;
   }
 
   span {
-    font-size: var(--text-sm);
-    color: var(--text-primary);
+    font-size: tokens.$font-size-sm;
+    color: tokens.$text-primary;
   }
 }
 
 .action-section {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-  background-color: rgb(0 0 0 / 10%);
-  border-radius: 8px;
+  @include utils.flex-center;
+  padding: tokens.$spacing-lg;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
 }
 
 .confirm-btn {
-  padding: 12px 32px;
-  background-color: #4a9eff;
+  padding: tokens.$spacing-sm tokens.$spacing-xl;
+  background-color: tokens.$primary-blue;
   border: none;
-  border-radius: 8px;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
+  border-radius: tokens.$radius-md;
+  color: tokens.$text-primary;
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-bold;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all tokens.$transition-fast;
 
   &:hover {
-    background-color: #357abd;
+    background-color: tokens.$primary-dark;
     transform: translateY(-1px);
   }
 }
 
 // 版本历史样式
 .version-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  @include utils.flex-col(tokens.$spacing-md);
 }
 
 .version-item {
-  background-color: rgb(0 0 0 / 10%);
-  padding: 16px;
-  border-radius: 8px;
-  border: 1px solid rgb(74 158 255 / 20%);
-  transition: all 0.2s ease;
+  background-color: tokens.$bg-light;
+  padding: tokens.$spacing-md;
+  border-radius: tokens.$radius-md;
+  border: 1px solid rgba(tokens.$primary-blue, 0.2);
+  transition: all tokens.$transition-fast;
 
   &:hover {
-    border-color: rgb(74 158 255 / 50%);
+    border-color: rgba(tokens.$primary-blue, 0.5);
     transform: translateY(-2px);
   }
 }
 
 .version-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
+  @include utils.flex-between;
+  margin-bottom: tokens.$spacing-md;
 
   .version-info {
     .version-name {
-      font-size: 18px;
-      font-weight: bold;
-      color: #fff;
-      margin-bottom: 4px;
+      font-size: tokens.$font-size-lg;
+      font-weight: tokens.$font-weight-bold;
+      color: tokens.$text-primary;
+      margin-bottom: tokens.$spacing-xs;
     }
 
     .version-date {
-      font-size: 12px;
-      color: #b0b0b0;
+      font-size: tokens.$font-size-xs;
+      color: tokens.$text-muted;
     }
   }
 
   .version-status {
-    padding: 4px 12px;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: bold;
+    padding: tokens.$spacing-xs tokens.$spacing-md;
+    border-radius: tokens.$radius-full;
+    font-size: tokens.$font-size-sm;
+    font-weight: tokens.$font-weight-bold;
 
     &.已发布 {
-      background-color: rgb(46 213 115 / 20%);
-      color: #2ed573;
+      background-color: rgba(tokens.$success, 0.2);
+      color: tokens.$success;
     }
 
     &.测试中 {
-      background-color: rgb(255 215 0 / 20%);
-      color: #ffd700;
+      background-color: rgba(tokens.$warning, 0.2);
+      color: tokens.$warning;
     }
 
     &.已撤回 {
-      background-color: rgb(255 71 87 / 20%);
-      color: #ff4757;
+      background-color: rgba(tokens.$error, 0.2);
+      color: tokens.$error;
     }
   }
 }
 
 .version-content {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  @include utils.flex-col(tokens.$spacing-md);
 }
 
 .content-section {
   h4 {
-    margin: 0 0 12px;
-    font-size: 16px;
-    color: #4a9eff;
+    margin: 0 0 tokens.$spacing-sm;
+    font-size: tokens.$font-size-base;
+    color: tokens.$primary-blue;
   }
 }
 
@@ -422,20 +402,18 @@ onMounted(() => {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  @include utils.flex-col(tokens.$spacing-sm);
 
   li {
-    font-size: 14px;
-    color: #fff;
-    padding-left: 16px;
+    font-size: tokens.$font-size-sm;
+    color: tokens.$text-primary;
+    padding-left: tokens.$spacing-md;
     position: relative;
 
     &::before {
       content: '•';
-      color: #4a9eff;
-      font-weight: bold;
+      color: tokens.$primary-blue;
+      font-weight: tokens.$font-weight-bold;
       position: absolute;
       left: 0;
     }
@@ -443,40 +421,36 @@ onMounted(() => {
 }
 
 .feedback-stats {
-  display: flex;
-  gap: 24px;
+  @include utils.flex-row(tokens.$spacing-xl, center, flex-start);
   flex-wrap: wrap;
 }
 
 .feedback-item {
-  display: flex;
-  gap: 8px;
+  @include utils.flex-row(tokens.$spacing-sm);
 
   .feedback-label {
-    font-size: 14px;
-    color: #b0b0b0;
+    font-size: tokens.$font-size-sm;
+    color: tokens.$text-muted;
   }
 
   .feedback-value {
-    font-size: 14px;
-    font-weight: bold;
-    color: #4a9eff;
+    font-size: tokens.$font-size-sm;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$primary-blue;
   }
 }
 
 .empty-state {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include utils.flex-center;
   height: 200px;
-  background-color: rgb(0 0 0 / 10%);
-  border: 1px dashed rgb(74 158 255 / 20%);
-  border-radius: 8px;
+  background-color: tokens.$bg-light;
+  border: 1px dashed rgba(tokens.$primary-blue, 0.2);
+  border-radius: tokens.$radius-md;
 
   p {
     margin: 0;
-    color: #b0b0b0;
-    font-size: 16px;
+    color: tokens.$text-muted;
+    font-size: tokens.$font-size-base;
   }
 }
 </style>

@@ -10,11 +10,9 @@
           class="result-item"
           :class="{ passed: assessmentResult.downloads }"
         >
-          <span class="result-label">下载�?</span>
+          <span class="result-label">下载量:</span>
           <span class="result-value">{{ businessData.downloads }}/{{ assessment.currentMonthTarget.downloads }}</span>
-          <span class="result-status">{{
-            assessmentResult.downloads ? '�? : '�?
-          }}</span>
+          <span class="result-status">{{ assessmentResult.downloads ? '✓' : '✗' }}</span>
         </div>
         <div
           class="result-item"
@@ -24,21 +22,17 @@
           <span class="result-value"
             >{{ businessData.activeUsers }}/{{ assessment.currentMonthTarget.activeUsers }}</span
           >
-          <span class="result-status">{{
-            assessmentResult.activeUsers ? '�? : '�?
-          }}</span>
+          <span class="result-status">{{ assessmentResult.activeUsers ? '✓' : '✗' }}</span>
         </div>
         <div
           class="result-item"
           :class="{ passed: assessmentResult.positiveReviews }"
         >
-          <span class="result-label">好评�?</span>
+          <span class="result-label">好评率:</span>
           <span class="result-value"
             >{{ businessData.positiveReviews }}/{{ assessment.currentMonthTarget.positiveReviews }}</span
           >
-          <span class="result-status">{{
-            assessmentResult.positiveReviews ? '�? : '�?
-          }}</span>
+          <span class="result-status">{{ assessmentResult.positiveReviews ? '✓' : '✗' }}</span>
         </div>
         <div
           class="result-item"
@@ -48,9 +42,7 @@
           <span class="result-value"
             >¥{{ businessData.totalRevenue }}/¥{{ assessment.currentMonthTarget.revenue }}</span
           >
-          <span class="result-status">{{
-            assessmentResult.revenue ? '�? : '�?
-          }}</span>
+          <span class="result-status">{{ assessmentResult.revenue ? '✓' : '✗' }}</span>
         </div>
       </div>
       <div
@@ -102,226 +94,223 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 /* 考核面板 */
 .assessment-panel {
   position: fixed;
   inset: 0;
   background-color: rgb(0 0 0 / 50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+  @include utils.flex-center;
+  z-index: tokens.$z-modal;
   animation: fadeIn 0.3s ease;
-}
 
-.assessment-content {
-  background: white;
-  border-radius: 12px;
-  padding: 30px;
-  max-width: 500px;
-  width: 90%;
-  box-shadow: 0 4px 20px rgb(0 0 0 / 20%);
-  animation: slideInUp 0.3s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideInUp {
-  from {
-    transform: translateY(50px);
-    opacity: 0;
-  }
-
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.assessment-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: #1e293b;
-  margin: 0 0 20px;
-  text-align: center;
-}
-
-.assessment-results {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.result-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px;
-  background: #f8fafc;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
-}
-
-.result-item.passed {
-  background: #f0fdf4;
-  border-color: #dcfce7;
-}
-
-.result-label {
-  font-size: 14px;
-  color: #64748b;
-}
-
-.result-value {
-  font-size: 14px;
-  font-weight: 500;
-  color: #1e293b;
-}
-
-.result-status {
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.result-item.passed .result-status {
-  color: #16a34a;
-}
-
-.result-item:not(.passed) .result-status {
-  color: #dc2626;
-}
-
-.assessment-conclusion {
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.assessment-conclusion.passed {
-  background: #f0fdf4;
-  color: #16a34a;
-}
-
-.assessment-conclusion:not(.passed) {
-  background: #fee2e2;
-  color: #dc2626;
-}
-
-.assessment-conclusion h3 {
-  margin: 0 0 8px;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.assessment-conclusion p {
-  margin: 0;
-  font-size: 14px;
-}
-
-.assessment-close {
-  width: 100%;
-  padding: 12px;
-  background: #3498db;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.assessment-close:hover {
-  background: #2980b9;
-}
-
-/* 响应式设�? */
-@media (width <= 768px) {
   .assessment-content {
-    padding: 20px;
-    margin: 20px;
+    background: white;
+    border-radius: tokens.$radius-xl;
+    padding: tokens.$spacing-xl;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: tokens.$shadow-xl;
+    animation: slideInUp 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideInUp {
+    from {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 
   .assessment-title {
-    font-size: 18px;
-    margin-bottom: 15px;
+    font-size: tokens.$font-size-xl;
+    font-weight: tokens.$font-weight-semibold;
+    color: tokens.$gray-800;
+    margin: 0 0 tokens.$spacing-lg;
+    text-align: center;
   }
 
-  .result-item {
-    padding: 10px;
-  }
+  .assessment-results {
+    @include utils.flex-col(tokens.$spacing-md, stretch, flex-start);
+    margin-bottom: tokens.$spacing-lg;
 
-  .result-label,
-  .result-value {
-    font-size: 13px;
+    .result-item {
+      @include utils.flex-between(center);
+      padding: tokens.$spacing-sm;
+      background: tokens.$gray-50;
+      border-radius: tokens.$radius-md;
+      border: 1px solid tokens.$gray-200;
+
+      &.passed {
+        background: rgb(16 185 129 / 5%);
+        border-color: rgb(16 185 129 / 20%);
+      }
+
+      .result-label {
+        font-size: tokens.$font-size-sm;
+        color: tokens.$gray-500;
+      }
+
+      .result-value {
+        font-size: tokens.$font-size-sm;
+        font-weight: tokens.$font-weight-medium;
+        color: tokens.$gray-800;
+      }
+
+      .result-status {
+        font-size: tokens.$font-size-lg;
+        font-weight: tokens.$font-weight-semibold;
+      }
+
+      &.passed .result-status {
+        color: tokens.$success-green;
+      }
+
+      &:not(.passed) .result-status {
+        color: tokens.$danger-red;
+      }
+    }
   }
 
   .assessment-conclusion {
-    padding: 15px;
-    margin-bottom: 15px;
-  }
+    padding: tokens.$spacing-lg;
+    border-radius: tokens.$radius-md;
+    text-align: center;
+    margin-bottom: tokens.$spacing-lg;
 
-  .assessment-conclusion h3 {
-    font-size: 16px;
-  }
+    &.passed {
+      background: rgb(16 185 129 / 5%);
+      color: tokens.$success-green;
+    }
 
-  .assessment-conclusion p {
-    font-size: 13px;
+    &:not(.passed) {
+      background: rgb(239 68 68 / 5%);
+      color: tokens.$danger-red;
+    }
+
+    h3 {
+      margin: 0 0 tokens.$spacing-xs;
+      font-size: tokens.$font-size-lg;
+      font-weight: tokens.$font-weight-semibold;
+    }
+
+    p {
+      margin: 0;
+      font-size: tokens.$font-size-sm;
+    }
   }
 
   .assessment-close {
-    padding: 10px;
-    font-size: 13px;
+    width: 100%;
+    padding: tokens.$spacing-sm;
+    background: tokens.$primary-blue;
+    color: white;
+    border: none;
+    border-radius: tokens.$radius-md;
+    font-size: tokens.$font-size-sm;
+    font-weight: tokens.$font-weight-medium;
+    cursor: pointer;
+    transition: background-color tokens.$transition-normal;
+
+    &:hover {
+      background: tokens.$primary-dark;
+    }
+  }
+}
+
+/* 响应式设�? */
+@include utils.mobile {
+  .assessment-panel {
+    .assessment-content {
+      padding: tokens.$spacing-lg;
+      margin: tokens.$spacing-lg;
+    }
+
+    .assessment-title {
+      font-size: tokens.$font-size-lg;
+      margin-bottom: tokens.$spacing-md;
+    }
+
+    .result-item {
+      padding: tokens.$spacing-sm;
+
+      .result-label,
+      .result-value {
+        font-size: tokens.$font-size-xs;
+      }
+    }
+
+    .assessment-conclusion {
+      padding: tokens.$spacing-md;
+      margin-bottom: tokens.$spacing-md;
+
+      h3 {
+        font-size: tokens.$font-size-base;
+      }
+
+      p {
+        font-size: tokens.$font-size-xs;
+      }
+    }
+
+    .assessment-close {
+      padding: tokens.$spacing-sm;
+      font-size: tokens.$font-size-xs;
+    }
   }
 }
 
 /* 横屏手机适配 */
-@media (orientation: landscape) and (height <= 600px) {
-  .assessment-content {
-    padding: 20px;
-    margin: 10px;
-  }
+@include utils.landscape-mobile {
+  .assessment-panel {
+    .assessment-content {
+      padding: tokens.$spacing-lg;
+      margin: tokens.$spacing-sm;
+    }
 
-  .assessment-title {
-    font-size: 18px;
-    margin-bottom: 15px;
-  }
+    .assessment-title {
+      font-size: tokens.$font-size-lg;
+      margin-bottom: tokens.$spacing-md;
+    }
 
-  .result-item {
-    padding: 10px;
-  }
+    .result-item {
+      padding: tokens.$spacing-sm;
 
-  .result-label,
-  .result-value {
-    font-size: 12px;
-  }
+      .result-label,
+      .result-value {
+        font-size: tokens.$font-size-xs;
+      }
+    }
 
-  .assessment-conclusion {
-    padding: 15px;
-    margin-bottom: 15px;
-  }
+    .assessment-conclusion {
+      padding: tokens.$spacing-md;
+      margin-bottom: tokens.$spacing-md;
 
-  .assessment-conclusion h3 {
-    font-size: 16px;
-  }
+      h3 {
+        font-size: tokens.$font-size-base;
+      }
 
-  .assessment-conclusion p {
-    font-size: 12px;
-  }
+      p {
+        font-size: tokens.$font-size-xs;
+      }
+    }
 
-  .assessment-close {
-    padding: 10px;
-    font-size: 12px;
+    .assessment-close {
+      padding: tokens.$spacing-sm;
+      font-size: tokens.$font-size-xs;
+    }
   }
 }
 </style>

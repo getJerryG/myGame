@@ -1,117 +1,136 @@
 <template>
   <div class="rewards-app">
-    <!-- 左侧菜单�?-->
-    <div class="modal-sidebar">
-      <div
-        class="sidebar-item"
-        v-for="module in app.modules"
-        :key="module.id"
-        :class="{ active: activeModule === module.id }"
-        @click="switchModule(module.id)"
-      >
-        <span class="sidebar-item-icon">{{ getModuleIcon(module.id) }}</span>
-        <span class="sidebar-item-name">{{ module.name }}</span>
-      </div>
+    <!-- 应用头部 -->
+    <div class="app-header">
+      <h2>奖励中心</h2>
     </div>
 
-    <!-- 右侧内容�?-->
-    <div class="modal-main">
-      <!-- 核心数据概览 -->
-      <div class="content-header">
-        <h2>{{ currentModule.name }}</h2>
-        <div
-          class="module-core-data"
-          v-if="app.coreData"
-        >
+    <!-- 标签页导航-->
+    <div class="app-tabs">
+      <button
+        class="tab-btn"
+        :class="{ active: activeTab === 'daily' }"
+        @click="activeTab = 'daily'"
+      >
+        每日奖励
+      </button>
+      <button
+        class="tab-btn"
+        :class="{ active: activeTab === 'achievements' }"
+        @click="activeTab = 'achievements'"
+      >
+        成就奖励
+      </button>
+      <button
+        class="tab-btn"
+        :class="{ active: activeTab === 'special' }"
+        @click="activeTab = 'special'"
+      >
+        特殊奖励
+      </button>
+    </div>
+
+    <!-- 标签页内容-->
+    <div class="app-content">
+      <!-- 每日奖励 -->
+      <div
+        v-if="activeTab === 'daily'"
+        class="tab-content"
+      >
+        <div class="rewards-grid">
           <div
-            class="core-data-item"
-            v-for="(value, key) in app.coreData"
-            :key="key"
+            v-for="reward in dailyRewards"
+            :key="reward.id"
+            class="reward-card"
+            :class="{ claimed: reward.claimed }"
           >
-            <span class="core-data-label">{{ getCoreDataLabel(key) }}:</span>
-            <span class="core-data-value">{{ value }}</span>
+            <div class="reward-header">
+              <div class="reward-icon">{{ reward.icon }}</div>
+              <div class="reward-name">{{ reward.name }}</div>
+            </div>
+            <div class="reward-description">{{ reward.description }}</div>
+            <div class="reward-amount">
+              <span class="amount-label">奖励:</span>
+              <span class="amount-value">{{ reward.amount }}</span>
+            </div>
+            <button
+              class="claim-btn"
+              :disabled="reward.claimed"
+              @click="claimDailyReward(reward.id)"
+            >
+              {{ reward.claimed ? '已领取' : '领取' }}
+            </button>
           </div>
         </div>
       </div>
 
-      <!-- 模块内容 -->
-      <div class="content-body">
-        <!-- 任务系统模块 -->
-        <div
-          v-if="activeModule === 'task-system'"
-          class="module-content"
-        >
-          <h3>任务系统</h3>
-          <div class="tasks-grid">
-            <div class="tasks-section">
-              <h4>日常任务 ({{ gameData?.tasks?.daily?.length || 0 }})</h4>
-              <div
-                class="task-item"
-                v-if="gameData?.tasks?.daily?.length === 0"
-              >
-                暂无日常任务
-              </div>
-              <div
-                class="task-item"
-                v-for="(task, index) in gameData?.tasks?.daily"
-                :key="index"
-              >
-                {{ task?.name || '未命名任务' }}
-              </div>
-            </div>
-
-            <div class="tasks-section">
-              <h4>周任务 ({{ gameData?.tasks?.weekly?.length || 0 }})</h4>
-              <div
-                class="task-item"
-                v-if="gameData?.tasks?.weekly?.length === 0"
-              >
-                暂无周任务
-              </div>
-              <div
-                class="task-item"
-                v-for="(task, index) in gameData?.tasks?.weekly"
-                :key="index"
-              >
-                {{ task?.name || '未命名任务' }}
+      <!-- 成就奖励 -->
+      <div
+        v-else-if="activeTab === 'achievements'"
+        class="tab-content"
+      >
+        <div class="achievements-list">
+          <div
+            v-for="achievement in achievements"
+            :key="achievement.id"
+            class="achievement-item"
+            :class="{ completed: achievement.completed }"
+          >
+            <div class="achievement-info">
+              <div class="achievement-icon">{{ achievement.icon }}</div>
+              <div class="achievement-details">
+                <div class="achievement-name">{{ achievement.name }}</div>
+                <div class="achievement-description">{{ achievement.description }}</div>
+                <div class="achievement-progress">
+                  <div class="progress-bar">
+                    <div
+                      class="progress-fill"
+                      :style="{ width: `${(achievement.current / achievement.target) * 100}%` }"
+                    ></div>
+                  </div>
+                  <span class="progress-text">{{ achievement.current }}/{{ achievement.target }}</span>
+                </div>
               </div>
             </div>
-
-            <div class="tasks-section">
-              <h4>月任务 ({{ gameData?.tasks?.monthly?.length || 0 }})</h4>
-              <div
-                class="task-item"
-                v-if="gameData?.tasks?.monthly?.length === 0"
+            <div class="achievement-reward">
+              <div class="reward-amount">{{ achievement.reward }}</div>
+              <button
+                class="claim-btn"
+                :disabled="!achievement.completed || achievement.claimed"
+                @click="claimAchievementReward(achievement.id)"
               >
-                暂无月任务
-              </div>
-              <div
-                class="task-item"
-                v-for="(task, index) in gameData?.tasks?.monthly"
-                :key="index"
-              >
-                {{ task?.name || '未命名任务' }}
-              </div>
+                {{ achievement.claimed ? '已领取' : achievement.completed ? '领取' : '未完成' }}
+              </button>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- 奖励管理模块 -->
-        <div
-          v-else-if="activeModule === 'reward-management'"
-          class="module-content"
-        >
-          <h3>奖励管理</h3>
-          <p>奖励管理功能开发中...</p>
-        </div>
-
-        <!-- 成就系统模块 -->
-        <div
-          v-else-if="activeModule === 'achievement-system'"
-          class="module-content"
-        >
-          <h3>成就系统</h3>
-          <p>成就系统功能开发中...</p>
+      <!-- 特殊奖励 -->
+      <div
+        v-else-if="activeTab === 'special'"
+        class="tab-content"
+      >
+        <div class="special-rewards">
+          <div
+            v-for="reward in specialRewards"
+            :key="reward.id"
+            class="special-reward-card"
+            :class="{ claimed: reward.claimed }"
+          >
+            <div class="reward-badge">{{ reward.badge }}</div>
+            <div class="reward-icon">{{ reward.icon }}</div>
+            <div class="reward-name">{{ reward.name }}</div>
+            <div class="reward-description">{{ reward.description }}</div>
+            <div class="reward-amount">{{ reward.amount }}</div>
+            <button
+              class="claim-btn special"
+              :disabled="reward.claimed"
+              @click="claimSpecialReward(reward.id)"
+            >
+              {{ reward.claimed ? '已领取' : '领取' }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -119,205 +138,428 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { ref } from 'vue';
 
-const props = defineProps({
-  app: {
-    type: Object,
-    required: true,
+// 导入类型
+import type { App } from '../../../types/app';
+import type { GameData } from '../../../types/game';
+import type { Modal } from '../../../types/modal';
+
+// Props定义
+defineProps<{
+  app: App;
+  gameData?: GameData;
+  modal?: Modal;
+}>();
+
+// 活跃标签页
+const activeTab = ref('daily');
+
+// 每日奖励
+const dailyRewards = ref([
+  {
+    id: 'daily-1',
+    name: '每日登录',
+    icon: '📅',
+    description: '每天登录游戏即可领取',
+    amount: '100金币',
+    claimed: false,
   },
-  gameData: {
-    type: Object,
-    default: () => ({}),
+  {
+    id: 'daily-2',
+    name: '每日任务',
+    icon: '📋',
+    description: '完成3个日常任务',
+    amount: '200金币',
+    claimed: true,
   },
-});
+  {
+    id: 'daily-3',
+    name: '每日分享',
+    icon: '📤',
+    description: '分享游戏到社交平台',
+    amount: '50金币',
+    claimed: false,
+  },
+]);
 
-const emit = defineEmits(['update:activeModule']);
+// 成就奖励
+const achievements = ref([
+  {
+    id: 'ach-1',
+    name: '初出茅庐',
+    icon: '🎖️',
+    description: '完成新手教程',
+    current: 1,
+    target: 1,
+    reward: '500金币',
+    completed: true,
+    claimed: true,
+  },
+  {
+    id: 'ach-2',
+    name: '策划新手',
+    icon: '🎯',
+    description: '成功发布1个英雄',
+    current: 0,
+    target: 1,
+    reward: '1000金币',
+    completed: false,
+    claimed: false,
+  },
+  {
+    id: 'ach-3',
+    name: '皮肤大师',
+    icon: '🧵',
+    description: '成功发布5个皮肤',
+    current: 2,
+    target: 5,
+    reward: '2000金币',
+    completed: false,
+    claimed: false,
+  },
+]);
 
-// 活跃模块状�?const activeModule = ref(props.app.modules[0].id);
+// 特殊奖励
+const specialRewards = ref([
+  {
+    id: 'special-1',
+    name: '首充礼包',
+    icon: '🎁',
+    description: '首次充值即可获得超值礼包',
+    amount: '3000金币 + 限定皮肤',
+    badge: '限时',
+    claimed: false,
+  },
+  {
+    id: 'special-2',
+    name: 'VIP特权',
+    icon: '👑',
+    description: '成为VIP会员享受专属特权',
+    amount: '每日500金币',
+    badge: 'VIP',
+    claimed: true,
+  },
+]);
 
-// 当前激活的模块
-const currentModule = computed(() => {
-  return props.app.modules.find((m) => m.id === activeModule.value) || props.app.modules[0];
-});
-
-// 切换模块
-const switchModule = (moduleId: string): void => {
-  activeModule.value = moduleId;
-  emit('update:activeModule', moduleId);
+// 领取每日奖励
+const claimDailyReward = (rewardId: string) => {
+  const reward = dailyRewards.value.find((r) => r.id === rewardId);
+  if (reward && !reward.claimed) {
+    reward.claimed = true;
+    alert(`领取成功: ${reward.amount}`);
+  }
 };
 
-// 获取模块图标
-const getModuleIcon = (moduleId: string): string => {
-  const icons = {
-    'task-system': '📝',
-    'reward-management': '🎁',
-    'achievement-system': '🏆',
-  };
-  return icons[moduleId] || '📦';
+// 领取成就奖励
+const claimAchievementReward = (achievementId: string) => {
+  const achievement = achievements.value.find((a) => a.id === achievementId);
+  if (achievement && achievement.completed && !achievement.claimed) {
+    achievement.claimed = true;
+    alert(`领取成功: ${achievement.reward}`);
+  }
 };
 
-// 获取核心数据标签
-const getCoreDataLabel = (key: string): string => {
-  const labels = {
-    tasks: '任务',
-    rewards: '奖励',
-  };
-  return labels[key] || key;
+// 领取特殊奖励
+const claimSpecialReward = (rewardId: string) => {
+  const reward = specialRewards.value.find((r) => r.id === rewardId);
+  if (reward && !reward.claimed) {
+    reward.claimed = true;
+    alert(`领取成功: ${reward.amount}`);
+  }
 };
 </script>
 
 <style lang="scss" scoped>
+
 .rewards-app {
-  display: flex;
-  width: 100%;
+  @include utils.flex-col(0, stretch);
   height: 100%;
-  overflow: hidden;
+  background-color: tokens.$bg-secondary;
+  color: tokens.$text-primary;
 }
 
-/* 左侧菜单栏样式 */
-.modal-sidebar {
-  width: 200px;
-  background-color: rgb(0 0 0 / 20%);
-  border-right: 1px solid #333;
-  overflow-y: auto;
+.app-header {
+  padding: tokens.$spacing-md tokens.$spacing-lg;
+  background-color: tokens.$bg-light;
+  border-bottom: 1px solid tokens.$border-light;
+
+  h2 {
+    margin: 0;
+    font-size: tokens.$font-size-xl;
+    color: tokens.$text-primary;
+  }
 }
 
-.sidebar-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  color: #b0b0b0;
-  border-left: 3px solid transparent;
+.app-tabs {
+  @include utils.tabs-container;
 }
 
-.sidebar-item:hover {
-  background-color: rgb(74 158 255 / 20%);
-  color: #fff;
+.tab-btn {
+  @include utils.tab-item;
+
+  &.active {
+    background-color: rgb(59 130 246 / 20%);
+    box-shadow: tokens.$shadow-blue;
+  }
 }
 
-.sidebar-item.active {
-  background-color: rgb(74 158 255 / 30%);
-  color: #fff;
-  border-left-color: #4a9eff;
-}
-
-.sidebar-item-icon {
-  font-size: 18px;
-  width: 20px;
-  text-align: center;
-}
-
-.sidebar-item-name {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-/* 右侧内容区域样式 */
-.modal-main {
+.app-content {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  background-color: rgb(26 26 46 / 50%);
-}
-
-.content-header {
-  padding: 16px;
-  border-bottom: 1px solid #333;
-  background-color: rgb(0 0 0 / 10%);
-}
-
-.content-header h2 {
-  margin: 0 0 12px;
-  font-size: 20px;
-  color: #fff;
-}
-
-.module-core-data {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.core-data-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-}
-
-.core-data-label {
-  color: #b0b0b0;
-}
-
-.core-data-value {
-  color: #4a9eff;
-  font-weight: bold;
-}
-
-.content-body {
-  flex: 1;
-  padding: 20px;
+  padding: tokens.$spacing-lg;
   overflow-y: auto;
-  color: #fff;
+  @include utils.custom-scrollbar;
 }
 
-.module-content {
-  background-color: rgb(0 0 0 / 10%);
-  border-radius: 8px;
-  padding: 20px;
-  min-height: 200px;
-}
-
-.module-content h3 {
-  margin: 0 0 16px;
-  font-size: 18px;
-  color: #4a9eff;
-}
-
-.module-content h4 {
-  margin: 0 0 12px;
-  font-size: 16px;
-  color: #fff;
-}
-
-.module-content p {
-  margin: 0 0 16px;
-  color: #b0b0b0;
-  line-height: 1.6;
-}
-
-/* 任务列表样式 */
-.tasks-grid {
+// 每日奖励样式
+.rewards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  margin-top: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: tokens.$spacing-lg;
 }
 
-.tasks-section {
-  background-color: rgb(0 0 0 / 20%);
-  border-radius: 8px;
-  padding: 16px;
-  border: 1px solid rgb(74 158 255 / 20%);
+.reward-card {
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-lg;
+  box-shadow: tokens.$shadow-md;
+  transition: all tokens.$transition-fast;
+  border: 2px solid transparent;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-lg;
+  }
+
+  &.claimed {
+    opacity: 0.7;
+    border-color: tokens.$border-medium;
+    background-color: tokens.$bg-tertiary;
+  }
 }
 
-.task-item {
-  padding: 8px 12px;
-  margin: 8px 0;
-  background-color: rgb(0 0 0 / 20%);
-  border-radius: 4px;
-  color: #b0b0b0;
-  font-size: 14px;
-  transition: all 0.2s ease;
+.reward-header {
+  @include utils.flex-row(tokens.$spacing-md, center);
+  margin-bottom: tokens.$spacing-md;
+
+  .reward-icon {
+    font-size: 32px;
+  }
+
+  .reward-name {
+    font-size: tokens.$font-size-lg;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$primary-gold;
+  }
 }
 
-.task-item:hover {
-  background-color: rgb(74 158 255 / 20%);
-  color: #fff;
+.reward-description {
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-secondary;
+  margin-bottom: tokens.$spacing-md;
+  line-height: tokens.$line-height-normal;
+}
+
+.reward-amount {
+  @include utils.flex-row(tokens.$space-2, center);
+  margin-bottom: tokens.$spacing-md;
+
+  .amount-label {
+    font-size: tokens.$font-size-sm;
+    color: tokens.$text-secondary;
+  }
+
+  .amount-value {
+    font-size: tokens.$font-size-base;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$primary-gold;
+  }
+}
+
+.claim-btn {
+  width: 100%;
+  padding: tokens.$space-3;
+  background-color: tokens.$primary-blue;
+  border: none;
+  border-radius: tokens.$radius-md;
+  color: white;
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-bold;
+  cursor: pointer;
+  transition: all tokens.$transition-fast;
+
+  &:hover:not(:disabled) {
+    background-color: tokens.$primary-dark;
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    background-color: tokens.$bg-tertiary;
+    color: tokens.$text-muted;
+    cursor: not-allowed;
+  }
+
+  &.special {
+    background-color: tokens.$primary-gold;
+    color: tokens.$bg-dark;
+
+    &:hover:not(:disabled) {
+      background-color: #f59e0b;
+    }
+  }
+}
+
+// 成就奖励样式
+.achievements-list {
+  @include utils.flex-col(tokens.$spacing-md);
+}
+
+.achievement-item {
+  @include utils.flex-between;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-md;
+  box-shadow: tokens.$shadow-md;
+  transition: all tokens.$transition-fast;
+  border-left: 4px solid transparent;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-lg;
+  }
+
+  &.completed {
+    border-left-color: tokens.$success;
+  }
+}
+
+.achievement-info {
+  @include utils.flex-row(tokens.$spacing-md, center);
+  flex: 1;
+}
+
+.achievement-icon {
+  font-size: 36px;
+}
+
+.achievement-details {
+  flex: 1;
+
+  .achievement-name {
+    font-size: tokens.$font-size-base;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$primary-gold;
+    margin-bottom: tokens.$space-1;
+  }
+
+  .achievement-description {
+    font-size: tokens.$font-size-sm;
+    color: tokens.$text-secondary;
+    margin-bottom: tokens.$space-2;
+  }
+}
+
+.achievement-progress {
+  @include utils.flex-row(tokens.$spacing-md, center);
+
+  .progress-bar {
+    flex: 1;
+    height: 8px;
+    background-color: tokens.$bg-tertiary;
+    border-radius: tokens.$radius-full;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background-color: tokens.$primary-blue;
+    border-radius: tokens.$radius-full;
+    transition: width tokens.$transition-normal;
+  }
+
+  .progress-text {
+    font-size: tokens.$font-size-xs;
+    color: tokens.$text-secondary;
+    min-width: 50px;
+  }
+}
+
+.achievement-reward {
+  @include utils.flex-col(tokens.$spacing-md, flex-end);
+
+  .reward-amount {
+    font-size: tokens.$font-size-base;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$primary-gold;
+  }
+}
+
+// 特殊奖励样式
+.special-rewards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: tokens.$spacing-lg;
+}
+
+.special-reward-card {
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-xl;
+  box-shadow: tokens.$shadow-md;
+  text-align: center;
+  position: relative;
+  transition: all tokens.$transition-fast;
+  border: 2px solid transparent;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-lg;
+  }
+
+  &.claimed {
+    opacity: 0.7;
+    border-color: tokens.$border-medium;
+    background-color: tokens.$bg-tertiary;
+  }
+}
+
+.reward-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: tokens.$error;
+  color: white;
+  padding: tokens.$space-1 tokens.$space-2;
+  border-radius: tokens.$radius-full;
+  font-size: tokens.$font-size-xs;
+  font-weight: tokens.$font-weight-bold;
+}
+
+.special-reward-card {
+  .reward-icon {
+    font-size: 48px;
+    margin-bottom: tokens.$spacing-md;
+  }
+
+  .reward-name {
+    font-size: tokens.$font-size-xl;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$primary-gold;
+    margin-bottom: tokens.$space-2;
+  }
+
+  .reward-description {
+    font-size: tokens.$font-size-sm;
+    color: tokens.$text-secondary;
+    margin-bottom: tokens.$spacing-md;
+    line-height: tokens.$line-height-normal;
+  }
+
+  .reward-amount {
+    font-size: tokens.$font-size-lg;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$primary-blue;
+    margin-bottom: tokens.$spacing-md;
+  }
 }
 </style>

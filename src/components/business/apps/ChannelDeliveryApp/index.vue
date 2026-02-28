@@ -200,234 +200,220 @@ const viewReport = (): void => {
 </script>
 
 <style lang="scss" scoped>
+
 .channel-delivery-app {
-  display: flex;
-  flex-direction: column;
+  @include utils.flex-col(0, stretch, flex-start);
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: rgb(0 0 0 / 20%);
-  color: #fff;
+  background-color: tokens.$bg-light;
+  color: tokens.$text-primary;
 }
 
 .app-tabs {
-  display: flex;
-  background-color: rgb(0 0 0 / 30%);
-  border-bottom: 1px solid rgb(74 158 255 / 20%);
+  @include utils.flex-row(0, center, flex-start);
+  background-color: tokens.$bg-light;
+  border-bottom: 1px solid rgba(tokens.$primary-blue, 0.2);
 
   button {
-    padding: 10px 20px;
+    padding: tokens.$spacing-sm tokens.$spacing-md;
     border: none;
     background: transparent;
     cursor: pointer;
-    font-size: 14px;
-    color: #b0b0b0;
-    transition: all 0.2s;
+    font-size: tokens.$font-size-sm;
+    color: tokens.$text-muted;
+    transition: all tokens.$transition-fast;
 
     &.active {
-      background-color: rgb(74 158 255 / 20%);
-      border-bottom: 2px solid #4a9eff;
-      font-weight: bold;
-      color: #fff;
+      background-color: rgba(tokens.$primary-blue, 0.2);
+      border-bottom: 2px solid tokens.$primary-blue;
+      font-weight: tokens.$font-weight-bold;
+      color: tokens.$text-primary;
     }
 
     &:hover {
-      background-color: rgb(74 158 255 / 10%);
+      background-color: rgba(tokens.$primary-blue, 0.1);
     }
   }
 }
 
 .channels-container {
   flex: 1;
-  padding: 20px;
+  padding: tokens.$spacing-lg;
   overflow-y: auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+  @include utils.grid-auto-fill(280px, tokens.$spacing-lg);
+  @include utils.custom-scrollbar;
 }
 
 .channel-card {
-  background-color: rgb(0 0 0 / 20%);
-  border: 1px solid rgb(74 158 255 / 20%);
-  border-radius: 8px;
-  padding: 15px;
-  transition: box-shadow 0.2s;
+  background-color: tokens.$bg-light;
+  border: 1px solid rgba(tokens.$primary-blue, 0.2);
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-md;
+  transition: box-shadow tokens.$transition-fast;
 
   &:hover {
-    box-shadow: 0 2px 10px rgb(74 158 255 / 20%);
+    box-shadow: tokens.$shadow-blue;
   }
 
   .channel-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+    @include utils.flex-between;
+    margin-bottom: tokens.$spacing-sm;
 
     h3 {
       margin: 0;
-      font-size: 16px;
-      color: #fff;
+      font-size: tokens.$font-size-base;
+      color: tokens.$text-primary;
     }
 
     .channel-type {
-      background-color: #4a9eff;
-      color: white;
-      padding: 3px 8px;
-      border-radius: 12px;
-      font-size: 12px;
+      background-color: tokens.$primary-blue;
+      color: tokens.$text-primary;
+      padding: 3px tokens.$spacing-sm;
+      border-radius: tokens.$radius-full;
+      font-size: tokens.$font-size-xs;
     }
   }
 
   .channel-stats {
-    margin-bottom: 15px;
+    margin-bottom: tokens.$spacing-md;
 
     .stat-item {
-      display: flex;
-      justify-content: space-between;
+      @include utils.flex-between;
       margin-bottom: 5px;
 
       .stat-label {
-        color: #b0b0b0;
-        font-size: 14px;
+        color: tokens.$text-muted;
+        font-size: tokens.$font-size-sm;
       }
 
       .stat-value {
-        font-weight: bold;
-        font-size: 14px;
+        font-weight: tokens.$font-weight-bold;
+        font-size: tokens.$font-size-sm;
 
         &.active {
-          color: #2ed573;
+          color: tokens.$success;
         }
 
         &.inactive {
-          color: #999;
+          color: tokens.$gray-500;
         }
       }
     }
   }
 
   .channel-actions {
-    display: flex;
-    justify-content: center;
+    @include utils.flex-center;
   }
 }
 
 .action-btn {
-  padding: 8px 16px;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
   border: none;
-  border-radius: 4px;
+  border-radius: tokens.$radius-sm;
   cursor: pointer;
-  font-size: 14px;
-  transition: all 0.2s;
+  font-size: tokens.$font-size-sm;
+  transition: all tokens.$transition-fast;
 
   &.primary {
-    background-color: #4a9eff;
-    color: white;
+    background-color: tokens.$primary-blue;
+    color: tokens.$text-primary;
 
     &:hover {
-      background-color: #3a8bd5;
+      background-color: tokens.$primary-dark;
     }
   }
 
   &.secondary {
-    background-color: rgb(0 0 0 / 30%);
-    color: #fff;
-    border: 1px solid rgb(74 158 255 / 30%);
+    background-color: tokens.$bg-light;
+    color: tokens.$text-primary;
+    border: 1px solid rgba(tokens.$primary-blue, 0.3);
 
     &:hover {
-      background-color: rgb(0 0 0 / 40%);
+      background-color: rgba(tokens.$bg-light, 1.5);
     }
   }
 }
 
 .app-footer {
-  padding: 15px 20px;
-  border-top: 1px solid rgb(74 158 255 / 20%);
-  display: flex;
-  justify-content: center;
+  padding: tokens.$spacing-md tokens.$spacing-lg;
+  border-top: 1px solid rgba(tokens.$primary-blue, 0.2);
+  @include utils.flex-center;
 }
 
 .report-btn {
-  padding: 10px 24px;
-  background-color: #4a9eff;
-  color: white;
+  padding: tokens.$spacing-sm tokens.$spacing-lg;
+  background-color: tokens.$primary-blue;
+  color: tokens.$text-primary;
   border: none;
-  border-radius: 4px;
+  border-radius: tokens.$radius-sm;
   cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.2s;
+  font-size: tokens.$font-size-sm;
+  transition: background-color tokens.$transition-fast;
 
   &:hover {
-    background-color: #3a8bd5;
+    background-color: tokens.$primary-dark;
   }
 }
 
 .modal-overlay {
-  position: fixed;
-  inset: 0;
-  background-color: rgb(0 0 0 / 50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+  @include utils.modal-overlay;
 }
 
 .modal-content {
-  background-color: rgb(26 26 46 / 95%);
-  border: 1px solid rgb(74 158 255 / 30%);
-  padding: 20px;
-  border-radius: 8px;
+  background-color: tokens.$bg-secondary;
+  border: 1px solid rgba(tokens.$primary-blue, 0.3);
+  padding: tokens.$spacing-lg;
+  border-radius: tokens.$radius-md;
   width: 400px;
   text-align: center;
 
   h3 {
-    margin-bottom: 20px;
-    color: #fff;
+    margin-bottom: tokens.$spacing-lg;
+    color: tokens.$text-primary;
   }
 }
 
 .intensity-options {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
+  @include utils.flex-col(tokens.$spacing-sm);
+  margin-bottom: tokens.$spacing-lg;
 }
 
 .intensity-btn {
-  padding: 15px;
-  background-color: rgb(0 0 0 / 20%);
-  border: 1px solid rgb(74 158 255 / 20%);
-  border-radius: 6px;
+  padding: tokens.$spacing-md;
+  background-color: tokens.$bg-light;
+  border: 1px solid rgba(tokens.$primary-blue, 0.2);
+  border-radius: tokens.$radius-sm;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all tokens.$transition-fast;
   text-align: left;
-  color: #fff;
+  color: tokens.$text-primary;
 
   &:hover {
-    background-color: rgb(74 158 255 / 20%);
-    border-color: #4a9eff;
+    background-color: rgba(tokens.$primary-blue, 0.2);
+    border-color: tokens.$primary-blue;
   }
 
   .intensity-desc {
     display: block;
-    font-size: 12px;
-    color: #b0b0b0;
+    font-size: tokens.$font-size-xs;
+    color: tokens.$text-muted;
     margin-top: 5px;
   }
 }
 
 .cancel-btn {
-  padding: 10px 24px;
-  background-color: rgb(0 0 0 / 30%);
-  color: #fff;
-  border: 1px solid rgb(74 158 255 / 30%);
-  border-radius: 4px;
+  padding: tokens.$spacing-sm tokens.$spacing-lg;
+  background-color: tokens.$bg-light;
+  color: tokens.$text-primary;
+  border: 1px solid rgba(tokens.$primary-blue, 0.3);
+  border-radius: tokens.$radius-sm;
   cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.2s;
+  font-size: tokens.$font-size-sm;
+  transition: background-color tokens.$transition-fast;
 
   &:hover {
-    background-color: rgb(0 0 0 / 40%);
+    background-color: rgba(tokens.$bg-light, 1.5);
   }
 }
 </style>

@@ -337,45 +337,45 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-/* 联系人列�? */
+
+/* 联系人列表 */
 .chat-contacts {
   width: 100%;
   height: 100%;
-  background-color: var(--sidebar-bg, #2a2a3a);
+  background-color: tokens.$bg-secondary;
   overflow-y: auto;
-  padding: 16px;
+  padding: tokens.$spacing-md;
+  @include utils.custom-scrollbar;
 }
 
 .contact-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-  margin-bottom: 8px;
-  background-color: var(--card-bg, #2a2a3a);
-  border-radius: 8px;
+  @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+  padding: tokens.$spacing-sm;
+  margin-bottom: tokens.$spacing-sm;
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-md;
   cursor: pointer;
-  transition: all 0.2s ease;
-  border: 1px solid var(--border-color, transparent);
-}
+  transition: all tokens.$transition-fast;
+  border: 1px solid transparent;
 
-.contact-item:hover {
-  background-color: var(--sidebar-hover, rgb(74 158 255 / 10%));
-  border-color: var(--primary-color, rgb(74 158 255 / 30%));
-}
+  &:hover {
+    background-color: rgba(tokens.$primary-blue, 0.1);
+    border-color: rgba(tokens.$primary-blue, 0.3);
+  }
 
-.contact-item.active {
-  background-color: var(--sidebar-active, rgb(74 158 255 / 20%));
-  border-color: var(--sidebar-active-border, rgb(74 158 255 / 50%));
-  border-right: 3px solid var(--sidebar-active-border, #4a9eff);
-}
+  &.active {
+    background-color: rgba(tokens.$primary-blue, 0.2);
+    border-color: rgba(tokens.$primary-blue, 0.5);
+    border-right: 3px solid tokens.$primary-blue;
+  }
 
-.contact-item.has-unread {
-  border-left: 3px solid var(--danger-color, #ff4757);
+  &.has-unread {
+    border-left: 3px solid tokens.$error;
+  }
 }
 
 .contact-avatar {
-  font-size: 24px;
+  font-size: tokens.$font-size-2xl;
 }
 
 .contact-info {
@@ -384,151 +384,118 @@ watch(
 }
 
 .contact-name {
-  font-weight: var(--font-bold, 700);
-  color: var(--text-primary, #fff);
-  margin-bottom: 4px;
-  font-size: 14px;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$text-primary;
+  margin-bottom: tokens.$spacing-xs;
+  font-size: tokens.$font-size-sm;
 }
 
 .contact-last-message {
-  color: var(--text-secondary, #b0b0b0);
-  font-size: 12px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  color: tokens.$text-muted;
+  font-size: tokens.$font-size-xs;
+  @include utils.text-truncate;
 }
 
 .contact-unread {
-  background-color: var(--danger-color, #ff4757);
-  color: white;
+  background-color: tokens.$error;
+  color: tokens.$text-primary;
   border-radius: 50%;
   width: 20px;
   height: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-  font-weight: var(--font-bold, 700);
+  @include utils.flex-center;
+  font-size: tokens.$font-size-xs;
+  font-weight: tokens.$font-weight-bold;
 }
 
 /* 聊天区域 */
 .chat-area {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--content-bg, #1e1e2e);
+  @include utils.flex-col(0, stretch, flex-start);
+  background-color: tokens.$bg-primary;
   overflow: hidden;
 }
 
 .chat-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px;
-  background-color: var(--card-bg, #2a2a3a);
-  border-bottom: 1px solid var(--border-color, rgb(74 158 255 / 20%));
+  @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+  padding: tokens.$spacing-md;
+  background-color: tokens.$bg-secondary;
+  border-bottom: 1px solid rgba(tokens.$primary-blue, 0.2);
 }
 
 .chat-messages {
   flex: 1;
-  padding: 16px;
+  padding: tokens.$spacing-md;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  @include utils.flex-col(tokens.$spacing-md);
+  @include utils.custom-scrollbar;
 }
 
 .message {
   max-width: 70%;
-  padding: 12px;
-  border-radius: 8px;
+  padding: tokens.$spacing-sm;
+  border-radius: tokens.$radius-md;
   word-wrap: break-word;
 }
 
 .contact-message {
   align-self: flex-start;
-  background-color: var(--contact-message-bg, rgb(74 158 255 / 20%));
-  border: 1px solid var(--contact-message-border, rgb(74 158 255 / 30%));
+  background-color: rgba(tokens.$primary-blue, 0.2);
+  border: 1px solid rgba(tokens.$primary-blue, 0.3);
 }
 
 .user-message {
   align-self: flex-end;
-  background-color: var(--user-message-bg, rgb(255 71 87 / 20%));
-  border: 1px solid var(--user-message-border, rgb(255 71 87 / 30%));
+  background-color: rgba(tokens.$error, 0.2);
+  border: 1px solid rgba(tokens.$error, 0.3);
 }
 
 .message-content {
-  margin-bottom: 4px;
-  color: var(--text-primary, #fff);
-  line-height: 1.4;
+  margin-bottom: tokens.$spacing-xs;
+  color: tokens.$text-primary;
+  line-height: tokens.$line-height-normal;
 }
 
 .message-time {
   font-size: 10px;
-  color: var(--text-secondary, #b0b0b0);
+  color: tokens.$text-muted;
   text-align: right;
 }
 
 .chat-options-area {
-  padding: 16px;
-  background-color: var(--card-bg, #2a2a3a);
-  border-top: 1px solid var(--border-color, rgb(74 158 255 / 20%));
+  padding: tokens.$spacing-md;
+  background-color: tokens.$bg-secondary;
+  border-top: 1px solid rgba(tokens.$primary-blue, 0.2);
 }
 
 .options-header {
-  color: var(--text-primary, #fff);
-  font-size: 14px;
-  margin-bottom: 12px;
-  font-weight: var(--font-bold, 700);
+  color: tokens.$text-primary;
+  font-size: tokens.$font-size-sm;
+  margin-bottom: tokens.$spacing-md;
+  font-weight: tokens.$font-weight-bold;
 }
 
 .options-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  @include utils.flex-col(tokens.$spacing-sm);
 }
 
 .option-btn {
-  padding: 12px 16px;
-  background-color: var(--button-bg, rgb(74 158 255 / 20%));
-  border: 1px solid var(--button-border, rgb(74 158 255 / 30%));
-  border-radius: 8px;
-  color: var(--text-primary, #fff);
-  font-size: 14px;
+  padding: tokens.$spacing-sm tokens.$spacing-md;
+  background-color: rgba(tokens.$primary-blue, 0.2);
+  border: 1px solid rgba(tokens.$primary-blue, 0.3);
+  border-radius: tokens.$radius-md;
+  color: tokens.$text-primary;
+  font-size: tokens.$font-size-sm;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all tokens.$transition-fast;
   text-align: left;
-  font-weight: var(--font-semibold, 600);
-}
+  font-weight: tokens.$font-weight-semibold;
 
-.option-btn:hover {
-  background-color: var(--button-hover, rgb(74 158 255 / 30%));
-  border-color: var(--button-hover-border, rgb(74 158 255 / 50%));
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgb(74 158 255 / 20%);
-}
-
-/* 滚动条样�? */
-.chat-contacts::-webkit-scrollbar,
-.chat-messages::-webkit-scrollbar {
-  width: 8px;
-}
-
-.chat-contacts::-webkit-scrollbar-track,
-.chat-messages::-webkit-scrollbar-track {
-  background: var(--scrollbar-track, rgb(0 0 0 / 10%));
-  border-radius: 4px;
-}
-
-.chat-contacts::-webkit-scrollbar-thumb,
-.chat-messages::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb, rgb(74 158 255 / 50%));
-  border-radius: 4px;
-}
-
-.chat-contacts::-webkit-scrollbar-thumb:hover,
-.chat-messages::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover, rgb(74 158 255 / 70%));
+  &:hover {
+    background-color: rgba(tokens.$primary-blue, 0.3);
+    border-color: rgba(tokens.$primary-blue, 0.5);
+    transform: translateY(-1px);
+    box-shadow: tokens.$shadow-blue;
+  }
 }
 </style>

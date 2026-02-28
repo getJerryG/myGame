@@ -7,7 +7,7 @@
       <h2 class="game-over-title">游戏结束</h2>
       <p class="game-over-reason">{{ gameState?.gameOverReason || '' }}</p>
       <div class="final-stats">
-        <h3>最终数�?/h3>
+        <h3 class="stats-title">最终数据</h3>
         <div class="stat-item">
           <span class="stat-label">存活月份:</span>
           <span class="stat-value">{{ gameState?.monthCount || 0 }}</span>
@@ -17,7 +17,7 @@
           <span class="stat-value">{{ businessData?.downloads || 0 }}</span>
         </div>
         <div class="stat-item">
-          <span class="stat-label">最高日活用�?</span>
+          <span class="stat-label">最高日活用户:</span>
           <span class="stat-value">{{
             businessData?.dailyLoginHistory && businessData.dailyLoginHistory.length > 0
               ? Math.max(...businessData.dailyLoginHistory.map((h) => h.value))
@@ -25,7 +25,7 @@
           }}</span>
         </div>
         <div class="stat-item">
-          <span class="stat-label">总收�?</span>
+          <span class="stat-label">总收入:</span>
           <span class="stat-value">¥{{ businessData?.totalRevenue || 0 }}</span>
         </div>
       </div>
@@ -33,7 +33,8 @@
         class="restart-btn"
         @click="resetGame"
       >
-        重新开�?      </button>
+        重新开始
+      </button>
     </div>
   </div>
 </template>
@@ -70,26 +71,23 @@ const resetGame = (): void => {
 </script>
 
 <style lang="scss" scoped>
+
 /* 游戏结束面板 */
 .game-over-panel {
-  position: fixed;
-  inset: 0;
-  background-color: rgb(0 0 0 / 80%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2000;
+  @include utils.modal-overlay;
+  z-index: tokens.$z-modal;
   animation: fadeIn 0.3s ease;
 }
 
 .game-over-content {
-  background: white;
-  border-radius: 12px;
-  padding: 40px;
+  background: tokens.$bg-secondary;
+  border-radius: tokens.$radius-xl;
+  padding: tokens.$spacing-2xl;
   max-width: 500px;
   width: 90%;
   text-align: center;
-  box-shadow: 0 4px 30px rgb(0 0 0 / 30%);
+  box-shadow: tokens.$shadow-xl;
+  border: 1px solid tokens.$border-light;
   animation: slideInUp 0.3s ease;
 }
 
@@ -116,156 +114,154 @@ const resetGame = (): void => {
 }
 
 .game-over-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: #dc2626;
-  margin: 0 0 12px;
+  font-size: tokens.$font-size-3xl;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$error;
+  margin: 0 0 tokens.$spacing-md;
 }
 
 .game-over-reason {
-  font-size: 16px;
-  color: #64748b;
-  margin: 0 0 30px;
+  font-size: tokens.$font-size-base;
+  color: tokens.$text-secondary;
+  margin: 0 0 tokens.$spacing-xl;
 }
 
 .final-stats {
-  background: #f8fafc;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 30px;
+  background: tokens.$bg-light;
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-lg;
+  margin-bottom: tokens.$spacing-xl;
   text-align: left;
 }
 
-.final-stats h3 {
-  font-size: 16px;
-  font-weight: 600;
-  color: #1e293b;
-  margin: 0 0 15px;
+.stats-title {
+  font-size: tokens.$font-size-lg;
+  font-weight: tokens.$font-weight-semibold;
+  color: tokens.$text-primary;
+  margin: 0 0 tokens.$spacing-md;
   text-align: center;
 }
 
 .stat-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid #e2e8f0;
-}
+  @include utils.flex-between;
+  padding: tokens.$spacing-sm 0;
+  border-bottom: 1px solid tokens.$border-light;
 
-.stat-item:last-child {
-  border-bottom: none;
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .stat-label {
-  font-size: 14px;
-  color: #64748b;
+  font-size: tokens.$font-size-sm;
+  color: tokens.$text-secondary;
 }
 
 .stat-value {
-  font-size: 14px;
-  font-weight: 600;
-  color: #1e293b;
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-semibold;
+  color: tokens.$text-primary;
 }
 
 .restart-btn {
-  padding: 15px 30px;
-  background: #3498db;
+  padding: tokens.$spacing-md tokens.$spacing-xl;
+  background: tokens.$primary-blue;
   color: white;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
+  border-radius: tokens.$radius-md;
+  font-size: tokens.$font-size-base;
+  font-weight: tokens.$font-weight-semibold;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all tokens.$transition-normal;
+
+  &:hover {
+    background: tokens.$primary-dark;
+    transform: translateY(-2px);
+    box-shadow: tokens.$shadow-lg;
+  }
 }
 
-.restart-btn:hover {
-  background: #2980b9;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgb(0 0 0 / 20%);
-}
-
-/* 响应式设�? */
-@media (width <= 768px) {
+/* 响应式设计 */
+@include utils.mobile {
   .game-over-content {
-    padding: 20px;
-    margin: 20px;
+    padding: tokens.$spacing-lg;
+    margin: tokens.$spacing-md;
   }
 
   .game-over-title {
-    font-size: 24px;
-    margin-bottom: 10px;
+    font-size: tokens.$font-size-2xl;
+    margin-bottom: tokens.$spacing-sm;
   }
 
   .game-over-reason {
-    font-size: 14px;
-    margin-bottom: 20px;
+    font-size: tokens.$font-size-sm;
+    margin-bottom: tokens.$spacing-lg;
   }
 
   .final-stats {
-    padding: 15px;
-    margin-bottom: 20px;
+    padding: tokens.$spacing-md;
+    margin-bottom: tokens.$spacing-lg;
   }
 
-  .final-stats h3 {
-    font-size: 15px;
-    margin-bottom: 12px;
+  .stats-title {
+    font-size: tokens.$font-size-base;
+    margin-bottom: tokens.$spacing-sm;
   }
 
   .stat-item {
-    padding: 6px 0;
+    padding: tokens.$spacing-xs 0;
   }
 
   .stat-label,
   .stat-value {
-    font-size: 13px;
+    font-size: tokens.$font-size-xs;
   }
 
   .restart-btn {
-    padding: 12px 24px;
-    font-size: 14px;
+    padding: tokens.$spacing-sm tokens.$spacing-lg;
+    font-size: tokens.$font-size-sm;
   }
 }
 
 /* 横屏手机适配 */
-@media (orientation: landscape) and (height <= 600px) {
+@include utils.landscape-mobile {
   .game-over-content {
-    padding: 20px;
-    margin: 10px;
+    padding: tokens.$spacing-lg;
+    margin: tokens.$spacing-sm;
   }
 
   .game-over-title {
-    font-size: 24px;
-    margin-bottom: 10px;
+    font-size: tokens.$font-size-2xl;
+    margin-bottom: tokens.$spacing-sm;
   }
 
   .game-over-reason {
-    font-size: 14px;
-    margin-bottom: 20px;
+    font-size: tokens.$font-size-sm;
+    margin-bottom: tokens.$spacing-lg;
   }
 
   .final-stats {
-    padding: 15px;
-    margin-bottom: 20px;
+    padding: tokens.$spacing-md;
+    margin-bottom: tokens.$spacing-lg;
   }
 
-  .final-stats h3 {
-    font-size: 15px;
-    margin-bottom: 12px;
+  .stats-title {
+    font-size: tokens.$font-size-base;
+    margin-bottom: tokens.$spacing-sm;
   }
 
   .stat-item {
-    padding: 6px 0;
+    padding: tokens.$spacing-xs 0;
   }
 
   .stat-label,
   .stat-value {
-    font-size: 13px;
+    font-size: tokens.$font-size-xs;
   }
 
   .restart-btn {
-    padding: 12px 24px;
-    font-size: 14px;
+    padding: tokens.$spacing-sm tokens.$spacing-lg;
+    font-size: tokens.$font-size-sm;
   }
 }
 </style>

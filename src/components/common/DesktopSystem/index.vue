@@ -1,122 +1,38 @@
 <template>
   <div class="desktop-system">
-    <!-- 引入独立的刘海栏组件 -->
-    <NotchBar
-      :levelName="策划职级名称"
-      :levelRank="策划段位"
-      :currentExp="策划经验"
-      :maxExp="策划升级经验"
-      :funds="策划资金"
-    />
+    <!-- 刘海栏 -->
+    <NotchBar :levelName="策划职级名称" :levelRank="策划段位" :currentExp="策划经验" :maxExp="策划升级经验" :funds="策划资金" />
 
     <!-- 任务系统面板 -->
     <TaskSystemPanel />
 
     <!-- 退出确认对话框 -->
-    <ExitConfirmDialog
-      :isVisible="showExitDialog"
-      title="退出游戏确认"
-      message="您正在退出游戏，如未保存将造成数据丢失！"
-      @close="showExitDialog = false"
-      @exit="handleExit"
-      @save="handleSaveAndExit"
-    />
+    <ExitConfirmDialog :isVisible="showExitDialog" title="退出游戏确认" message="您正在退出游戏，如未保存将造成数据丢失！"
+      @close="showExitDialog = false" @exit="handleExit" @save="handleSaveAndExit" />
 
     <!-- 升级特效 -->
-    <div
-      v-if="showLevelUpEffect"
-      class="level-up-effect"
-    >
-      <div class="level-up-message">{{ levelUpMessage }}</div>
-    </div>
+    <DesktopLevelUpEffect :visible="showLevelUpEffect" :message="levelUpMessage" />
 
-    <!-- 桌面背景 -->
-    <div class="desktop-background">
-      <!-- 桌面应用图标区域 -->
-      <div class="desktop-icons">
-        <DesktopAppIcon
-          v-for="app in allDesktopApps"
-          :key="app.id"
-          :app="app"
-          :position="app.position"
-          @click="openApp(app)"
-        />
-      </div>
-    </div>
+    <!-- 桌面背景和图标 -->
+    <DesktopBackground :apps="allDesktopApps" @click="openApp" />
 
-    <!-- 任务栏 -->
-    <div class="taskbar">
-      <div class="taskbar-left">
-        <div
-          class="start-button"
-          @click="toggleStartMenu"
-        >
-          <span>开始</span>
-        </div>
-      </div>
-      <div class="taskbar-right">
-        <div class="game-date">{{ gameDateDisplay }}</div>
-      </div>
-    </div>
+    <!-- 任务栏（包含开始菜单） -->
+    <DesktopTaskbar 
+      :game-data="gameData" 
+      @save-game="saveGame" 
+      @restart-game="restartGame" 
+      @open-settings="openGameSettings" 
+    />
 
-    <!-- 开始菜单 -->
-    <div
-      v-if="isStartMenuOpen"
-      class="start-menu"
-      @click.stop
-    >
-      <div class="start-menu-header">
-        <h2>开始</h2>
-      </div>
-      <div class="start-menu-content">
-        <div class="start-menu-buttons">
-          <button
-            class="start-menu-button"
-            @click="saveGame"
-          >
-            <span class="button-icon">💾</span>
-            <span class="button-text">保存副本</span>
-          </button>
-          <button
-            class="start-menu-button"
-            @click="restartGame"
-          >
-            <span class="button-icon">🔄</span>
-            <span class="button-text">重新开始</span>
-          </button>
-          <button
-            class="start-menu-button"
-            @click="openGameSettings"
-          >
-            <span class="button-icon">⚙️</span>
-            <span class="button-text">游戏设置</span>
-          </button>
-        </div>
-      </div>
-    </div>
-    <!-- 点击外部关闭开始菜单 -->
-    <div
-      v-if="isStartMenuOpen"
-      class="start-menu-backdrop"
-      @click="closeStartMenu"
-    ></div>
-
-    <!-- 弹出层 -->
+    <!-- 应用窗口层 -->
     <div class="desktop-modals">
-      <DesktopAppContainer
-        v-for="modal in sortedModals"
-        :key="modal.id"
-        :window-id="modal.id"
-        :window-state="{
-          position: modal.position,
-          size: modal.size,
-          isMaximized: modal.isMaximized,
-          isMinimized: minimizedApps.includes(modal.appId),
-          activeModule: modal.activeModule,
-        }"
-        :app="allDesktopApps.find((a) => a.id === modal.appId)"
-        :gameData="gameData"
-        @close="closeApp(modal.appId)"
+      <DesktopAppContainer v-for="modal in sortedModals" :key="modal.id" :window-id="modal.id" :window-state="{
+        position: modal.position,
+        size: modal.size,
+        isMaximized: modal.isMaximized,
+        isMinimized: minimizedApps.includes(modal.appId),
+        activeModule: modal.activeModule,
+      }" :app="allDesktopApps.find((a) => a.id === modal.appId)" :gameData="gameData" @close="closeApp(modal.appId)"
         @update:windowState="
           (updatedState) => {
             const updatedModal = {
@@ -128,10 +44,7 @@
             };
             updateModal(updatedModal);
           }
-        "
-        @app-installed="handleAppInstalled"
-      >
-        <!-- 这里可以添加应用内容的插槽 -->
+        " @app-installed="handleAppInstalled">
       </DesktopAppContainer>
     </div>
   </div>
@@ -140,11 +53,13 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch, provide } from 'vue';
 import { useRouter } from 'vue-router';
-import DesktopAppIcon from '../DesktopAppIcon/index.vue';
 import DesktopAppContainer from '../DesktopAppContainer/index.vue';
 import TaskSystemPanel from '../TaskSystemPanel/index.vue';
 import ExitConfirmDialog from '../dialogs/ExitConfirmDialog.vue';
 import NotchBar from '../NotchBar/index.vue';
+import DesktopLevelUpEffect from './DesktopLevelUpEffect.vue';
+import DesktopBackground from './DesktopBackground.vue';
+import DesktopTaskbar from './DesktopTaskbar.vue';
 import { useGameStore } from '@/stores/gameStore';
 import { useSimulationGameStateStore } from '@/stores/simulation/simulationGameStateStore';
 import { usePlayerStore } from '@/stores/playerStore';
@@ -164,22 +79,30 @@ import { useModalStore } from '@/stores/modalStore';
 // 导入类型
 import type { GameData } from '@/types/game';
 import type { Modal } from '@/types/modal';
-import type { AvailableApp } from '@/components/business/apps/AppStore/AppStore.vue';
+import type { DesktopApp, AvailableApp } from './types';
 
-// 定义应用类型
-interface DesktopApp {
-  id: string;
-  name: string;
-  icon: string;
-  position: { x: number; y: number };
-  coreData: Record<string, any>;
-  modules: Array<{ id: string; name: string }>;
-}
-
-// Props定义
+// Props 定义
 const props = defineProps<{
   gameData: GameData;
 }>();
+
+// 活跃的应用列表
+const activeApps = ref<string[]>([]);
+
+// 最小化的应用列表
+const minimizedApps = ref<string[]>([]);
+
+// 打开的弹出框列表
+const openModals = ref<Modal[]>([]);
+
+// 排序后的弹出框列表（根据 zIndex）
+const sortedModals = computed(() => {
+  return [...openModals.value].sort((a, b) => {
+    const windowA = windowManagerStore.windows.find((w) => w.id === a.id);
+    const windowB = windowManagerStore.windows.find((w) => w.id === b.id);
+    return (windowA?.zIndex || 0) - (windowB?.zIndex || 0);
+  });
+});
 
 // 获取路由实例
 const router = useRouter();
@@ -541,27 +464,6 @@ const saveDesktopApps = (): void => {
 // 桌面应用列表
 const desktopApps = ref<DesktopApp[]>(loadDesktopApps());
 
-// 计算游戏日期对应的星期几
-const getDayOfWeek = (year: number, month: number, day: number): string => {
-  // 使用固定算法计算星期几，基于1年1月1日是星期一
-  const daysOfWeek = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-  // 简单的日期计算，实际项目中可以使用更精确的算法
-  const totalDays = (year - 1) * 365 + (month - 1) * 30 + day;
-  return daysOfWeek[totalDays % 7];
-};
-
-// 游戏日期显示，包含星期几
-const gameDateDisplay = computed(() => {
-  // 添加空值检查
-  if (!props.gameData?.gameState?.currentDate) {
-    return '加载中...';
-  }
-
-  const date = props.gameData.gameState.currentDate;
-  const dayOfWeek = getDayOfWeek(date.year, date.month, date.day);
-  return `${date.year}年${date.month}月${date.day}日 ${dayOfWeek} ${date.hour}:${String(date.minute).padStart(2, '0')}`;
-});
-
 // 处理应用安装事件
 const handleAppInstalled = (app: App): void => {
   // 检查应用是否已存在
@@ -605,22 +507,154 @@ const handleAppInstalled = (app: App): void => {
   saveDesktopApps();
 };
 
-// 活跃的应用列表
-const activeApps = ref<string[]>([]);
+// 保存游戏（由 DesktopTaskbar 调用）
+const saveGame = (): void => {
+  const gameStore = useGameStore();
+  const simulationGameStateStore = useSimulationGameStateStore();
+  const playerStore = usePlayerStore();
+  const simulationStore = useSimulationStore();
 
-// 最小化的应用列表
-const minimizedApps = ref<string[]>([]);
+  const gameSnapshot = {
+    timestamp: Date.now(),
+    gameStore: gameStore.$state,
+    simulationGameStateStore: simulationGameStateStore.$state,
+    playerStore: playerStore.$state,
+    simulationStore: simulationStore.$state,
+    desktopApps: desktopApps.value,
+  };
 
-// 打开的弹出框列表
-const openModals = ref<Modal[]>([]);
+  const savedGames = JSON.parse(localStorage.getItem('game-snapshots') || '[]');
+  savedGames.push(gameSnapshot);
+  localStorage.setItem('game-snapshots', JSON.stringify(savedGames));
+};
 
-// 排序后的弹出框列表（根据 zIndex）
-const sortedModals = computed(() => {
-  return [...openModals.value].sort((a, b) => {
-    const windowA = windowManagerStore.windows.find((w) => w.id === a.id);
-    const windowB = windowManagerStore.windows.find((w) => w.id === b.id);
-    return (windowA?.zIndex || 0) - (windowB?.zIndex || 0);
-  });
+// 重新开始游戏（由 DesktopTaskbar 调用）
+const restartGame = (): void => {
+  if (confirm('确定要重新开始游戏吗？所有进度将丢失！')) {
+    const gameStore = useGameStore();
+    const simulationGameStateStore = useSimulationGameStateStore();
+    const playerStore = usePlayerStore();
+    const simulationStore = useSimulationStore();
+    const taskSystemStore = useSimulationTaskSystemStore();
+    const careerSystemStore = useSimulationCareerSystemStore();
+    const newbieGoalsStore = useSimulationNewbieGoalsStore();
+    const skinDevelopmentStore = useSimulationSkinDevelopmentStore();
+    const heroDevelopmentStore = useSimulationHeroDevelopmentStore();
+    const businessDataStore = useSimulationBusinessDataStore();
+    const coreGoalsStore = useSimulationCoreGoalsStore();
+    const lotteryStorageStore = useLotteryStorageStore();
+    const heroSkinStore = useHeroSkinStore();
+    const modalStore = useModalStore();
+
+    gameStore.resetResources();
+    gameStore.resetStatistics();
+    simulationGameStateStore.resetGameState();
+    playerStore.resetPlayer();
+    simulationStore.resetSimulation();
+    taskSystemStore.resetTaskSystem();
+    careerSystemStore.resetCareerSystem();
+    newbieGoalsStore.resetNewbieGoals();
+    skinDevelopmentStore.resetSkinDevelopmentSystem();
+    heroDevelopmentStore.resetHeroDevelopmentSystem();
+    businessDataStore.resetBusinessData();
+    coreGoalsStore.$reset();
+    lotteryStorageStore.$reset();
+    heroSkinStore.clearAllData();
+    modalStore.$reset();
+
+    const localStorageKeys = [
+      'game-snapshots',
+      'pinia-game',
+      'pinia-simulationGameState',
+      'pinia-player',
+      'pinia-simulation',
+      'simulation-task-system',
+      'simulation-career-system',
+      'simulation-newbie-goals',
+      'simulation-skin-development',
+      'simulation-hero-development',
+      'simulation-business-data',
+      'simulation-core-goals',
+      'lottery-storage',
+      'hero-skin-data',
+      'desktop-apps',
+      'app-store-installed-apps',
+      'heroes-storage',
+      'skins-storage',
+    ];
+
+    localStorageKeys.forEach((key) => {
+      localStorage.removeItem(key);
+    });
+
+    desktopApps.value = initialDesktopApps;
+    resetAppPositions(desktopApps.value);
+    saveDesktopApps();
+
+    activeApps.value = [];
+    minimizedApps.value = [];
+    openModals.value = [];
+
+    window.location.reload();
+  }
+};
+
+// 打开游戏设置（由 DesktopTaskbar 调用）
+const openGameSettings = (): void => {
+  let settingsApp = desktopApps.value.find((app) => app.id === 'game-settings');
+
+  if (!settingsApp) {
+    settingsApp = {
+      id: 'game-settings',
+      name: '游戏设置',
+      icon: '⚙️',
+      position: { x: 0, y: 0 },
+      coreData: {},
+      modules: [
+        { id: 'basic-settings', name: '基本设置' },
+        { id: 'advanced-settings', name: '高级设置' },
+        { id: 'about', name: '关于' },
+      ],
+    };
+
+    desktopApps.value.push(settingsApp);
+    resetAppPositions(desktopApps.value);
+    saveDesktopApps();
+  }
+
+  openApp(settingsApp);
+};
+
+// 处理直接退出
+const handleExit = () => {
+  showExitDialog.value = false;
+  router.push('/');
+};
+
+// 处理保存后退出
+const handleSaveAndExit = () => {
+  showExitDialog.value = false;
+  saveGame();
+  router.push('/');
+};
+
+// 初始化
+onMounted(() => {
+  updateAppData();
+
+  const gameReleaseApp = desktopApps.value.find((app) => app.id === 'game-release');
+  if (!gameReleaseApp) {
+    desktopApps.value.push({
+      id: 'game-release',
+      name: '游戏发布',
+      icon: '📦',
+      position: { x: 450, y: 50 },
+      coreData: {},
+      modules: [{ id: 'game-release', name: '游戏发布' }],
+    });
+    resetAppPositions(desktopApps.value);
+    saveDesktopApps();
+  }
 });
 
 // 更新桌面应用数据
@@ -693,551 +727,36 @@ const updateModal = (updatedModal: Modal): void => {
     openModals.value[index] = updatedModal;
   }
 };
-
-// 开始菜单状态
-const isStartMenuOpen = ref(false);
-
-// 切换开始菜单显示/隐藏
-const toggleStartMenu = (): void => {
-  isStartMenuOpen.value = !isStartMenuOpen.value;
-};
-
-// 关闭开始菜单
-const closeStartMenu = (): void => {
-  isStartMenuOpen.value = false;
-};
-
-// 保存游戏
-const saveGame = (): void => {
-  // 获取所有相关store的实例
-  const gameStore = useGameStore();
-  const simulationGameStateStore = useSimulationGameStateStore();
-  const playerStore = usePlayerStore();
-  const simulationStore = useSimulationStore();
-
-  // 创建游戏状态快照
-  const gameSnapshot = {
-    timestamp: Date.now(),
-    gameStore: gameStore.$state,
-    simulationGameStateStore: simulationGameStateStore.$state,
-    playerStore: playerStore.$state,
-    simulationStore: simulationStore.$state,
-    desktopApps: desktopApps.value,
-  };
-
-  // 保存到localStorage
-  const savedGames = JSON.parse(localStorage.getItem('game-snapshots') || '[]');
-  savedGames.push(gameSnapshot);
-  localStorage.setItem('game-snapshots', JSON.stringify(savedGames));
-
-  closeStartMenu();
-};
-
-// 重新开始游戏
-const restartGame = (): void => {
-  // 确认重新开始
-  if (confirm('确定要重新开始游戏吗？所有进度将丢失！')) {
-    // 获取所有相关store的实例
-    const gameStore = useGameStore();
-    const simulationGameStateStore = useSimulationGameStateStore();
-    const playerStore = usePlayerStore();
-    const simulationStore = useSimulationStore();
-    const taskSystemStore = useSimulationTaskSystemStore();
-    const careerSystemStore = useSimulationCareerSystemStore();
-    const newbieGoalsStore = useSimulationNewbieGoalsStore();
-    const skinDevelopmentStore = useSimulationSkinDevelopmentStore();
-    const heroDevelopmentStore = useSimulationHeroDevelopmentStore();
-    const businessDataStore = useSimulationBusinessDataStore();
-    const coreGoalsStore = useSimulationCoreGoalsStore();
-    const lotteryStorageStore = useLotteryStorageStore();
-    const heroSkinStore = useHeroSkinStore();
-    const modalStore = useModalStore();
-
-    // 重置各个store的状态
-    gameStore.resetResources();
-    gameStore.resetStatistics();
-    simulationGameStateStore.resetGameState();
-    playerStore.resetPlayer();
-    simulationStore.resetSimulation();
-    taskSystemStore.resetTaskSystem();
-    careerSystemStore.resetCareerSystem();
-    newbieGoalsStore.resetNewbieGoals();
-    skinDevelopmentStore.resetSkinDevelopmentSystem();
-    heroDevelopmentStore.resetHeroDevelopmentSystem();
-    businessDataStore.resetBusinessData();
-    coreGoalsStore.$reset();
-    lotteryStorageStore.$reset();
-    heroSkinStore.clearAllData();
-    modalStore.$reset();
-
-    // 清除所有相关的localStorage数据
-    const localStorageKeys = [
-      'game-snapshots',
-      'pinia-game',
-      'pinia-simulationGameState',
-      'pinia-player',
-      'pinia-simulation',
-      'simulation-task-system',
-      'simulation-career-system',
-      'simulation-newbie-goals',
-      'simulation-skin-development',
-      'simulation-hero-development',
-      'simulation-business-data',
-      'simulation-core-goals',
-      'lottery-storage',
-      'hero-skin-data',
-      'desktop-apps',
-      'app-store-installed-apps',
-      'heroes-storage',
-      'skins-storage',
-    ];
-
-    localStorageKeys.forEach((key) => {
-      localStorage.removeItem(key);
-    });
-
-    // 重置桌面应用为初始状态
-    desktopApps.value = initialDesktopApps;
-    resetAppPositions(desktopApps.value);
-    saveDesktopApps();
-
-    // 重置活跃应用和模态框
-    activeApps.value = [];
-    minimizedApps.value = [];
-    openModals.value = [];
-
-    closeStartMenu();
-
-    // 刷新页面以确保所有状态都被重置
-    window.location.reload();
-  }
-};
-
-// 打开游戏设置
-const openGameSettings = (): void => {
-  // 检查游戏设置应用是否已存在
-  let settingsApp = desktopApps.value.find((app) => app.id === 'game-settings');
-
-  // 如果不存在，添加到桌面应用列表
-  if (!settingsApp) {
-    settingsApp = {
-      id: 'game-settings',
-      name: '游戏设置',
-      icon: '⚙️',
-      position: { x: 0, y: 0 }, // 初始位置，后续会重置
-      coreData: {},
-      modules: [
-        { id: 'basic-settings', name: '基本设置' },
-        { id: 'advanced-settings', name: '高级设置' },
-        { id: 'about', name: '关于' },
-      ],
-    };
-
-    // 添加新应用到桌面
-    desktopApps.value.push(settingsApp);
-
-    // 重置所有应用位置，确保整齐排列
-    resetAppPositions(desktopApps.value);
-
-    // 保存桌面应用到本地存储
-    saveDesktopApps();
-  }
-
-  // 打开游戏设置应用
-  openApp(settingsApp);
-
-  closeStartMenu();
-};
-
-// 初始化
-onMounted(() => {
-  // 初始更新应用数据
-  updateAppData();
-
-  // 确保游戏发布应用已正确配置
-  const gameReleaseApp = desktopApps.value.find((app) => app.id === 'game-release');
-  if (!gameReleaseApp) {
-    // 如果游戏发布应用不存在，添加到桌面
-    desktopApps.value.push({
-      id: 'game-release',
-      name: '游戏发布',
-      icon: '📦',
-      position: { x: 450, y: 50 },
-      coreData: {},
-      modules: [{ id: 'game-release', name: '游戏发布' }],
-    });
-    resetAppPositions(desktopApps.value);
-    saveDesktopApps();
-  }
-});
-
-// 处理直接退出
-const handleExit = () => {
-  showExitDialog.value = false;
-  // 直接返回主页，不执行保存
-  router.push('/');
-};
-
-// 处理保存后退出
-const handleSaveAndExit = () => {
-  showExitDialog.value = false;
-  // 调用保存游戏方法
-  saveGame();
-  // 保存完成后返回主页
-  router.push('/');
-};
 </script>
 
 <style lang="scss" scoped>
+// ============================================
+// DesktopSystem 组件样式
+// ============================================
+
 .desktop-system {
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #1a1a2e;
-  color: #fff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: tokens.$bg-dark;
+  color: tokens.$text-primary;
+  font-family: tokens.$font-family-base;
   overflow: hidden;
-}
 
-/* 刘海栏样式 */
-.notch-bar {
-  height: 60px;
-  background: linear-gradient(135deg, #0a1027 0%, #1a2332 100%);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 9999;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+  /* 弹出层 */
+  .desktop-modals {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 150;
+    pointer-events: none;
 
-  .notch-info-left {
-    display: flex;
-    align-items: center;
-    margin-left: 20px;
-
-    /* 用户信息样式 */
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-
-      .user-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 8px;
-        background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 2px 8px rgba(255, 215, 0, 0.5);
-        border: 2px solid rgba(255, 255, 255, 0.3);
-      }
-
-      .avatar-placeholder {
-        font-size: 18px;
-        font-weight: bold;
-        color: #0a1027;
-      }
-
-      .user-name {
-        font-size: 16px;
-        font-weight: bold;
-        color: #fff;
-
-        .name {
-          width: 150px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-
-          .notch-value {
-            // tag
-            padding: 2px 5px;
-            border-radius: 4px;
-            background-color: #f40;
-            color: #fff;
-          }
-        }
-      }
+    > * {
+      pointer-events: auto;
     }
   }
-}
-
-/* 升级特效样式 */
-.level-up-effect {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-  animation: levelUpEffect 3s ease-out forwards;
-}
-
-.level-up-message {
-  background-color: rgb(0 0 0 / 80%);
-  color: #4a9eff;
-  font-size: 32px;
-  font-weight: bold;
-  padding: 20px 40px;
-  border-radius: 10px;
-  text-shadow: 0 0 10px rgb(74 158 255 / 80%);
-  box-shadow: 0 0 30px rgb(74 158 255 / 50%);
-  animation: levelUpPulse 1.5s ease-in-out infinite;
-}
-
-@keyframes levelUpEffect {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.5);
-  }
-
-  20% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.1);
-  }
-
-  80% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
-@keyframes levelUpPulse {
-  0%,
-  100% {
-    text-shadow: 0 0 10px rgb(74 158 255 / 80%);
-    box-shadow: 0 0 30px rgb(74 158 255 / 50%);
-  }
-
-  50% {
-    text-shadow: 0 0 20px rgb(74 158 255 / 100%);
-    box-shadow: 0 0 50px rgb(74 158 255 / 80%);
-  }
-}
-
-.desktop-background {
-  flex: 1;
-  position: relative;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  overflow: hidden;
-  margin-top: 0;
-  padding-top: 25px;
-
-  /* 添加顶部内边距，确保内容不被刘海栏遮挡 */
-}
-
-.desktop-icons {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-  pointer-events: none;
-}
-
-.desktop-icons > * {
-  pointer-events: auto;
-}
-
-/* 任务栏样式 */
-.taskbar {
-  height: 48px;
-  background-color: rgb(26 26 46 / 95%);
-  border-top: 1px solid #333;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 10px;
-  z-index: 100;
-  box-shadow: 0 -2px 10px rgb(0 0 0 / 30%);
-}
-
-.taskbar-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.start-button {
-  padding: 8px 16px;
-  background-color: #4a9eff;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.2s ease;
-}
-
-.start-button:hover {
-  background-color: #357abd;
-  transform: translateY(-1px);
-}
-
-.taskbar-apps {
-  display: flex;
-  gap: 5px;
-  overflow-x: auto;
-  max-width: calc(100% - 200px);
-}
-
-.taskbar-app {
-  padding: 8px 16px;
-  background-color: rgb(74 158 255 / 20%);
-  border-radius: 4px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.2s ease;
-  border: 1px solid transparent;
-}
-
-.taskbar-app:hover {
-  background-color: rgb(74 158 255 / 40%);
-}
-
-.taskbar-app.active {
-  background-color: rgb(74 158 255 / 60%);
-  border-color: #4a9eff;
-}
-
-.taskbar-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.game-date {
-  padding: 8px 16px;
-  background-color: rgb(0 0 0 / 20%);
-  border-radius: 4px;
-  font-size: 14px;
-  color: #4a9eff;
-  font-weight: bold;
-}
-
-.system-time {
-  padding: 8px 16px;
-  background-color: rgb(0 0 0 / 20%);
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-/* 弹出框内容 */
-.desktop-modals {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 150;
-  pointer-events: none;
-}
-
-.desktop-modals > * {
-  pointer-events: auto;
-}
-
-/* 开始菜单样式 */
-.start-menu-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 98;
-  background-color: rgb(0 0 0 / 0%);
-}
-
-.start-menu {
-  position: absolute;
-  bottom: 48px;
-  left: 0;
-  width: 280px;
-  background-color: rgb(26 26 46 / 95%);
-  border: 1px solid #333;
-  border-radius: 8px 8px 0 0;
-  box-shadow: 0 -2px 15px rgb(0 0 0 / 50%);
-  z-index: 99;
-  display: flex;
-  flex-direction: column;
-  animation: startMenuSlideUp 0.2s ease-out forwards;
-  transform-origin: bottom left;
-}
-
-@keyframes startMenuSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.start-menu-header {
-  padding: 12px 16px;
-  border-bottom: 1px solid #333;
-  background-color: rgb(74 158 255 / 10%);
-  border-radius: 8px 8px 0 0;
-}
-
-.start-menu-header h2 {
-  margin: 0;
-  font-size: 18px;
-  font-weight: bold;
-  color: #4a9eff;
-}
-
-.start-menu-content {
-  padding: 8px 0;
-  flex: 1;
-  overflow-y: auto;
-}
-
-.start-menu-buttons {
-  display: flex;
-  flex-direction: column;
-}
-
-.start-menu-button {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-align: left;
-}
-
-.start-menu-button:hover {
-  background-color: rgb(74 158 255 / 30%);
-}
-
-.start-menu-button:active {
-  background-color: rgb(74 158 255 / 50%);
-}
-
-.button-icon {
-  font-size: 20px;
-}
-
-.button-text {
-  flex: 1;
 }
 </style>

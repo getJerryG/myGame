@@ -2,7 +2,7 @@
   <div class="login-reward-config">
     <div class="config-section">
       <h4 class="section-title">登录奖励配置</h4>
-      <p class="section-description">设置连续登录奖励，激励玩家保持活�?/p>
+      <p class="section-description">设置连续登录奖励，激励玩家保持活跃</p>
 
       <!-- 奖励序列配置 -->
       <div class="reward-sequence">
@@ -19,28 +19,35 @@
             @drop="onDrop($event, index)"
           >
             <div class="day-header">
-              <span class="day-number">第{{ index + 1 }}�?/span>
+              <span class="day-number">第{{ index + 1 }}天</span>
               <button
                 v-if="index > 0"
                 class="remove-btn"
                 @click="removeLoginReward(index)"
               >
-                �?              </button>
+                ×
+              </button>
             </div>
             <div class="reward-preview">
               <span class="reward-icon">{{ day.reward.icon }}</span>
               <div class="reward-info">
                 <div class="reward-name">{{ day.reward.name }}</div>
-                <div class="reward-amount">{{ day.reward.amount }}�?/div>
+                <div class="reward-amount">{{ day.reward.amount }}个</div>
               </div>
             </div>
-            <button class="edit-btn" @click="openRewardEditor(day, index)">
+            <button
+              class="edit-btn"
+              @click="openRewardEditor(day, index)"
+            >
               编辑
             </button>
           </div>
 
           <!-- 添加奖励按钮 -->
-          <div class="day-item add-item" @click="addLoginReward">
+          <div
+            class="day-item add-item"
+            @click="addLoginReward"
+          >
             <span class="add-icon">+</span>
             <span class="add-label">添加奖励</span>
           </div>
@@ -50,7 +57,7 @@
   </div>
 </template>
 
-<script setup lang=ts>
+<script setup lang="ts">
 import { ref, watch } from 'vue';
 
 const props = defineProps({
@@ -65,9 +72,11 @@ const emit = defineEmits(['update:loginRewards']);
 // 本地副本
 const localLoginRewards = ref([...props.loginRewards]);
 
-// 拖拽状�?const draggedIndex = ref(null);
+// 拖拽状态
+const draggedIndex = ref(null);
 
-// 监听props变化，更新本地状�?watch(
+// 监听props变化，更新本地状态
+watch(
   () => props.loginRewards,
   (newRewards) => {
     localLoginRewards.value = [...newRewards];
@@ -75,7 +84,8 @@ const localLoginRewards = ref([...props.loginRewards]);
   { deep: true }
 );
 
-// 监听本地状态变化，通知父组�?watch(
+// 监听本地状态变化，通知父组件
+watch(
   localLoginRewards,
   (newRewards) => {
     emit('update:loginRewards', [...newRewards]);
@@ -83,7 +93,8 @@ const localLoginRewards = ref([...props.loginRewards]);
   { deep: true }
 );
 
-// 拖拽开�?function onDragStart(event: DragEvent, index: number): void {
+// 拖拽开始
+function onDragStart(event: DragEvent, index: number): void {
   draggedIndex.value = index;
   if (event.dataTransfer) {
     event.dataTransfer.effectAllowed = 'move';
@@ -127,118 +138,104 @@ function removeLoginReward(index: number): void {
   });
 }
 
-// 打开奖励编辑�?function openRewardEditor(): void {
+// 打开奖励编辑器
+function openRewardEditor(): void {
   // 这里可以实现奖励编辑逻辑
 }
 </script>
 
-<style lang=scss scoped>
+<style lang="scss" scoped>
+
 .login-reward-config {
   padding: 0;
 }
 
 /* 配置区块 */
 .config-section {
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-md);
-  padding: 20px;
+  @include utils.config-section;
 }
 
 .section-title {
-  font-size: var(--text-base);
-  font-weight: var(--font-semibold);
-  color: var(--text-primary);
-  margin: 0 0 8px;
+  @include utils.section-title;
 }
 
 .section-description {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-  margin: 0 0 20px;
+  @include utils.section-description;
 }
 
 /* 登录奖励序列 */
 .reward-sequence {
-  margin-top: 20px;
-}
+  margin-top: tokens.$spacing-lg;
 
-.reward-sequence h5 {
-  font-size: var(--text-sm);
-  font-weight: var(--font-semibold);
-  color: var(--primary-gold);
-  margin: 0 0 15px;
+  h5 {
+    @include utils.subsection-title;
+  }
 }
 
 .sequence-container {
   display: flex;
-  gap: 15px;
+  gap: tokens.$spacing-md;
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  margin-bottom: tokens.$spacing-lg;
 }
 
 .day-item {
   width: 120px;
-  background-color: rgb(255 255 255 / 5%);
-  border-radius: var(--radius-md);
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  transition: all var(--transition-fast);
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  padding: tokens.$spacing-md;
+  @include utils.flex-col(tokens.$spacing-sm, center);
+  transition: all tokens.$transition-fast;
   border: 1px solid transparent;
-}
 
-.day-item:hover {
-  background-color: rgb(255 255 255 / 10%);
-  border-color: var(--border-light);
-  transform: translateY(-2px);
-}
+  &:hover {
+    background-color: tokens.$bg-lighter;
+    border-color: tokens.$border-light;
+    transform: translateY(-2px);
+  }
 
-.day-item.draggable:hover {
-  cursor: grab;
-}
+  &.draggable {
+    &:hover {
+      cursor: grab;
+    }
 
-.day-item.draggable:active {
-  cursor: grabbing;
+    &:active {
+      cursor: grabbing;
+    }
+  }
 }
 
 .day-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include utils.flex-between;
   width: 100%;
 }
 
 .day-number {
-  font-size: var(--text-xs);
-  font-weight: var(--font-bold);
-  color: var(--primary-gold);
+  font-size: tokens.$font-size-xs;
+  font-weight: tokens.$font-weight-bold;
+  color: tokens.$primary-gold;
 }
 
 .remove-btn {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 14px;
-  color: var(--text-muted);
-  transition: color var(--transition-fast);
-  padding: 2px;
-}
+  font-size: tokens.$font-size-base;
+  color: tokens.$text-muted;
+  transition: color tokens.$transition-fast;
+  padding: tokens.$spacing-xs;
 
-.remove-btn:hover {
-  color: var(--danger-red);
+  &:hover {
+    color: tokens.$danger-red;
+  }
 }
 
 .reward-preview {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  @include utils.flex-col(tokens.$spacing-xs, center);
 }
 
 .reward-icon {
-  font-size: 24px;
+  font-size: tokens.$font-size-2xl;
 }
 
 .reward-info {
@@ -246,74 +243,67 @@ function removeLoginReward(index: number): void {
 }
 
 .reward-name {
-  font-size: var(--text-xs);
-  font-weight: var(--font-medium);
-  color: var(--text-primary);
+  font-size: tokens.$font-size-xs;
+  font-weight: tokens.$font-weight-medium;
+  color: tokens.$text-primary;
 }
 
 .reward-amount {
-  font-size: var(--text-xs);
-  color: var(--text-secondary);
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
 }
 
 .edit-btn {
-  padding: 6px 12px;
-  background-color: rgb(255 255 255 / 10%);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-sm);
-  font-size: var(--text-xs);
-  color: var(--text-secondary);
+  padding: tokens.$spacing-xs tokens.$spacing-sm;
+  background-color: tokens.$bg-lighter;
+  border: 1px solid tokens.$border-light;
+  border-radius: tokens.$radius-sm;
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-secondary;
   cursor: pointer;
-  transition: all var(--transition-fast);
-}
+  transition: all tokens.$transition-fast;
 
-.edit-btn:hover {
-  background-color: rgb(59 130 246 / 20%);
-  color: var(--text-primary);
+  &:hover {
+    background-color: rgb(59 130 246 / 20%);
+    color: tokens.$text-primary;
+  }
 }
 
 /* 添加奖励按钮 */
 .add-item {
-  border: 2px dashed var(--border-light);
+  border: 2px dashed tokens.$border-light;
   background-color: transparent;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  @include utils.flex-col(tokens.$spacing-sm, center, center);
   min-height: 150px;
   cursor: pointer;
-  transition: all var(--transition-fast);
-}
+  transition: all tokens.$transition-fast;
 
-.add-item:hover {
-  border-color: var(--primary-gold);
-  background-color: rgb(251 191 36 / 10%);
+  &:hover {
+    border-color: tokens.$primary-gold;
+    background-color: rgb(251 191 36 / 10%);
+  }
 }
 
 .add-icon {
-  font-size: 24px;
+  font-size: tokens.$font-size-2xl;
   font-weight: bold;
-  color: var(--text-muted);
+  color: tokens.$text-muted;
 }
 
 .add-label {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
+  font-size: tokens.$font-size-xs;
+  color: tokens.$text-muted;
 }
 
-/* 响应式设�? */
-@media (width <= 768px) {
+/* 响应式设计 */
+@include utils.mobile {
   .sequence-container {
     justify-content: center;
   }
 
   .day-item {
     width: 100px;
-    padding: 10px;
+    padding: tokens.$spacing-sm;
   }
 }
 </style>
-
-
-
-

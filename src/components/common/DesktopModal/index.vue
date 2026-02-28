@@ -8,27 +8,39 @@
     :style="modalStyle"
     @mousedown="startDrag"
   >
-    <!-- 标题�?->
-    <div class="modal-header" @mousedown.stop="startDragHeader">
+    <!-- 标题栏 -->
+    <div
+      class="modal-header"
+      @mousedown.stop="startDragHeader"
+    >
       <div class="modal-title">
         <span class="app-icon">{{ app.icon }}</span>
         <span class="app-name">{{ app.name }}</span>
       </div>
       <div class="modal-controls">
-        <button class="control-button minimize" @click.stop="$emit('minimize')">
-          <span>�?/span>
+        <button
+          class="control-button minimize"
+          @click.stop="$emit('minimize')"
+        >
+          <span>−</span>
         </button>
-        <button class="control-button maximize" @click.stop="$emit('maximize')">
-          <span v-if="!modal.isMaximized">�?/span>
-          <span v-else>�?/span>
+        <button
+          class="control-button maximize"
+          @click.stop="$emit('maximize')"
+        >
+          <span v-if="!modal.isMaximized">□</span>
+          <span v-else>❐</span>
         </button>
-        <button class="control-button close" @click.stop="$emit('close')">
+        <button
+          class="control-button close"
+          @click.stop="$emit('close')"
+        >
           <span>×</span>
         </button>
       </div>
     </div>
 
-    <!-- 主要内容区域 - 动态加载应用组�?-->
+    <!-- 主要内容区域 - 动态加载应用组件 -->
     <div class="modal-content">
       <template v-if="currentAppComponent">
         <component
@@ -41,10 +53,10 @@
       </template>
       <template v-else>
         <div class="error-container">
-            <h3>应用组件不存�?/h3>
-            <p>无法加载应用: {{ app.id }}</p>
-            <p>请检查应用配置或联系管理�?/p>
-          </div>
+          <h3>应用组件不存在</h3>
+          <p>无法加载应用: {{ app.id }}</p>
+          <p>请检查应用配置或联系管理员</p>
+        </div>
       </template>
     </div>
   </div>
@@ -53,7 +65,8 @@
 <script setup lang="ts">
 import { ref, computed, onUnmounted } from 'vue';
 
-// 导入所有应用组�?import ChatApp from '@/components/business/apps/chat/ChatApp.vue';
+// 导入所有应用组件
+import ChatApp from '@/components/business/apps/chat/ChatApp.vue';
 import DataCenterApp from '@/components/business/apps/DataCenter/DataCenterApp.vue';
 import OperationsApp from '@/components/business/apps/operations/OperationsApp.vue';
 import ContentApp from '@/components/business/apps/content/ContentApp.vue';
@@ -111,8 +124,8 @@ const appComponents = {
   'app-store': AppStore,
   'hero-development': HeroApp,
   'skin-development': SkinApp,
-  'event-development': OperationsApp, // 事件开发使用运营管理组
-  'game-release': GameReleaseApp, // 游戏发布使用专门的游戏发布组
+  'event-development': OperationsApp, // 事件开发使用运营管理组件
+  'game-release': GameReleaseApp, // 游戏发布使用专门的游戏发布组件
 };
 
 // 获取当前应用组件
@@ -127,7 +140,8 @@ const modalStyle = computed(() => {
       left: '0px',
       top: '0px',
       width: '100%',
-      height: 'calc(100% - 48px)', // 减去任务栏高�?      zIndex: 100,
+      height: 'calc(100% - 48px)', // 减去任务栏高度
+      zIndex: 100,
     };
   }
 
@@ -155,17 +169,11 @@ const modalStyle = computed(() => {
 // 拖拽功能
 const startDrag = (e: MouseEvent): void => {
   // 排除控制按钮区域，防止点击按钮时触发拖拽
-  if (
-    (e.target as Element).closest('.control-button') ||
-    (e.target as Element).closest('.modal-controls')
-  ) {
+  if ((e.target as Element).closest('.control-button') || (e.target as Element).closest('.modal-controls')) {
     return;
   }
 
-  if (
-    e.target.classList.contains('modal-header') ||
-    (e.target as Element).closest('.modal-header')
-  ) {
+  if (e.target.classList.contains('modal-header') || (e.target as Element).closest('.modal-header')) {
     startDragHeader(e);
   }
 };
@@ -186,22 +194,26 @@ const startDragHeader = (e: MouseEvent): void => {
 const drag = (e: MouseEvent): void => {
   if (!isDragging.value) return;
 
-  // 获取桌面容器尺寸（减去任务栏高度48px�?  const desktopWidth = window.innerWidth;
+  // 获取桌面容器尺寸（减去任务栏高度48px）
+  const desktopWidth = window.innerWidth;
   const desktopHeight = window.innerHeight - 48;
 
   // 计算新的位置
   let newX = e.clientX - dragOffset.value.x;
   let newY = e.clientY - dragOffset.value.y;
 
-  // 碰撞检�? 确保窗口不会超出桌面范围
-  // 左边�?  newX = Math.max(0, newX);
-  // 上边�?  newY = Math.max(0, newY);
-  // 右边�?- 考虑窗口宽度
+  // 碰撞检测 - 确保窗口不会超出桌面范围
+  // 左边界
+  newX = Math.max(0, newX);
+  // 上边界
+  newY = Math.max(0, newY);
+  // 右边界 - 考虑窗口宽度
   newX = Math.min(desktopWidth - props.modal.size.width, newX);
-  // 下边�?- 考虑窗口高度
+  // 下边界 - 考虑窗口高度
   newY = Math.min(desktopHeight - props.modal.size.height, newY);
 
-  // 更新拖拽位置，用于实时渲�?  dragPosition.value = { x: newX, y: newY };
+  // 更新拖拽位置，用于实时渲染
+  dragPosition.value = { x: newX, y: newY };
 
   // 使用requestAnimationFrame优化性能
   if (!animationFrameId) {
@@ -215,8 +227,7 @@ const drag = (e: MouseEvent): void => {
 const stopDrag = (): void => {
   if (
     isDragging.value &&
-    (dragPosition.value.x !== props.modal.position.x ||
-      dragPosition.value.y !== props.modal.position.y)
+    (dragPosition.value.x !== props.modal.position.x || dragPosition.value.y !== props.modal.position.y)
   ) {
     // 只有当位置发生变化时才更新modal
     const updatedModal = {
@@ -227,81 +238,82 @@ const stopDrag = (): void => {
   }
 
   // 直接将isDragging设为false，不再等待nextTick
-  // 同步dragPosition与props.modal.position，确保状态一�?  dragPosition.value = { ...props.modal.position };
+  // 同步dragPosition与props.modal.position，确保状态一致
+  dragPosition.value = { ...props.modal.position };
   isDragging.value = false;
 
-  // 清理事件监听�?  document.removeEventListener('mousemove', drag);
+  // 清理事件监听器
+  document.removeEventListener('mousemove', drag);
   document.removeEventListener('mouseup', stopDrag);
 
-  // 取消动画�?  if (animationFrameId) {
+  // 取消动画帧
+  if (animationFrameId) {
     cancelAnimationFrame(animationFrameId);
     animationFrameId = null;
   }
 };
 
-// 组件卸载时清理事件监�?onUnmounted(() => {
+// 组件卸载时清理事件监听器
+onUnmounted(() => {
   document.removeEventListener('mousemove', drag);
   document.removeEventListener('mouseup', stopDrag);
 });
 </script>
 
-<style lang=scss scoped>
+<style lang="scss" scoped>
+
 .desktop-modal {
   position: absolute;
   background-color: rgb(26 26 46 / 95%);
-  border: 1px solid #4a9eff;
-  border-radius: 8px;
-  box-shadow: 0 8px 32px rgb(0 0 0 / 50%), 0 0 0 2px rgb(255 255 255 / 80%);
+  border: 1px solid tokens.$primary-blue;
+  border-radius: tokens.$radius-lg;
+  box-shadow:
+    0 8px 32px rgb(0 0 0 / 50%),
+    0 0 0 2px rgb(255 255 255 / 80%);
   overflow: hidden;
   transition: all 0.08s ease;
   min-width: 600px;
   min-height: 400px;
-  display: flex;
-  flex-direction: column;
+  @include utils.flex-col(tokens.$spacing-none, stretch, flex-start);
+
+  &.is-maximized {
+    border-radius: 0;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  &.is-minimized {
+    display: none;
+  }
 }
 
-.desktop-modal.is-maximized {
-  border-radius: 0;
-  min-width: 0;
-  min-height: 0;
-}
-
-.desktop-modal.is-minimized {
-  display: none;
-}
-
-/* 标题栏样�? */
+/* 标题栏样式 */
 .modal-header {
   height: 48px;
   background-color: rgb(74 158 255 / 20%);
-  border-bottom: 1px solid #333;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 16px;
+  border-bottom: 1px solid tokens.$border-medium;
+  @include utils.flex-between;
+  padding: 0 tokens.$spacing-lg;
   cursor: move;
   user-select: none;
 }
 
 .modal-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+  @include utils.flex-row(tokens.$spacing-sm, center);
 
-.modal-title .app-icon {
-  font-size: 20px;
-}
+  .app-icon {
+    font-size: tokens.$font-size-xl;
+  }
 
-.modal-title .app-name {
-  font-size: 16px;
-  font-weight: bold;
-  color: #fff;
+  .app-name {
+    font-size: tokens.$font-size-lg;
+    font-weight: tokens.$font-weight-bold;
+    color: tokens.$text-primary;
+  }
 }
 
 .modal-controls {
-  display: flex;
-  gap: 4px;
+  @include utils.flex-row(tokens.$spacing-xs, center);
 }
 
 .control-button {
@@ -309,28 +321,26 @@ const stopDrag = (): void => {
   height: 32px;
   background-color: transparent;
   border: none;
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
+  color: tokens.$text-primary;
+  font-size: tokens.$font-size-lg;
+  font-weight: tokens.$font-weight-bold;
   cursor: pointer;
-  border-radius: 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.2s ease;
-}
+  border-radius: tokens.$radius-sm;
+  @include utils.flex-center;
+  transition: all tokens.$transition-fast;
 
-.control-button:hover {
-  background-color: rgb(255 255 255 / 10%);
-}
+  &:hover {
+    background-color: tokens.$bg-lighter;
+  }
 
-.control-button.close:hover {
-  background-color: #ff4757;
-}
+  &.close:hover {
+    background-color: tokens.$error;
+  }
 
-.control-button.minimize:hover,
-.control-button.maximize:hover {
-  background-color: rgb(74 158 255 / 50%);
+  &.minimize:hover,
+  &.maximize:hover {
+    background-color: rgb(74 158 255 / 50%);
+  }
 }
 
 /* 内容区域样式 */
@@ -340,312 +350,288 @@ const stopDrag = (): void => {
   overflow: hidden;
 }
 
-/* 左侧菜单栏样�? */
+/* 左侧菜单栏样式 */
 .modal-sidebar {
   width: 200px;
-  background-color: rgb(0 0 0 / 20%);
-  border-right: 1px solid #333;
+  background-color: tokens.$bg-light;
+  border-right: 1px solid tokens.$border-medium;
   overflow-y: auto;
 }
 
 .sidebar-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
+  @include utils.flex-row(tokens.$spacing-3, center);
+  padding: tokens.$spacing-3 tokens.$spacing-4;
   cursor: pointer;
-  transition: all 0.2s ease;
-  color: #b0b0b0;
+  transition: all tokens.$transition-fast;
+  color: tokens.$text-muted;
   border-left: 3px solid transparent;
-}
 
-.sidebar-item:hover {
-  background-color: rgb(74 158 255 / 20%);
-  color: #fff;
-}
+  &:hover {
+    background-color: rgb(74 158 255 / 20%);
+    color: tokens.$text-primary;
+  }
 
-.sidebar-item.active {
-  background-color: rgb(74 158 255 / 30%);
-  color: #fff;
-  border-left-color: #4a9eff;
+  &.active {
+    background-color: rgb(74 158 255 / 30%);
+    color: tokens.$text-primary;
+    border-left-color: tokens.$primary-blue;
+  }
 }
 
 .sidebar-item-icon {
-  font-size: 18px;
+  font-size: tokens.$font-size-lg;
   width: 20px;
   text-align: center;
 }
 
 .sidebar-item-name {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: tokens.$font-size-sm;
+  font-weight: tokens.$font-weight-medium;
 }
 
 /* 右侧内容区域样式 */
 .modal-main {
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  @include utils.flex-col(tokens.$spacing-none, stretch, flex-start);
   overflow: hidden;
   background-color: rgb(26 26 46 / 50%);
 }
 
 .content-header {
-  padding: 16px;
-  border-bottom: 1px solid #333;
+  padding: tokens.$spacing-lg;
+  border-bottom: 1px solid tokens.$border-medium;
   background-color: rgb(0 0 0 / 10%);
-}
 
-.content-header h2 {
-  margin: 0 0 12px;
-  font-size: 20px;
-  color: #fff;
+  h2 {
+    margin: 0 0 tokens.$spacing-3;
+    font-size: tokens.$font-size-xl;
+    color: tokens.$text-primary;
+  }
 }
 
 .module-core-data {
-  display: flex;
-  gap: 20px;
+  @include utils.flex-row(tokens.$spacing-5, center);
   flex-wrap: wrap;
 }
 
 .core-data-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
+  @include utils.flex-row(tokens.$spacing-2, center);
+  font-size: tokens.$font-size-sm;
 }
 
 .core-data-label {
-  color: #b0b0b0;
+  color: tokens.$text-muted;
 }
 
 .core-data-value {
-  color: #4a9eff;
-  font-weight: bold;
+  color: tokens.$primary-blue;
+  font-weight: tokens.$font-weight-bold;
 }
 
 .content-body {
   flex: 1;
-  padding: 20px;
+  padding: tokens.$spacing-5;
   overflow-y: auto;
-  color: #fff;
+  color: tokens.$text-primary;
 }
 
 .module-content {
   background-color: rgb(0 0 0 / 10%);
-  border-radius: 8px;
-  padding: 20px;
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-5;
   min-height: 200px;
-}
 
-.module-content h3 {
-  margin: 0 0 16px;
-  font-size: 18px;
-  color: #4a9eff;
-}
+  h3 {
+    margin: 0 0 tokens.$spacing-4;
+    font-size: tokens.$font-size-lg;
+    color: tokens.$primary-blue;
+  }
 
-.module-content h4 {
-  margin: 0 0 12px;
-  font-size: 16px;
-  color: #fff;
-}
+  h4 {
+    margin: 0 0 tokens.$spacing-3;
+    font-size: tokens.$font-size-base;
+    color: tokens.$text-primary;
+  }
 
-.module-content p {
-  margin: 0 0 16px;
-  color: #b0b0b0;
-  line-height: 1.6;
+  p {
+    margin: 0 0 tokens.$spacing-4;
+    color: tokens.$text-muted;
+    line-height: tokens.$line-height-relaxed;
+  }
 }
 
 /* 数据卡片样式 */
 .data-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px;
-  margin-top: 16px;
+  gap: tokens.$spacing-4;
+  margin-top: tokens.$spacing-4;
 }
 
 .data-card {
-  background-color: rgb(0 0 0 / 20%);
-  border-radius: 8px;
-  padding: 16px;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-4;
   border: 1px solid rgb(74 158 255 / 20%);
-  transition: all 0.2s ease;
-}
+  transition: all tokens.$transition-fast;
 
-.data-card:hover {
-  border-color: rgb(74 158 255 / 50%);
-  transform: translateY(-2px);
+  &:hover {
+    border-color: rgb(74 158 255 / 50%);
+    transform: translateY(-2px);
+  }
 }
 
 .data-card-header {
-  margin-bottom: 12px;
-  padding-bottom: 8px;
+  margin-bottom: tokens.$spacing-3;
+  padding-bottom: tokens.$spacing-2;
   border-bottom: 1px solid rgb(74 158 255 / 20%);
 }
 
 .data-card-body {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  @include utils.flex-col(tokens.$spacing-3, stretch);
 }
 
 .data-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 0;
+  @include utils.flex-between;
+  padding: tokens.$spacing-2 0;
 }
 
 .data-label {
-  color: #b0b0b0;
-  font-size: 14px;
+  color: tokens.$text-muted;
+  font-size: tokens.$font-size-sm;
 }
 
 .data-value {
-  color: #4a9eff;
-  font-weight: bold;
-  font-size: 16px;
+  color: tokens.$primary-blue;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-base;
 }
 
-/* 图表占位�? */
+/* 图表占位符 */
 .chart-placeholder {
-  background-color: rgb(0 0 0 / 20%);
-  border-radius: 8px;
-  padding: 20px;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-5;
   text-align: center;
   min-height: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @include utils.flex-col(tokens.$spacing-4, center, center);
 }
 
 .trend-data {
-  margin-top: 20px;
+  margin-top: tokens.$spacing-5;
   width: 100%;
   max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  @include utils.flex-col(tokens.$spacing-2, stretch);
 }
 
 .trend-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 12px;
-  background-color: rgb(0 0 0 / 20%);
-  border-radius: 4px;
+  @include utils.flex-between;
+  padding: tokens.$spacing-2 tokens.$spacing-3;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-sm;
 }
 
 .trend-date {
-  color: #b0b0b0;
-  font-size: 14px;
+  color: tokens.$text-muted;
+  font-size: tokens.$font-size-sm;
 }
 
 .trend-value {
-  color: #4a9eff;
-  font-weight: bold;
-  font-size: 14px;
+  color: tokens.$primary-blue;
+  font-weight: tokens.$font-weight-bold;
+  font-size: tokens.$font-size-sm;
 }
 
 /* 任务列表样式 */
 .tasks-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  margin-top: 16px;
+  gap: tokens.$spacing-4;
+  margin-top: tokens.$spacing-4;
 }
 
 .tasks-section {
-  background-color: rgb(0 0 0 / 20%);
-  border-radius: 8px;
-  padding: 16px;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-4;
   border: 1px solid rgb(74 158 255 / 20%);
 }
 
 .task-item {
-  padding: 8px 12px;
-  margin: 8px 0;
-  background-color: rgb(0 0 0 / 20%);
-  border-radius: 4px;
-  color: #b0b0b0;
-  font-size: 14px;
-  transition: all 0.2s ease;
-}
+  padding: tokens.$spacing-2 tokens.$spacing-3;
+  margin: tokens.$spacing-2 0;
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-sm;
+  color: tokens.$text-muted;
+  font-size: tokens.$font-size-sm;
+  transition: all tokens.$transition-fast;
 
-.task-item:hover {
-  background-color: rgb(74 158 255 / 20%);
-  color: #fff;
+  &:hover {
+    background-color: rgb(74 158 255 / 20%);
+    color: tokens.$text-primary;
+  }
 }
 
 /* 关于页面样式 */
 .about-content {
-  background-color: rgb(0 0 0 / 20%);
-  border-radius: 8px;
-  padding: 20px;
-  margin-top: 16px;
-}
+  background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-lg;
+  padding: tokens.$spacing-5;
+  margin-top: tokens.$spacing-4;
 
-.about-content p {
-  margin: 8px 0;
-  color: #b0b0b0;
-  font-size: 14px;
-}
+  p {
+    margin: tokens.$spacing-2 0;
+    color: tokens.$text-muted;
+    font-size: tokens.$font-size-sm;
+  }
 
-.about-content strong {
-  color: #4a9eff;
+  strong {
+    color: tokens.$primary-blue;
+  }
 }
 
 /* 错误提示样式 */
 .error-container {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @include utils.flex-col(tokens.$spacing-3, center, center);
   text-align: center;
-  padding: 20px;
-  background-color: rgb(255 71 87 / 10%);
-  border: 1px solid rgb(255 71 87 / 30%);
-  border-radius: 8px;
-  margin: 20px;
+  padding: tokens.$spacing-5;
+  background-color: rgb(239 68 68 / 10%);
+  border: 1px solid rgb(239 68 68 / 30%);
+  border-radius: tokens.$radius-lg;
+  margin: tokens.$spacing-5;
+
+  h3 {
+    color: tokens.$error;
+    margin-bottom: tokens.$spacing-3;
+    font-size: tokens.$font-size-xl;
+  }
+
+  p {
+    color: tokens.$text-muted;
+    margin: tokens.$spacing-2 0;
+    font-size: tokens.$font-size-sm;
+  }
 }
 
-.error-container h3 {
-  color: #ff4757;
-  margin-bottom: 12px;
-  font-size: 20px;
-}
+/* 滚动条样式 */
+.modal-sidebar,
+.content-body {
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
 
-.error-container p {
-  color: #b0b0b0;
-  margin: 8px 0;
-  font-size: 14px;
-}
+  &::-webkit-scrollbar-track {
+    background: rgb(0 0 0 / 10%);
+  }
 
-/* 滚动条样�? */
-.modal-sidebar::-webkit-scrollbar,
-.content-body::-webkit-scrollbar {
-  width: 8px;
-}
+  &::-webkit-scrollbar-thumb {
+    background: rgb(74 158 255 / 50%);
+    border-radius: tokens.$radius-sm;
 
-.modal-sidebar::-webkit-scrollbar-track,
-.content-body::-webkit-scrollbar-track {
-  background: rgb(0 0 0 / 10%);
-}
-
-.modal-sidebar::-webkit-scrollbar-thumb,
-.content-body::-webkit-scrollbar-thumb {
-  background: rgb(74 158 255 / 50%);
-  border-radius: 4px;
-}
-
-.modal-sidebar::-webkit-scrollbar-thumb:hover,
-.content-body::-webkit-scrollbar-thumb:hover {
-  background: rgb(74 158 255 / 70%);
+    &:hover {
+      background: rgb(74 158 255 / 70%);
+    }
+  }
 }
 </style>
-
-
-
-

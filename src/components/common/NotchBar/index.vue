@@ -25,17 +25,24 @@
 
     <div class="notch-info-right">
       <!-- 资金信息 -->
-      <div class="notch-item">
-        <span class="notch-value">{{ funds }}</span>
+      <div class="notch-item funds-item">
+        <span class="notch-value funds-value">{{ animatedFunds }}</span>
+        <!-- 资金变化提示 -->
+        <transition name="fade" @before-enter="handleBeforeEnter" @enter="handleEnter" @after-enter="handleAfterEnter">
+          <span v-if="showFundChange" class="funds-change-indicator"
+            :class="{ positive: fundChange > 0, negative: fundChange < 0 }">
+            {{ fundChange > 0 ? '+' : '' }}{{ fundChange }}
+          </span>
+        </transition>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref, watch, nextTick } from 'vue';
 
-// 定义组件props
+// 定义组件 props
 const props = defineProps<{
   levelName: string;
   levelRank: string;
@@ -44,11 +51,106 @@ const props = defineProps<{
   funds: number;
 }>();
 
-// 计算经验条百分比
+// 动画资金值
+const animatedFunds = ref(props.funds);
+
+// 资金变化提示相关
+const showFundChange = ref(false);
+const fundChange = ref(0);
+
+// 经验条百分比
 const expProgressPercent = computed(() => {
   if (props.maxExp <= 0) return 0;
   return Math.min(100, Math.floor((props.currentExp / props.maxExp) * 100));
 });
+
+// 监听资金变化
+watch(
+  () => props.funds,
+  async (newFunds, oldFunds) => {
+    if (newFunds === oldFunds) return;
+
+    const change = newFunds - oldFunds;
+
+    // 1. 先设置变化值和显示状态（显示提示）
+    fundChange.value = change;
+    showFundChange.value = true;
+
+    // 2. 等待提示元素显示出来
+    await nextTick();
+
+    // 3. 提示显示后，延迟一小段时间再执行数字滚动
+    await new Promise(resolve => setTimeout(resolve, 300));
+
+    // 4. 执行数字滚动动画
+    await animateValue(oldFunds, newFunds, 500);
+
+    // 5. 数字滚动完成后，再延迟隐藏提示
+    setTimeout(() => {
+      showFundChange.value = false;
+    }, 1000);
+  },
+  { immediate: false }
+);
+
+// 数字滚动动画函数
+const animateValue = (start: number, end: number, duration: number): Promise<void> => {
+  return new Promise((resolve) => {
+    const startTime = performance.now();
+    const startValue = Math.floor(start);
+    const endValue = Math.floor(end);
+    const diff = endValue - startValue;
+
+    // 如果差值很小，直接设置
+    if (Math.abs(diff) < 1) {
+      animatedFunds.value = endValue;
+      resolve();
+      return;
+    }
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // 使用缓动函数（easeOutQuart）
+      const easeProgress = 1 - Math.pow(1 - progress, 4);
+      const currentValue = Math.floor(startValue + diff * easeProgress);
+
+      animatedFunds.value = currentValue;
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        animatedFunds.value = endValue;
+        resolve();
+      }
+    };
+
+    requestAnimationFrame(animate);
+  });
+};
+
+// Transition 钩子函数
+const handleBeforeEnter = (el: Element) => {
+  // 初始状态：完全可见，在数字上方
+  (el as HTMLElement).style.opacity = '1';
+  (el as HTMLElement).style.transform = 'translateY(0) scale(1)';
+};
+
+const handleEnter = (el: Element, done: () => void) => {
+  // 提示元素保持可见一段时间
+  setTimeout(() => {
+    // 数字滚动完成后，开始淡出并向上移动
+    (el as HTMLElement).style.opacity = '0';
+    (el as HTMLElement).style.transform = 'translateY(-20px) scale(0.8)';
+  }, 1200); // 等待数字滚动（500ms）+ 显示一段时间（700ms）后淡出
+
+  setTimeout(done, 2000); // 总时长：淡出动画 800ms
+};
+
+const handleAfterEnter = (el: Element) => {
+  // 动画完成后清理
+};
 </script>
 
 <style scoped lang="scss">
@@ -119,6 +221,68 @@ const expProgressPercent = computed(() => {
   border: 1px solid rgb(255 215 0 / 20%);
   box-shadow: 0 1px 3px rgb(0 0 0 / 30%);
   min-width: 100px;
+  position: relative;
+}
+
+// 资金项特殊样式
+.funds-item {
+  position: relative;
+  overflow: visible;
+}
+
+.funds-value {
+  position: relative;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+// 资金变化提示
+.funds-change-indicator {
+  position: absolute;
+  top: -20px;
+  right: 50%;
+  transform: translateX(50%);
+  font-size: tokens.$font-size-xs;
+  font-weight: tokens.$font-weight-bold;
+  padding: tokens.$spacing-xs tokens.$spacing-sm;
+  border-radius: tokens.$radius-sm;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 30%);
+
+  &.positive {
+    color: #fff;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  }
+
+  &.negative {
+    color: #fff;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  }
+}
+
+// Fade transition
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.fade-enter-from {
+  opacity: 0;
+  transform: translateY(10px) scale(0.8);
+}
+
+.fade-enter-to {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.fade-leave-active {
+  opacity: 0;
+  transform: translateY(-20px) scale(0.8);
 }
 
 .notch-label {

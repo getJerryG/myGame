@@ -22,7 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
 # Environment variables
 .env
 .env.local
@@ -34,6 +33,7 @@ coverage
 visualizer.html
 performance-reports
 localhost?*
+test?*
 
 # Build
 out

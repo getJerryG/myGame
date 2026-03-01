@@ -23,10 +23,9 @@
       3,
       {
         "ignore": [
-          "nested-selectors",
           "pseudo-classes"
         ],
-        "ignoreAtRules": ["media", "include"]
+        "ignoreAtRules": ["media", "include", "mixin"]
       }
     ],
     "block-no-empty": true,

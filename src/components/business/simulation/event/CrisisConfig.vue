@@ -181,6 +181,7 @@ function selectSolution(index: number): void {
 
       .solution-header {
         @include utils.flex-between(center);
+
         margin-bottom: tokens.$spacing-sm;
 
         .solution-name {

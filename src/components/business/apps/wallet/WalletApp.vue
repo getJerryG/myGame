@@ -149,6 +149,7 @@ const handleItemChange = (itemId: string): void => {
 /* 侧边栏菜单 */
 .sidebar-menu {
   @include utils.flex-col(0, stretch);
+
   width: 100%;
   height: 100%;
   background-color: tokens.$bg-secondary;
@@ -158,6 +159,7 @@ const handleItemChange = (itemId: string): void => {
 
 .menu-item {
   @include utils.flex-row(tokens.$spacing-md, center);
+
   padding: tokens.$spacing-md tokens.$spacing-lg;
   background: none;
   border: none;
@@ -192,6 +194,7 @@ const handleItemChange = (itemId: string): void => {
   background-color: tokens.$bg-primary;
   color: tokens.$text-primary;
   overflow-y: auto;
+
   @include utils.custom-scrollbar;
 }
 
@@ -285,11 +288,13 @@ const handleItemChange = (itemId: string): void => {
 /* 交易记录样式 */
 .transaction-history {
   margin-top: tokens.$spacing-md;
+
   @include utils.flex-col(tokens.$spacing-md);
 }
 
 .transaction-item {
   @include utils.flex-between;
+
   background-color: tokens.$bg-secondary;
   padding: tokens.$spacing-md;
   border-radius: tokens.$radius-md;

@@ -274,6 +274,7 @@ const claimSpecialReward = (rewardId: string) => {
 
 .rewards-app {
   @include utils.flex-col(0, stretch);
+
   height: 100%;
   background-color: tokens.$bg-secondary;
   color: tokens.$text-primary;
@@ -308,6 +309,7 @@ const claimSpecialReward = (rewardId: string) => {
   flex: 1;
   padding: tokens.$spacing-lg;
   overflow-y: auto;
+
   @include utils.custom-scrollbar;
 }
 
@@ -340,6 +342,7 @@ const claimSpecialReward = (rewardId: string) => {
 
 .reward-header {
   @include utils.flex-row(tokens.$spacing-md, center);
+
   margin-bottom: tokens.$spacing-md;
 
   .reward-icon {
@@ -362,6 +365,7 @@ const claimSpecialReward = (rewardId: string) => {
 
 .reward-amount {
   @include utils.flex-row(tokens.$space-2, center);
+
   margin-bottom: tokens.$spacing-md;
 
   .amount-label {
@@ -416,6 +420,7 @@ const claimSpecialReward = (rewardId: string) => {
 
 .achievement-item {
   @include utils.flex-between;
+
   background-color: tokens.$bg-light;
   border-radius: tokens.$radius-md;
   padding: tokens.$spacing-md;
@@ -435,6 +440,7 @@ const claimSpecialReward = (rewardId: string) => {
 
 .achievement-info {
   @include utils.flex-row(tokens.$spacing-md, center);
+
   flex: 1;
 }
 

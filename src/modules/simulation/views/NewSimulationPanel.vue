@@ -155,6 +155,7 @@ const startSimulation = () => {
 
 .new-simulation-panel {
   @include utils.flex-col(tokens.$spacing-lg, stretch, flex-start);
+
   padding: tokens.$spacing-xl;
   background-color: tokens.$bg-lighter;
   border-radius: tokens.$radius-lg;
@@ -186,6 +187,7 @@ const startSimulation = () => {
 
 .config-item {
   @include utils.flex-between;
+
   padding: tokens.$spacing-md;
   background-color: tokens.$bg-light;
   border-radius: tokens.$radius-md;
@@ -207,6 +209,7 @@ const startSimulation = () => {
 
 .config-control {
   @include utils.flex-row(tokens.$spacing-sm, center, flex-end);
+
   flex: 1;
 }
 
@@ -216,10 +219,10 @@ const startSimulation = () => {
   border-radius: 4px;
   background: tokens.$bg-light;
   outline: none;
-  -webkit-appearance: none;
+  appearance: none;
 
   &::-webkit-slider-thumb {
-    -webkit-appearance: none;
+    appearance: none;
     appearance: none;
     width: 20px;
     height: 20px;
@@ -279,6 +282,7 @@ const startSimulation = () => {
 
 .panel-actions {
   @include utils.flex-row(tokens.$spacing-md, center, center);
+
   margin-top: tokens.$spacing-lg;
 }
 
@@ -324,6 +328,7 @@ const startSimulation = () => {
 
   .status-header {
     @include utils.flex-row(tokens.$spacing-sm, center, flex-start);
+
     margin-bottom: tokens.$spacing-sm;
 
     .status-icon {
@@ -356,6 +361,7 @@ const startSimulation = () => {
 
   .status-details {
     @include utils.flex-between;
+
     font-size: tokens.$font-size-sm;
     opacity: 0.9;
   }
@@ -366,6 +372,7 @@ const startSimulation = () => {
   100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.5;
   }

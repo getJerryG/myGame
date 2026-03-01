@@ -260,11 +260,14 @@ export default {
 
 .market-sentiment-panel {
   @include utils.panel-base;
+
   padding: tokens.$spacing-lg;
+
   @include utils.flex-col(tokens.$spacing-xl, stretch, flex-start);
 
   .panel-title {
     @include utils.panel-title;
+
     display: flex;
     align-items: center;
     gap: tokens.$spacing-sm;
@@ -336,13 +339,17 @@ export default {
     .feedback-scroll {
       max-height: 200px;
       overflow-y: auto;
+
       @include utils.flex-col(tokens.$spacing-sm, stretch, flex-start);
+
       padding-right: tokens.$spacing-sm;
+
       @include utils.custom-scrollbar;
     }
 
     .feedback-item {
       @include utils.flex-row(tokens.$spacing-md, flex-start, flex-start);
+
       padding: tokens.$spacing-sm;
       background-color: tokens.$bg-light;
       border-radius: tokens.$radius-md;
@@ -373,6 +380,7 @@ export default {
 
       .feedback-content {
         flex: 1;
+
         @include utils.flex-col(tokens.$spacing-xs, stretch, flex-start);
 
         .feedback-text {
@@ -399,6 +407,7 @@ export default {
 
     .decision-item {
       @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+
       padding: tokens.$spacing-sm;
       background-color: tokens.$bg-light;
       border-radius: tokens.$radius-md;
@@ -416,6 +425,7 @@ export default {
 
       .decision-content {
         flex: 1;
+
         @include utils.flex-col(tokens.$spacing-xs, stretch, flex-start);
 
         .decision-title {
@@ -433,6 +443,7 @@ export default {
 
     .empty-state {
       @include utils.flex-center;
+
       gap: tokens.$spacing-md;
       padding: tokens.$spacing-xl tokens.$spacing-lg;
       background-color: tokens.$bg-light;

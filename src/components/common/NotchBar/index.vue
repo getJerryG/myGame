@@ -179,6 +179,7 @@ const handleAfterEnter = (el: Element) => {
   // 右侧信息区
   .notch-info-right {
     @include utils.flex-row(tokens.$spacing-lg);
+
     margin-right: tokens.$spacing-lg;
   }
 }
@@ -193,7 +194,9 @@ const handleAfterEnter = (el: Element) => {
   height: 40px;
   border-radius: tokens.$radius-md;
   background: linear-gradient(135deg, tokens.$primary-gold 0%, tokens.$warning 100%);
+
   @include utils.flex-center;
+
   box-shadow: 0 2px 8px rgb(255 215 0 / 50%);
   border: 2px solid rgb(255 255 255 / 30%);
 }
@@ -214,6 +217,7 @@ const handleAfterEnter = (el: Element) => {
 // 信息项
 .notch-item {
   @include utils.flex-col(tokens.$spacing-xs, center);
+
   padding: tokens.$spacing-sm tokens.$spacing-md;
   background: linear-gradient(135deg, rgb(255 255 255 / 10%) 0%, rgb(255 255 255 / 5%) 100%);
   border-radius: tokens.$radius-full;
@@ -298,6 +302,7 @@ const handleAfterEnter = (el: Element) => {
 // 经验条容器
 .exp-container {
   @include utils.flex-col(tokens.$spacing-xs, center);
+
   width: 100%;
 
   .notch-value {

@@ -100,7 +100,9 @@ export default {
   position: fixed;
   inset: 0;
   background-color: rgb(0 0 0 / 50%);
+
   @include utils.flex-center;
+
   z-index: tokens.$z-modal;
   animation: fadeIn 0.3s ease;
 
@@ -118,6 +120,7 @@ export default {
     from {
       opacity: 0;
     }
+
     to {
       opacity: 1;
     }
@@ -128,6 +131,7 @@ export default {
       transform: translateY(50px);
       opacity: 0;
     }
+
     to {
       transform: translateY(0);
       opacity: 1;
@@ -144,10 +148,12 @@ export default {
 
   .assessment-results {
     @include utils.flex-col(tokens.$spacing-md, stretch, flex-start);
+
     margin-bottom: tokens.$spacing-lg;
 
     .result-item {
       @include utils.flex-between(center);
+
       padding: tokens.$spacing-sm;
       background: tokens.$gray-50;
       border-radius: tokens.$radius-md;

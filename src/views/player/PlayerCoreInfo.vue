@@ -162,6 +162,7 @@ function hideTooltip(): void {
 /* 核心信息头部 */
 .core-info-header {
   @include utils.flex-between;
+
   gap: tokens.$spacing-md;
   padding: tokens.$spacing-md;
   background: linear-gradient(135deg, tokens.$skill-magic-border 0%, tokens.$skill-magic-dark 100%);
@@ -194,6 +195,7 @@ function hideTooltip(): void {
 /* 等级徽章 */
 .level-badge {
   @include utils.flex-row(tokens.$spacing-xs, center, center);
+
   background: tokens.$bg-lighter;
   backdrop-filter: blur(10px);
   padding: tokens.$spacing-sm tokens.$spacing-md;
@@ -217,6 +219,7 @@ function hideTooltip(): void {
 /* 金币显示 */
 .gold-display {
   @include utils.flex-row(tokens.$spacing-xs, center, center);
+
   background: linear-gradient(135deg, #f6e05e 0%, #d69e2e 100%);
   padding: tokens.$spacing-sm tokens.$spacing-md;
   border-radius: tokens.$radius-full;
@@ -270,6 +273,7 @@ function hideTooltip(): void {
 /* 状态头部 */
 .stat-header {
   @include utils.flex-row(tokens.$spacing-sm, center, flex-start);
+
   margin-bottom: tokens.$spacing-sm;
 }
 
@@ -405,6 +409,7 @@ function hideTooltip(): void {
 /* 属性卡片 */
 .attribute-card {
   @include utils.flex-col(tokens.$spacing-sm, center, center);
+
   padding: tokens.$spacing-md;
   background: linear-gradient(135deg, tokens.$gray-50 0%, tokens.$gray-200 100%);
   border-radius: tokens.$radius-lg;
@@ -504,6 +509,7 @@ function hideTooltip(): void {
 /* 无玩家状态 */
 .no-player {
   @include utils.flex-col(tokens.$spacing-md, center, center);
+
   padding: tokens.$spacing-2xl;
   text-align: center;
   color: tokens.$gray-400;

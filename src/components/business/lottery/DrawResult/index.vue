@@ -56,6 +56,7 @@ defineProps({
   flex: 1;
   min-height: 200px;
   overflow-y: auto;
+
   @include utils.flex-col(tokens.$spacing-0);
   @include utils.custom-scrollbar;
 
@@ -81,6 +82,7 @@ defineProps({
   overflow-y: auto;
   flex: 1;
   min-height: 0;
+
   @include utils.custom-scrollbar;
 }
 
@@ -91,7 +93,9 @@ defineProps({
   border-radius: tokens.$radius-lg;
   box-shadow: tokens.$shadow-md;
   border: 1px solid tokens.$border-light;
+
   @include utils.flex-col(tokens.$spacing-xs, center);
+
   min-width: 120px;
   opacity: 0;
   transform: scale(0.5);

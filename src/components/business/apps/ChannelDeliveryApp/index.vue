@@ -203,6 +203,7 @@ const viewReport = (): void => {
 
 .channel-delivery-app {
   @include utils.flex-col(0, stretch, flex-start);
+
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -212,6 +213,7 @@ const viewReport = (): void => {
 
 .app-tabs {
   @include utils.flex-row(0, center, flex-start);
+
   background-color: tokens.$bg-light;
   border-bottom: 1px solid rgba(tokens.$primary-blue, 0.2);
 
@@ -241,6 +243,7 @@ const viewReport = (): void => {
   flex: 1;
   padding: tokens.$spacing-lg;
   overflow-y: auto;
+
   @include utils.grid-auto-fill(280px, tokens.$spacing-lg);
   @include utils.custom-scrollbar;
 }
@@ -258,6 +261,7 @@ const viewReport = (): void => {
 
   .channel-header {
     @include utils.flex-between;
+
     margin-bottom: tokens.$spacing-sm;
 
     h3 {
@@ -280,6 +284,7 @@ const viewReport = (): void => {
 
     .stat-item {
       @include utils.flex-between;
+
       margin-bottom: 5px;
 
       .stat-label {
@@ -338,6 +343,7 @@ const viewReport = (): void => {
 .app-footer {
   padding: tokens.$spacing-md tokens.$spacing-lg;
   border-top: 1px solid rgba(tokens.$primary-blue, 0.2);
+
   @include utils.flex-center;
 }
 
@@ -376,6 +382,7 @@ const viewReport = (): void => {
 
 .intensity-options {
   @include utils.flex-col(tokens.$spacing-sm);
+
   margin-bottom: tokens.$spacing-lg;
 }
 

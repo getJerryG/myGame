@@ -302,6 +302,7 @@ const applyFilters = () => {
 
 .event-log-app {
   @include utils.flex-col(0, stretch, flex-start);
+
   height: 100%;
   background-color: tokens.$bg-light;
   color: tokens.$text-primary;
@@ -310,6 +311,7 @@ const applyFilters = () => {
     padding: tokens.$spacing-md;
     border-bottom: 1px solid rgba(tokens.$primary-blue, 0.2);
     background-color: tokens.$bg-light;
+
     @include utils.flex-between;
 
     h2 {
@@ -335,6 +337,7 @@ const applyFilters = () => {
 
   .app-tabs {
     @include utils.flex-row(0, center, flex-start);
+
     background-color: tokens.$bg-light;
     border-bottom: 1px solid rgba(tokens.$primary-blue, 0.2);
 
@@ -369,6 +372,7 @@ const applyFilters = () => {
 
     .empty-state {
       @include utils.flex-center;
+
       height: 200px;
       color: tokens.$text-muted;
       font-size: tokens.$font-size-base;
@@ -391,6 +395,7 @@ const applyFilters = () => {
 
         .event-header {
           @include utils.flex-between;
+
           margin-bottom: tokens.$spacing-md;
 
           .event-type {
@@ -488,6 +493,7 @@ const applyFilters = () => {
 
   .modal-header {
     @include utils.flex-between;
+
     padding: tokens.$spacing-md;
     border-bottom: 1px solid rgba(tokens.$primary-blue, 0.2);
 
@@ -528,6 +534,7 @@ const applyFilters = () => {
 
         .filter-buttons {
           @include utils.flex-row(tokens.$spacing-sm, center, flex-start);
+
           flex-wrap: wrap;
 
           .filter-option-btn {
@@ -557,6 +564,7 @@ const applyFilters = () => {
 
   .modal-footer {
     @include utils.flex-row(tokens.$spacing-sm, center, flex-end);
+
     padding: tokens.$spacing-md;
     border-top: 1px solid rgba(tokens.$primary-blue, 0.2);
 

@@ -240,6 +240,7 @@ const rewardsHistory = ref([
 
 .section-header {
   @include utils.flex-between;
+
   margin-bottom: tokens.$spacing-lg;
   padding-bottom: tokens.$spacing-md;
   border-bottom: 1px solid tokens.$border-light;
@@ -267,7 +268,9 @@ const rewardsHistory = ref([
   border-radius: tokens.$radius-lg;
   padding: tokens.$spacing-lg;
   box-shadow: tokens.$shadow-md;
+
   @include utils.flex-col(tokens.$spacing-lg, center, center);
+
   border: 1px solid tokens.$border-light;
 }
 
@@ -342,7 +345,9 @@ const rewardsHistory = ref([
   border-radius: tokens.$radius-lg;
   padding: tokens.$spacing-md;
   box-shadow: tokens.$shadow-md;
+
   @include utils.flex-row(tokens.$spacing-md);
+
   transition: all tokens.$transition-fast;
   border-left: 4px solid rgba(tokens.$primary-blue, 0.3);
   border: 1px solid tokens.$border-light;
@@ -360,7 +365,9 @@ const rewardsHistory = ref([
 
 .condition-icon {
   font-size: tokens.$font-size-3xl;
+
   @include utils.flex-center;
+
   width: 60px;
   height: 60px;
   background-color: rgba(tokens.$primary-blue, 0.2);
@@ -370,6 +377,7 @@ const rewardsHistory = ref([
 
 .condition-content {
   flex: 1;
+
   @include utils.flex-col(tokens.$spacing-xs);
 }
 
@@ -409,7 +417,9 @@ const rewardsHistory = ref([
   border-radius: tokens.$radius-lg;
   padding: tokens.$spacing-md;
   box-shadow: tokens.$shadow-md;
+
   @include utils.flex-col(tokens.$spacing-md, center, center);
+
   transition: all tokens.$transition-fast;
   text-align: center;
   border: 1px solid tokens.$border-light;
@@ -422,7 +432,9 @@ const rewardsHistory = ref([
 
 .permission-icon {
   font-size: tokens.$font-size-3xl;
+
   @include utils.flex-center;
+
   width: 60px;
   height: 60px;
   background-color: rgba(tokens.$primary-blue, 0.2);
@@ -467,7 +479,9 @@ const rewardsHistory = ref([
   border-radius: tokens.$radius-lg;
   cursor: pointer;
   transition: all tokens.$transition-fast;
+
   @include utils.flex-center;
+
   gap: tokens.$spacing-sm;
 
   &:hover {
@@ -489,7 +503,9 @@ const rewardsHistory = ref([
 .reward-item {
   padding: tokens.$spacing-md;
   border-bottom: 1px solid tokens.$border-light;
+
   @include utils.flex-row(tokens.$spacing-md);
+
   align-items: center;
   transition: background-color tokens.$transition-fast;
 
@@ -527,11 +543,13 @@ const rewardsHistory = ref([
 
 .reward-amounts {
   @include utils.flex-row(tokens.$spacing-md);
+
   align-items: center;
 }
 
 .amount-item {
   @include utils.flex-row(tokens.$spacing-xs);
+
   align-items: center;
   font-weight: tokens.$font-weight-bold;
 }

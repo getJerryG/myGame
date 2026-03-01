@@ -380,6 +380,7 @@ const getOperationName = (operationKey: string): string => {
 
 .progress-header {
   @include utils.flex-between;
+
   margin-bottom: tokens.$spacing-sm;
 }
 
@@ -513,6 +514,7 @@ const getOperationName = (operationKey: string): string => {
 
 .unlock-item {
   @include utils.flex-row(tokens.$spacing-sm, center);
+
   font-size: tokens.$font-size-sm;
   color: tokens.$primary-blue;
 }
@@ -529,6 +531,7 @@ const getOperationName = (operationKey: string): string => {
 
 .effect-row {
   @include utils.flex-row(tokens.$spacing-sm, center);
+
   font-size: tokens.$font-size-sm;
   color: tokens.$text-primary;
 }

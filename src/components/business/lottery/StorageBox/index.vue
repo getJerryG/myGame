@@ -168,6 +168,7 @@ function validateDecomposeQuantity(item: StorageItem, index: number): void {
 /* 面板头部 */
 .panel-header {
   @include utils.flex-between;
+
   padding: tokens.$spacing-md;
   cursor: pointer;
   background-color: tokens.$bg-light;
@@ -239,6 +240,7 @@ function validateDecomposeQuantity(item: StorageItem, index: number): void {
   padding: 0 tokens.$spacing-md tokens.$spacing-md;
   min-height: 0;
   max-height: 400px;
+
   @include utils.custom-scrollbar;
 }
 
@@ -294,6 +296,7 @@ function validateDecomposeQuantity(item: StorageItem, index: number): void {
 
 .decompose-controls {
   @include utils.flex-row(tokens.$spacing-sm, center);
+
   margin-bottom: tokens.$spacing-xs;
 }
 

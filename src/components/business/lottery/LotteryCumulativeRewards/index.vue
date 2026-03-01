@@ -114,6 +114,7 @@ const claimCumulativeReward = (threshold: number): void => {
 
 .cumulative-rewards-panel-vertical {
   @include utils.flex-col(tokens.$spacing-0);
+
   height: 100%;
   background-color: tokens.$bg-secondary;
   border-radius: tokens.$radius-lg;
@@ -124,6 +125,7 @@ const claimCumulativeReward = (threshold: number): void => {
 
 .panel-header {
   @include utils.flex-between;
+
   padding: tokens.$spacing-sm tokens.$spacing-md;
   background-color: tokens.$bg-light;
   border-bottom: 1px solid tokens.$border-light;
@@ -148,6 +150,7 @@ const claimCumulativeReward = (threshold: number): void => {
 
 .progress-info {
   @include utils.flex-between;
+
   margin-bottom: tokens.$spacing-xs;
   font-size: tokens.$font-size-xs;
   color: tokens.$text-secondary;
@@ -165,6 +168,7 @@ const claimCumulativeReward = (threshold: number): void => {
   flex: 1;
   overflow-y: auto;
   padding: 0 tokens.$spacing-md tokens.$spacing-md;
+
   @include utils.flex-col(tokens.$spacing-md);
   @include utils.custom-scrollbar;
 }
@@ -183,6 +187,7 @@ const claimCumulativeReward = (threshold: number): void => {
 
 .vertical-reward-item {
   @include utils.flex-between;
+
   padding: tokens.$spacing-sm;
   border-radius: tokens.$radius-sm;
   transition: all tokens.$transition-fast;

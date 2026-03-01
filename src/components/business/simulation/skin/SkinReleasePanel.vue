@@ -238,6 +238,7 @@ const handleSkinReleased = (data) => {
 .panel-content {
   @include utils.panel-content;
   @include utils.flex-col(tokens.$spacing-xl, stretch);
+
   height: calc(100vh - 400px);
   min-height: 600px;
 
@@ -259,12 +260,14 @@ const handleSkinReleased = (data) => {
 /* 皮肤展示区域 */
 .skin-showcase {
   @include utils.flex-col(tokens.$spacing-md, stretch);
+
   height: 100%;
   overflow: hidden;
 }
 
 .skin-publish-area {
   @include utils.flex-col(tokens.$spacing-md, stretch);
+
   height: 100%;
   overflow: hidden;
 }
@@ -280,6 +283,7 @@ const handleSkinReleased = (data) => {
 
 .features-grid {
   @include utils.grid-auto-fill(150px, tokens.$spacing-md);
+
   margin-top: tokens.$spacing-sm;
 }
 
@@ -327,6 +331,7 @@ const handleSkinReleased = (data) => {
   margin-bottom: tokens.$spacing-sm;
   display: block;
   transition: transform tokens.$transition-normal;
+
   @include utils.bounce;
 }
 

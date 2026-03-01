@@ -150,6 +150,7 @@ const toggleCollapse = (): void => {
 
   .panel-header {
     @include utils.flex-between(center);
+
     padding: tokens.$spacing-md tokens.$spacing-lg;
     background: white;
     border-bottom: 1px solid tokens.$gray-200;
@@ -210,15 +211,19 @@ const toggleCollapse = (): void => {
 
     .chart-container {
       height: 150px;
+
       @include utils.flex-row(tokens.$spacing-sm, flex-end, flex-start);
+
       padding: tokens.$spacing-md 0;
 
       .chart-bars {
         flex: 1;
+
         @include utils.flex-row(tokens.$spacing-sm, flex-end, flex-start);
 
         .chart-bar {
           flex: 1;
+
           @include utils.flex-col(tokens.$spacing-xs, center, flex-end);
 
           .bar {

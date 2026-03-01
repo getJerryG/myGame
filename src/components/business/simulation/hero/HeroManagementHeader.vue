@@ -27,6 +27,7 @@ function toggleCollapse(): void {
 
 .panel-header {
   @include utils.flex-between(center);
+
   padding: tokens.$spacing-md tokens.$spacing-lg;
   background: linear-gradient(135deg, tokens.$primary-blue 0%, #764ba2 100%);
   border-radius: tokens.$radius-md tokens.$radius-md 0 0;
@@ -44,6 +45,7 @@ function toggleCollapse(): void {
 
 .collapse-btn {
   @include utils.collapse-btn;
+
   color: tokens.$text-primary;
   font-size: tokens.$font-size-base;
   border-radius: 50%;

@@ -284,6 +284,7 @@ const handleItemClick = (item: SidebarItem): void => {
 
 .data-grid {
   @include utils.grid-auto-fill(250px, tokens.$spacing-md);
+
   margin-top: tokens.$spacing-md;
 }
 
@@ -312,6 +313,7 @@ const handleItemClick = (item: SidebarItem): void => {
 
 .data-item {
   @include utils.flex-between;
+
   padding: tokens.$spacing-sm 0;
 }
 
@@ -332,6 +334,7 @@ const handleItemClick = (item: SidebarItem): void => {
   padding: tokens.$spacing-lg;
   text-align: center;
   min-height: 200px;
+
   @include utils.flex-col(tokens.$spacing-md, center, center);
 }
 
@@ -339,11 +342,13 @@ const handleItemClick = (item: SidebarItem): void => {
   margin-top: tokens.$spacing-lg;
   width: 100%;
   max-width: 400px;
+
   @include utils.flex-col(tokens.$spacing-sm);
 }
 
 .trend-item {
   @include utils.flex-between;
+
   padding: tokens.$spacing-sm tokens.$spacing-md;
   background-color: tokens.$bg-light;
   border-radius: tokens.$radius-sm;

@@ -245,6 +245,7 @@ watch(
 
 .stage-header {
   @include utils.flex-between;
+
   margin-bottom: tokens.$spacing-md;
 }
 
@@ -276,6 +277,7 @@ watch(
 
 .stage-nodes {
   @include utils.flex-between;
+
   position: relative;
   z-index: 1;
 }
@@ -288,7 +290,9 @@ watch(
   width: 40px;
   height: 40px;
   border-radius: tokens.$radius-full;
+
   @include utils.flex-center;
+
   font-weight: tokens.$font-weight-bold;
   cursor: pointer;
   transition: all tokens.$transition-normal;
@@ -316,6 +320,7 @@ watch(
   font-size: tokens.$font-size-xs;
   text-align: center;
   width: 80px;
+
   @include utils.text-truncate;
 
   &.name-completed {
@@ -376,6 +381,7 @@ watch(
 
 .goal-header {
   @include utils.flex-between;
+
   margin-bottom: tokens.$spacing-sm;
 }
 
@@ -422,6 +428,7 @@ watch(
 
 .progress-values {
   @include utils.flex-between;
+
   font-size: tokens.$font-size-xs;
   color: tokens.$text-muted;
 }
@@ -484,6 +491,7 @@ watch(
 
 .history-header {
   @include utils.flex-between;
+
   margin-bottom: tokens.$spacing-xs;
 }
 

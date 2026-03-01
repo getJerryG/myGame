@@ -101,10 +101,12 @@ const closePreview = (): void => {
 
 .preview-modal {
   @include utils.modal-overlay;
+
   backdrop-filter: blur(10px);
 
   .preview-content {
     @include utils.modal-content;
+
     max-width: 500px;
     width: 90%;
     max-height: 80vh;

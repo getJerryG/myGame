@@ -201,6 +201,7 @@ export default {
 /* 任务卡片 */
 .task-bubble {
   @include utils.flex-row(tokens.$spacing-md, center);
+
   background: tokens.$bg-light;
   border-radius: tokens.$radius-md;
   padding: tokens.$spacing-sm tokens.$spacing-md;
@@ -240,6 +241,7 @@ export default {
   color: tokens.$text-primary;
   margin: 0;
   flex: 1;
+
   @include utils.text-truncate;
 }
 

@@ -132,6 +132,7 @@ const localFilters = ref({ ...props.filters });
 
 .filter-row {
   @include utils.flex-row(tokens.$spacing-3, center, flex-start);
+
   flex-wrap: wrap;
   margin-bottom: tokens.$spacing-md;
 
@@ -142,6 +143,7 @@ const localFilters = ref({ ...props.filters });
 
 .filter-group {
   @include utils.flex-col(tokens.$spacing-xs, stretch, flex-start);
+
   min-width: 150px;
 
   &.search {
@@ -164,6 +166,7 @@ const localFilters = ref({ ...props.filters });
 
 .search-input {
   @include utils.input-base;
+
   width: 100%;
   background: tokens.$gray-50;
 }
@@ -171,6 +174,7 @@ const localFilters = ref({ ...props.filters });
 .reset-btn {
   @include utils.btn-danger;
   @include utils.flex-row(tokens.$spacing-sm, center);
+
   padding: tokens.$spacing-sm tokens.$spacing-md;
   font-size: tokens.$font-size-sm;
   text-transform: uppercase;

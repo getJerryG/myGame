@@ -223,6 +223,7 @@ const claimAllTasks = () => {
 
 .task-center-app {
   @include utils.flex-col(0, stretch);
+
   height: 100%;
   background-color: tokens.$bg-secondary;
   color: tokens.$text-primary;
@@ -257,6 +258,7 @@ const claimAllTasks = () => {
   flex: 1;
   padding: tokens.$spacing-lg;
   overflow-y: auto;
+
   @include utils.custom-scrollbar;
 }
 
@@ -267,6 +269,7 @@ const claimAllTasks = () => {
 
 .task-item {
   @include utils.flex-between;
+
   background-color: tokens.$bg-light;
   padding: tokens.$spacing-md;
   border-radius: tokens.$radius-md;
@@ -291,6 +294,7 @@ const claimAllTasks = () => {
 
 .task-info {
   flex: 1;
+
   @include utils.flex-col(tokens.$space-2);
 }
 
@@ -360,6 +364,7 @@ const claimAllTasks = () => {
 
 .reward-item {
   @include utils.flex-row(tokens.$space-1, center);
+
   padding: tokens.$space-1 tokens.$space-2;
   background-color: tokens.$bg-dark;
   border-radius: tokens.$radius-sm;
@@ -394,6 +399,7 @@ const claimAllTasks = () => {
 
 .empty-state {
   @include utils.flex-center;
+
   height: 200px;
   background-color: tokens.$bg-light;
   border: 1px dashed tokens.$border-light;
@@ -409,6 +415,7 @@ const claimAllTasks = () => {
 // 一键领取按钮样式
 .action-section {
   @include utils.flex-center;
+
   padding: tokens.$spacing-lg;
   background-color: tokens.$bg-light;
   border-radius: tokens.$radius-md;

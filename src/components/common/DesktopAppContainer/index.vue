@@ -268,7 +268,9 @@ onUnmounted(() => {
   border-radius: tokens.$radius-lg;
   box-shadow: 0 0 30px rgb(0 0 0 / 50%);
   overflow: hidden;
+
   @include utils.flex-col(tokens.$spacing-none, stretch, flex-start);
+
   z-index: tokens.$z-fixed;
   transition: all tokens.$transition-normal;
 
@@ -285,6 +287,7 @@ onUnmounted(() => {
 /* 标题栏样式 */
 .app-header {
   @include utils.flex-between;
+
   padding: tokens.$spacing-sm tokens.$spacing-lg;
   background-color: rgb(74 158 255 / 10%);
   border-bottom: 1px solid rgb(74 158 255 / 30%);
@@ -316,7 +319,9 @@ onUnmounted(() => {
   border: none;
   border-radius: tokens.$radius-sm;
   cursor: pointer;
+
   @include utils.flex-center;
+
   font-size: tokens.$font-size-sm;
   transition: all tokens.$transition-fast;
 
@@ -350,6 +355,7 @@ onUnmounted(() => {
 
 .sidebar-item {
   @include utils.flex-row(tokens.$spacing-3, center);
+
   padding: tokens.$spacing-3 tokens.$spacing-5;
   cursor: pointer;
   transition: all tokens.$transition-fast;
@@ -390,6 +396,7 @@ onUnmounted(() => {
 /* 错误容器样式 */
 .error-container {
   @include utils.flex-col(tokens.$spacing-4, center, center);
+
   height: 100%;
   text-align: center;
   color: tokens.$danger-red;

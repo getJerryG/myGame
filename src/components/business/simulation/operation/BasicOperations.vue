@@ -207,6 +207,7 @@ const fixBasicBugs = (): void => {
 
 .operations-grid {
   @include utils.grid-layout(3, tokens.$spacing-lg);
+
   margin-bottom: tokens.$spacing-xl;
 
   @include utils.tablet {
@@ -223,6 +224,7 @@ const fixBasicBugs = (): void => {
   border-radius: tokens.$radius-lg;
   padding: tokens.$spacing-lg;
   border: 1px solid tokens.$border-light;
+
   @include utils.flex-col(tokens.$spacing-md, stretch);
 
   &.skin-release {
@@ -284,6 +286,7 @@ const fixBasicBugs = (): void => {
 
 .action-btn {
   @include utils.btn-base;
+
   width: 100%;
 
   &.primary {
@@ -329,7 +332,7 @@ const fixBasicBugs = (): void => {
     color: tokens.$warning;
   }
 
-  &:not(.success):not(.warning) {
+  &:not(.success, .warning) {
     background-color: rgb(59 130 246 / 10%);
     color: tokens.$primary-blue;
   }

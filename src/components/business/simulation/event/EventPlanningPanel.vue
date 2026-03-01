@@ -477,6 +477,7 @@ const saveEvent = (config: EventConfig): void => {
 
     .template-card {
       @include utils.glass-effect;
+
       border-radius: tokens.$radius-sm;
       padding: tokens.$spacing-md;
       cursor: pointer;
@@ -515,6 +516,7 @@ const saveEvent = (config: EventConfig): void => {
 
   .quick-plan-section {
     @include utils.flex-center;
+
     margin: tokens.$spacing-lg 0;
 
     .quick-plan-btn {

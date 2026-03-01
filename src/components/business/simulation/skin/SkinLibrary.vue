@@ -120,6 +120,7 @@ const getSkinCountByQuality = (quality) => {
 /* 品质筛选标签 */
 .quality-tabs {
   @include utils.flex-row(tokens.$spacing-sm, center);
+
   margin-bottom: tokens.$spacing-lg;
   overflow-x: auto;
   padding-bottom: tokens.$spacing-sm;
@@ -127,6 +128,7 @@ const getSkinCountByQuality = (quality) => {
 
 .quality-tab {
   @include utils.flex-row(tokens.$spacing-sm, center);
+
   padding: tokens.$spacing-sm tokens.$spacing-md;
   background-color: tokens.$bg-light;
   border-radius: tokens.$radius-md;
@@ -166,12 +168,15 @@ const getSkinCountByQuality = (quality) => {
 .skin-list {
   flex: 1;
   overflow-y: auto;
+
   @include utils.flex-col(tokens.$spacing-md, stretch);
+
   padding-right: tokens.$spacing-md;
 }
 
 .skin-item {
   @include utils.flex-row(tokens.$spacing-md, center);
+
   padding: tokens.$spacing-md;
   background-color: tokens.$bg-light;
   border-radius: tokens.$radius-md;
@@ -233,6 +238,7 @@ const getSkinCountByQuality = (quality) => {
 
 .skin-info {
   flex: 1;
+
   @include utils.flex-col(tokens.$spacing-xs, stretch);
 }
 
@@ -249,6 +255,7 @@ const getSkinCountByQuality = (quality) => {
 
 .skin-stats {
   @include utils.flex-row(tokens.$spacing-md, center);
+
   margin-top: tokens.$spacing-xs;
 }
 

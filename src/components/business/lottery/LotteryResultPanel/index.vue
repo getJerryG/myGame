@@ -66,7 +66,9 @@ watch(
   padding: tokens.$spacing-md;
   margin-top: tokens.$spacing-lg;
   flex: 1;
+
   @include utils.flex-col(tokens.$spacing-0);
+
   overflow: hidden;
   min-height: 300px;
 
@@ -89,6 +91,7 @@ watch(
   overflow-y: auto;
   padding: tokens.$spacing-sm;
   align-content: flex-start;
+
   @include utils.custom-scrollbar;
 }
 

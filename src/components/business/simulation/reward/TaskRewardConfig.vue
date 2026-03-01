@@ -101,11 +101,13 @@ function editTask(task) {
 
 .task-header {
   @include utils.flex-between(flex-start);
+
   margin-bottom: tokens.$spacing-md;
 }
 
 .task-info {
   @include utils.flex-row(tokens.$spacing-sm, center);
+
   flex: 1;
 }
 
@@ -137,6 +139,7 @@ function editTask(task) {
 
 .btn-secondary {
   @include utils.btn-secondary;
+
   padding: tokens.$spacing-xs tokens.$spacing-sm;
   font-size: tokens.$font-size-xs;
 }
@@ -160,6 +163,7 @@ function editTask(task) {
 
 .reward-tag {
   @include utils.flex-row(tokens.$spacing-xs, center);
+
   padding: tokens.$spacing-xs tokens.$spacing-sm;
   background-color: tokens.$bg-lighter;
   border-radius: tokens.$radius-full;

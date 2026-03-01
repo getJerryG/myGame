@@ -305,7 +305,9 @@ const formatDate = (date: Date): string => {
   border-radius: tokens.$radius-lg;
   box-shadow: tokens.$shadow-md;
   padding: tokens.$spacing-md;
+
   @include utils.flex-row(tokens.$spacing-md, center);
+
   border: 1px solid tokens.$border-light;
 }
 
@@ -381,6 +383,7 @@ const formatDate = (date: Date): string => {
   gap: tokens.$spacing-md;
   max-height: 600px;
   overflow-y: auto;
+
   @include utils.custom-scrollbar;
 }
 
@@ -399,6 +402,7 @@ const formatDate = (date: Date): string => {
 
 .decision-header {
   @include utils.flex-between;
+
   margin-bottom: tokens.$spacing-sm;
 }
 
@@ -446,6 +450,7 @@ const formatDate = (date: Date): string => {
 
 .cost-list {
   @include utils.flex-row(tokens.$spacing-sm, center, flex-start);
+
   flex-wrap: wrap;
 }
 
@@ -459,6 +464,7 @@ const formatDate = (date: Date): string => {
 
 .effects-list {
   @include utils.flex-row(tokens.$spacing-sm, center, flex-start);
+
   flex-wrap: wrap;
 }
 
@@ -525,6 +531,7 @@ const formatDate = (date: Date): string => {
   gap: tokens.$spacing-md;
   max-height: 500px;
   overflow-y: auto;
+
   @include utils.custom-scrollbar;
 }
 
@@ -537,6 +544,7 @@ const formatDate = (date: Date): string => {
 
 .history-header {
   @include utils.flex-between;
+
   margin-bottom: tokens.$spacing-xs;
 }
 

@@ -529,6 +529,7 @@ const saveConfig = () => {
 
   .section-title {
     @include utils.subsection-title;
+
     margin-bottom: tokens.$spacing-md;
   }
 }
@@ -545,6 +546,7 @@ const saveConfig = () => {
 
 .calculator-item {
   @include utils.stat-item;
+
   text-align: center;
 }
 

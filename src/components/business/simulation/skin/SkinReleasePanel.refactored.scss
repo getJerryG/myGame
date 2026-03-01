@@ -32,6 +32,7 @@
 // 面板内容
 .panel-content {
   @include m.panel-content;
+
   display: flex;
   flex-direction: column;
   gap: v.$spacing-lg;
@@ -61,6 +62,7 @@
 
 .quality-tab {
   @include m.flex-row(v.$spacing-sm, center, center);
+
   padding: v.$spacing-sm v.$spacing-md;
   background-color: v.$bg-light;
   border-radius: v.$radius-md;
@@ -108,6 +110,7 @@
 .skin-showcase,
 .skin-publish-area {
   @include m.flex-col(v.$spacing-md);
+
   height: 100%;
   overflow: hidden;
 }
@@ -116,14 +119,18 @@
 .skin-list {
   flex: 1;
   overflow-y: auto;
+
   @include m.flex-col(v.$spacing-sm);
+
   padding-right: v.$spacing-sm;
+
   @include m.custom-scrollbar;
 }
 
 // 皮肤项
 .skin-item {
   @include m.flex-row(v.$spacing-md, center);
+
   padding: v.$spacing-md;
   background-color: v.$bg-light;
   border-radius: v.$radius-md;
@@ -177,6 +184,7 @@
   font-size: 48px;
   display: block;
   transition: transform 0.3s ease, filter 0.3s ease;
+
   @include m.float;
 }
 
@@ -192,6 +200,7 @@
   color: white;
   min-width: 40px;
   text-align: center;
+
   @include m.pulse;
 
   &.brave { background-color: #10b981; }
@@ -203,6 +212,7 @@
 // 皮肤信息
 .skin-info {
   flex: 1;
+
   @include m.flex-col(v.$spacing-xs);
 }
 
@@ -219,6 +229,7 @@
 
 .skin-stats {
   @include m.flex-row(v.$spacing-lg);
+
   margin-top: v.$spacing-xs;
 }
 
@@ -237,13 +248,16 @@
 // 皮肤详情
 .skin-detail {
   @include m.flex-col(v.$spacing-lg);
+
   overflow-y: auto;
   padding-right: v.$spacing-sm;
   flex: 1;
+
   @include m.custom-scrollbar;
 
   &.empty {
     @include m.flex-center;
+
     background-color: v.$bg-light;
     border-radius: v.$radius-md;
     border: 2px dashed v.$border-light;
@@ -253,6 +267,7 @@
 
 .empty-state {
   @include m.flex-col(v.$spacing-md, center);
+
   padding: v.$spacing-xl;
   text-align: center;
 }
@@ -272,6 +287,7 @@
   background-color: v.$bg-light;
   border-radius: v.$radius-md;
   padding: v.$spacing-lg;
+
   @include m.flex-col(v.$spacing-md);
 
   h5 {
@@ -303,6 +319,7 @@
 
 .skin-basic-info {
   flex: 1;
+
   @include m.flex-col(v.$spacing-sm);
 }
 
@@ -342,6 +359,7 @@
 
 .effect-item {
   @include m.flex-row(v.$spacing-sm);
+
   padding: v.$spacing-sm v.$spacing-md;
   background-color: rgb(255 255 255 / 2%);
   border-radius: v.$radius-sm;
@@ -397,11 +415,13 @@
 // 折扣控制
 .discount-control {
   @include m.flex-row(v.$spacing-lg, center);
+
   margin-bottom: v.$spacing-sm;
 }
 
 .discount-slider {
   @include m.slider-base;
+
   flex: 1;
 }
 
@@ -437,6 +457,7 @@
 
 .prediction-item {
   @include m.flex-row(v.$spacing-lg, center);
+
   padding: v.$spacing-sm v.$spacing-md;
   background-color: rgb(255 255 255 / 2%);
   border-radius: v.$radius-md;
@@ -450,6 +471,7 @@
 
 .prediction-value {
   flex: 1;
+
   @include m.value-text(v.$font-size-base);
 }
 
@@ -479,6 +501,7 @@
 // 操作按钮
 .action-buttons {
   @include m.flex-row(v.$spacing-md, center, flex-end);
+
   margin-top: v.$spacing-sm;
 }
 
@@ -542,6 +565,7 @@
   margin-bottom: v.$spacing-sm;
   display: block;
   transition: transform 0.3s ease;
+
   @include m.bounce;
 }
 

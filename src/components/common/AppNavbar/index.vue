@@ -119,7 +119,9 @@ onUnmounted(() => {
   background: linear-gradient(135deg, tokens.$gray-800 0%, tokens.$gray-700 100%);
   color: tokens.$text-primary;
   padding: tokens.$spacing-sm tokens.$spacing-lg;
+
   @include utils.flex-between;
+
   box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
   position: fixed;
   top: 0;
@@ -181,6 +183,7 @@ onUnmounted(() => {
 
 .navbar-menu {
   @include utils.flex-row(tokens.$spacing-lg, center);
+
   transition: all tokens.$transition-normal;
 }
 

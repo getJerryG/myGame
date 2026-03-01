@@ -226,7 +226,9 @@ const openAbout = (): void => {
 .home-page {
   width: 100vw;
   height: 100vh;
+
   @include utils.flex-center;
+
   overflow: hidden;
   position: relative;
   font-family: tokens.$font-family-base;
@@ -242,6 +244,7 @@ const openAbout = (): void => {
   background-size: cover;
   background-position: center;
   opacity: 0.9;
+
   /* 使用contain优化渲染 */
   contain: strict;
 
@@ -257,6 +260,7 @@ const openAbout = (): void => {
       radial-gradient(circle at 20% 50%, rgb(74 158 255 / 10%) 0%, transparent 50%),
       radial-gradient(circle at 80% 20%, rgb(255 215 0 / 10%) 0%, transparent 50%),
       radial-gradient(circle at 40% 80%, rgb(255 107 107 / 10%) 0%, transparent 50%);
+
     /* 移除动画，使用静态效果 */
     opacity: 0.9;
   }
@@ -276,6 +280,7 @@ const openAbout = (): void => {
 .left-column,
 .right-column {
   @include utils.flex-col(tokens.$spacing-md, stretch, center);
+
   flex: 1;
   width: 50%;
   min-width: 300px;
@@ -303,9 +308,11 @@ const openAbout = (): void => {
     color: tokens.$primary;
     text-shadow: 0 0 20px rgb(74 158 255 / 50%);
     margin: 0;
+
     /* 使用更高效的动画 */
     animation: titleGlow 2s ease-in-out infinite alternate;
     line-height: tokens.$line-height-tight;
+
     /* 确保文字快速渲染 */
     font-display: swap;
     will-change: text-shadow;
@@ -351,6 +358,7 @@ const openAbout = (): void => {
 /* 按钮容器 */
 .button-container {
   @include utils.flex-col(tokens.$spacing-md, stretch, center);
+
   width: 100%;
   max-width: 350px;
 }
@@ -369,6 +377,7 @@ const openAbout = (): void => {
   box-shadow: 0 4px 15px rgb(74 158 255 / 40%);
   width: 100%;
   min-height: 60px;
+
   @include utils.flex-center;
 
   &:hover {
@@ -395,6 +404,7 @@ const openAbout = (): void => {
   transition: all tokens.$transition-normal;
   width: 100%;
   min-height: 50px;
+
   @include utils.flex-center;
 
   &:hover {
@@ -417,7 +427,9 @@ const openAbout = (): void => {
   width: 100vw;
   height: 100vh;
   background-color: rgb(0 0 0 / 80%);
+
   @include utils.flex-center;
+
   z-index: tokens.$z-modal;
   animation: fadeIn 0.3s ease;
 }
@@ -436,6 +448,7 @@ const openAbout = (): void => {
 
 .modal-header {
   @include utils.flex-between;
+
   padding: tokens.$spacing-md tokens.$spacing-xl;
   background-color: rgb(74 158 255 / 10%);
   border-bottom: 1px solid rgb(74 158 255 / 20%);
@@ -455,7 +468,9 @@ const openAbout = (): void => {
     padding: 0;
     width: 30px;
     height: 30px;
+
     @include utils.flex-center;
+
     border-radius: 50%;
     transition: all tokens.$transition-normal;
 
@@ -494,6 +509,7 @@ const openAbout = (): void => {
 
 .save-info {
   @include utils.flex-between;
+
   margin-bottom: tokens.$spacing-md;
 
   .save-name {

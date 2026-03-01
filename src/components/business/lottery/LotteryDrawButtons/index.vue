@@ -44,6 +44,7 @@ const handleTenDraws = (): void => {
 
 .draw-buttons-panel {
   @include utils.flex-center;
+
   gap: tokens.$spacing-lg;
   margin: tokens.$spacing-lg 0;
   padding: tokens.$spacing-lg;

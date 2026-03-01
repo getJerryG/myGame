@@ -65,6 +65,7 @@ const showAchievements = (): void => {
 /* 动作按钮 */
 .action-btn {
   @include utils.flex-row(tokens.$spacing-4, center);
+
   padding: tokens.$spacing-4 tokens.$spacing-6;
   border: none;
   border-radius: tokens.$radius-lg;

@@ -142,6 +142,7 @@
 // 主要按钮（金色主题）
 @mixin btn-primary {
   @include btn-base;
+
   background: linear-gradient(135deg, tokens.$primary-gold 0%, tokens.$warning 100%);
   color: tokens.$bg-dark;
   font-weight: tokens.$font-weight-bold;
@@ -166,6 +167,7 @@
 // 次要按钮
 @mixin btn-secondary {
   @include btn-base;
+
   background-color: tokens.$bg-light;
   color: tokens.$text-secondary;
   border: 1px solid tokens.$border-light;
@@ -179,6 +181,7 @@
 // 危险按钮
 @mixin btn-danger {
   @include btn-base;
+
   background-color: tokens.$error;
   color: white;
 
@@ -234,6 +237,7 @@
 // 选择框
 @mixin select-base {
   @include input-base;
+
   cursor: pointer;
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
@@ -445,7 +449,7 @@
 
 // 横屏手机
 @mixin landscape-mobile {
-  @media (orientation: landscape) and (max-height: 600px) {
+  @media (orientation: landscape) and (height <= 600px) {
     @content;
   }
 }
@@ -656,6 +660,7 @@
 // 通知徽章
 @mixin badge-notification {
   @include badge-base;
+
   background-color: tokens.$error;
   color: white;
   box-shadow: tokens.$shadow-sm;
@@ -681,6 +686,7 @@
   height: $size;
   border-radius: 50%;
   background-color: $bg-color;
+
   @include flex-center;
 }
 

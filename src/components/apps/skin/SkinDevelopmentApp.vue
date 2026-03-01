@@ -178,6 +178,7 @@ const closeApp = () => {
 
 .skin-development-app {
   @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
+
   height: 100%;
   background-color: tokens.$bg-lighter;
   border-radius: tokens.$radius-lg;
@@ -186,6 +187,7 @@ const closeApp = () => {
 
 .app-header {
   @include utils.flex-between;
+
   padding: tokens.$spacing-md tokens.$spacing-lg;
   background: linear-gradient(135deg, tokens.$lottery-purple 0%, #7c3aed 100%);
   color: tokens.$text-primary;
@@ -204,7 +206,9 @@ const closeApp = () => {
     cursor: pointer;
     width: 32px;
     height: 32px;
+
     @include utils.flex-center;
+
     border-radius: 50%;
     transition: all tokens.$transition-normal;
 
@@ -216,13 +220,16 @@ const closeApp = () => {
 
 .app-content {
   @include utils.flex-row(tokens.$spacing-0, stretch, flex-start);
+
   flex: 1;
   overflow: hidden;
 }
 
 .skin-list-section {
   width: 300px;
+
   @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
+
   border-right: 1px solid tokens.$border-light;
   background-color: tokens.$bg-light;
 
@@ -239,12 +246,14 @@ const closeApp = () => {
 
 .skin-grid {
   @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
+
   overflow-y: auto;
   flex: 1;
 }
 
 .skin-card {
   @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+
   padding: tokens.$spacing-md;
   cursor: pointer;
   transition: all tokens.$transition-normal;
@@ -265,6 +274,7 @@ const closeApp = () => {
 
   .skin-info {
     @include utils.flex-col(tokens.$spacing-xs, flex-start, center);
+
     flex: 1;
 
     .skin-name {
@@ -309,7 +319,9 @@ const closeApp = () => {
 
 .skin-detail-section {
   flex: 1;
+
   @include utils.flex-col(tokens.$spacing-lg, center, center);
+
   padding: tokens.$spacing-xl;
   overflow-y: auto;
 
@@ -321,6 +333,7 @@ const closeApp = () => {
 
   .detail-info {
     @include utils.flex-col(tokens.$spacing-md, center, center);
+
     text-align: center;
 
     .detail-name {
@@ -372,6 +385,7 @@ const closeApp = () => {
 
   .detail-actions {
     @include utils.flex-row(tokens.$spacing-md, center, center);
+
     margin-top: tokens.$spacing-xl;
 
     .action-btn {
@@ -422,7 +436,9 @@ const closeApp = () => {
 
 .no-selection {
   flex: 1;
+
   @include utils.flex-col(tokens.$spacing-md, center, center);
+
   color: tokens.$text-muted;
 
   .no-selection-icon {
@@ -450,10 +466,8 @@ const closeApp = () => {
   }
 
   .skin-grid {
-    flex-direction: row;
-    flex-wrap: wrap;
-    overflow-x: auto;
-    overflow-y: hidden;
+    flex-flow: row wrap;
+    overflow: auto hidden;
   }
 
   .skin-card {

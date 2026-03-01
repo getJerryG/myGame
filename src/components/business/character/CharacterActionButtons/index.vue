@@ -56,6 +56,7 @@ defineEmits(['toggle-inventory', 'show-achievements', 'go-to-lottery']);
   border: 1px solid tokens.$border-light;
   border-radius: tokens.$radius-lg;
   padding: tokens.$space-3 tokens.$space-4;
+
   @include utils.flex-col(tokens.$space-1, center, center);
 
   cursor: pointer;

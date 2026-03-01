@@ -324,6 +324,7 @@ function getPredictedROI(): string {
   background-color: tokens.$bg-light;
   border-radius: tokens.$radius-md;
   padding: tokens.$spacing-md;
+
   @include utils.flex-col(tokens.$spacing-sm, stretch);
 }
 

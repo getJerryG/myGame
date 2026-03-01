@@ -345,11 +345,13 @@ watch(
   background-color: tokens.$bg-secondary;
   overflow-y: auto;
   padding: tokens.$spacing-md;
+
   @include utils.custom-scrollbar;
 }
 
 .contact-item {
   @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+
   padding: tokens.$spacing-sm;
   margin-bottom: tokens.$spacing-sm;
   background-color: tokens.$bg-secondary;
@@ -393,6 +395,7 @@ watch(
 .contact-last-message {
   color: tokens.$text-muted;
   font-size: tokens.$font-size-xs;
+
   @include utils.text-truncate;
 }
 
@@ -402,7 +405,9 @@ watch(
   border-radius: 50%;
   width: 20px;
   height: 20px;
+
   @include utils.flex-center;
+
   font-size: tokens.$font-size-xs;
   font-weight: tokens.$font-weight-bold;
 }
@@ -411,13 +416,16 @@ watch(
 .chat-area {
   width: 100%;
   height: 100%;
+
   @include utils.flex-col(0, stretch, flex-start);
+
   background-color: tokens.$bg-primary;
   overflow: hidden;
 }
 
 .chat-header {
   @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+
   padding: tokens.$spacing-md;
   background-color: tokens.$bg-secondary;
   border-bottom: 1px solid rgba(tokens.$primary-blue, 0.2);
@@ -427,6 +435,7 @@ watch(
   flex: 1;
   padding: tokens.$spacing-md;
   overflow-y: auto;
+
   @include utils.flex-col(tokens.$spacing-md);
   @include utils.custom-scrollbar;
 }

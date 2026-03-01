@@ -38,6 +38,7 @@ const lotteryStore = useLotteryStore();
 
 .data-panel {
   @include utils.grid-layout(3, tokens.$space-2);
+
   background-color: tokens.$bg-secondary;
   padding: tokens.$space-4;
   border-radius: tokens.$radius-md;
@@ -49,6 +50,7 @@ const lotteryStore = useLotteryStore();
 
 .data-item {
   @include utils.flex-between;
+
   height: 30px;
 }
 
@@ -72,7 +74,9 @@ const lotteryStore = useLotteryStore();
   width: 20px;
   height: 20px;
   border-radius: tokens.$radius-full;
+
   @include utils.flex-center;
+
   transition: background-color tokens.$transition-fast;
 
   &:hover {

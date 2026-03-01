@@ -189,6 +189,7 @@ const closeApp = () => {
 
 .game-settings-app {
   @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
+
   height: 100%;
   background-color: tokens.$bg-lighter;
   border-radius: tokens.$radius-lg;
@@ -197,6 +198,7 @@ const closeApp = () => {
 
 .app-header {
   @include utils.flex-between;
+
   padding: tokens.$spacing-md tokens.$spacing-lg;
   background: linear-gradient(135deg, tokens.$gray-600 0%, tokens.$gray-700 100%);
   color: tokens.$text-primary;
@@ -215,7 +217,9 @@ const closeApp = () => {
     cursor: pointer;
     width: 32px;
     height: 32px;
+
     @include utils.flex-center;
+
     border-radius: 50%;
     transition: all tokens.$transition-normal;
 
@@ -250,6 +254,7 @@ const closeApp = () => {
 
 .setting-item {
   @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+
   padding: tokens.$spacing-md 0;
   border-bottom: 1px solid tokens.$border-light;
 
@@ -270,10 +275,10 @@ const closeApp = () => {
   border-radius: 3px;
   background: tokens.$bg-light;
   outline: none;
-  -webkit-appearance: none;
+  appearance: none;
 
   &::-webkit-slider-thumb {
-    -webkit-appearance: none;
+    appearance: none;
     appearance: none;
     width: 18px;
     height: 18px;
@@ -345,10 +350,7 @@ const closeApp = () => {
   .toggle-slider {
     position: absolute;
     cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background-color: tokens.$bg-light;
     transition: tokens.$transition-normal;
     border-radius: 26px;
@@ -370,6 +372,7 @@ const closeApp = () => {
 
 .settings-footer {
   @include utils.flex-row(tokens.$spacing-md, center, center);
+
   padding: tokens.$spacing-md tokens.$spacing-xl;
   background-color: tokens.$bg-light;
   border-top: 1px solid tokens.$border-light;

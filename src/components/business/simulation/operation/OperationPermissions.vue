@@ -180,6 +180,7 @@ const getCategoryCount = (category: string): number => {
 
 .permissions-grid {
   @include utils.grid-layout(2, tokens.$spacing-lg);
+
   margin-bottom: tokens.$spacing-xl;
 
   @include utils.mobile {
@@ -206,6 +207,7 @@ const getCategoryCount = (category: string): number => {
   font-size: tokens.$font-size-xl;
   font-weight: tokens.$font-weight-semibold;
   margin-bottom: tokens.$spacing-md;
+
   @include utils.flex-row(tokens.$spacing-sm, center);
 }
 

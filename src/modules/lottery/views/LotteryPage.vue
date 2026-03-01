@@ -217,6 +217,7 @@ const finishLottery = () => {
 
 .lottery-page {
   @include utils.flex-col(tokens.$spacing-lg, stretch, flex-start);
+
   padding: tokens.$spacing-xl;
   min-height: 100%;
 }
@@ -242,11 +243,13 @@ const finishLottery = () => {
 
 .lottery-area {
   @include utils.flex-col(tokens.$spacing-lg, center, center);
+
   margin-bottom: tokens.$spacing-xl;
 }
 
 .lottery-machine {
   @include utils.flex-col(tokens.$spacing-md, center, center);
+
   padding: tokens.$spacing-xl;
   background: linear-gradient(135deg, tokens.$bg-lighter 0%, tokens.$bg-light 100%);
   border-radius: tokens.$radius-xl;
@@ -257,6 +260,7 @@ const finishLottery = () => {
 
 .machine-display {
   @include utils.flex-row(tokens.$spacing-sm, center, center);
+
   flex-wrap: wrap;
   gap: tokens.$spacing-sm;
   padding: tokens.$spacing-md;
@@ -267,6 +271,7 @@ const finishLottery = () => {
 
 .display-item {
   @include utils.flex-col(tokens.$spacing-xs, center, center);
+
   padding: tokens.$spacing-sm;
   background-color: tokens.$bg-lighter;
   border-radius: tokens.$radius-md;
@@ -319,6 +324,7 @@ const finishLottery = () => {
 
 .lottery-result {
   @include utils.flex-col(tokens.$spacing-md, center, center);
+
   padding: tokens.$spacing-xl;
   background: linear-gradient(135deg, tokens.$success 0%, #059669 100%);
   border-radius: tokens.$radius-xl;
@@ -342,6 +348,7 @@ const finishLottery = () => {
 
   .result-item {
     @include utils.flex-col(tokens.$spacing-sm, center, center);
+
     padding: tokens.$spacing-md;
     background-color: rgb(255 255 255 / 20%);
     border-radius: tokens.$radius-lg;
@@ -431,6 +438,7 @@ const finishLottery = () => {
 
 .prize-card {
   @include utils.flex-col(tokens.$spacing-xs, center, center);
+
   padding: tokens.$spacing-md;
   background-color: tokens.$bg-lighter;
   border-radius: tokens.$radius-lg;
@@ -491,6 +499,7 @@ const finishLottery = () => {
 
 .history-list {
   @include utils.flex-col(tokens.$spacing-sm, stretch, flex-start);
+
   max-height: 300px;
   overflow-y: auto;
   padding: tokens.$spacing-md;
@@ -501,6 +510,7 @@ const finishLottery = () => {
 
 .history-item {
   @include utils.flex-between;
+
   padding: tokens.$spacing-sm tokens.$spacing-md;
   background-color: tokens.$bg-light;
   border-radius: tokens.$radius-md;

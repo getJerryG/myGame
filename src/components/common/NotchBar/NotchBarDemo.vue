@@ -107,10 +107,10 @@ const subtractFunds = (amount: number) => {
   margin-bottom: 40px;
   
   .control-group {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgb(255 255 255 / 10%);
     padding: 20px;
     border-radius: 8px;
-    border: 1px solid rgba(255, 215, 0, 0.2);
+    border: 1px solid rgb(255 215 0 / 20%);
     
     label {
       display: block;
@@ -123,8 +123,8 @@ const subtractFunds = (amount: number) => {
     select {
       width: 100%;
       padding: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 215, 0, 0.3);
+      background: rgb(255 255 255 / 10%);
+      border: 1px solid rgb(255 215 0 / 30%);
       border-radius: 4px;
       color: #fff;
       font-size: 14px;
@@ -154,7 +154,7 @@ const subtractFunds = (amount: number) => {
       
       &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+        box-shadow: 0 4px 12px rgb(255 215 0 / 40%);
       }
       
       &:active {
@@ -167,13 +167,13 @@ const subtractFunds = (amount: number) => {
 .demo-preview {
   margin: 40px 0;
   padding: 20px;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgb(0 0 0 / 30%);
   border-radius: 8px;
-  border: 2px solid rgba(255, 215, 0, 0.3);
+  border: 2px solid rgb(255 215 0 / 30%);
 }
 
 .demo-info {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgb(255 255 255 / 5%);
   padding: 20px;
   border-radius: 8px;
   border-left: 4px solid #ffd700;
@@ -194,7 +194,7 @@ const subtractFunds = (amount: number) => {
       color: #fff;
       font-size: 14px;
       
-      &:before {
+      &::before {
         content: '✓ ';
         color: #22c55e;
         font-weight: bold;

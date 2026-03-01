@@ -384,6 +384,7 @@ onMounted(() => {
 /* 侧边栏菜单 */
 .sidebar-menu {
   @include utils.flex-col(0, stretch);
+
   width: 100%;
   height: 100%;
   background-color: tokens.$bg-secondary;
@@ -393,6 +394,7 @@ onMounted(() => {
 
 .menu-item {
   @include utils.flex-row(tokens.$spacing-md, center);
+
   padding: tokens.$spacing-md tokens.$spacing-lg;
   background: none;
   border: none;
@@ -427,6 +429,7 @@ onMounted(() => {
   background-color: tokens.$bg-primary;
   color: tokens.$text-primary;
   overflow-y: auto;
+
   @include utils.custom-scrollbar;
 }
 
@@ -478,6 +481,7 @@ onMounted(() => {
 
 .option-btn {
   @include utils.flex-col(tokens.$space-2, center, center);
+
   padding: tokens.$spacing-md;
   border: none;
   border-radius: tokens.$radius-md;
@@ -532,6 +536,7 @@ onMounted(() => {
 /* 操作区域样式 */
 .action-section {
   margin-top: tokens.$spacing-lg;
+
   @include utils.flex-center;
 }
 
@@ -580,6 +585,7 @@ onMounted(() => {
 
 .skin-header {
   @include utils.flex-row(tokens.$spacing-md, center);
+
   margin-bottom: tokens.$spacing-md;
 }
 
@@ -590,6 +596,7 @@ onMounted(() => {
   border-radius: 50%;
   width: 68px;
   height: 68px;
+
   @include utils.flex-center;
 }
 
@@ -681,6 +688,7 @@ onMounted(() => {
 
 .stat-item {
   @include utils.flex-between;
+
   margin-bottom: tokens.$space-2;
   font-size: tokens.$font-size-sm;
 
@@ -707,6 +715,7 @@ onMounted(() => {
 
 .meta-item {
   @include utils.flex-between;
+
   margin-bottom: tokens.$space-2;
   font-size: tokens.$font-size-sm;
 

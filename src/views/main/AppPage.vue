@@ -67,12 +67,15 @@ const goBack = () => {
 .app-page {
   width: 100%;
   height: 100%;
+
   @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
+
   background-color: tokens.$gray-100;
 }
 
 .app-header {
   @include utils.flex-between;
+
   padding: tokens.$spacing-md;
   background-color: tokens.$bg-dark;
   color: tokens.$text-primary;
@@ -107,6 +110,7 @@ const goBack = () => {
   flex: 1;
   padding: tokens.$spacing-md;
   overflow-y: auto;
+
   @include utils.flex-center;
 
   & > div {

@@ -274,6 +274,7 @@ onUnmounted(() => {
   transition: all 0.08s ease;
   min-width: 600px;
   min-height: 400px;
+
   @include utils.flex-col(tokens.$spacing-none, stretch, flex-start);
 
   &.is-maximized {
@@ -292,7 +293,9 @@ onUnmounted(() => {
   height: 48px;
   background-color: rgb(74 158 255 / 20%);
   border-bottom: 1px solid tokens.$border-medium;
+
   @include utils.flex-between;
+
   padding: 0 tokens.$spacing-lg;
   cursor: move;
   user-select: none;
@@ -326,7 +329,9 @@ onUnmounted(() => {
   font-weight: tokens.$font-weight-bold;
   cursor: pointer;
   border-radius: tokens.$radius-sm;
+
   @include utils.flex-center;
+
   transition: all tokens.$transition-fast;
 
   &:hover {
@@ -360,6 +365,7 @@ onUnmounted(() => {
 
 .sidebar-item {
   @include utils.flex-row(tokens.$spacing-3, center);
+
   padding: tokens.$spacing-3 tokens.$spacing-4;
   cursor: pointer;
   transition: all tokens.$transition-fast;
@@ -392,7 +398,9 @@ onUnmounted(() => {
 /* 右侧内容区域样式 */
 .modal-main {
   flex: 1;
+
   @include utils.flex-col(tokens.$spacing-none, stretch, flex-start);
+
   overflow: hidden;
   background-color: rgb(26 26 46 / 50%);
 }
@@ -411,11 +419,13 @@ onUnmounted(() => {
 
 .module-core-data {
   @include utils.flex-row(tokens.$spacing-5, center);
+
   flex-wrap: wrap;
 }
 
 .core-data-item {
   @include utils.flex-row(tokens.$spacing-2, center);
+
   font-size: tokens.$font-size-sm;
 }
 
@@ -493,6 +503,7 @@ onUnmounted(() => {
 
 .data-item {
   @include utils.flex-between;
+
   padding: tokens.$spacing-2 0;
 }
 
@@ -514,6 +525,7 @@ onUnmounted(() => {
   padding: tokens.$spacing-5;
   text-align: center;
   min-height: 200px;
+
   @include utils.flex-col(tokens.$spacing-4, center, center);
 }
 
@@ -521,11 +533,13 @@ onUnmounted(() => {
   margin-top: tokens.$spacing-5;
   width: 100%;
   max-width: 400px;
+
   @include utils.flex-col(tokens.$spacing-2, stretch);
 }
 
 .trend-item {
   @include utils.flex-between;
+
   padding: tokens.$spacing-2 tokens.$spacing-3;
   background-color: tokens.$bg-light;
   border-radius: tokens.$radius-sm;
@@ -593,7 +607,9 @@ onUnmounted(() => {
 /* 错误提示样式 */
 .error-container {
   flex: 1;
+
   @include utils.flex-col(tokens.$spacing-3, center, center);
+
   text-align: center;
   padding: tokens.$spacing-5;
   background-color: rgb(239 68 68 / 10%);

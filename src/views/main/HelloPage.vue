@@ -232,7 +232,9 @@ watch(showGuide, (newVal) => {
 .hello-modal {
   width: 100%;
   height: 100%;
+
   @include utils.flex-center;
+
   font-family: tokens.$font-family-base;
   position: relative;
   background: linear-gradient(135deg, tokens.$bg-dark 0%, tokens.$bg-secondary 50%, tokens.$bg-tertiary 100%);
@@ -255,7 +257,9 @@ watch(showGuide, (newVal) => {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+
   @include utils.flex-center;
+
   cursor: pointer;
   transition: all tokens.$transition-normal;
   z-index: 10;
@@ -282,6 +286,7 @@ watch(showGuide, (newVal) => {
 .left-column,
 .right-column {
   @include utils.flex-col(tokens.$spacing-md, stretch, center);
+
   flex: 1;
   width: 50%;
   min-width: 300px;
@@ -445,7 +450,9 @@ watch(showGuide, (newVal) => {
   box-shadow: 0 4px 15px rgb(74 158 255 / 40%);
   width: 100%;
   min-height: 60px;
+
   @include utils.flex-center;
+
   margin-top: tokens.$spacing-sm;
 
   &:hover:not(:disabled) {

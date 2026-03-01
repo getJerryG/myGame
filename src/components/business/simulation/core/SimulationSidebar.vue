@@ -305,7 +305,9 @@ const toggleSubMenu = (menuName) => {
   background-color: tokens.$bg-dark;
   color: tokens.$text-primary;
   height: 100vh;
+
   @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
+
   box-shadow: tokens.$shadow-md;
 }
 
@@ -328,6 +330,7 @@ const toggleSubMenu = (menuName) => {
   margin: 0;
   flex: 1;
   overflow-y: auto;
+
   @include utils.custom-scrollbar;
 }
 
@@ -337,6 +340,7 @@ const toggleSubMenu = (menuName) => {
 
 .menu-link {
   @include utils.flex-row(tokens.$spacing-sm, center);
+
   padding: tokens.$spacing-md tokens.$spacing-lg;
   cursor: pointer;
   transition: background-color tokens.$transition-normal;
@@ -384,6 +388,7 @@ const toggleSubMenu = (menuName) => {
 
 .sub-menu-link {
   @include utils.flex-row(tokens.$spacing-sm, center);
+
   padding: tokens.$spacing-sm tokens.$spacing-lg tokens.$spacing-sm 45px;
   cursor: pointer;
   transition: background-color tokens.$transition-normal;

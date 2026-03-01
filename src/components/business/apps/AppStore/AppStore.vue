@@ -413,6 +413,7 @@ onMounted(() => {
 
 .app-item {
   @include utils.flex-col(tokens.$space-3, flex-start);
+
   background-color: tokens.$bg-secondary;
   border: 1px solid tokens.$border-light;
   border-radius: tokens.$radius-md;
@@ -435,7 +436,9 @@ onMounted(() => {
   font-size: 48px;
   width: 60px;
   height: 60px;
+
   @include utils.flex-center;
+
   background-color: tokens.$bg-light;
   border-radius: tokens.$radius-md;
 }
@@ -464,7 +467,9 @@ onMounted(() => {
 
 .app-status {
   margin-top: tokens.$space-1;
+
   @include utils.flex-row(tokens.$space-2, center);
+
   font-size: tokens.$font-size-xs;
 }
 
@@ -521,6 +526,7 @@ onMounted(() => {
 
 .download-progress {
   @include utils.flex-row(tokens.$space-2, center);
+
   width: 100%;
   max-width: 150px;
 }

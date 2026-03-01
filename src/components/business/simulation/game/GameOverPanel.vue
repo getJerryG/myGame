@@ -75,6 +75,7 @@ const resetGame = (): void => {
 /* 游戏结束面板 */
 .game-over-panel {
   @include utils.modal-overlay;
+
   z-index: tokens.$z-modal;
   animation: fadeIn 0.3s ease;
 }
@@ -144,6 +145,7 @@ const resetGame = (): void => {
 
 .stat-item {
   @include utils.flex-between;
+
   padding: tokens.$spacing-sm 0;
   border-bottom: 1px solid tokens.$border-light;
 

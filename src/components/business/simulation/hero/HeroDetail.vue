@@ -242,18 +242,22 @@ const saveAdjustments = (): void => {
 
 .hero-detail-container {
   @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
+
   height: 100%;
 }
 
 .hero-detail {
   @include utils.flex-col(tokens.$spacing-lg, stretch, flex-start);
+
   overflow-y: auto;
   padding-right: tokens.$spacing-sm;
   height: 100%;
+
   @include utils.custom-scrollbar;
 
   &.empty {
     @include utils.flex-center;
+
     background-color: tokens.$bg-light;
     border-radius: tokens.$radius-md;
     border: 2px dashed tokens.$border-light;
@@ -263,6 +267,7 @@ const saveAdjustments = (): void => {
 
 .empty-state {
   @include utils.flex-col(tokens.$spacing-md, center);
+
   padding: tokens.$spacing-2xl;
   text-align: center;
 }
@@ -288,6 +293,7 @@ const saveAdjustments = (): void => {
   background-color: tokens.$bg-light;
   border-radius: tokens.$radius-md;
   padding: tokens.$spacing-md;
+
   @include utils.flex-col(tokens.$spacing-3, stretch, flex-start);
 
   h5 {
@@ -369,6 +375,7 @@ const saveAdjustments = (): void => {
 
 .adjustment-slider {
   @include utils.slider-base;
+
   flex: 1;
 }
 
@@ -418,6 +425,7 @@ const saveAdjustments = (): void => {
 
 .analysis-item {
   @include utils.flex-row(tokens.$spacing-3, flex-start);
+
   padding: tokens.$spacing-sm;
   background-color: tokens.$bg-lighter;
   border-radius: tokens.$radius-md;
@@ -432,6 +440,7 @@ const saveAdjustments = (): void => {
 
 .analysis-content {
   flex: 1;
+
   @include utils.flex-col(tokens.$spacing-xs, stretch, flex-start);
 }
 
@@ -450,10 +459,12 @@ const saveAdjustments = (): void => {
 /* 操作按钮 */
 .action-buttons {
   @include utils.flex-row(tokens.$spacing-3, center);
+
   margin-top: tokens.$spacing-sm;
 
   .btn {
     @include utils.btn-base;
+
     flex: 1;
 
     &.btn-primary {

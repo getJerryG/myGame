@@ -275,6 +275,7 @@ const selectHero = (hero: Hero): void => {
 
 .panel-content {
   @include utils.panel-content;
+
   max-height: 1000px;
 
   &.collapsed {

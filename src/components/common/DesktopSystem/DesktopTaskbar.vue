@@ -155,6 +155,7 @@ const handleOpenSettings = () => {
 
 .start-menu {
   @include utils.start-menu;
+
   animation: startMenuSlideUp 0.2s ease-out forwards;
   transform-origin: bottom left;
 
@@ -183,6 +184,7 @@ const handleOpenSettings = () => {
 
       .start-menu-button {
         @include utils.flex-row(tokens.$spacing-md);
+
         padding: tokens.$spacing-md;
         background: none;
         border: none;

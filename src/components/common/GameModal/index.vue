@@ -70,7 +70,9 @@ const closeModal = (): void => {
   position: fixed;
   inset: 0;
   background: rgb(0 0 0 / 85%);
+
   @include utils.flex-center;
+
   z-index: tokens.$z-modal;
   animation: modalFadeIn 0.4s ease;
   backdrop-filter: blur(5px);
@@ -109,6 +111,7 @@ const closeModal = (): void => {
 
 .modal-header {
   @include utils.flex-between;
+
   padding: tokens.$spacing-5 tokens.$spacing-6;
   border-bottom: 3px solid tokens.$gray-300;
   background: linear-gradient(135deg, tokens.$primary 0%, #764ba2 100%);
@@ -138,7 +141,9 @@ const closeModal = (): void => {
   padding: tokens.$spacing-2;
   width: 40px;
   height: 40px;
+
   @include utils.flex-center;
+
   border-radius: tokens.$radius-full;
   transition: all tokens.$transition-normal;
   box-shadow: 0 4px 15px rgb(239 68 68 / 40%);
@@ -173,6 +178,7 @@ const closeModal = (): void => {
 
 .modal-footer {
   @include utils.flex-row(tokens.$spacing-3, center, flex-end);
+
   padding: tokens.$spacing-5 tokens.$spacing-6;
   border-top: 3px solid tokens.$gray-300;
   background: linear-gradient(135deg, tokens.$gray-100 0%, tokens.$gray-200 100%);

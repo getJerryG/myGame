@@ -174,6 +174,7 @@ const handleDecomposeAll = (): void => {
 
 .panel-header {
   @include utils.flex-between;
+
   padding: tokens.$spacing-sm tokens.$spacing-md;
   background-color: tokens.$bg-light;
   border-bottom: 1px solid tokens.$border-light;
@@ -235,6 +236,7 @@ const handleDecomposeAll = (): void => {
   display: flex;
   flex-direction: column;
   gap: tokens.$spacing-sm;
+
   @include utils.custom-scrollbar;
 }
 

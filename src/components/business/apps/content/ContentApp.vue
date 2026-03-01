@@ -120,6 +120,7 @@ const getCoreDataLabel = (key: string): string => {
 
 .content-app {
   @include utils.flex-row(0, stretch, flex-start);
+
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -131,11 +132,13 @@ const getCoreDataLabel = (key: string): string => {
   background-color: tokens.$bg-light;
   border-right: 1px solid tokens.$border-medium;
   overflow-y: auto;
+
   @include utils.custom-scrollbar;
 }
 
 .sidebar-item {
   @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+
   padding: tokens.$spacing-sm tokens.$spacing-md;
   cursor: pointer;
   transition: all tokens.$transition-fast;
@@ -168,7 +171,9 @@ const getCoreDataLabel = (key: string): string => {
 /* 右侧内容区域样式 */
 .modal-main {
   flex: 1;
+
   @include utils.flex-col(0, stretch, flex-start);
+
   overflow: hidden;
   background-color: tokens.$bg-light;
 }
@@ -187,11 +192,13 @@ const getCoreDataLabel = (key: string): string => {
 
 .module-core-data {
   @include utils.flex-row(tokens.$spacing-lg, center, flex-start);
+
   flex-wrap: wrap;
 }
 
 .core-data-item {
   @include utils.flex-row(tokens.$spacing-sm);
+
   font-size: tokens.$font-size-sm;
 }
 
@@ -209,6 +216,7 @@ const getCoreDataLabel = (key: string): string => {
   padding: tokens.$spacing-lg;
   overflow-y: auto;
   color: tokens.$text-primary;
+
   @include utils.custom-scrollbar;
 }
 

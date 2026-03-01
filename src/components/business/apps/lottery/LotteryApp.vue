@@ -272,6 +272,7 @@ const buyTickets = (): void => {
 /* 侧边栏菜单 */
 .sidebar-menu {
   @include utils.flex-col(0, stretch);
+
   width: 100%;
   height: 100%;
   background-color: tokens.$bg-secondary;
@@ -281,6 +282,7 @@ const buyTickets = (): void => {
 
 .menu-item {
   @include utils.flex-row(tokens.$spacing-md, center);
+
   padding: tokens.$spacing-md tokens.$spacing-lg;
   background: none;
   border: none;
@@ -315,6 +317,7 @@ const buyTickets = (): void => {
   background-color: tokens.$bg-primary;
   color: tokens.$text-primary;
   overflow-y: auto;
+
   @include utils.custom-scrollbar;
 }
 
@@ -329,11 +332,13 @@ const buyTickets = (): void => {
   border-radius: tokens.$radius-md;
   padding: tokens.$spacing-xl;
   box-shadow: tokens.$shadow-md;
+
   @include utils.flex-col(tokens.$spacing-lg, center);
 }
 
 .machine-header {
   @include utils.flex-between;
+
   width: 100%;
   margin-bottom: tokens.$spacing-lg;
 
@@ -385,6 +390,7 @@ const buyTickets = (): void => {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -395,7 +401,9 @@ const buyTickets = (): void => {
   top: 50%;
   left: 50%;
   transform-origin: center center;
+
   @include utils.flex-col(tokens.$space-1, center, center);
+
   font-size: tokens.$font-size-sm;
   color: tokens.$text-primary;
   width: 80px;
@@ -438,6 +446,7 @@ const buyTickets = (): void => {
 /* 控制按钮样式 */
 .lottery-controls {
   @include utils.flex-row(tokens.$spacing-md, center);
+
   margin-top: tokens.$spacing-lg;
 }
 
@@ -499,6 +508,7 @@ const buyTickets = (): void => {
   100% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.05);
   }
@@ -531,6 +541,7 @@ const buyTickets = (): void => {
 
 .history-item {
   @include utils.flex-between;
+
   background-color: tokens.$bg-light;
   padding: tokens.$spacing-md;
   border-radius: tokens.$radius-md;

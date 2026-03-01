@@ -52,7 +52,9 @@ const goBack = () => {
 .not-found-page {
   width: 100vw;
   height: 100vh;
+
   @include utils.flex-center;
+
   background: linear-gradient(135deg, tokens.$bg-dark 0%, tokens.$bg-secondary 50%, tokens.$bg-tertiary 100%);
   overflow: hidden;
   position: relative;
@@ -76,6 +78,7 @@ const goBack = () => {
   from {
     opacity: 0.8;
   }
+
   to {
     opacity: 1;
   }
@@ -83,6 +86,7 @@ const goBack = () => {
 
 .not-found-container {
   @include utils.flex-col(tokens.$spacing-md, center, center);
+
   text-align: center;
   z-index: 1;
   max-width: 600px;
@@ -108,6 +112,7 @@ const goBack = () => {
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-20px);
   }
@@ -222,14 +227,17 @@ const goBack = () => {
     transform: translate(0, 0) scale(1);
     opacity: 0.6;
   }
+
   25% {
     transform: translate(20px, -20px) scale(1.1);
     opacity: 0.8;
   }
+
   50% {
     transform: translate(0, -40px) scale(0.9);
     opacity: 1;
   }
+
   75% {
     transform: translate(-20px, -20px) scale(1.1);
     opacity: 0.8;
@@ -237,7 +245,7 @@ const goBack = () => {
 }
 
 /* 响应式设计 */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .not-found-container {
     padding: tokens.$spacing-lg tokens.$spacing-md;
     margin: tokens.$spacing-md;

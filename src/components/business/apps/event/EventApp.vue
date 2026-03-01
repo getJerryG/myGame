@@ -218,6 +218,7 @@ const createEvent = () => {
 /* 侧边栏菜单 */
 .sidebar-menu {
   @include utils.flex-col(0, stretch, flex-start);
+
   width: 100%;
   height: 100%;
   background-color: tokens.$bg-secondary;
@@ -227,6 +228,7 @@ const createEvent = () => {
 
 .menu-item {
   @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+
   padding: tokens.$spacing-md tokens.$spacing-lg;
   background: none;
   border: none;
@@ -261,6 +263,7 @@ const createEvent = () => {
   background-color: tokens.$bg-primary;
   color: tokens.$text-primary;
   overflow-y: auto;
+
   @include utils.custom-scrollbar;
 }
 
@@ -318,6 +321,7 @@ const createEvent = () => {
 /* 信息框 */
 .info-box {
   @include utils.flex-center;
+
   height: 60px;
   background-color: tokens.$bg-light;
   border: 1px solid rgba(tokens.$primary-blue, 0.2);
@@ -334,6 +338,7 @@ const createEvent = () => {
 /* 操作区域 */
 .action-section {
   @include utils.flex-center;
+
   padding: tokens.$spacing-lg;
   background-color: tokens.$bg-secondary;
   border-radius: tokens.$radius-md;
@@ -366,6 +371,7 @@ const createEvent = () => {
 /* 活动项 */
 .event-item {
   @include utils.flex-between;
+
   background-color: tokens.$bg-secondary;
   padding: tokens.$spacing-md;
   border-radius: tokens.$radius-md;
@@ -395,6 +401,7 @@ const createEvent = () => {
 
 .event-meta {
   @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+
   margin-bottom: tokens.$spacing-xs;
 }
 
@@ -428,6 +435,7 @@ const createEvent = () => {
 /* 活动数据 */
 .event-data {
   @include utils.flex-col(tokens.$spacing-sm, flex-end);
+
   text-align: right;
 }
 
@@ -449,6 +457,7 @@ const createEvent = () => {
 /* 空状态 */
 .empty-state {
   @include utils.flex-center;
+
   height: 220px;
   background-color: tokens.$bg-light;
   border: 1px dashed rgba(tokens.$primary-blue, 0.2);

@@ -47,6 +47,7 @@ const selectEventType = (type: string): void => {
 
   .tabs {
     @include utils.flex-row(tokens.$spacing-sm, center, flex-start);
+
     background-color: tokens.$bg-light;
     padding: tokens.$spacing-xs;
     border-radius: tokens.$radius-lg;
@@ -54,7 +55,9 @@ const selectEventType = (type: string): void => {
 
   .tab-btn {
     flex: 1;
+
     @include utils.flex-row(tokens.$spacing-sm, center, center);
+
     padding: tokens.$spacing-sm tokens.$spacing-md;
     background: none;
     border: none;

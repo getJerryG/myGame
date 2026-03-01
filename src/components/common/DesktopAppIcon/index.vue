@@ -204,6 +204,7 @@ const handleCancelDownload = () => {
 
   .icon-container {
     @include utils.icon-container(60px);
+
     margin-bottom: tokens.$spacing-sm;
 
     .app-icon {
@@ -215,7 +216,9 @@ const handleCancelDownload = () => {
       position: absolute;
       bottom: -5px;
       right: -5px;
+
       @include utils.badge-notification;
+
       box-shadow: tokens.$shadow-md;
     }
   }
@@ -225,6 +228,7 @@ const handleCancelDownload = () => {
     font-size: tokens.$font-size-xs;
     text-align: center;
     max-width: 100%;
+
     @include utils.text-truncate;
   }
 
@@ -232,7 +236,9 @@ const handleCancelDownload = () => {
   .download-progress-overlay {
     position: absolute;
     inset: 0;
+
     @include utils.flex-center;
+
     background-color: rgb(0 0 0 / 50%);
     border-radius: 50%;
 
@@ -310,6 +316,7 @@ const handleCancelDownload = () => {
   /* 删除确认模态框样式 */
   .delete-confirm-overlay {
     @include utils.modal-overlay;
+
     z-index: tokens.$z-max;
 
     .confirm-modal {

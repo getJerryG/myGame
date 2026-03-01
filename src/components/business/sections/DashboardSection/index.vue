@@ -285,6 +285,7 @@ function updatePlayerHero(team: string, index: number, heroId: string): void {
 
 .dashboard-section {
   @include utils.flex-col(tokens.$spacing-lg);
+
   padding: tokens.$spacing-lg;
   background-color: tokens.$bg-primary;
   color: tokens.$text-primary;
@@ -346,6 +347,7 @@ function updatePlayerHero(team: string, index: number, heroId: string): void {
 
 .kpi-trend {
   @include utils.flex-row(tokens.$spacing-xs, center, flex-start);
+
   font-size: tokens.$font-size-sm;
 
   &.up {
@@ -378,6 +380,7 @@ function updatePlayerHero(team: string, index: number, heroId: string): void {
 
 .config-item {
   @include utils.flex-row(tokens.$spacing-sm, center, flex-start);
+
   margin-bottom: tokens.$spacing-sm;
 
   label {
@@ -389,6 +392,7 @@ function updatePlayerHero(team: string, index: number, heroId: string): void {
   select,
   input {
     @include utils.input-base;
+
     width: auto;
     min-width: 150px;
   }
@@ -396,6 +400,7 @@ function updatePlayerHero(team: string, index: number, heroId: string): void {
 
 .teams-section {
   @include utils.flex-row(tokens.$spacing-lg, flex-start, flex-start);
+
   flex-wrap: wrap;
 }
 
@@ -419,6 +424,7 @@ function updatePlayerHero(team: string, index: number, heroId: string): void {
 
   select {
     @include utils.select-base;
+
     flex: 1;
   }
 }
@@ -452,6 +458,7 @@ function updatePlayerHero(team: string, index: number, heroId: string): void {
 
 .teams-results {
   @include utils.flex-row(tokens.$spacing-lg, flex-start, flex-start);
+
   flex-wrap: wrap;
 }
 

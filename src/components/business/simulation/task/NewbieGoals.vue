@@ -203,6 +203,7 @@ const claimReward = (goalId: string): void => {
 
 .progress-header {
   @include utils.flex-between;
+
   margin-bottom: tokens.$spacing-sm;
 }
 
@@ -259,11 +260,13 @@ const claimReward = (goalId: string): void => {
 
 .goal-content {
   @include utils.flex-between;
+
   gap: tokens.$spacing-md;
 }
 
 .goal-main {
   @include utils.flex-row(tokens.$spacing-md, flex-start);
+
   flex: 1;
 }
 
@@ -271,7 +274,9 @@ const claimReward = (goalId: string): void => {
   width: 24px;
   height: 24px;
   border-radius: tokens.$radius-full;
+
   @include utils.flex-center;
+
   flex-shrink: 0;
   font-size: tokens.$font-size-xs;
   font-weight: tokens.$font-weight-bold;
@@ -323,6 +328,7 @@ const claimReward = (goalId: string): void => {
 
 .progress-values {
   @include utils.flex-between;
+
   font-size: tokens.$font-size-xs;
   color: tokens.$text-muted;
   margin-top: tokens.$spacing-xs;

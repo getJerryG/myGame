@@ -172,6 +172,7 @@ const closeApp = () => {
 
 .hero-development-app {
   @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
+
   height: 100%;
   background-color: tokens.$bg-lighter;
   border-radius: tokens.$radius-lg;
@@ -180,6 +181,7 @@ const closeApp = () => {
 
 .app-header {
   @include utils.flex-between;
+
   padding: tokens.$spacing-md tokens.$spacing-lg;
   background: linear-gradient(135deg, tokens.$primary 0%, tokens.$primary-dark 100%);
   color: tokens.$text-primary;
@@ -198,7 +200,9 @@ const closeApp = () => {
     cursor: pointer;
     width: 32px;
     height: 32px;
+
     @include utils.flex-center;
+
     border-radius: 50%;
     transition: all tokens.$transition-normal;
 
@@ -210,13 +214,16 @@ const closeApp = () => {
 
 .app-content {
   @include utils.flex-row(tokens.$spacing-0, stretch, flex-start);
+
   flex: 1;
   overflow: hidden;
 }
 
 .hero-list-section {
   width: 300px;
+
   @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
+
   border-right: 1px solid tokens.$border-light;
   background-color: tokens.$bg-light;
 
@@ -233,12 +240,14 @@ const closeApp = () => {
 
 .hero-grid {
   @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
+
   overflow-y: auto;
   flex: 1;
 }
 
 .hero-card {
   @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+
   padding: tokens.$spacing-md;
   cursor: pointer;
   transition: all tokens.$transition-normal;
@@ -259,6 +268,7 @@ const closeApp = () => {
 
   .hero-info {
     @include utils.flex-col(tokens.$spacing-xs, flex-start, center);
+
     flex: 1;
 
     .hero-name {
@@ -303,13 +313,16 @@ const closeApp = () => {
 
 .hero-detail-section {
   flex: 1;
+
   @include utils.flex-col(tokens.$spacing-lg, stretch, flex-start);
+
   padding: tokens.$spacing-xl;
   overflow-y: auto;
 }
 
 .detail-header {
   @include utils.flex-row(tokens.$spacing-lg, center, flex-start);
+
   padding-bottom: tokens.$spacing-lg;
   border-bottom: 1px solid tokens.$border-light;
 
@@ -361,6 +374,7 @@ const closeApp = () => {
 
   .stat-item {
     @include utils.flex-between;
+
     padding: tokens.$spacing-md;
     background-color: tokens.$bg-light;
     border-radius: tokens.$radius-md;
@@ -381,6 +395,7 @@ const closeApp = () => {
 
 .detail-actions {
   @include utils.flex-row(tokens.$spacing-md, center, center);
+
   margin-top: auto;
 
   .action-btn {
@@ -417,7 +432,9 @@ const closeApp = () => {
 
 .no-selection {
   flex: 1;
+
   @include utils.flex-col(tokens.$spacing-md, center, center);
+
   color: tokens.$text-muted;
 
   .no-selection-icon {
@@ -445,10 +462,8 @@ const closeApp = () => {
   }
 
   .hero-grid {
-    flex-direction: row;
-    flex-wrap: wrap;
-    overflow-x: auto;
-    overflow-y: hidden;
+    flex-flow: row wrap;
+    overflow: auto hidden;
   }
 
   .hero-card {

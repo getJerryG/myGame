@@ -140,7 +140,9 @@ function claimCumulativeReward(threshold: number): void {
     padding: tokens.$spacing-md;
     background-color: tokens.$bg-light;
     border-bottom: 1px solid tokens.$border-light;
+
     @include utils.flex-col(tokens.$spacing-xs, flex-start);
+
     height: auto;
     min-height: 50px;
     flex-shrink: 0;
@@ -170,6 +172,7 @@ function claimCumulativeReward(threshold: number): void {
 
 .progress-info {
   @include utils.flex-between;
+
   margin-bottom: tokens.$spacing-xs;
   font-size: tokens.$font-size-xs;
   color: tokens.$text-secondary;
@@ -196,8 +199,11 @@ function claimCumulativeReward(threshold: number): void {
   flex: 1;
   overflow-y: auto;
   padding: tokens.$spacing-md;
+
   @include utils.flex-col(tokens.$spacing-md);
+
   min-height: 0;
+
   @include utils.custom-scrollbar;
 }
 
@@ -220,6 +226,7 @@ function claimCumulativeReward(threshold: number): void {
 /* 竖向奖励项 */
 .vertical-reward-item {
   @include utils.flex-between;
+
   padding: tokens.$spacing-sm;
   border-radius: tokens.$radius-sm;
   margin-bottom: tokens.$spacing-xs;
@@ -246,6 +253,7 @@ function claimCumulativeReward(threshold: number): void {
 
   .reward-info {
     @include utils.flex-col(2px, flex-start);
+
     margin-bottom: 0;
   }
 

@@ -321,6 +321,7 @@ const saveEvent = (): void => {
 
     .reward-item {
       @include utils.flex-row(tokens.$spacing-sm, center, flex-start);
+
       padding: tokens.$spacing-sm;
       background-color: tokens.$bg-light;
       border-radius: tokens.$radius-md;
@@ -351,6 +352,7 @@ const saveEvent = (): void => {
 
     .add-reward-btn {
       @include utils.flex-row(tokens.$spacing-sm, center, center);
+
       padding: tokens.$spacing-sm;
       background-color: rgb(16 185 129 / 20%);
       border: 1px dashed tokens.$success-green;
@@ -373,6 +375,7 @@ const saveEvent = (): void => {
 
     .condition-item {
       @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+
       padding: tokens.$spacing-sm;
       background-color: tokens.$bg-light;
       border-radius: tokens.$radius-md;
@@ -380,6 +383,7 @@ const saveEvent = (): void => {
 
     .checkbox-label {
       @include utils.flex-row(tokens.$spacing-sm, center, flex-start);
+
       cursor: pointer;
       flex: 1;
       font-size: tokens.$font-size-sm;
@@ -395,6 +399,7 @@ const saveEvent = (): void => {
 
   .form-actions {
     @include utils.flex-row(tokens.$spacing-md, center, flex-end);
+
     margin-top: tokens.$spacing-sm;
 
     .btn {

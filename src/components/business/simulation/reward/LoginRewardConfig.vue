@@ -184,7 +184,9 @@ function openRewardEditor(): void {
   background-color: tokens.$bg-light;
   border-radius: tokens.$radius-md;
   padding: tokens.$spacing-md;
+
   @include utils.flex-col(tokens.$spacing-sm, center);
+
   transition: all tokens.$transition-fast;
   border: 1px solid transparent;
 
@@ -207,6 +209,7 @@ function openRewardEditor(): void {
 
 .day-header {
   @include utils.flex-between;
+
   width: 100%;
 }
 
@@ -273,7 +276,9 @@ function openRewardEditor(): void {
 .add-item {
   border: 2px dashed tokens.$border-light;
   background-color: transparent;
+
   @include utils.flex-col(tokens.$spacing-sm, center, center);
+
   min-height: 150px;
   cursor: pointer;
   transition: all tokens.$transition-fast;

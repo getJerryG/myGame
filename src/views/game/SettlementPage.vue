@@ -423,7 +423,9 @@ const continueGame = (): void => {
 .settlement-page {
   width: 100vw;
   height: 100vh;
+
   @include utils.flex-center;
+
   overflow: hidden;
   position: relative;
   font-family: tokens.$font-family-base;
@@ -468,6 +470,7 @@ const continueGame = (): void => {
 
 .settlement-content {
   @include utils.flex-col(tokens.$spacing-md, center, flex-start);
+
   z-index: 1;
   max-width: tokens.$max-content-width;
   width: 100%;
@@ -512,6 +515,7 @@ const continueGame = (): void => {
 /* 核心数据概览 */
 .settlement-overview {
   @include utils.grid-auto-fill(200px, tokens.$spacing-md);
+
   width: 100%;
   margin-bottom: tokens.$spacing-lg;
 
@@ -564,6 +568,7 @@ const continueGame = (): void => {
 /* 图表区域 */
 .charts-section {
   @include utils.grid-auto-fill(550px, tokens.$spacing-md);
+
   width: 100%;
   margin-bottom: tokens.$spacing-lg;
 }
@@ -615,6 +620,7 @@ const continueGame = (): void => {
 
   .data-item {
     @include utils.flex-between;
+
     padding: tokens.$spacing-sm tokens.$spacing-md;
     background-color: tokens.$bg-lighter;
     border-radius: tokens.$radius-md;

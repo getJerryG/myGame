@@ -78,6 +78,7 @@
 
   .history-list {
     @include utils.flex-col(tokens.$spacing-md, stretch, flex-start);
+
     max-height: 300px;
     overflow-y: auto;
     padding-right: tokens.$spacing-sm;
@@ -98,6 +99,7 @@
 
   .history-header {
     @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+
     margin-bottom: tokens.$spacing-sm;
   }
 

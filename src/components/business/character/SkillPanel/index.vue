@@ -74,8 +74,7 @@ function getSkillKey(index: number): string {
   padding: tokens.$spacing-lg;
   font-family: 'Comic Sans MS', cursive, sans-serif;
   max-height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden auto;
   background: linear-gradient(135deg, tokens.$panel-bg-start 0%, tokens.$panel-bg-end 100%);
   border-radius: tokens.$radius-xl;
   border: 3px solid tokens.$skill-magic-border;
@@ -270,7 +269,9 @@ function getSkillKey(index: number): string {
   font-weight: tokens.$font-weight-bold;
   width: 32px;
   height: 32px;
+
   @include utils.flex-center;
+
   border-radius: 50%;
   font-size: tokens.$font-size-sm;
   box-shadow:

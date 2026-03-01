@@ -275,13 +275,16 @@ const endCollab = (collabId: string) => {
 .collab-center-app {
   width: 100%;
   height: 100%;
+
   @include utils.flex-col(0, stretch, flex-start);
+
   background-color: tokens.$bg-secondary;
   color: tokens.$text-primary;
 }
 
 .app-header {
   @include utils.flex-between;
+
   padding: tokens.$spacing-md tokens.$spacing-lg;
   background-color: rgba(tokens.$primary-blue, 0.1);
   border-bottom: 1px solid rgba(tokens.$primary-blue, 0.3);
@@ -313,6 +316,7 @@ const endCollab = (collabId: string) => {
 /* 标签页导航 */
 .tab-nav {
   @include utils.flex-row(0, center, flex-start);
+
   padding: 0 tokens.$spacing-lg;
   background-color: tokens.$bg-light;
   border-bottom: 1px solid rgba(tokens.$primary-blue, 0.3);
@@ -344,6 +348,7 @@ const endCollab = (collabId: string) => {
   flex: 1;
   padding: tokens.$spacing-lg;
   overflow-y: auto;
+
   @include utils.custom-scrollbar;
 }
 
@@ -354,6 +359,7 @@ const endCollab = (collabId: string) => {
 
 .collab-item {
   @include utils.flex-between;
+
   padding: tokens.$spacing-md;
   background-color: tokens.$bg-light;
   border-radius: tokens.$radius-md;
@@ -380,6 +386,7 @@ const endCollab = (collabId: string) => {
 
 .collab-header {
   @include utils.flex-between;
+
   margin-bottom: tokens.$spacing-sm;
 }
 
@@ -415,6 +422,7 @@ const endCollab = (collabId: string) => {
 
 .collab-meta {
   @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+
   font-size: tokens.$font-size-xs;
   color: tokens.$gray-500;
 }
@@ -425,6 +433,7 @@ const endCollab = (collabId: string) => {
 
 .collab-actions {
   @include utils.flex-row(tokens.$spacing-sm);
+
   flex-shrink: 0;
 }
 
@@ -459,6 +468,7 @@ const endCollab = (collabId: string) => {
 /* 空状态 */
 .empty-state {
   @include utils.flex-col(tokens.$spacing-md, center, center);
+
   height: 200px;
   color: tokens.$text-muted;
   text-align: center;
@@ -506,6 +516,7 @@ const endCollab = (collabId: string) => {
 
 .modal-header {
   @include utils.flex-between;
+
   margin-bottom: tokens.$spacing-lg;
 
   h3 {
@@ -565,6 +576,7 @@ const endCollab = (collabId: string) => {
 
 .form-actions {
   @include utils.flex-row(tokens.$spacing-sm, center, flex-end);
+
   margin-top: tokens.$spacing-xl;
 }
 

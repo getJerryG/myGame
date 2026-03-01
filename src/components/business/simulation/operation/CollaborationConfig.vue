@@ -157,6 +157,7 @@ function resetSelection(): void {
 /* 合作联动列表 */
 .collaboration-list {
   @include utils.flex-col(tokens.$spacing-md, stretch);
+
   margin-bottom: tokens.$spacing-xl;
 }
 
@@ -181,11 +182,13 @@ function resetSelection(): void {
 
 .collab-header {
   @include utils.flex-between(flex-start);
+
   margin-bottom: tokens.$spacing-md;
 }
 
 .collab-info {
   @include utils.flex-row(tokens.$spacing-sm, center);
+
   flex: 1;
 }
 
@@ -235,6 +238,7 @@ function resetSelection(): void {
 /* 合作效果 */
 .collab-effects {
   @include utils.flex-row(tokens.$spacing-xl, center);
+
   flex-wrap: wrap;
   padding-top: tokens.$spacing-sm;
   border-top: 1px solid rgb(255 255 255 / 10%);
@@ -257,6 +261,7 @@ function resetSelection(): void {
 /* 操作按钮 */
 .collab-actions {
   @include utils.flex-row(tokens.$spacing-md, center, flex-end);
+
   margin-top: tokens.$spacing-lg;
   padding-top: tokens.$spacing-lg;
   border-top: 1px solid rgb(255 255 255 / 10%);

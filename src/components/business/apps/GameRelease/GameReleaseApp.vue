@@ -213,6 +213,7 @@ onMounted(() => {
 
 .game-release-app {
   @include utils.flex-col(0, stretch, flex-start);
+
   height: 100%;
   background-color: tokens.$bg-light;
   color: tokens.$text-primary;
@@ -225,6 +226,7 @@ onMounted(() => {
 
 .content-item {
   @include utils.flex-between(flex-start);
+
   background-color: tokens.$bg-light;
   padding: tokens.$spacing-md;
   border-radius: tokens.$radius-md;
@@ -291,6 +293,7 @@ onMounted(() => {
 
 .radio-option {
   @include utils.flex-row(tokens.$spacing-xs);
+
   cursor: pointer;
 
   input[type='radio'] {
@@ -305,6 +308,7 @@ onMounted(() => {
 
 .action-section {
   @include utils.flex-center;
+
   padding: tokens.$spacing-lg;
   background-color: tokens.$bg-light;
   border-radius: tokens.$radius-md;
@@ -347,6 +351,7 @@ onMounted(() => {
 
 .version-header {
   @include utils.flex-between;
+
   margin-bottom: tokens.$spacing-md;
 
   .version-info {
@@ -402,6 +407,7 @@ onMounted(() => {
   list-style: none;
   padding: 0;
   margin: 0;
+
   @include utils.flex-col(tokens.$spacing-sm);
 
   li {
@@ -422,6 +428,7 @@ onMounted(() => {
 
 .feedback-stats {
   @include utils.flex-row(tokens.$spacing-xl, center, flex-start);
+
   flex-wrap: wrap;
 }
 
@@ -442,6 +449,7 @@ onMounted(() => {
 
 .empty-state {
   @include utils.flex-center;
+
   height: 200px;
   background-color: tokens.$bg-light;
   border: 1px dashed rgba(tokens.$primary-blue, 0.2);

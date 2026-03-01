@@ -161,6 +161,7 @@ const publishGame = (): void => {
 
 .game-setup-container {
   @include utils.flex-center;
+
   min-height: 100vh;
   background-color: tokens.$bg-primary;
 }
@@ -210,6 +211,7 @@ const publishGame = (): void => {
   background: tokens.$bg-light;
   cursor: pointer;
   transition: all tokens.$transition-fast;
+
   @include utils.flex-col(tokens.$spacing-xs, center, center);
 
   &:hover {
@@ -273,6 +275,7 @@ const publishGame = (): void => {
 
 .input-footer {
   @include utils.flex-between;
+
   margin-top: tokens.$spacing-xs;
 }
 

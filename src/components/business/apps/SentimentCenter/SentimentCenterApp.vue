@@ -318,6 +318,7 @@ const exportReport = () => {
 
 .sentiment-center-app {
   @include utils.flex-col(0, stretch);
+
   height: 100%;
   background-color: tokens.$bg-secondary;
   color: tokens.$text-primary;
@@ -352,6 +353,7 @@ const exportReport = () => {
   flex: 1;
   padding: tokens.$spacing-lg;
   overflow-y: auto;
+
   @include utils.custom-scrollbar;
 }
 
@@ -366,6 +368,7 @@ const exportReport = () => {
 .stat-card {
   padding: tokens.$spacing-md;
   border-radius: tokens.$radius-md;
+
   @include utils.flex-col(tokens.$space-2, center);
 
   &.positive {
@@ -445,6 +448,7 @@ const exportReport = () => {
 
 .comment-header {
   @include utils.flex-between;
+
   margin-bottom: tokens.$space-2;
 
   .comment-user {
@@ -507,6 +511,7 @@ const exportReport = () => {
   background-color: tokens.$bg-dark;
   border-radius: tokens.$radius-md;
   padding: tokens.$spacing-lg;
+
   @include utils.flex-col(tokens.$spacing-lg, center);
 
   .chart-title {
@@ -517,6 +522,7 @@ const exportReport = () => {
 
   .chart-bars {
     @include utils.flex-row(tokens.$spacing-md, flex-end, center);
+
     height: 200px;
     width: 100%;
   }
@@ -573,6 +579,7 @@ const exportReport = () => {
 
 .detail-item {
   @include utils.flex-col(tokens.$space-2, center);
+
   padding: tokens.$spacing-md;
   background-color: tokens.$bg-dark;
   border-radius: tokens.$radius-sm;
@@ -598,7 +605,9 @@ const exportReport = () => {
   background-color: tokens.$bg-light;
   border-radius: tokens.$radius-md;
   padding: tokens.$spacing-lg;
+
   @include utils.flex-col(tokens.$spacing-md, center);
+
   margin-bottom: tokens.$spacing-lg;
 
   h3 {
@@ -614,6 +623,7 @@ const exportReport = () => {
   border-radius: 50%;
   background-color: rgb(59 130 246 / 20%);
   border: 10px solid rgb(59 130 246 / 30%);
+
   @include utils.flex-col(tokens.$space-2, center, center);
 
   .score-number {
@@ -655,6 +665,7 @@ const exportReport = () => {
 
 .satisfaction-bar {
   @include utils.flex-row(tokens.$spacing-md, center);
+
   height: 20px;
   background-color: tokens.$bg-dark;
   border-radius: tokens.$radius-full;
@@ -678,6 +689,7 @@ const exportReport = () => {
 // 导出报告按钮样式
 .action-section {
   @include utils.flex-center;
+
   padding: tokens.$spacing-lg;
   background-color: tokens.$bg-light;
   border-radius: tokens.$radius-md;

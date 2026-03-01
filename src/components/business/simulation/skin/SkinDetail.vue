@@ -376,11 +376,13 @@ const confirmRelease = () => {
 /* 皮肤详情 */
 .skin-detail {
   @include utils.flex-col(tokens.$spacing-lg, stretch);
+
   overflow-y: auto;
   padding-right: tokens.$spacing-md;
 
   &.empty {
     @include utils.flex-center;
+
     background-color: tokens.$bg-light;
     border-radius: tokens.$radius-md;
     border: 2px dashed tokens.$border-light;
@@ -389,6 +391,7 @@ const confirmRelease = () => {
 
 .empty-state {
   @include utils.flex-col(tokens.$spacing-md, center);
+
   padding: tokens.$spacing-2xl;
   text-align: center;
 }
@@ -410,6 +413,7 @@ const confirmRelease = () => {
 
   h5 {
     @include utils.subsection-title;
+
     padding-bottom: tokens.$spacing-sm;
     border-bottom: 1px solid tokens.$border-light;
   }
@@ -434,6 +438,7 @@ const confirmRelease = () => {
 
 .skin-basic-info {
   flex: 1;
+
   @include utils.flex-col(tokens.$spacing-xs, stretch);
 }
 
@@ -473,6 +478,7 @@ const confirmRelease = () => {
 
 .effect-item {
   @include utils.flex-row(tokens.$spacing-sm, center);
+
   padding: tokens.$spacing-sm tokens.$spacing-md;
   background-color: rgb(255 255 255 / 2%);
   border-radius: tokens.$radius-sm;
@@ -528,6 +534,7 @@ const confirmRelease = () => {
 /* 折扣控制 */
 .discount-control {
   @include utils.flex-row(tokens.$spacing-lg, center);
+
   margin-bottom: tokens.$spacing-sm;
 }
 
@@ -567,6 +574,7 @@ const confirmRelease = () => {
 
 .prediction-item {
   @include utils.flex-row(tokens.$spacing-md, center);
+
   padding: tokens.$spacing-md;
   background-color: rgb(255 255 255 / 2%);
   border-radius: tokens.$radius-md;
@@ -580,6 +588,7 @@ const confirmRelease = () => {
 
 .prediction-value {
   flex: 1;
+
   @include utils.value-text(tokens.$font-size-base);
 }
 

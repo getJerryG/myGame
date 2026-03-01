@@ -227,6 +227,7 @@ const closeApp = () => {
 
 .game-release-app {
   @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
+
   height: 100%;
   background-color: tokens.$bg-lighter;
   border-radius: tokens.$radius-lg;
@@ -235,6 +236,7 @@ const closeApp = () => {
 
 .app-header {
   @include utils.flex-between;
+
   padding: tokens.$spacing-md tokens.$spacing-lg;
   background: linear-gradient(135deg, tokens.$success 0%, #059669 100%);
   color: tokens.$text-primary;
@@ -253,7 +255,9 @@ const closeApp = () => {
     cursor: pointer;
     width: 32px;
     height: 32px;
+
     @include utils.flex-center;
+
     border-radius: 50%;
     transition: all tokens.$transition-normal;
 
@@ -265,6 +269,7 @@ const closeApp = () => {
 
 .app-content {
   @include utils.flex-col(tokens.$spacing-lg, stretch, flex-start);
+
   flex: 1;
   padding: tokens.$spacing-xl;
   overflow-y: auto;
@@ -275,6 +280,7 @@ const closeApp = () => {
 
   .status-card {
     @include utils.flex-col(tokens.$spacing-md, center, center);
+
     padding: tokens.$spacing-xl;
     border-radius: tokens.$radius-xl;
     min-width: 200px;
@@ -374,11 +380,13 @@ const closeApp = () => {
 
 .channel-list {
   @include utils.flex-row(tokens.$spacing-sm, center, flex-start);
+
   flex-wrap: wrap;
 }
 
 .channel-item {
   @include utils.flex-row(tokens.$spacing-sm, center, flex-start);
+
   padding: tokens.$spacing-sm tokens.$spacing-md;
   background-color: tokens.$bg-light;
   border: 2px solid tokens.$border-light;
@@ -434,6 +442,7 @@ const closeApp = () => {
 
   .history-header {
     @include utils.flex-between;
+
     margin-bottom: tokens.$spacing-sm;
 
     .history-version {
@@ -450,6 +459,7 @@ const closeApp = () => {
 
   .history-channels {
     @include utils.flex-row(tokens.$spacing-xs, center, flex-start);
+
     margin-bottom: tokens.$spacing-sm;
 
     .channel-tag {

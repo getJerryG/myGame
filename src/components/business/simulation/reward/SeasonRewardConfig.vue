@@ -90,6 +90,7 @@ const editRankReward = (rank) => {
 
 .rank-header {
   @include utils.flex-row(tokens.$spacing-sm, center);
+
   margin-bottom: tokens.$spacing-md;
 }
 
@@ -112,6 +113,7 @@ const editRankReward = (rank) => {
 
 .rank-reward-item {
   @include utils.flex-row(tokens.$spacing-sm, center);
+
   padding: tokens.$spacing-sm tokens.$spacing-md;
   background-color: tokens.$bg-lighter;
   border-radius: tokens.$radius-sm;

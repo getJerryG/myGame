@@ -362,6 +362,7 @@ const formatDate = (date: Date): string => {
     .event-header,
     .history-header {
       @include utils.flex-between(flex-start);
+
       margin-bottom: tokens.$spacing-sm;
 
       .event-title,
@@ -537,6 +538,7 @@ const formatDate = (date: Date): string => {
   .history-list {
     max-height: 500px;
     overflow-y: auto;
+
     @include utils.custom-scrollbar;
   }
 

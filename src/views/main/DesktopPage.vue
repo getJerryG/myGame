@@ -112,7 +112,9 @@ const handleHelloModalClose = () => {
 .desktop-loading {
   width: 100vw;
   height: 100vh;
+
   @include utils.flex-center;
+
   background: linear-gradient(135deg, tokens.$bg-dark 0%, tokens.$bg-secondary 50%, tokens.$bg-tertiary 100%);
   color: tokens.$text-primary;
   font-size: tokens.$font-size-2xl;
@@ -124,6 +126,7 @@ const handleHelloModalClose = () => {
   100% {
     opacity: 0.6;
   }
+
   50% {
     opacity: 1;
   }
@@ -178,7 +181,9 @@ const handleHelloModalClose = () => {
   inset: 0;
   background: rgb(0 0 0 / 85%);
   backdrop-filter: blur(tokens.$spacing-xs);
+
   @include utils.flex-center;
+
   z-index: 10000;
   animation: fadeIn 0.3s ease;
 }

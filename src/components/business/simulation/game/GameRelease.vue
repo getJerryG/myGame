@@ -203,7 +203,6 @@ const generateNewAnnouncement = (): void => {
 </script>
 
 <style lang="scss" scoped>
-
 .game-release-container {
   max-width: tokens.$max-content-width;
   margin: 0 auto;
@@ -302,9 +301,11 @@ const generateNewAnnouncement = (): void => {
   cursor: pointer;
   transition: all tokens.$transition-fast;
 
-  &:hover:not(:disabled) {
-    box-shadow: tokens.$shadow-lg;
-    transform: translateY(-2px);
+  &:hover {
+    &:not(:disabled) {
+      box-shadow: tokens.$shadow-lg;
+      transform: translateY(-2px);
+    }
   }
 
   &:disabled {

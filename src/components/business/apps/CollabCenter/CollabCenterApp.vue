@@ -271,7 +271,6 @@ const endCollab = (collabId: string) => {
 </script>
 
 <style lang="scss" scoped>
-
 .collab-center-app {
   width: 100%;
   height: 100%;

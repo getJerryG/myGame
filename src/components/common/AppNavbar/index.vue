@@ -113,7 +113,6 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-
 /* 导航栏样式 */
 .navbar {
   background: linear-gradient(135deg, tokens.$gray-800 0%, tokens.$gray-700 100%);
@@ -140,6 +139,12 @@ onUnmounted(() => {
   &:hover {
     transform: translateY(0);
     box-shadow: 0 4px 20px rgb(0 0 0 / 30%);
+
+    .navbar-brand {
+      h1 {
+        transform: scale(1.05);
+      }
+    }
   }
 }
 
@@ -150,10 +155,6 @@ onUnmounted(() => {
     font-weight: tokens.$font-weight-bold;
     text-shadow: 0 2px 4px rgb(0 0 0 / 30%);
     transition: all tokens.$transition-normal;
-  }
-
-  .navbar:hover & h1 {
-    transform: scale(1.05);
   }
 }
 
@@ -238,6 +239,15 @@ onUnmounted(() => {
 }
 
 /* 链接发光效果 */
+.nav-link {
+  &:hover {
+    .link-glow {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}
+
 .link-glow {
   position: absolute;
   top: -50%;
@@ -249,17 +259,18 @@ onUnmounted(() => {
   opacity: 0;
   transition: all 0.6s ease;
   z-index: 1;
-
-  .nav-link:hover & {
-    transform: scale(1);
-    opacity: 1;
-  }
 }
 
 /* 响应式设计 */
 @include utils.mobile {
   .menu-toggle {
     display: flex;
+
+    &:focus {
+      outline: 2px solid tokens.$text-primary;
+      outline-offset: 2px;
+      border-radius: tokens.$radius-sm;
+    }
   }
 
   .navbar-menu {
@@ -296,10 +307,17 @@ onUnmounted(() => {
       transform: none;
       background: rgb(255 255 255 / 10%);
     }
+
+    &:focus {
+      outline: 2px solid tokens.$success;
+      outline-offset: 2px;
+    }
   }
 
-  .navbar-brand h1 {
-    font-size: tokens.$font-size-lg;
+  .navbar-brand {
+    h1 {
+      font-size: tokens.$font-size-lg;
+    }
   }
 
   .navbar {
@@ -308,15 +326,19 @@ onUnmounted(() => {
 }
 
 /* 可访问性增强 */
-.nav-link:focus {
-  outline: 2px solid tokens.$success;
-  outline-offset: 2px;
+.nav-link {
+  &:focus {
+    outline: 2px solid tokens.$success;
+    outline-offset: 2px;
+  }
 }
 
-.menu-toggle:focus {
-  outline: 2px solid tokens.$text-primary;
-  outline-offset: 2px;
-  border-radius: tokens.$radius-sm;
+.menu-toggle {
+  &:focus {
+    outline: 2px solid tokens.$text-primary;
+    outline-offset: 2px;
+    border-radius: tokens.$radius-sm;
+  }
 }
 
 /* 动画效果 */

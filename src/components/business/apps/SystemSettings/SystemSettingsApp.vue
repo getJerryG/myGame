@@ -55,7 +55,11 @@
             </div>
             <div class="info-item">
               <span class="info-label">游戏时间</span>
-              <span class="info-value">{{ gameData?.gameState?.currentDate ? `${gameData.gameState.currentDate.year}年${gameData.gameState.currentDate.month}月${gameData.gameState.currentDate.day}日` : '加载中...' }}</span>
+              <span class="info-value">{{
+                gameData?.gameState?.currentDate
+                  ? `${gameData.gameState.currentDate.year}年${gameData.gameState.currentDate.month}月${gameData.gameState.currentDate.day}日`
+                  : '加载中...'
+              }}</span>
             </div>
             <div class="info-item">
               <span class="info-label">策划等级</span>

@@ -1,3 +1,5 @@
+@use '@/styles/tokens' as tokens;
+
 .operation-strategy-panel {
   background-color: var(--bg-secondary);
   border-radius: var(--radius-lg);
@@ -5,10 +7,10 @@
   overflow: hidden;
   border: 1px solid var(--border-light);
   transition: all var(--transition-normal);
-}
 
-.operation-strategy-panel:hover {
-  box-shadow: var(--shadow-xl);
+  &:hover {
+    box-shadow: var(--shadow-xl);
+  }
 }
 
 /* 面板头部 */
@@ -91,6 +93,10 @@
   &.active {
     background-color: rgb(59 130 246 / 20%);
     box-shadow: 0 2px 8px rgb(59 130 246 / 30%);
+
+    .tab-label {
+      color: var(--text-primary);
+    }
   }
 }
 
@@ -102,10 +108,6 @@
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   color: var(--text-secondary);
-}
-
-.strategy-tab.active .tab-label {
-  color: var(--text-primary);
 }
 
 /* 策略配置内容 */
@@ -552,7 +554,7 @@
 }
 
 /* 响应式设计 */
-@media (width <= 768px) {
+@media (width <= tokens.$breakpoint-md) {
   .panel-content {
     padding: 15px;
   }
@@ -608,7 +610,7 @@
 }
 
 /* 横屏手机适配 */
-@media (orientation: landscape) and (height <= 600px) {
+@media (orientation: landscape) and (height <= tokens.$height-breakpoint-sm) {
   .panel-content {
     padding: 12px;
   }

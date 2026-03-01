@@ -257,7 +257,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .market-sentiment-panel {
   @include utils.panel-base;
 

@@ -1,6 +1,14 @@
 <template>
-  <div class="top-core-data" aria-labelledby="core-data-header">
-    <h2 id="core-data-header" class="sr-only">核心数据</h2>
+  <div
+    class="top-core-data"
+    aria-labelledby="core-data-header"
+  >
+    <h2
+      id="core-data-header"
+      class="sr-only"
+    >
+      核心数据
+    </h2>
 
     <!-- 上方：策划信息和时间系统 -->
     <div class="top-section">
@@ -237,18 +245,18 @@ const animateValue = (target: number, setter: (val: number) => void, duration = 
   const update = (timestamp: number) => {
     const elapsed = timestamp - start;
     const progress = Math.min(elapsed / duration, 1);
-    
+
     // 使用缓动函数
     const easeProgress = 1 - Math.pow(1 - progress, 3);
     const currentValue = initialValue + (target - initialValue) * easeProgress;
-    
+
     setter(currentValue);
-    
+
     if (progress < 1) {
       requestAnimationFrame(update);
     }
   };
-  
+
   requestAnimationFrame(update);
 };
 
@@ -257,7 +265,7 @@ onMounted(() => {
   animateValue(props.businessData?.activeUsers || 0, (val) => {
     animatedActiveUsers.value = Math.floor(val);
   });
-  
+
   // 初始化时间动画
   if (props.gameState?.currentDate) {
     animatedHour.value = props.gameState.currentDate.hour;

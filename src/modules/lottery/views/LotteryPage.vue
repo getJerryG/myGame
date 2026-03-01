@@ -214,7 +214,6 @@ const finishLottery = () => {
 </script>
 
 <style lang="scss" scoped>
-
 .lottery-page {
   @include utils.flex-col(tokens.$spacing-lg, stretch, flex-start);
 
@@ -310,9 +309,11 @@ const finishLottery = () => {
   box-shadow: 0 4px 15px rgb(74 158 255 / 40%);
   min-width: 200px;
 
-  &:hover:not(:disabled) {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgb(74 158 255 / 60%);
+  &:hover {
+    &:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgb(74 158 255 / 60%);
+    }
   }
 
   &:disabled {

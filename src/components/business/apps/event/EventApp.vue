@@ -214,7 +214,6 @@ const createEvent = () => {
 </script>
 
 <style lang="scss" scoped>
-
 /* 侧边栏菜单 */
 .sidebar-menu {
   @include utils.flex-col(0, stretch, flex-start);

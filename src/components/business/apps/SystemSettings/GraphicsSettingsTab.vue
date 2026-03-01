@@ -182,8 +182,10 @@ const emit = defineEmits<{
     transition: all tokens.$transition-fast;
   }
 
-  &.active .toggle-slider {
-    left: calc(100% - 24px);
+  &.active {
+    .toggle-slider {
+      left: calc(100% - 24px);
+    }
   }
 }
 </style>

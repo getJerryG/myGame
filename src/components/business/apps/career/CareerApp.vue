@@ -228,7 +228,6 @@ const rewardsHistory = ref([
 </script>
 
 <style lang="scss" scoped>
-
 .module-section {
   background-color: tokens.$bg-secondary;
   border-radius: tokens.$radius-lg;

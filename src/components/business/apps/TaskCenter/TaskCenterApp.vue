@@ -220,7 +220,6 @@ const claimAllTasks = () => {
 </script>
 
 <style lang="scss" scoped>
-
 .task-center-app {
   @include utils.flex-col(0, stretch);
 
@@ -433,9 +432,11 @@ const claimAllTasks = () => {
   cursor: pointer;
   transition: all tokens.$transition-fast;
 
-  &:hover:not(:disabled) {
-    background-color: tokens.$primary-dark;
-    transform: translateY(-1px);
+  &:hover {
+    &:not(:disabled) {
+      background-color: tokens.$primary-dark;
+      transform: translateY(-1px);
+    }
   }
 
   &:disabled {

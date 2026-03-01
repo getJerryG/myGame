@@ -164,7 +164,6 @@ const getCategoryCount = (category: string): number => {
 </script>
 
 <style lang="scss" scoped>
-
 .operation-permissions-container {
   max-width: tokens.$max-content-width;
   margin: 0 auto;

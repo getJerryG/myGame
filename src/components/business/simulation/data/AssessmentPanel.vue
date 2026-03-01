@@ -94,7 +94,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 /* 考核面板 */
 .assessment-panel {
   position: fixed;
@@ -180,12 +179,16 @@ export default {
         font-weight: tokens.$font-weight-semibold;
       }
 
-      &.passed .result-status {
-        color: tokens.$success-green;
+      &.passed {
+        .result-status {
+          color: tokens.$success-green;
+        }
       }
 
-      &:not(.passed) .result-status {
-        color: tokens.$danger-red;
+      &:not(.passed) {
+        .result-status {
+          color: tokens.$danger-red;
+        }
       }
     }
   }

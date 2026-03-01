@@ -399,7 +399,6 @@ const emit = defineEmits(['strategy-confirmed']);
 </script>
 
 <style lang="scss" scoped>
-
 .operation-strategy-panel {
   @include utils.panel-base;
 }
@@ -440,8 +439,10 @@ const emit = defineEmits(['strategy-confirmed']);
 .strategy-tab {
   @include utils.tab-item;
 
-  &.active .tab-label {
-    color: tokens.$text-primary;
+  &.active {
+    .tab-label {
+      color: tokens.$text-primary;
+    }
   }
 }
 

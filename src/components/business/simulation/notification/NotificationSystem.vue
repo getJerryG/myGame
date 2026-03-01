@@ -97,75 +97,124 @@ const getEventIcon = (type: 'positive' | 'negative' | 'neutral' | 'info'): strin
   z-index: 1000;
   animation: slideInRight 0.3s ease;
   border-left: 4px solid #3498db;
-}
 
-.notification-popup.positive {
-  border-left-color: #10b981;
-}
+  &.positive {
+    border-left-color: #10b981;
+  }
 
-.notification-popup.negative {
-  border-left-color: #ef4444;
-}
+  &.negative {
+    border-left-color: #ef4444;
+  }
 
-.notification-popup.neutral {
-  border-left-color: #3b82f6;
-}
+  &.neutral {
+    border-left-color: #3b82f6;
+  }
 
-.notification-content {
-  padding: 20px;
-}
+  &-content {
+    padding: 20px;
+  }
 
-.notification-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 12px;
-}
+  &-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
 
-.notification-icon {
-  font-size: 20px;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
+  &-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
 
-.notification-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #1e293b;
-  margin: 0;
-  flex: 1;
-}
+  &-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+    flex: 1;
+  }
 
-.notification-close {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  color: #94a3b8;
-  padding: 0;
-  line-height: 1;
-  flex-shrink: 0;
-}
+  &-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #94a3b8;
+    padding: 0;
+    line-height: 1;
+    flex-shrink: 0;
 
-.notification-close:hover {
-  color: #64748b;
-}
+    &:hover {
+      color: #64748b;
+    }
+  }
 
-.notification-message {
-  font-size: 14px;
-  color: #64748b;
-  margin: 0 0 12px;
-  line-height: 1.4;
-}
+  &-message {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0 0 12px;
+    line-height: 1.4;
+  }
 
-.notification-footer {
-  display: flex;
-  justify-content: flex-end;
-}
+  &-footer {
+    display: flex;
+    justify-content: flex-end;
+  }
 
-.notification-time {
-  font-size: 12px;
-  color: #94a3b8;
+  &-time {
+    font-size: 12px;
+    color: #94a3b8;
+  }
+
+  /* 响应式设�? */
+  @media (width <= tokens.$breakpoint-md) {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+
+    &-content {
+      padding: 15px;
+    }
+
+    &-title {
+      font-size: 14px;
+    }
+
+    &-message {
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    &-time {
+      font-size: 11px;
+    }
+  }
+
+  /* 横屏手机适配 */
+  @media (orientation: landscape) and (height <= 600px) {
+    top: 10px;
+    right: 10px;
+    max-width: 300px;
+
+    &-content {
+      padding: 15px;
+    }
+
+    &-title {
+      font-size: 14px;
+    }
+
+    &-message {
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    &-time {
+      font-size: 11px;
+    }
+  }
 }
 
 /* 动画效果 */
@@ -178,59 +227,6 @@ const getEventIcon = (type: 'positive' | 'negative' | 'neutral' | 'info'): strin
   to {
     transform: translateX(0);
     opacity: 1;
-  }
-}
-
-/* 响应式设�? */
-@media (width <= 768px) {
-  .notification-popup {
-    top: 10px;
-    right: 10px;
-    left: 10px;
-    max-width: none;
-  }
-
-  .notification-content {
-    padding: 15px;
-  }
-
-  .notification-title {
-    font-size: 14px;
-  }
-
-  .notification-message {
-    font-size: 13px;
-    margin-bottom: 10px;
-  }
-
-  .notification-time {
-    font-size: 11px;
-  }
-}
-
-/* 横屏手机适配 */
-@media (orientation: landscape) and (height <= 600px) {
-  .notification-popup {
-    top: 10px;
-    right: 10px;
-    max-width: 300px;
-  }
-
-  .notification-content {
-    padding: 15px;
-  }
-
-  .notification-title {
-    font-size: 14px;
-  }
-
-  .notification-message {
-    font-size: 13px;
-    margin-bottom: 10px;
-  }
-
-  .notification-time {
-    font-size: 11px;
   }
 }
 </style>

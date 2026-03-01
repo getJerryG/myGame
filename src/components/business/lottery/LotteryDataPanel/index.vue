@@ -35,7 +35,6 @@ const lotteryStore = useLotteryStore();
 </script>
 
 <style lang="scss" scoped>
-
 .data-panel {
   @include utils.grid-layout(3, tokens.$space-2);
 

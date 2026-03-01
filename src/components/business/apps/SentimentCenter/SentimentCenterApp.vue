@@ -315,7 +315,6 @@ const exportReport = () => {
 </script>
 
 <style lang="scss" scoped>
-
 .sentiment-center-app {
   @include utils.flex-col(0, stretch);
 

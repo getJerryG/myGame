@@ -145,7 +145,6 @@ function openRewardEditor(): void {
 </script>
 
 <style lang="scss" scoped>
-
 .login-reward-config {
   padding: 0;
 }

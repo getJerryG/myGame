@@ -270,16 +270,35 @@ const claimReward = (taskId: string) => {
   font-size: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
-}
 
-.control-btn:hover {
-  background-color: rgb(74 158 255 / 40%);
+  &:hover {
+    background-color: rgb(74 158 255 / 40%);
+  }
 }
 
 .task-system-content {
   padding: 16px;
   max-height: 400px;
   overflow-y: auto;
+
+  /* 滚动条样式 */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgb(0 0 0 / 20%);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgb(74 158 255 / 50%);
+    border-radius: 3px;
+
+    &:hover {
+      background: rgb(74 158 255 / 80%);
+    }
+  }
 }
 
 .task-list {
@@ -319,14 +338,14 @@ const claimReward = (taskId: string) => {
   border-radius: 6px;
   margin-bottom: 8px;
   transition: all 0.2s ease;
-}
 
-.task-item:hover {
-  background-color: rgb(0 0 0 / 40%);
-}
+  &:hover {
+    background-color: rgb(0 0 0 / 40%);
+  }
 
-.task-item.completed {
-  opacity: 0.7;
+  &.completed {
+    opacity: 0.7;
+  }
 }
 
 .task-info {
@@ -402,33 +421,14 @@ const claimReward = (taskId: string) => {
   font-size: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
-}
 
-.action-btn:hover {
-  background-color: #357abd;
-}
+  &:hover {
+    background-color: #357abd;
+  }
 
-.action-btn:disabled {
-  background-color: #aaa;
-  cursor: not-allowed;
-}
-
-/* 滚动条样式 */
-.task-system-content::-webkit-scrollbar {
-  width: 6px;
-}
-
-.task-system-content::-webkit-scrollbar-track {
-  background: rgb(0 0 0 / 20%);
-  border-radius: 3px;
-}
-
-.task-system-content::-webkit-scrollbar-thumb {
-  background: rgb(74 158 255 / 50%);
-  border-radius: 3px;
-}
-
-.task-system-content::-webkit-scrollbar-thumb:hover {
-  background: rgb(74 158 255 / 80%);
+  &:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
 }
 </style>

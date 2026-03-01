@@ -111,7 +111,6 @@ const claimCumulativeReward = (threshold: number): void => {
 </script>
 
 <style lang="scss" scoped>
-
 .cumulative-rewards-panel-vertical {
   @include utils.flex-col(tokens.$spacing-0);
 

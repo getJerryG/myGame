@@ -191,7 +191,6 @@ const fixBasicBugs = (): void => {
 </script>
 
 <style lang="scss" scoped>
-
 .basic-operations-container {
   max-width: tokens.$max-content-width;
   margin: 0 auto;

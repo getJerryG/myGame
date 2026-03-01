@@ -133,13 +133,21 @@ defineProps<{
 
 .chart-bar {
   flex: 1;
-  background: linear-gradient(180deg, tokens.$primary-gold 0%, color.adjust(tokens.$primary-gold, $lightness: -20%) 100%);
+  background: linear-gradient(
+    180deg,
+    tokens.$primary-gold 0%,
+    color.adjust(tokens.$primary-gold, $lightness: -20%) 100%
+  );
   border-radius: tokens.$radius-sm tokens.$radius-sm 0 0;
   min-height: 4px;
   transition: height tokens.$transition-fast;
 
   &:hover {
-    background: linear-gradient(180deg, color.adjust(tokens.$primary-gold, $lightness: 10%) 0%, tokens.$primary-gold 100%);
+    background: linear-gradient(
+      180deg,
+      color.adjust(tokens.$primary-gold, $lightness: 10%) 0%,
+      tokens.$primary-gold 100%
+    );
   }
 }
 </style>

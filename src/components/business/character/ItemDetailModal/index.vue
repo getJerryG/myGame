@@ -58,7 +58,6 @@ defineEmits(['close']);
 </script>
 
 <style lang="scss" scoped>
-
 .item-detail {
   @include utils.flex-col(tokens.$space-3);
 }

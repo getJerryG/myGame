@@ -268,7 +268,6 @@ const buyTickets = (): void => {
 </script>
 
 <style lang="scss" scoped>
-
 /* 侧边栏菜单 */
 .sidebar-menu {
   @include utils.flex-col(0, stretch);
@@ -461,10 +460,12 @@ const buyTickets = (): void => {
   font-weight: tokens.$font-weight-bold;
   transition: all tokens.$transition-fast;
 
-  &:hover:not(:disabled) {
-    background-color: #f59e0b;
-    transform: translateY(-2px);
-    box-shadow: tokens.$shadow-gold;
+  &:hover {
+    &:not(:disabled) {
+      background-color: #f59e0b;
+      transform: translateY(-2px);
+      box-shadow: tokens.$shadow-gold;
+    }
   }
 
   &:disabled {

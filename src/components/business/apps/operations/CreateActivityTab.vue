@@ -144,11 +144,7 @@ const emit = defineEmits<{
 }>();
 
 const canCreate = computed(() => {
-  return (
-    props.activityName.trim() !== '' &&
-    props.startTime !== '' &&
-    props.endTime !== ''
-  );
+  return props.activityName.trim() !== '' && props.startTime !== '' && props.endTime !== '';
 });
 </script>
 
@@ -275,7 +271,11 @@ const canCreate = computed(() => {
 
 .confirm-btn {
   padding: tokens.$spacing-md tokens.$spacing-xl;
-  background: linear-gradient(135deg, tokens.$primary-gold 0%, color.adjust(tokens.$primary-gold, $lightness: -10%) 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$primary-gold 0%,
+    color.adjust(tokens.$primary-gold, $lightness: -10%) 100%
+  );
   border: none;
   border-radius: tokens.$radius-md;
   color: #fff;
@@ -284,13 +284,17 @@ const canCreate = computed(() => {
   cursor: pointer;
   transition: all tokens.$transition-fast;
 
-  &:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgb(255 193 7 / 40%);
+  &:hover {
+    &:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgb(255 193 7 / 40%);
+    }
   }
 
-  &:active:not(:disabled) {
-    transform: translateY(0);
+  &:active {
+    &:not(:disabled) {
+      transform: translateY(0);
+    }
   }
 
   &:disabled {

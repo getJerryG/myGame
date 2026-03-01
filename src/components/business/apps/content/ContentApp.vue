@@ -117,7 +117,6 @@ const getCoreDataLabel = (key: string): string => {
 </script>
 
 <style lang="scss" scoped>
-
 .content-app {
   @include utils.flex-row(0, stretch, flex-start);
 

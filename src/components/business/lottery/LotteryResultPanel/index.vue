@@ -57,7 +57,6 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-
 .result-panel {
   background-color: tokens.$bg-secondary;
   border-radius: tokens.$radius-lg;

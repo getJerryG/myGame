@@ -256,7 +256,6 @@ const handleItemClick = (item: SidebarItem): void => {
 </script>
 
 <style lang="scss" scoped>
-
 .module-content {
   background-color: tokens.$bg-light;
   border-radius: tokens.$radius-md;

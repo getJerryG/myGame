@@ -66,7 +66,6 @@ function getSkillKey(index: number): string {
 </script>
 
 <style lang="scss" scoped>
-
 /* 核心容器样式 */
 .skill-panel-container {
   @include utils.flex-col(tokens.$spacing-lg, stretch, flex-start);
@@ -193,7 +192,12 @@ function getSkillKey(index: number): string {
       left: 0;
       right: 0;
       height: 4px;
-      background: linear-gradient(90deg, tokens.$skill-physical-border, tokens.$skill-physical-dark, tokens.$skill-physical-border);
+      background: linear-gradient(
+        90deg,
+        tokens.$skill-physical-border,
+        tokens.$skill-physical-dark,
+        tokens.$skill-physical-border
+      );
       animation: skillPulsePhysical 2s ease-in-out infinite;
     }
 
@@ -218,7 +222,12 @@ function getSkillKey(index: number): string {
       left: 0;
       right: 0;
       height: 4px;
-      background: linear-gradient(90deg, tokens.$skill-magic-border, tokens.$skill-magic-dark, tokens.$skill-magic-border);
+      background: linear-gradient(
+        90deg,
+        tokens.$skill-magic-border,
+        tokens.$skill-magic-dark,
+        tokens.$skill-magic-border
+      );
       animation: skillPulseMagic 2s ease-in-out infinite;
     }
 

@@ -272,7 +272,6 @@ const formatDate = (date: Date): string => {
 </script>
 
 <style lang="scss" scoped>
-
 .dynamic-events-container {
   max-width: tokens.$max-content-width;
   margin: 0 auto;

@@ -228,7 +228,6 @@ watch(showGuide, (newVal) => {
 </script>
 
 <style lang="scss" scoped>
-
 .hello-modal {
   width: 100%;
   height: 100%;
@@ -455,14 +454,18 @@ watch(showGuide, (newVal) => {
 
   margin-top: tokens.$spacing-sm;
 
-  &:hover:not(:disabled) {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgb(74 158 255 / 60%);
-    background: linear-gradient(135deg, tokens.$primary-dark 0%, tokens.$primary 100%);
+  &:hover {
+    &:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgb(74 158 255 / 60%);
+      background: linear-gradient(135deg, tokens.$primary-dark 0%, tokens.$primary 100%);
+    }
   }
 
-  &:active:not(:disabled) {
-    transform: translateY(-1px);
+  &:active {
+    &:not(:disabled) {
+      transform: translateY(-1px);
+    }
   }
 
   &:disabled {

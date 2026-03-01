@@ -57,7 +57,6 @@ const showAchievements = (): void => {
 </script>
 
 <style lang="scss" scoped>
-
 /* 基础样式重置 */
 * {
   box-sizing: border-box;

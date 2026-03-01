@@ -389,10 +389,12 @@ const saveEvent = (): void => {
       font-size: tokens.$font-size-sm;
       color: tokens.$text-secondary;
 
-      input[type='checkbox'] {
-        width: 16px;
-        height: 16px;
-        accent-color: tokens.$primary-blue;
+      input {
+        &[type='checkbox'] {
+          width: 16px;
+          height: 16px;
+          accent-color: tokens.$primary-blue;
+        }
       }
     }
   }
@@ -428,10 +430,14 @@ const saveEvent = (): void => {
       align-items: stretch;
 
       .form-select,
-      .form-input,
-      .form-input.small {
+      .form-input {
         width: 100%;
         max-width: none;
+
+        &.small {
+          width: 100%;
+          max-width: none;
+        }
       }
     }
 
@@ -440,10 +446,12 @@ const saveEvent = (): void => {
       align-items: stretch;
       gap: tokens.$spacing-sm;
 
-      .form-input.small,
-      .form-select.small {
-        width: 100%;
-        max-width: none;
+      .form-input,
+      .form-select {
+        &.small {
+          width: 100%;
+          max-width: none;
+        }
       }
     }
 

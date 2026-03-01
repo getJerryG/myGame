@@ -372,7 +372,6 @@ const confirmRelease = () => {
 </script>
 
 <style lang="scss" scoped>
-
 /* 皮肤详情 */
 .skin-detail {
   @include utils.flex-col(tokens.$spacing-lg, stretch);
@@ -518,10 +517,12 @@ const confirmRelease = () => {
 .setting-checkbox {
   @include utils.flex-row(tokens.$spacing-sm, center);
 
-  input[type='checkbox'] {
-    width: 16px;
-    height: 16px;
-    accent-color: tokens.$primary-gold;
+  input {
+    &[type='checkbox'] {
+      width: 16px;
+      height: 16px;
+      accent-color: tokens.$primary-gold;
+    }
   }
 
   label {

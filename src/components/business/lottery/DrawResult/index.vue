@@ -45,7 +45,6 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-
 /* 抽奖结果面板 */
 .result-panel {
   background-color: tokens.$bg-secondary;

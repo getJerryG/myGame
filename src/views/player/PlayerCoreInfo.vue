@@ -153,7 +153,6 @@ function hideTooltip(): void {
 </script>
 
 <style lang="scss" scoped>
-
 /* 核心信息区域 */
 .character-core-info {
   @include utils.flex-col(tokens.$spacing-lg);
@@ -243,8 +242,12 @@ function hideTooltip(): void {
   transition: transform tokens.$transition-normal;
 }
 
-.gold-display:hover .gold-icon {
-  transform: rotate(360deg);
+.gold-display {
+  &:hover {
+    .gold-icon {
+      transform: rotate(360deg);
+    }
+  }
 }
 
 .gold-text {
@@ -435,20 +438,24 @@ function hideTooltip(): void {
     box-shadow: 0 15px 35px rgb(0 0 0 / 15%);
     border-color: tokens.$skill-magic-border;
     background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
-  }
 
-  &:hover::before {
-    left: 100%;
+    &::before {
+      left: 100%;
+    }
+  }
+}
+
+.attribute-card {
+  &:hover {
+    .attribute-icon {
+      transform: scale(1.2) rotate(5deg);
+    }
   }
 }
 
 .attribute-icon {
   font-size: tokens.$font-size-4xl;
   transition: transform tokens.$transition-normal;
-}
-
-.attribute-card:hover .attribute-icon {
-  transform: scale(1.2) rotate(5deg);
 }
 
 .attribute-value {

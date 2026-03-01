@@ -261,7 +261,6 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-
 .desktop-modal {
   position: absolute;
   background-color: rgb(26 26 46 / 95%);
@@ -338,13 +337,22 @@ onUnmounted(() => {
     background-color: tokens.$bg-lighter;
   }
 
-  &.close:hover {
-    background-color: tokens.$error;
+  &.close {
+    &:hover {
+      background-color: tokens.$error;
+    }
   }
 
-  &.minimize:hover,
-  &.maximize:hover {
-    background-color: rgb(74 158 255 / 50%);
+  &.minimize {
+    &:hover {
+      background-color: rgb(74 158 255 / 50%);
+    }
+  }
+
+  &.maximize {
+    &:hover {
+      background-color: rgb(74 158 255 / 50%);
+    }
   }
 }
 

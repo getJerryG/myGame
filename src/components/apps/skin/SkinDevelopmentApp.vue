@@ -175,7 +175,6 @@ const closeApp = () => {
 </script>
 
 <style lang="scss" scoped>
-
 .skin-development-app {
   @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
 
@@ -223,6 +222,10 @@ const closeApp = () => {
 
   flex: 1;
   overflow: hidden;
+
+  @media (width <=tokens.$breakpoint-md) {
+    flex-direction: column;
+  }
 }
 
 .skin-list-section {
@@ -242,6 +245,13 @@ const closeApp = () => {
     background-color: tokens.$bg-lighter;
     border-bottom: 1px solid tokens.$border-light;
   }
+
+  @media (width <=tokens.$breakpoint-md) {
+    width: 100%;
+    max-height: 200px;
+    border-right: none;
+    border-bottom: 1px solid tokens.$border-light;
+  }
 }
 
 .skin-grid {
@@ -249,6 +259,11 @@ const closeApp = () => {
 
   overflow-y: auto;
   flex: 1;
+
+  @media (width <=tokens.$breakpoint-md) {
+    flex-flow: row wrap;
+    overflow: auto hidden;
+  }
 }
 
 .skin-card {
@@ -315,6 +330,12 @@ const closeApp = () => {
       color: tokens.$gray-900;
     }
   }
+
+  @media (width <=tokens.$breakpoint-md) {
+    min-width: 150px;
+    border-bottom: none;
+    border-right: 1px solid tokens.$border-light;
+  }
 }
 
 .skin-detail-section {
@@ -329,6 +350,10 @@ const closeApp = () => {
     font-size: 120px;
     margin-bottom: tokens.$spacing-lg;
     animation: float 3s ease-in-out infinite;
+
+    @media (width <=tokens.$breakpoint-md) {
+      font-size: 80px !important;
+    }
   }
 
   .detail-info {
@@ -420,6 +445,15 @@ const closeApp = () => {
         }
       }
     }
+
+    @media (width <=tokens.$breakpoint-md) {
+      flex-direction: column;
+      width: 100%;
+
+      .action-btn {
+        width: 100%;
+      }
+    }
   }
 }
 
@@ -449,44 +483,6 @@ const closeApp = () => {
   p {
     margin: 0;
     font-size: tokens.$font-size-lg;
-  }
-}
-
-/* 响应式设计 */
-@media (width <= 768px) {
-  .app-content {
-    flex-direction: column;
-  }
-
-  .skin-list-section {
-    width: 100%;
-    max-height: 200px;
-    border-right: none;
-    border-bottom: 1px solid tokens.$border-light;
-  }
-
-  .skin-grid {
-    flex-flow: row wrap;
-    overflow: auto hidden;
-  }
-
-  .skin-card {
-    min-width: 150px;
-    border-bottom: none;
-    border-right: 1px solid tokens.$border-light;
-  }
-
-  .detail-preview {
-    font-size: 80px !important;
-  }
-
-  .detail-actions {
-    flex-direction: column;
-    width: 100%;
-
-    .action-btn {
-      width: 100%;
-    }
   }
 }
 </style>

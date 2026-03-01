@@ -271,7 +271,6 @@ const claimSpecialReward = (rewardId: string) => {
 </script>
 
 <style lang="scss" scoped>
-
 .rewards-app {
   @include utils.flex-col(0, stretch);
 
@@ -392,9 +391,11 @@ const claimSpecialReward = (rewardId: string) => {
   cursor: pointer;
   transition: all tokens.$transition-fast;
 
-  &:hover:not(:disabled) {
-    background-color: tokens.$primary-dark;
-    transform: translateY(-1px);
+  &:hover {
+    &:not(:disabled) {
+      background-color: tokens.$primary-dark;
+      transform: translateY(-1px);
+    }
   }
 
   &:disabled {
@@ -407,8 +408,11 @@ const claimSpecialReward = (rewardId: string) => {
     background-color: tokens.$primary-gold;
     color: tokens.$bg-dark;
 
-    &:hover:not(:disabled) {
-      background-color: #f59e0b;
+    &:hover {
+      &:not(:disabled) {
+        background-color: #d97706;
+        transform: translateY(-1px);
+      }
     }
   }
 }

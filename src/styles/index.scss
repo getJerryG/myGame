@@ -202,9 +202,11 @@ html, body {
   color: tokens.$bg-dark;
   font-weight: tokens.$font-weight-bold;
 
-  &:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: tokens.$shadow-gold-lg;
+  &:hover {
+    &:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: tokens.$shadow-gold-lg;
+    }
   }
 }
 
@@ -213,9 +215,11 @@ html, body {
   color: tokens.$text-secondary;
   border: 1px solid tokens.$border-light;
 
-  &:hover:not(:disabled) {
-    background-color: tokens.$bg-lighter;
-    color: tokens.$text-primary;
+  &:hover {
+    &:not(:disabled) {
+      background-color: tokens.$bg-lighter;
+      color: tokens.$text-primary;
+    }
   }
 }
 
@@ -223,9 +227,10 @@ html, body {
   background-color: tokens.$error;
   color: white;
 
-  &:hover:not(:disabled) {
-    background-color: #dc2626;
-    transform: translateY(-2px);
+  &:hover {
+    &:not(:disabled) {
+      background-color: tokens.$error-dark;
+    }
   }
 }
 

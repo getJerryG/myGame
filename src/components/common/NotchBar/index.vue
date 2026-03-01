@@ -17,7 +17,10 @@
         <div class="exp-container">
           <span class="notch-value">{{ currentExp }}/{{ maxExp }}</span>
           <div class="exp-progress-bar">
-            <div class="exp-progress" :style="{ width: `${expProgressPercent}%` }"></div>
+            <div
+              class="exp-progress"
+              :style="{ width: `${expProgressPercent}%` }"
+            ></div>
           </div>
         </div>
       </div>
@@ -28,9 +31,17 @@
       <div class="notch-item funds-item">
         <span class="notch-value funds-value">{{ animatedFunds }}</span>
         <!-- 资金变化提示 -->
-        <transition name="fade" @before-enter="handleBeforeEnter" @enter="handleEnter" @after-enter="handleAfterEnter">
-          <span v-if="showFundChange" class="funds-change-indicator"
-            :class="{ positive: fundChange > 0, negative: fundChange < 0 }">
+        <transition
+          name="fade"
+          @before-enter="handleBeforeEnter"
+          @enter="handleEnter"
+          @after-enter="handleAfterEnter"
+        >
+          <span
+            v-if="showFundChange"
+            class="funds-change-indicator"
+            :class="{ positive: fundChange > 0, negative: fundChange < 0 }"
+          >
             {{ fundChange > 0 ? '+' : '' }}{{ fundChange }}
           </span>
         </transition>
@@ -80,7 +91,7 @@ watch(
     await nextTick();
 
     // 3. 提示显示后，延迟一小段时间再执行数字滚动
-    await new Promise(resolve => setTimeout(resolve, 300));
+    await new Promise((resolve) => setTimeout(resolve, 300));
 
     // 4. 执行数字滚动动画
     await animateValue(oldFunds, newFunds, 500);

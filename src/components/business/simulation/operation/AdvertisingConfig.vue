@@ -200,7 +200,6 @@ function getPredictedROI(): string {
 </script>
 
 <style lang="scss" scoped>
-
 .advertising-config {
   padding: 0;
 }

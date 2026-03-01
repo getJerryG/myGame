@@ -2,7 +2,12 @@
   <div class="hero-detail-sidebar">
     <div class="sidebar-header">
       <h4>英雄详情</h4>
-      <button class="close-detail-btn" @click="$emit('close')">×</button>
+      <button
+        class="close-detail-btn"
+        @click="$emit('close')"
+      >
+        ×
+      </button>
     </div>
     <div class="sidebar-content">
       <!-- 英雄基本信息 -->
@@ -40,9 +45,7 @@
                 class="stat-bar"
                 :style="{ width: hero.winRate + '%' }"
               ></div>
-              <span class="stat-detail-value"
-                >{{ hero.winRate }}%</span
-              >
+              <span class="stat-detail-value">{{ hero.winRate }}%</span>
             </div>
           </div>
           <div class="stat-detail-item">
@@ -52,9 +55,7 @@
                 class="stat-bar pick-rate-bar"
                 :style="{ width: hero.pickRate + '%' }"
               ></div>
-              <span class="stat-detail-value"
-                >{{ hero.pickRate }}%</span
-              >
+              <span class="stat-detail-value">{{ hero.pickRate }}%</span>
             </div>
           </div>
           <div class="stat-detail-item">
@@ -64,9 +65,7 @@
                 class="stat-bar ban-rate-bar"
                 :style="{ width: hero.banRate + '%' }"
               ></div>
-              <span class="stat-detail-value"
-                >{{ hero.banRate }}%</span
-              >
+              <span class="stat-detail-value">{{ hero.banRate }}%</span>
             </div>
           </div>
         </div>
@@ -295,11 +294,19 @@ const emit = defineEmits<{
 
       .stat-bar {
         height: 100%;
-        background: linear-gradient(90deg, tokens.$primary-gold 0%, color.adjust(tokens.$primary-gold, $lightness: -20%) 100%);
+        background: linear-gradient(
+          90deg,
+          tokens.$primary-gold 0%,
+          color.adjust(tokens.$primary-gold, $lightness: -20%) 100%
+        );
         transition: width tokens.$transition-fast;
 
         &.pick-rate-bar {
-          background: linear-gradient(90deg, tokens.$primary-blue 0%, color.adjust(tokens.$primary-blue, $lightness: -20%) 100%);
+          background: linear-gradient(
+            90deg,
+            tokens.$primary-blue 0%,
+            color.adjust(tokens.$primary-blue, $lightness: -20%) 100%
+          );
         }
 
         &.ban-rate-bar {
@@ -376,7 +383,11 @@ const emit = defineEmits<{
   .action-btn {
     width: 100%;
     padding: tokens.$spacing-md;
-    background: linear-gradient(135deg, tokens.$primary-gold 0%, color.adjust(tokens.$primary-gold, $lightness: -10%) 100%);
+    background: linear-gradient(
+      135deg,
+      tokens.$primary-gold 0%,
+      color.adjust(tokens.$primary-gold, $lightness: -10%) 100%
+    );
     border: none;
     border-radius: tokens.$radius-md;
     color: #fff;

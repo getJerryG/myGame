@@ -451,7 +451,6 @@ const saveConfig = () => {
 </script>
 
 <style lang="scss" scoped>
-
 .reward-system-panel {
   @include utils.panel-base;
 }

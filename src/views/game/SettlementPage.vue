@@ -419,7 +419,6 @@ const continueGame = (): void => {
 </script>
 
 <style lang="scss" scoped>
-
 .settlement-page {
   width: 100vw;
   height: 100vh;
@@ -477,6 +476,8 @@ const continueGame = (): void => {
   padding: tokens.$spacing-md;
   overflow-y: auto;
   max-height: 100vh;
+
+  @include utils.custom-scrollbar;
 }
 
 .settlement-title {
@@ -497,6 +498,12 @@ const continueGame = (): void => {
     color: tokens.$text-primary;
     margin: tokens.$spacing-sm 0 0;
     opacity: 0.8;
+  }
+
+  @media (width <= 768px) {
+    h1 {
+      font-size: tokens.$font-size-3xl;
+    }
   }
 }
 
@@ -563,6 +570,10 @@ const continueGame = (): void => {
       }
     }
   }
+
+  @media (width <= 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* 图表区域 */
@@ -571,6 +582,14 @@ const continueGame = (): void => {
 
   width: 100%;
   margin-bottom: tokens.$spacing-lg;
+
+  @media (width <= 1200px) {
+    grid-template-columns: 1fr;
+  }
+
+  @media (width <= 768px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .chart-card {
@@ -599,6 +618,14 @@ const continueGame = (): void => {
   .chart-container {
     height: 300px;
     width: 100%;
+
+    @media (width <= 1200px) {
+      height: 250px;
+    }
+
+    @media (width <= 768px) {
+      height: 200px;
+    }
   }
 }
 
@@ -616,6 +643,10 @@ const continueGame = (): void => {
 
   .data-grid {
     @include utils.grid-auto-fill(250px, tokens.$spacing-md);
+
+    @media (width <= 768px) {
+      grid-template-columns: 1fr;
+    }
   }
 
   .data-item {
@@ -673,50 +704,8 @@ const continueGame = (): void => {
       }
     }
   }
-}
 
-/* 滚动条样式 */
-.settlement-content {
-  @include utils.custom-scrollbar;
-}
-
-/* 响应式设计 */
-@media (width <= 1200px) {
-  .charts-section {
-    grid-template-columns: 1fr;
-  }
-
-  .chart-card {
-    .chart-container {
-      height: 250px;
-    }
-  }
-}
-
-@media (width <= 768px) {
-  .settlement-title h1 {
-    font-size: tokens.$font-size-3xl;
-  }
-
-  .settlement-overview {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .charts-section {
-    grid-template-columns: 1fr;
-  }
-
-  .chart-card {
-    .chart-container {
-      height: 200px;
-    }
-  }
-
-  .detailed-data .data-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .settlement-actions {
+  @media (width <= 768px) {
     flex-direction: column;
     gap: tokens.$spacing-sm;
     width: 100%;

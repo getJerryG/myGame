@@ -75,7 +75,6 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-
 .character-core-info {
   @include utils.panel-base;
 

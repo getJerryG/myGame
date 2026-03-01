@@ -271,7 +271,6 @@ const getOperationName = (operationKey: string): string => {
 </script>
 
 <style lang="scss" scoped>
-
 .career-promotion-container {
   max-width: tokens.$max-content-width;
   margin: 0 auto;
@@ -477,9 +476,11 @@ const getOperationName = (operationKey: string): string => {
   cursor: pointer;
   transition: all tokens.$transition-fast;
 
-  &:hover:not(:disabled) {
-    box-shadow: tokens.$shadow-lg;
-    transform: translateY(-2px);
+  &:hover {
+    &:not(:disabled) {
+      box-shadow: tokens.$shadow-lg;
+      transform: translateY(-2px);
+    }
   }
 
   &:disabled {

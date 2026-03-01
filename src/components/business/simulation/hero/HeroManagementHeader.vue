@@ -24,7 +24,6 @@ function toggleCollapse(): void {
 </script>
 
 <style lang="scss" scoped>
-
 .panel-header {
   @include utils.flex-between(center);
 

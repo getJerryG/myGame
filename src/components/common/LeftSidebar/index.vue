@@ -125,39 +125,39 @@ export default {
   margin-bottom: 4px;
   border-radius: 8px;
   transition: all 0.2s ease;
-}
 
-.nav-item:hover {
-  background-color: #e9ecef;
-}
+  &:hover {
+    background-color: #e9ecef;
 
-.nav-item.active {
-  background-color: #007bff;
-}
+    a {
+      color: #007bff;
+    }
+  }
 
-.nav-item.active .nav-text {
-  color: white;
-}
+  &.active {
+    background-color: #007bff;
 
-.nav-item.active .nav-icon {
-  color: white;
-}
+    .nav-text {
+      color: white;
+    }
 
-.nav-item a {
-  display: flex;
-  align-items: center;
-  padding: 10px 15px;
-  color: #495057;
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
+    .nav-icon {
+      color: white;
+    }
 
-.nav-item:hover a {
-  color: #007bff;
-}
+    a {
+      color: white;
+    }
+  }
 
-.nav-item.active a {
-  color: white;
+  a {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    color: #495057;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
 }
 
 .nav-icon {

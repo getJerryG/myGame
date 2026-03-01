@@ -299,7 +299,6 @@ const applyFilters = () => {
 </script>
 
 <style lang="scss" scoped>
-
 .event-log-app {
   @include utils.flex-col(0, stretch, flex-start);
 

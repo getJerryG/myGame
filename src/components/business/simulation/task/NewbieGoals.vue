@@ -174,7 +174,6 @@ const claimReward = (goalId: string): void => {
 </script>
 
 <style lang="scss" scoped>
-
 .newbie-goals-container {
   max-width: tokens.$max-content-width;
   margin: 0 auto;

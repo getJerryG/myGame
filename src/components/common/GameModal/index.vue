@@ -65,7 +65,6 @@ const closeModal = (): void => {
 </script>
 
 <style lang="scss" scoped>
-
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -104,8 +103,10 @@ const closeModal = (): void => {
     z-index: 0;
   }
 
-  &:hover::before {
-    left: 100%;
+  &:hover {
+    &::before {
+      left: 100%;
+    }
   }
 }
 
@@ -215,11 +216,11 @@ const closeModal = (): void => {
     z-index: -1;
   }
 
-  &:hover::before {
-    left: 100%;
-  }
-
   &:hover {
+    &::before {
+      left: 100%;
+    }
+
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgb(0 0 0 / 25%);
   }

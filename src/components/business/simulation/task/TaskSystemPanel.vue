@@ -144,7 +144,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 /* 任务面板 */
 .task-panel {
   background: tokens.$bg-secondary;
@@ -264,21 +263,27 @@ export default {
   flex-shrink: 0;
 }
 
-.task-bubble:not(.completed) .task-status-btn {
-  background-color: tokens.$primary-blue;
-  color: white;
+.task-bubble {
+  &:not(.completed) {
+    .task-status-btn {
+      background-color: tokens.$primary-blue;
+      color: white;
 
-  &:hover {
-    background-color: tokens.$primary-dark;
+      &:hover {
+        background-color: tokens.$primary-dark;
+      }
+    }
   }
-}
 
-.task-bubble.completed .task-status-btn {
-  background-color: tokens.$success;
-  color: white;
+  &.completed {
+    .task-status-btn {
+      background-color: tokens.$success;
+      color: white;
 
-  &:hover {
-    background-color: tokens.$success-green;
+      &:hover {
+        background-color: tokens.$success-green;
+      }
+    }
   }
 }
 

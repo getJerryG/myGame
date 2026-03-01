@@ -41,7 +41,6 @@ const handleTenDraws = (): void => {
 // LotteryDrawButtons 组件样式
 // ============================================
 
-
 .draw-buttons-panel {
   @include utils.flex-center;
 
@@ -65,9 +64,11 @@ const handleTenDraws = (): void => {
   min-width: 200px;
   box-shadow: tokens.$shadow-sm;
 
-  &:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: tokens.$shadow-md;
+  &:hover {
+    &:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: tokens.$shadow-md;
+    }
   }
 
   &:disabled {
@@ -79,16 +80,20 @@ const handleTenDraws = (): void => {
   &.single {
     background: linear-gradient(135deg, tokens.$info 0%, color.adjust(tokens.$info, $lightness: -10%) 100%);
 
-    &:hover:not(:disabled) {
-      background: linear-gradient(135deg, color.adjust(tokens.$info, $lightness: 5%) 0%, tokens.$info 100%);
+    &:hover {
+      &:not(:disabled) {
+        background: linear-gradient(135deg, color.adjust(tokens.$info, $lightness: 5%) 0%, tokens.$info 100%);
+      }
     }
   }
 
   &.ten {
     background: linear-gradient(135deg, tokens.$warning 0%, color.adjust(tokens.$warning, $lightness: -10%) 100%);
 
-    &:hover:not(:disabled) {
-      background: linear-gradient(135deg, color.adjust(tokens.$warning, $lightness: 5%) 0%, tokens.$warning 100%);
+    &:hover {
+      &:not(:disabled) {
+        background: linear-gradient(135deg, color.adjust(tokens.$warning, $lightness: 5%) 0%, tokens.$warning 100%);
+      }
     }
   }
 }

@@ -63,7 +63,6 @@ function editTask(task) {
 </script>
 
 <style lang="scss" scoped>
-
 .task-reward-config {
   padding: 0;
 }

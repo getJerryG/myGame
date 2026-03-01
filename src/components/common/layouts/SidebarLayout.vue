@@ -303,11 +303,11 @@ const getCoreDataLabel = (key: string): string => {
 
 .content-header {
   padding: 16px;
-}
 
-.content-header h2 {
-  margin: 0 0 12px;
-  font-size: 20px;
+  h2 {
+    margin: 0 0 12px;
+    font-size: 20px;
+  }
 }
 
 .module-core-data {

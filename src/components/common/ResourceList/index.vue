@@ -199,45 +199,45 @@ function handleQuickAction(action: string): void {
   justify-content: center;
   position: relative;
   overflow: hidden;
-}
 
-.tab-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgb(255 255 255 / 40%),
-    transparent
-  );
-  transition: left 0.5s ease;
-}
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(255 255 255 / 40%),
+      transparent
+    );
+    transition: left 0.5s ease;
+  }
 
-.tab-button:hover::before {
-  left: 100%;
-}
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgb(0 0 0 / 15%);
+    border-color: #667eea;
 
-.tab-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgb(0 0 0 / 15%);
-  border-color: #667eea;
-}
+    &::before {
+      left: 100%;
+    }
+  }
 
-/* 选项卡激活状�? */
-.tab-button.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border-color: #667eea;
-  box-shadow: 0 6px 20px rgb(102 126 234 / 40%);
-  transform: translateY(-2px);
-}
+  /* 选项卡激活状态 */
+  &.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: #667eea;
+    box-shadow: 0 6px 20px rgb(102 126 234 / 40%);
+    transform: translateY(-2px);
 
-.tab-button.active .tab-icon {
-  animation: pulse 1.5s ease-in-out infinite;
+    .tab-icon {
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+  }
 }
 
 @keyframes pulse {
@@ -272,23 +272,25 @@ function handleQuickAction(action: string): void {
 }
 
 /* 滚动条样�? */
-.tabs-content::-webkit-scrollbar {
-  width: 8px;
-}
+.tabs-content {
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
 
-.tabs-content::-webkit-scrollbar-track {
-  background: rgb(255 255 255 / 50%);
-  border-radius: 4px;
-}
+  &::-webkit-scrollbar-track {
+    background: rgb(255 255 255 / 50%);
+    border-radius: 4px;
+  }
 
-.tabs-content::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
-  border-radius: 4px;
-  border: 2px solid rgb(255 255 255 / 50%);
-}
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+    border-radius: 4px;
+    border: 2px solid rgb(255 255 255 / 50%);
 
-.tabs-content::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #764ba2 0%, #667eea 100%);
+    &:hover {
+      background: linear-gradient(180deg, #764ba2 0%, #667eea 100%);
+    }
+  }
 }
 
 /* 选项卡面板样�? */
@@ -340,39 +342,41 @@ function handleQuickAction(action: string): void {
   box-shadow: 0 4px 15px rgb(0 0 0 / 10%);
 }
 
-.task-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
-  transition: all 0.3s ease;
-}
+.task-item {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+    transition: all 0.3s ease;
+  }
 
-.task-item.in_progress::before {
-  background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b);
-}
+  &.in_progress {
+    border-color: #f59e0b;
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
 
-.task-item.completed::before {
-  background: linear-gradient(90deg, #10b981, #34d399, #10b981);
-}
+    &::before {
+      background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b);
+    }
+  }
 
-.task-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgb(0 0 0 / 15%);
-  border-color: #667eea;
-}
+  &.completed {
+    border-color: #10b981;
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
 
-.task-item.in_progress {
-  border-color: #f59e0b;
-  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-}
+    &::before {
+      background: linear-gradient(90deg, #10b981, #34d399, #10b981);
+    }
+  }
 
-.task-item.completed {
-  border-color: #10b981;
-  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgb(0 0 0 / 15%);
+    border-color: #667eea;
+  }
 }
 
 /* 任务头部样式 */
@@ -417,17 +421,17 @@ function handleQuickAction(action: string): void {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
-}
 
-.task-status-badge.in_progress {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  color: white;
-  animation: pulse 2s ease-in-out infinite;
-}
+  &.in_progress {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+    animation: pulse 2s ease-in-out infinite;
+  }
 
-.task-status-badge.completed {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: white;
+  &.completed {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+  }
 }
 
 /* 任务描述样式 */
@@ -469,14 +473,6 @@ function handleQuickAction(action: string): void {
   z-index: 1;
 }
 
-.task-item.in_progress .progress-fill {
-  background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
-}
-
-.task-item.completed .progress-fill {
-  background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
-}
-
 .progress-glow {
   position: absolute;
   inset: 0;
@@ -486,12 +482,20 @@ function handleQuickAction(action: string): void {
   z-index: 0;
 }
 
-.task-item.in_progress .progress-glow {
-  background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
-}
+.task-item {
+  &.in_progress {
+    .progress-fill,
+    .progress-glow {
+      background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+    }
+  }
 
-.task-item.completed .progress-glow {
-  background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+  &.completed {
+    .progress-fill,
+    .progress-glow {
+      background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+    }
+  }
 }
 
 .progress-text {
@@ -528,53 +532,55 @@ function handleQuickAction(action: string): void {
   box-shadow: 0 4px 15px rgb(0 0 0 / 10%);
 }
 
-.quick-action-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
-  transition: all 0.3s ease;
-}
+.quick-action-item {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+    transition: all 0.3s ease;
+  }
 
-.quick-action-item::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgb(255 255 255 / 40%),
-    transparent
-  );
-  transition: left 0.5s ease;
-}
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(255 255 255 / 40%),
+      transparent
+    );
+    transition: left 0.5s ease;
+  }
 
-.quick-action-item:hover::after {
-  left: 100%;
-}
+  &:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 15px 35px rgb(0 0 0 / 15%);
+    border-color: #667eea;
+    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
 
-.quick-action-item:hover {
-  transform: translateY(-8px) scale(1.03);
-  box-shadow: 0 15px 35px rgb(0 0 0 / 15%);
-  border-color: #667eea;
-  background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+    &::after {
+      left: 100%;
+    }
+
+    .quick-action-icon {
+      transform: scale(1.2) rotate(10deg);
+      animation: spin 0.5s ease;
+    }
+  }
 }
 
 .quick-action-icon {
   font-size: 48px;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
-}
-
-.quick-action-item:hover .quick-action-icon {
-  transform: scale(1.2) rotate(10deg);
-  animation: spin 0.5s ease;
 }
 
 @keyframes spin {

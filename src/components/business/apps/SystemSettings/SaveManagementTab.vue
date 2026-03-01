@@ -134,8 +134,10 @@ const emit = defineEmits<{
     background: tokens.$primary-blue;
     color: #fff;
 
-    &:hover:not(:disabled) {
-      background: color.adjust(tokens.$primary-blue, $lightness: -10%);
+    &:hover {
+      &:not(:disabled) {
+        background: color.adjust(tokens.$primary-blue, $lightness: -10%);
+      }
     }
 
     &:disabled {
@@ -158,7 +160,11 @@ const emit = defineEmits<{
   margin-top: tokens.$spacing-lg;
   width: 100%;
   padding: tokens.$spacing-md;
-  background: linear-gradient(135deg, tokens.$primary-gold 0%, color.adjust(tokens.$primary-gold, $lightness: -10%) 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$primary-gold 0%,
+    color.adjust(tokens.$primary-gold, $lightness: -10%) 100%
+  );
   border: none;
   border-radius: tokens.$radius-md;
   color: #fff;

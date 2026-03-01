@@ -261,7 +261,6 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-
 .desktop-app-container {
   position: absolute;
   background-color: rgb(26 26 46 / 95%);

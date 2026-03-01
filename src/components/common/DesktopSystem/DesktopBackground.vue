@@ -2,10 +2,10 @@
   <div class="desktop-background">
     <!-- 桌面应用图标区域 -->
     <div class="desktop-icons">
-      <DesktopAppIcon 
-        v-for="app in apps" 
-        :key="app.id" 
-        :app="app" 
+      <DesktopAppIcon
+        v-for="app in apps"
+        :key="app.id"
+        :app="app"
         :position="app.position"
         @click="$emit('click', app)"
       />

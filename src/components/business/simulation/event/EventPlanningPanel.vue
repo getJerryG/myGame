@@ -431,7 +431,6 @@ const saveEvent = (config: EventConfig): void => {
 </script>
 
 <style lang="scss" scoped>
-
 .event-planning-panel {
   @include utils.panel-base;
 

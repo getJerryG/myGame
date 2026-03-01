@@ -380,7 +380,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-
 /* 侧边栏菜单 */
 .sidebar-menu {
   @include utils.flex-col(0, stretch);
@@ -551,10 +550,12 @@ onMounted(() => {
   font-weight: tokens.$font-weight-bold;
   transition: all tokens.$transition-fast;
 
-  &:hover:not(:disabled) {
-    background-color: tokens.$primary-dark;
-    transform: translateY(-2px);
-    box-shadow: tokens.$shadow-blue;
+  &:hover {
+    &:not(:disabled) {
+      background-color: tokens.$primary-dark;
+      transform: translateY(-2px);
+      box-shadow: tokens.$shadow-blue;
+    }
   }
 
   &:disabled {

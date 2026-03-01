@@ -224,7 +224,6 @@ const closeApp = () => {
 </script>
 
 <style lang="scss" scoped>
-
 .game-release-app {
   @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
 
@@ -494,9 +493,11 @@ const closeApp = () => {
     transition: all tokens.$transition-normal;
     box-shadow: 0 4px 15px rgb(16 185 129 / 40%);
 
-    &:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgb(16 185 129 / 60%);
+    &:hover {
+      &:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgb(16 185 129 / 60%);
+      }
     }
 
     &:disabled {

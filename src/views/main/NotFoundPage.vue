@@ -48,7 +48,6 @@ const goBack = () => {
 </script>
 
 <style lang="scss" scoped>
-
 .not-found-page {
   width: 100vw;
   height: 100vh;

@@ -274,7 +274,6 @@ const formatDate = (date: Date): string => {
 </script>
 
 <style lang="scss" scoped>
-
 .decision-making-container {
   max-width: tokens.$max-content-width;
   margin: 0 auto;

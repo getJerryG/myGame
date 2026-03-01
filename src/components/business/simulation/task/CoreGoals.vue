@@ -224,7 +224,6 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-
 .core-goals-container {
   max-width: tokens.$max-content-width;
   margin: 0 auto;

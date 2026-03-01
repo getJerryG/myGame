@@ -62,7 +62,6 @@ defineEmits(['show-tooltip', 'hide-tooltip']);
 </script>
 
 <style lang="scss" scoped>
-
 .attributes-section {
   margin-top: tokens.$space-4;
 }

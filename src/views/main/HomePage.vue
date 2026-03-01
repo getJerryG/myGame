@@ -222,7 +222,6 @@ const openAbout = (): void => {
 </script>
 
 <style lang="scss" scoped>
-
 .home-page {
   width: 100vw;
   height: 100vh;
@@ -316,6 +315,14 @@ const openAbout = (): void => {
     /* 确保文字快速渲染 */
     font-display: swap;
     will-change: text-shadow;
+
+    @media (width <= 768px) {
+      font-size: tokens.$font-size-4xl;
+    }
+
+    @media (width <= 480px) {
+      font-size: tokens.$font-size-3xl;
+    }
   }
 
   .subtitle {
@@ -325,6 +332,14 @@ const openAbout = (): void => {
     opacity: 0.9;
     font-weight: tokens.$font-weight-medium;
     font-display: swap;
+
+    @media (width <= 768px) {
+      font-size: tokens.$font-size-lg;
+    }
+
+    @media (width <= 480px) {
+      font-size: tokens.$font-size-base;
+    }
   }
 }
 
@@ -598,14 +613,6 @@ const openAbout = (): void => {
 }
 
 @media (width <= 768px) {
-  .game-title h1 {
-    font-size: tokens.$font-size-4xl;
-  }
-
-  .subtitle {
-    font-size: tokens.$font-size-lg;
-  }
-
   .game-description {
     font-size: tokens.$font-size-base;
     line-height: tokens.$line-height-normal;
@@ -674,14 +681,6 @@ const openAbout = (): void => {
 }
 
 @media (width <= 480px) {
-  .game-title h1 {
-    font-size: tokens.$font-size-3xl;
-  }
-
-  .subtitle {
-    font-size: tokens.$font-size-base;
-  }
-
   .left-column,
   .right-column {
     padding: tokens.$spacing-md tokens.$spacing-xs;

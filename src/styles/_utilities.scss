@@ -147,14 +147,18 @@
   color: tokens.$bg-dark;
   font-weight: tokens.$font-weight-bold;
 
-  &:hover:not(:disabled) {
-    background: linear-gradient(135deg, tokens.$warning 0%, #d97706 100%);
-    transform: translateY(-2px);
-    box-shadow: tokens.$shadow-gold-lg;
+  &:hover {
+    &:not(:disabled) {
+      background: linear-gradient(135deg, tokens.$warning 0%, #d97706 100%);
+      transform: translateY(-2px);
+      box-shadow: tokens.$shadow-gold-lg;
+    }
   }
 
-  &:active:not(:disabled) {
-    transform: translateY(0);
+  &:active {
+    &:not(:disabled) {
+      transform: translateY(0);
+    }
   }
 
   &:disabled {
@@ -810,8 +814,10 @@
     background-color: tokens.$bg-lighter;
   }
 
-  &.close:hover {
-    background-color: tokens.$error;
+  &.close {
+    &:hover {
+      background-color: tokens.$error;
+    }
   }
 }
 

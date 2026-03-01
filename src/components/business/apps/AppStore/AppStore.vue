@@ -397,7 +397,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-
 .app-store-content {
   flex: 1;
   height: 100%;

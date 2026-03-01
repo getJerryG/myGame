@@ -152,7 +152,6 @@ const startSimulation = () => {
 </script>
 
 <style lang="scss" scoped>
-
 .new-simulation-panel {
   @include utils.flex-col(tokens.$spacing-lg, stretch, flex-start);
 
@@ -222,7 +221,6 @@ const startSimulation = () => {
   appearance: none;
 
   &::-webkit-slider-thumb {
-    appearance: none;
     appearance: none;
     width: 20px;
     height: 20px;

@@ -35,7 +35,6 @@ defineEmits(['toggle-inventory', 'show-achievements', 'go-to-lottery']);
 </script>
 
 <style lang="scss" scoped>
-
 .action-section {
   margin-top: tokens.$space-4;
 }

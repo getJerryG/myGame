@@ -25,11 +25,9 @@
     "keyframes-name-pattern": null,
     "property-no-deprecated": null,
     "scss/selector-nest-combinators": "always",
-    "selector-pseudo-class-notation": "compact",
-    "scss/media-feature-value-dollar-variable": "always",
-    "scss/selector-no-unnecessary-nesting": false,
+    "scss/media-feature-value-dollar-variable": null,
     "max-nesting-depth": [
-      3,
+      8,
       {
         "ignore": [
           "pseudo-classes"
@@ -38,7 +36,7 @@
       }
     ],
     "block-no-empty": true,
-    "scss/selector-no-union-class-name": true,
+    "scss/selector-no-union-class-name": null,
     "selector-pseudo-class-no-unknown": [
       true,
       {

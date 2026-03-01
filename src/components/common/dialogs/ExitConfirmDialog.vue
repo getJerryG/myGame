@@ -130,18 +130,18 @@ const handleSave = () => {
 .exit-button {
   background-color: #ff6b6b;
   color: white;
-}
 
-.exit-button:hover {
-  background-color: #ff5252;
+  &:hover {
+    background-color: #ff5252;
+  }
 }
 
 .save-button {
   background-color: #4a9eff;
   color: white;
-}
 
-.save-button:hover {
-  background-color: #357abd;
+  &:hover {
+    background-color: #357abd;
+  }
 }
 </style>

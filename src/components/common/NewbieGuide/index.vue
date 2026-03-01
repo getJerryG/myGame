@@ -155,22 +155,24 @@ onMounted(() => {
   border: 3px solid #667eea;
   position: relative;
   overflow: hidden;
-}
 
-.guide-content::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 30%), transparent);
-  transition: left 0.6s ease;
-  z-index: 0;
-}
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 30%), transparent);
+    transition: left 0.6s ease;
+    z-index: 0;
+  }
 
-.guide-content:hover::before {
-  left: 100%;
+  &:hover {
+    &::before {
+      left: 100%;
+    }
+  }
 }
 
 .guide-header {
@@ -253,9 +255,10 @@ onMounted(() => {
 
 .guide-image {
   width: 100%;
-  height: 180px;
-  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  height: 200px;
+  background-color: #f0fdf4;
   border-radius: 12px;
+  margin: 12px 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -265,11 +268,11 @@ onMounted(() => {
   font-weight: bold;
   border: 2px dashed #10b981;
   transition: all 0.3s ease;
-}
 
-.guide-image:hover {
-  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
-  box-shadow: 0 4px 15px rgb(16 185 129 / 30%);
+  &:hover {
+    background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+    box-shadow: 0 4px 15px rgb(16 185 129 / 30%);
+  }
 }
 
 .guide-footer {
@@ -300,72 +303,82 @@ onMounted(() => {
   box-shadow: 0 4px 15px rgb(0 0 0 / 15%);
   z-index: 1;
   min-width: 100px;
-}
 
-.guide-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 40%), transparent);
-  transition: left 0.5s ease;
-  z-index: -1;
-}
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 40%), transparent);
+    transition: left 0.5s ease;
+    z-index: -1;
+  }
 
-.guide-btn:hover::before {
-  left: 100%;
-}
+  &:hover {
+    &::before {
+      left: 100%;
+    }
 
-.guide-btn:hover:not(:disabled) {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgb(0 0 0 / 25%);
-}
+    &:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgb(0 0 0 / 25%);
+    }
+  }
 
-.guide-btn:active:not(:disabled) {
-  transform: translateY(-1px);
-}
+  &:active {
+    &:not(:disabled) {
+      transform: translateY(-1px);
+    }
+  }
 
-.guide-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
 
-.guide-btn.back {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  color: white;
-  border-color: #f59e0b;
-  box-shadow: 0 4px 15px rgb(245 158 11 / 40%);
-}
+  &.back {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+    border-color: #f59e0b;
+    box-shadow: 0 4px 15px rgb(245 158 11 / 40%);
 
-.guide-btn.back:hover:not(:disabled) {
-  box-shadow: 0 8px 25px rgb(245 158 11 / 60%);
-}
+    &:hover {
+      &:not(:disabled) {
+        box-shadow: 0 8px 25px rgb(245 158 11 / 60%);
+      }
+    }
+  }
 
-.guide-btn.next {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: white;
-  border-color: #10b981;
-  box-shadow: 0 4px 15px rgb(16 185 129 / 40%);
-}
+  &.next {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border-color: #10b981;
+    box-shadow: 0 4px 15px rgb(16 185 129 / 40%);
 
-.guide-btn.next:hover:not(:disabled) {
-  box-shadow: 0 8px 25px rgb(16 185 129 / 60%);
-}
+    &:hover {
+      &:not(:disabled) {
+        box-shadow: 0 8px 25px rgb(16 185 129 / 60%);
+      }
+    }
+  }
 
-.guide-btn.skip {
-  background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
-  color: white;
-  border-color: #f56565;
-  box-shadow: 0 4px 15px rgb(245 101 101 / 40%);
-  margin-left: auto;
-}
+  &.skip {
+    background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+    color: white;
+    border-color: #f56565;
+    box-shadow: 0 4px 15px rgb(245 101 101 / 40%);
+    margin-left: auto;
 
-.guide-btn.skip:hover:not(:disabled) {
-  box-shadow: 0 8px 25px rgb(245 101 101 / 60%);
+    &:hover {
+      &:not(:disabled) {
+        box-shadow: 0 8px 25px rgb(245 101 101 / 60%);
+      }
+    }
+  }
 }
 
 .guide-arrow {
@@ -378,18 +391,18 @@ onMounted(() => {
   transform: translate(-50%, -100%);
   z-index: 2001;
   filter: drop-shadow(0 5px 10px rgb(0 0 0 / 30%));
-}
 
-.guide-arrow::before {
-  content: '';
-  position: absolute;
-  top: 10px;
-  left: -12px;
-  width: 0;
-  height: 0;
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  border-bottom: 24px solid white;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: -12px;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 24px solid white;
+  }
 }
 
 /* 动画 */

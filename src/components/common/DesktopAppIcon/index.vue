@@ -190,7 +190,6 @@ const handleCancelDownload = () => {
 // DesktopAppIcon 组件样式
 // ============================================
 
-
 .desktop-app-icon {
   @include utils.desktop-app-icon;
 

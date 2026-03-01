@@ -212,7 +212,6 @@ const handleSkinReleased = (data) => {
 </script>
 
 <style lang="scss" scoped>
-
 .skin-release-panel {
   @include utils.panel-base;
 }
@@ -305,7 +304,13 @@ const handleSkinReleased = (data) => {
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, tokens.$primary-gold, tokens.$success-green, tokens.$primary-blue, tokens.$lottery-purple);
+    background: linear-gradient(
+      90deg,
+      tokens.$primary-gold,
+      tokens.$success-green,
+      tokens.$primary-blue,
+      tokens.$lottery-purple
+    );
     transform: scaleX(0);
     transition: transform tokens.$transition-normal;
   }
@@ -342,24 +347,34 @@ const handleSkinReleased = (data) => {
 }
 
 /* 不同特色项的颜色效果 */
-.feature-item-1 .feature-icon {
-  color: tokens.$primary-gold;
+.feature-item-1 {
+  .feature-icon {
+    color: tokens.$primary-gold;
+  }
 }
 
-.feature-item-2 .feature-icon {
-  color: tokens.$success-green;
+.feature-item-2 {
+  .feature-icon {
+    color: tokens.$success-green;
+  }
 }
 
-.feature-item-3 .feature-icon {
-  color: tokens.$primary-blue;
+.feature-item-3 {
+  .feature-icon {
+    color: tokens.$primary-blue;
+  }
 }
 
-.feature-item-4 .feature-icon {
-  color: tokens.$lottery-purple;
+.feature-item-4 {
+  .feature-icon {
+    color: tokens.$lottery-purple;
+  }
 }
 
-.feature-item-5 .feature-icon {
-  color: tokens.$danger-red;
+.feature-item-5 {
+  .feature-icon {
+    color: tokens.$danger-red;
+  }
 }
 
 /* 响应式设计 */

@@ -136,7 +136,6 @@ function resetSelection(): void {
 </script>
 
 <style lang="scss" scoped>
-
 .collaboration-config {
   padding: 0;
 }

@@ -9,7 +9,6 @@
 </script>
 
 <style lang="scss" scoped>
-
 .root-app {
   width: 100%;
   height: 100%;

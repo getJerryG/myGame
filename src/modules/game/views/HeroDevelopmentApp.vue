@@ -169,7 +169,6 @@ const closeApp = () => {
 </script>
 
 <style lang="scss" scoped>
-
 .hero-development-app {
   @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
 

@@ -158,7 +158,6 @@ const publishGame = (): void => {
 </script>
 
 <style lang="scss" scoped>
-
 .game-setup-container {
   @include utils.flex-center;
 
@@ -301,8 +300,10 @@ const publishGame = (): void => {
   cursor: pointer;
   transition: all tokens.$transition-fast;
 
-  &:hover:not(:disabled) {
-    background: tokens.$primary-dark;
+  &:hover {
+    &:not(:disabled) {
+      background: tokens.$primary-dark;
+    }
   }
 
   &:disabled {

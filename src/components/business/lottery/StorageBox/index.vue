@@ -221,10 +221,12 @@ function validateDecomposeQuantity(item: StorageItem, index: number): void {
   height: 40px;
   flex-shrink: 0;
 
-  &:hover:not(:disabled) {
-    background-color: #dc2626;
-    transform: translateY(-1px);
-    box-shadow: tokens.$shadow-md;
+  &:hover {
+    &:not(:disabled) {
+      background-color: #dc2626;
+      transform: translateY(-1px);
+      box-shadow: tokens.$shadow-md;
+    }
   }
 
   &:disabled {
@@ -327,9 +329,11 @@ function validateDecomposeQuantity(item: StorageItem, index: number): void {
   cursor: pointer;
   transition: all tokens.$transition-normal;
 
-  &:hover:not(:disabled) {
-    background-color: #dc2626;
-    transform: translateY(-1px);
+  &:hover {
+    &:not(:disabled) {
+      background-color: #dc2626;
+      transform: translateY(-1px);
+    }
   }
 
   &:disabled {

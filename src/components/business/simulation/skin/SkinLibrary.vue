@@ -116,7 +116,6 @@ const getSkinCountByQuality = (quality) => {
 </script>
 
 <style lang="scss" scoped>
-
 /* 品质筛选标签 */
 .quality-tabs {
   @include utils.flex-row(tokens.$spacing-sm, center);

@@ -103,7 +103,6 @@ function selectSolution(index: number): void {
 </script>
 
 <style lang="scss" scoped>
-
 .crisis-config {
   padding: 0;
 
@@ -122,8 +121,7 @@ function selectSolution(index: number): void {
   .crisis-section {
     margin-bottom: tokens.$spacing-xl;
 
-    h5,
-    .solution-section h5 {
+    h5 {
       @include utils.subsection-title;
     }
 

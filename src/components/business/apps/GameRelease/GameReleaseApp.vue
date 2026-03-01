@@ -210,255 +210,308 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-
 .game-release-app {
   @include utils.flex-col(0, stretch, flex-start);
 
   height: 100%;
   background-color: tokens.$bg-light;
   color: tokens.$text-primary;
-}
 
-// 待发布内容样式
-.content-list {
-  @include utils.flex-col(tokens.$spacing-md);
-}
+  .app-header {
+    padding: tokens.$spacing-md;
+    border-bottom: 1px solid rgba(tokens.$primary-blue, 0.2);
+    background-color: tokens.$bg-light;
 
-.content-item {
-  @include utils.flex-between(flex-start);
-
-  background-color: tokens.$bg-light;
-  padding: tokens.$spacing-md;
-  border-radius: tokens.$radius-md;
-  border: 1px solid rgba(tokens.$primary-blue, 0.2);
-  transition: all tokens.$transition-fast;
-
-  &:hover {
-    border-color: rgba(tokens.$primary-blue, 0.5);
-    transform: translateY(-2px);
-  }
-}
-
-.content-info {
-  flex: 1;
-
-  .content-type {
-    display: inline-block;
-    padding: tokens.$spacing-xs tokens.$spacing-sm;
-    background-color: rgba(tokens.$primary-blue, 0.2);
-    border-radius: tokens.$radius-sm;
-    font-size: tokens.$font-size-xs;
-    color: tokens.$primary-blue;
-    margin-bottom: tokens.$spacing-sm;
-  }
-
-  .content-name {
-    font-size: tokens.$font-size-base;
-    font-weight: tokens.$font-weight-bold;
-    color: tokens.$text-primary;
-    margin-bottom: tokens.$spacing-xs;
-  }
-
-  .content-meta {
-    @include utils.flex-row(tokens.$spacing-md, center, flex-start);
-
-    .content-status {
-      font-size: tokens.$font-size-xs;
-      color: tokens.$success;
-    }
-
-    .content-date {
-      font-size: tokens.$font-size-xs;
-      color: tokens.$text-muted;
-    }
-  }
-}
-
-.content-release-options {
-  @include utils.flex-col(tokens.$spacing-md, flex-end);
-}
-
-.release-option {
-  @include utils.flex-col(tokens.$spacing-sm);
-
-  .option-label {
-    font-size: tokens.$font-size-sm;
-    color: tokens.$text-muted;
-  }
-}
-
-.radio-group {
-  @include utils.flex-row(tokens.$spacing-lg);
-}
-
-.radio-option {
-  @include utils.flex-row(tokens.$spacing-xs);
-
-  cursor: pointer;
-
-  input[type='radio'] {
-    accent-color: tokens.$primary-blue;
-  }
-
-  span {
-    font-size: tokens.$font-size-sm;
-    color: tokens.$text-primary;
-  }
-}
-
-.action-section {
-  @include utils.flex-center;
-
-  padding: tokens.$spacing-lg;
-  background-color: tokens.$bg-light;
-  border-radius: tokens.$radius-md;
-}
-
-.confirm-btn {
-  padding: tokens.$spacing-sm tokens.$spacing-xl;
-  background-color: tokens.$primary-blue;
-  border: none;
-  border-radius: tokens.$radius-md;
-  color: tokens.$text-primary;
-  font-size: tokens.$font-size-base;
-  font-weight: tokens.$font-weight-bold;
-  cursor: pointer;
-  transition: all tokens.$transition-fast;
-
-  &:hover {
-    background-color: tokens.$primary-dark;
-    transform: translateY(-1px);
-  }
-}
-
-// 版本历史样式
-.version-list {
-  @include utils.flex-col(tokens.$spacing-md);
-}
-
-.version-item {
-  background-color: tokens.$bg-light;
-  padding: tokens.$spacing-md;
-  border-radius: tokens.$radius-md;
-  border: 1px solid rgba(tokens.$primary-blue, 0.2);
-  transition: all tokens.$transition-fast;
-
-  &:hover {
-    border-color: rgba(tokens.$primary-blue, 0.5);
-    transform: translateY(-2px);
-  }
-}
-
-.version-header {
-  @include utils.flex-between;
-
-  margin-bottom: tokens.$spacing-md;
-
-  .version-info {
-    .version-name {
-      font-size: tokens.$font-size-lg;
-      font-weight: tokens.$font-weight-bold;
+    h2 {
+      margin: 0;
+      font-size: tokens.$font-size-xl;
       color: tokens.$text-primary;
-      margin-bottom: tokens.$spacing-xs;
     }
+  }
 
-    .version-date {
-      font-size: tokens.$font-size-xs;
+  .app-tabs {
+    @include utils.flex-row(0, center, flex-start);
+
+    background-color: tokens.$bg-light;
+    border-bottom: 1px solid rgba(tokens.$primary-blue, 0.2);
+
+    .tab-btn {
+      flex: 1;
+      padding: tokens.$spacing-md;
+      background: transparent;
+      border: none;
       color: tokens.$text-muted;
+      font-size: tokens.$font-size-sm;
+      font-weight: tokens.$font-weight-medium;
+      cursor: pointer;
+      transition: all tokens.$transition-fast;
+
+      &:hover {
+        background-color: rgba(tokens.$primary-blue, 0.2);
+        color: tokens.$text-primary;
+      }
+
+      &.active {
+        background-color: rgba(tokens.$primary-blue, 0.3);
+        color: tokens.$text-primary;
+        border-bottom: 2px solid tokens.$primary-blue;
+      }
     }
   }
 
-  .version-status {
-    padding: tokens.$spacing-xs tokens.$spacing-md;
-    border-radius: tokens.$radius-full;
-    font-size: tokens.$font-size-sm;
-    font-weight: tokens.$font-weight-bold;
+  .app-content {
+    flex: 1;
+    padding: tokens.$spacing-md;
+    overflow-y: auto;
 
-    &.已发布 {
-      background-color: rgba(tokens.$success, 0.2);
-      color: tokens.$success;
-    }
-
-    &.测试中 {
-      background-color: rgba(tokens.$warning, 0.2);
-      color: tokens.$warning;
-    }
-
-    &.已撤回 {
-      background-color: rgba(tokens.$error, 0.2);
-      color: tokens.$error;
+    .tab-content {
+      height: 100%;
     }
   }
-}
 
-.version-content {
-  @include utils.flex-col(tokens.$spacing-md);
-}
-
-.content-section {
-  h4 {
-    margin: 0 0 tokens.$spacing-sm;
-    font-size: tokens.$font-size-base;
-    color: tokens.$primary-blue;
+  // 待发布内容样式
+  .content-list {
+    @include utils.flex-col(tokens.$spacing-md);
   }
-}
 
-.update-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  .content-item {
+    @include utils.flex-between(flex-start);
 
-  @include utils.flex-col(tokens.$spacing-sm);
+    background-color: tokens.$bg-light;
+    padding: tokens.$spacing-md;
+    border-radius: tokens.$radius-md;
+    border: 1px solid rgba(tokens.$primary-blue, 0.2);
+    transition: all tokens.$transition-fast;
 
-  li {
-    font-size: tokens.$font-size-sm;
-    color: tokens.$text-primary;
-    padding-left: tokens.$spacing-md;
-    position: relative;
+    &:hover {
+      border-color: rgba(tokens.$primary-blue, 0.5);
+      transform: translateY(-2px);
+    }
 
-    &::before {
-      content: '•';
-      color: tokens.$primary-blue;
+    .content-info {
+      flex: 1;
+
+      .content-type {
+        display: inline-block;
+        padding: tokens.$spacing-xs tokens.$spacing-sm;
+        background-color: rgba(tokens.$primary-blue, 0.2);
+        border-radius: tokens.$radius-sm;
+        font-size: tokens.$font-size-xs;
+        color: tokens.$primary-blue;
+        margin-bottom: tokens.$spacing-sm;
+      }
+
+      .content-name {
+        font-size: tokens.$font-size-base;
+        font-weight: tokens.$font-weight-bold;
+        color: tokens.$text-primary;
+        margin-bottom: tokens.$spacing-xs;
+      }
+
+      .content-meta {
+        @include utils.flex-row(tokens.$spacing-md, center, flex-start);
+
+        .content-status {
+          font-size: tokens.$font-size-xs;
+          color: tokens.$success;
+        }
+
+        .content-date {
+          font-size: tokens.$font-size-xs;
+          color: tokens.$text-muted;
+        }
+      }
+    }
+
+    .content-release-options {
+      @include utils.flex-col(tokens.$spacing-md, flex-end);
+
+      .release-option {
+        @include utils.flex-col(tokens.$spacing-sm);
+
+        .option-label {
+          font-size: tokens.$font-size-sm;
+          color: tokens.$text-muted;
+        }
+
+        .radio-group {
+          @include utils.flex-row(tokens.$spacing-lg);
+
+          .radio-option {
+            @include utils.flex-row(tokens.$spacing-xs);
+
+            cursor: pointer;
+
+            input {
+              &[type='radio'] {
+                accent-color: tokens.$primary-blue;
+              }
+            }
+
+            span {
+              font-size: tokens.$font-size-sm;
+              color: tokens.$text-primary;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .action-section {
+    @include utils.flex-center;
+
+    padding: tokens.$spacing-lg;
+    background-color: tokens.$bg-light;
+    border-radius: tokens.$radius-md;
+
+    .confirm-btn {
+      padding: tokens.$spacing-sm tokens.$spacing-xl;
+      background-color: tokens.$primary-blue;
+      border: none;
+      border-radius: tokens.$radius-md;
+      color: tokens.$text-primary;
+      font-size: tokens.$font-size-base;
       font-weight: tokens.$font-weight-bold;
-      position: absolute;
-      left: 0;
+      cursor: pointer;
+      transition: all tokens.$transition-fast;
+
+      &:hover {
+        background-color: tokens.$primary-dark;
+        transform: translateY(-1px);
+      }
     }
   }
-}
 
-.feedback-stats {
-  @include utils.flex-row(tokens.$spacing-xl, center, flex-start);
-
-  flex-wrap: wrap;
-}
-
-.feedback-item {
-  @include utils.flex-row(tokens.$spacing-sm);
-
-  .feedback-label {
-    font-size: tokens.$font-size-sm;
-    color: tokens.$text-muted;
+  // 版本历史样式
+  .version-list {
+    @include utils.flex-col(tokens.$spacing-md);
   }
 
-  .feedback-value {
-    font-size: tokens.$font-size-sm;
-    font-weight: tokens.$font-weight-bold;
-    color: tokens.$primary-blue;
+  .version-item {
+    background-color: tokens.$bg-light;
+    padding: tokens.$spacing-md;
+    border-radius: tokens.$radius-md;
+    border: 1px solid rgba(tokens.$primary-blue, 0.2);
+    transition: all tokens.$transition-fast;
+
+    &:hover {
+      border-color: rgba(tokens.$primary-blue, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .version-header {
+      @include utils.flex-between;
+
+      margin-bottom: tokens.$spacing-md;
+
+      .version-info {
+        .version-name {
+          font-size: tokens.$font-size-lg;
+          font-weight: tokens.$font-weight-bold;
+          color: tokens.$text-primary;
+          margin-bottom: tokens.$spacing-xs;
+        }
+
+        .version-date {
+          font-size: tokens.$font-size-xs;
+          color: tokens.$text-muted;
+        }
+      }
+
+      .version-status {
+        padding: tokens.$spacing-xs tokens.$spacing-md;
+        border-radius: tokens.$radius-full;
+        font-size: tokens.$font-size-sm;
+        font-weight: tokens.$font-weight-bold;
+
+        &.已发布 {
+          background-color: rgba(tokens.$success, 0.2);
+          color: tokens.$success;
+        }
+
+        &.测试中 {
+          background-color: rgba(tokens.$warning, 0.2);
+          color: tokens.$warning;
+        }
+
+        &.已撤回 {
+          background-color: rgba(tokens.$error, 0.2);
+          color: tokens.$error;
+        }
+      }
+    }
+
+    .version-content {
+      @include utils.flex-col(tokens.$spacing-md);
+
+      .content-section {
+        h4 {
+          margin: 0 0 tokens.$spacing-sm;
+          font-size: tokens.$font-size-base;
+          color: tokens.$primary-blue;
+        }
+      }
+
+      .update-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        @include utils.flex-col(tokens.$spacing-sm);
+
+        li {
+          font-size: tokens.$font-size-sm;
+          color: tokens.$text-primary;
+          padding-left: tokens.$spacing-md;
+          position: relative;
+
+          &::before {
+            content: '•';
+            color: tokens.$primary-blue;
+            font-weight: tokens.$font-weight-bold;
+            position: absolute;
+            left: 0;
+          }
+        }
+      }
+
+      .feedback-stats {
+        @include utils.flex-row(tokens.$spacing-xl, center, flex-start);
+
+        flex-wrap: wrap;
+
+        .feedback-item {
+          @include utils.flex-row(tokens.$spacing-sm);
+
+          .feedback-label {
+            font-size: tokens.$font-size-sm;
+            color: tokens.$text-muted;
+          }
+
+          .feedback-value {
+            font-size: tokens.$font-size-sm;
+            font-weight: tokens.$font-weight-bold;
+            color: tokens.$primary-blue;
+          }
+        }
+      }
+    }
   }
-}
 
-.empty-state {
-  @include utils.flex-center;
+  .empty-state {
+    @include utils.flex-center;
 
-  height: 200px;
-  background-color: tokens.$bg-light;
-  border: 1px dashed rgba(tokens.$primary-blue, 0.2);
-  border-radius: tokens.$radius-md;
+    height: 200px;
+    background-color: tokens.$bg-light;
+    border: 1px dashed rgba(tokens.$primary-blue, 0.2);
+    border-radius: tokens.$radius-md;
 
-  p {
-    margin: 0;
-    color: tokens.$text-muted;
-    font-size: tokens.$font-size-base;
+    p {
+      margin: 0;
+      color: tokens.$text-muted;
+      font-size: tokens.$font-size-base;
+    }
   }
 }
 </style>

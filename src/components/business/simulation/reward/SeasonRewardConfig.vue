@@ -54,7 +54,6 @@ const editRankReward = (rank) => {
 </script>
 
 <style lang="scss" scoped>
-
 .season-reward-config {
   padding: 0;
 }

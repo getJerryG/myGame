@@ -159,7 +159,6 @@ const handleDecomposeAll = (): void => {
 </script>
 
 <style lang="scss" scoped>
-
 .storage-box-panel {
   width: 100%;
   height: 100%;
@@ -217,9 +216,11 @@ const handleDecomposeAll = (): void => {
   font-weight: tokens.$font-weight-medium;
   transition: all tokens.$transition-fast;
 
-  &:hover:not(:disabled) {
-    background-color: #d97706;
-    transform: translateY(-1px);
+  &:hover {
+    &:not(:disabled) {
+      background-color: #d97706;
+      transform: translateY(-1px);
+    }
   }
 
   &:disabled {
@@ -314,9 +315,11 @@ const handleDecomposeAll = (): void => {
   font-weight: tokens.$font-weight-medium;
   transition: all tokens.$transition-fast;
 
-  &:hover:not(:disabled) {
-    background-color: #059669;
-    transform: translateY(-1px);
+  &:hover {
+    &:not(:disabled) {
+      background-color: #059669;
+      transform: translateY(-1px);
+    }
   }
 
   &:disabled {

@@ -47,7 +47,6 @@ const showAchievements = (): void => {
 </script>
 
 <style lang="scss" scoped>
-
 /* 动作区域 */
 .action-section {
   background: tokens.$text-primary;
@@ -90,11 +89,11 @@ const showAchievements = (): void => {
     transition: left 0.5s ease;
   }
 
-  &:hover::before {
-    left: 100%;
-  }
-
   &:hover {
+    &::before {
+      left: 100%;
+    }
+
     transform: translateY(-3px);
     box-shadow: 0 12px 25px rgb(0 0 0 / 20%);
   }

@@ -337,7 +337,6 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-
 /* 联系人列表 */
 .chat-contacts {
   width: 100%;

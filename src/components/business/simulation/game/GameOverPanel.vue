@@ -71,7 +71,6 @@ const resetGame = (): void => {
 </script>
 
 <style lang="scss" scoped>
-
 /* 游戏结束面板 */
 .game-over-panel {
   @include utils.modal-overlay;

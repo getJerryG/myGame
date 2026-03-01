@@ -76,7 +76,10 @@
     </div>
 
     <!-- 调整大小手柄 -->
-    <WindowResizeHandle @resize="handleResize" @resize-end="stopResize" />
+    <WindowResizeHandle
+      @resize="handleResize"
+      @resize-end="stopResize"
+    />
   </div>
 </template>
 
@@ -175,8 +178,8 @@ const stopDrag = () => {
 
 // 处理调整大小
 const handleResize = (direction: string, dx: number, dy: number): void => {
-  let newWidth = Math.max(200, windowStartSize.value.width + dx);
-  let newHeight = Math.max(150, windowStartSize.value.height + dy);
+  const newWidth = Math.max(200, windowStartSize.value.width + dx);
+  const newHeight = Math.max(150, windowStartSize.value.height + dy);
   windowManagerStore.updateWindowSize(props.windowId, newWidth, newHeight);
 };
 

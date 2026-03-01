@@ -63,7 +63,6 @@ const goBack = () => {
 </script>
 
 <style lang="scss" scoped>
-
 .app-page {
   width: 100%;
   height: 100%;
@@ -113,7 +112,7 @@ const goBack = () => {
 
   @include utils.flex-center;
 
-  & > div {
+  > div {
     width: 100%;
     max-width: tokens.$max-content-width;
     background-color: tokens.$text-primary;

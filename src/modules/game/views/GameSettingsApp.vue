@@ -186,7 +186,6 @@ const closeApp = () => {
 </script>
 
 <style lang="scss" scoped>
-
 .game-settings-app {
   @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
 
@@ -279,7 +278,6 @@ const closeApp = () => {
 
   &::-webkit-slider-thumb {
     appearance: none;
-    appearance: none;
     width: 18px;
     height: 18px;
     border-radius: 50%;
@@ -338,11 +336,13 @@ const closeApp = () => {
     width: 0;
     height: 0;
 
-    &:checked + .toggle-slider {
-      background-color: tokens.$primary;
+    &:checked {
+      + .toggle-slider {
+        background-color: tokens.$primary;
 
-      &::before {
-        transform: translateX(24px);
+        &::before {
+          transform: translateX(24px);
+        }
       }
     }
   }

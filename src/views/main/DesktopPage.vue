@@ -78,7 +78,6 @@ const handleHelloModalClose = () => {
 </script>
 
 <style lang="scss" scoped>
-
 .desktop-page {
   width: 100vw;
   height: 100vh;

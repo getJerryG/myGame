@@ -58,7 +58,6 @@ defineEmits(['close', 'show-item-detail', 'use-item']);
 </script>
 
 <style lang="scss" scoped>
-
 .full-inventory {
   max-height: 500px;
   overflow-y: auto;

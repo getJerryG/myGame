@@ -22,9 +22,16 @@
           :aria-disabled="isGameOver"
           @click="$emit('next-day')"
         >
-          <span class="btn-icon" aria-hidden="true">▶️</span>
+          <span
+            class="btn-icon"
+            aria-hidden="true"
+            >▶️</span
+          >
           <span class="btn-text">下一天</span>
-          <span class="btn-glow" aria-hidden="true"></span>
+          <span
+            class="btn-glow"
+            aria-hidden="true"
+          ></span>
         </button>
       </div>
     </div>
@@ -119,7 +126,11 @@ const phaseName = computed(() => getPhaseName(props.currentPhase));
   .next-day-btn {
     position: relative;
     padding: tokens.$spacing-md tokens.$spacing-xl;
-    background: linear-gradient(135deg, tokens.$primary-blue 0%, color.adjust(tokens.$primary-blue, $lightness: -10%) 100%);
+    background: linear-gradient(
+      135deg,
+      tokens.$primary-blue 0%,
+      color.adjust(tokens.$primary-blue, $lightness: -10%) 100%
+    );
     border: none;
     border-radius: tokens.$radius-md;
     color: #fff;
@@ -131,13 +142,17 @@ const phaseName = computed(() => getPhaseName(props.currentPhase));
     align-items: center;
     gap: tokens.$spacing-sm;
 
-    &:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgb(74 158 255 / 40%);
+    &:hover {
+      &:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgb(74 158 255 / 40%);
+      }
     }
 
-    &:active:not(:disabled) {
-      transform: translateY(0);
+    &:active {
+      &:not(:disabled) {
+        transform: translateY(0);
+      }
     }
 
     &:disabled {
@@ -161,8 +176,12 @@ const phaseName = computed(() => getPhaseName(props.currentPhase));
       transition: opacity tokens.$transition-fast;
     }
 
-    &:hover:not(:disabled) .btn-glow {
-      opacity: 1;
+    &:hover {
+      &:not(:disabled) {
+        .btn-glow {
+          opacity: 1;
+        }
+      }
     }
   }
 }

@@ -80,9 +80,11 @@ const handleItemClick = (item: SidebarItem): void => {
   color: var(--app-text-secondary);
   position: relative;
 
-  &:hover:not(.disabled) {
-    background-color: var(--bg-hover);
-    color: var(--app-text-primary);
+  &:hover {
+    &:not(.disabled) {
+      background-color: var(--bg-hover);
+      color: var(--app-text-primary);
+    }
   }
 
   &.active {

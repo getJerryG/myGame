@@ -24,8 +24,12 @@
     "no-descending-specificity": null,
     "keyframes-name-pattern": null,
     "property-no-deprecated": null,
+    "scss/selector-nest-combinators": "always",
+    "selector-pseudo-class-notation": "compact",
+    "scss/media-feature-value-dollar-variable": "always",
+    "scss/selector-no-unnecessary-nesting": false,
     "max-nesting-depth": [
-      4,
+      3,
       {
         "ignore": [
           "pseudo-classes"

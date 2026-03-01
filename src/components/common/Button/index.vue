@@ -125,7 +125,6 @@ const handleClick = (event: MouseEvent) => {
   cursor: pointer;
   transition: all tokens.$transition-fast;
   position: relative;
-  overflow: hidden;
   
   /* 文本溢出处理 */
   white-space: nowrap;
@@ -205,15 +204,19 @@ const handleClick = (event: MouseEvent) => {
   background-color: tokens.$primary;
   color: white;
   
-  &:hover:not(.btn--disabled) {
-    background-color: tokens.$primary-dark;
-    box-shadow: tokens.$shadow-md;
-    transform: translateY(-1px);
+  &:hover {
+    &:not(.btn--disabled) {
+      background-color: tokens.$primary-dark;
+      box-shadow: tokens.$shadow-md;
+      transform: translateY(-1px);
+    }
   }
   
-  &:active:not(.btn--disabled) {
-    transform: translateY(0);
-    box-shadow: tokens.$shadow-sm;
+  &:active {
+    &:not(.btn--disabled) {
+      transform: translateY(0);
+      box-shadow: tokens.$shadow-sm;
+    }
   }
 }
 
@@ -222,16 +225,20 @@ const handleClick = (event: MouseEvent) => {
   color: tokens.$text-primary;
   border: 1px solid tokens.$border-medium;
   
-  &:hover:not(.btn--disabled) {
-    background-color: tokens.$bg-light;
-    border-color: tokens.$primary;
-    box-shadow: tokens.$shadow-md;
-    transform: translateY(-1px);
+  &:hover {
+    &:not(.btn--disabled) {
+      background-color: tokens.$bg-light;
+      border-color: tokens.$primary;
+      box-shadow: tokens.$shadow-md;
+      transform: translateY(-1px);
+    }
   }
   
-  &:active:not(.btn--disabled) {
-    transform: translateY(0);
-    box-shadow: tokens.$shadow-sm;
+  &:active {
+    &:not(.btn--disabled) {
+      transform: translateY(0);
+      box-shadow: tokens.$shadow-sm;
+    }
   }
 }
 
@@ -239,15 +246,19 @@ const handleClick = (event: MouseEvent) => {
   background-color: tokens.$success;
   color: white;
   
-  &:hover:not(.btn--disabled) {
-    background-color: tokens.$success-green;
-    box-shadow: tokens.$shadow-md;
-    transform: translateY(-1px);
+  &:hover {
+    &:not(.btn--disabled) {
+      background-color: tokens.$success-green;
+      box-shadow: tokens.$shadow-md;
+      transform: translateY(-1px);
+    }
   }
   
-  &:active:not(.btn--disabled) {
-    transform: translateY(0);
-    box-shadow: tokens.$shadow-sm;
+  &:active {
+    &:not(.btn--disabled) {
+      transform: translateY(0);
+      box-shadow: tokens.$shadow-sm;
+    }
   }
 }
 
@@ -255,15 +266,19 @@ const handleClick = (event: MouseEvent) => {
   background-color: tokens.$warning;
   color: white;
   
-  &:hover:not(.btn--disabled) {
-    background-color: tokens.$warning-yellow;
-    box-shadow: tokens.$shadow-md;
-    transform: translateY(-1px);
+  &:hover {
+    &:not(.btn--disabled) {
+      background-color: tokens.$warning-yellow;
+      box-shadow: tokens.$shadow-md;
+      transform: translateY(-1px);
+    }
   }
   
-  &:active:not(.btn--disabled) {
-    transform: translateY(0);
-    box-shadow: tokens.$shadow-sm;
+  &:active {
+    &:not(.btn--disabled) {
+      transform: translateY(0);
+      box-shadow: tokens.$shadow-sm;
+    }
   }
 }
 
@@ -271,15 +286,19 @@ const handleClick = (event: MouseEvent) => {
   background-color: tokens.$error;
   color: white;
   
-  &:hover:not(.btn--disabled) {
-    background-color: tokens.$error-red;
-    box-shadow: tokens.$shadow-md;
-    transform: translateY(-1px);
+  &:hover {
+    &:not(.btn--disabled) {
+      background-color: tokens.$error-red;
+      box-shadow: tokens.$shadow-md;
+      transform: translateY(-1px);
+    }
   }
   
-  &:active:not(.btn--disabled) {
-    transform: translateY(0);
-    box-shadow: tokens.$shadow-sm;
+  &:active {
+    &:not(.btn--disabled) {
+      transform: translateY(0);
+      box-shadow: tokens.$shadow-sm;
+    }
   }
 }
 
@@ -287,15 +306,19 @@ const handleClick = (event: MouseEvent) => {
   background-color: tokens.$info;
   color: white;
   
-  &:hover:not(.btn--disabled) {
-    background-color: tokens.$info-blue;
-    box-shadow: tokens.$shadow-md;
-    transform: translateY(-1px);
+  &:hover {
+    &:not(.btn--disabled) {
+      background-color: tokens.$info-blue;
+      box-shadow: tokens.$shadow-md;
+      transform: translateY(-1px);
+    }
   }
   
-  &:active:not(.btn--disabled) {
-    transform: translateY(0);
-    box-shadow: tokens.$shadow-sm;
+  &:active {
+    &:not(.btn--disabled) {
+      transform: translateY(0);
+      box-shadow: tokens.$shadow-sm;
+    }
   }
 }
 
@@ -332,7 +355,7 @@ const handleClick = (event: MouseEvent) => {
 .btn__spinner {
   width: 16px;
   height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid rgb(255 255 255 / 30%);
   border-top-color: white;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
@@ -340,7 +363,7 @@ const handleClick = (event: MouseEvent) => {
   /* 针对非白色背景的调整 */
   .btn--secondary &,
   .btn--info & {
-    border-color: rgba(0, 0, 0, 0.3);
+    border-color: rgb(0 0 0 / 30%);
     border-top-color: tokens.$text-primary;
   }
 }

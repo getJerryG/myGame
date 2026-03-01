@@ -489,8 +489,10 @@ const handleDrop = () => {
   margin-right: tokens.$spacing-sm;
   cursor: pointer;
   
-  input[type="checkbox"] {
-    accent-color: tokens.$primary;
+  input {
+    &[type="checkbox"] {
+      accent-color: tokens.$primary;
+    }
   }
   
   /* 网格列表的选择框 */
@@ -529,7 +531,7 @@ const handleDrop = () => {
 .list__spinner {
   width: 24px;
   height: 24px;
-  border: 2px solid rgba(0, 0, 0, 0.1);
+  border: 2px solid rgb(0 0 0 / 10%);
   border-top-color: tokens.$primary;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;

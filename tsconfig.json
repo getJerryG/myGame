@@ -29,5 +29,5 @@
     "types": ["vite/client"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/**/*.vue", "src/**/*.js"],
-  "exclude": [".eslintrc.cjs", "tailwind.config.js","node_modules","**/*.spec.ts","**/*.test.ts","src/**/*.scss"]
+  "exclude": [".config/.eslintrc.cjs", "tailwind.config.js","node_modules","**/*.spec.ts","**/*.test.ts","src/**/*.scss"]
 }

@@ -1,225 +1,233 @@
 <template>
-  <section
+  <Panel
+    title="任务"
+    collapsible
     class="task-panel"
-    aria-labelledby="task-system-title"
   >
-    <div class="panel-header">
-      <h2
-        id="task-system-title"
-        class="panel-title"
-      >
-        任务
-      </h2>
-      <button
-        class="collapse-btn"
-        aria-expanded="!isCollapsed"
-        @click="toggleCollapse"
-      >
-        <span class="collapse-icon">{{ isCollapsed ? '▶️' : '▼' }}</span>
-      </button>
-    </div>
-
-    <div
-      class="panel-content"
-      :class="{ collapsed: isCollapsed }"
-    >
-      <!-- 每日任务 -->
-      <div class="task-section">
+    <!-- 每日任务 -->
+    <Card class="task-section" variant="info" size="small">
+      <template #header>
         <h3 class="section-title">每日任务</h3>
-        <div
-          v-if="dailyTasks.length === 0"
-          class="empty-tasks"
-          aria-label="暂无每日任务"
-        >
-          <p>暂无每日任务</p>
-        </div>
-        <div
-          v-for="task in dailyTasks"
-          :key="task.id"
-          class="task-bubble"
-          :class="{ completed: task.completed }"
-          :aria-label="task.title + (task.completed ? ' 已完成' : ' 进度: ' + task.progress + '/' + task.target)"
-        >
-          <span
-            class="task-icon"
-            aria-hidden="true"
-            >{{ task.icon || '📋' }}</span
+      </template>
+      
+      <List
+        :items="dailyTasks"
+        layout="vertical"
+        class="task-list"
+        :empty-text="'暂无每日任务'"
+        :empty-icon="'📋'"
+      >
+        <template #item="{ item }">
+          <Card
+            :variant="item.completed ? 'success' : 'default'"
+            size="small"
+            class="task-item"
           >
-          <h4 class="task-title">{{ task.title }}</h4>
-          <span class="task-progress-text">{{ task.progress }}/{{ task.target }}</span>
-          <button class="task-status-btn">{{ task.completed ? '已完成' : '未完成' }}</button>
-        </div>
-      </div>
+            <div class="task-content">
+              <span
+                class="task-icon"
+                aria-hidden="true"
+                >{{ item.icon || '📋' }}</span
+              >
+              <h4 class="task-title">{{ item.title }}</h4>
+              <span class="task-progress-text">{{ item.progress }}/{{ item.target }}</span>
+            </div>
+            <Button
+              :variant="item.completed ? 'success' : 'primary'"
+              size="small"
+              :disabled="item.completed"
+            >
+              {{ item.completed ? '已完成' : '未完成' }}
+            </Button>
+          </Card>
+        </template>
+      </List>
+    </Card>
 
-      <!-- 周任务 -->
-      <div class="task-section">
+    <!-- 周任务 -->
+    <Card class="task-section" variant="warning" size="small">
+      <template #header>
         <h3 class="section-title">周任务</h3>
-        <div
-          v-if="weeklyTasks.length === 0"
-          class="empty-tasks"
-          aria-label="暂无周任务"
-        >
-          <p>暂无周任务</p>
-        </div>
-        <div
-          v-for="task in weeklyTasks"
-          :key="task.id"
-          class="task-bubble"
-          :class="{ completed: task.completed }"
-          :aria-label="task.title + (task.completed ? ' 已完成' : ' 进度: ' + task.progress + '/' + task.target)"
-        >
-          <span
-            class="task-icon"
-            aria-hidden="true"
-            >{{ task.icon || '📅' }}</span
+      </template>
+      
+      <List
+        :items="weeklyTasks"
+        layout="vertical"
+        class="task-list"
+        :empty-text="'暂无周任务'"
+        :empty-icon="'📅'"
+      >
+        <template #item="{ item }">
+          <Card
+            :variant="item.completed ? 'success' : 'default'"
+            size="small"
+            class="task-item"
           >
-          <h4 class="task-title">{{ task.title }}</h4>
-          <span class="task-progress-text">{{ task.progress }}/{{ task.target }}</span>
-          <button class="task-status-btn">{{ task.completed ? '已完成' : '未完成' }}</button>
-        </div>
-      </div>
+            <div class="task-content">
+              <span
+                class="task-icon"
+                aria-hidden="true"
+                >{{ item.icon || '📅' }}</span
+              >
+              <h4 class="task-title">{{ item.title }}</h4>
+              <span class="task-progress-text">{{ item.progress }}/{{ item.target }}</span>
+            </div>
+            <Button
+              :variant="item.completed ? 'success' : 'primary'"
+              size="small"
+              :disabled="item.completed"
+            >
+              {{ item.completed ? '已完成' : '未完成' }}
+            </Button>
+          </Card>
+        </template>
+      </List>
+    </Card>
 
-      <!-- 月度任务 -->
-      <div class="task-section">
+    <!-- 月度任务 -->
+    <Card class="task-section" variant="primary" size="small">
+      <template #header>
         <h3 class="section-title">月度任务</h3>
-        <div
-          v-if="monthlyTasks.length === 0"
-          class="empty-tasks"
-          aria-label="暂无月度任务"
-        >
-          <p>暂无月度任务</p>
-        </div>
-        <div
-          v-for="task in monthlyTasks"
-          :key="task.id"
-          class="task-bubble"
-          :class="{ completed: task.completed }"
-          :aria-label="task.title + (task.completed ? ' 已完成' : ' 进度: ' + task.progress + '/' + task.target)"
-        >
-          <span
-            class="task-icon"
-            aria-hidden="true"
-            >{{ task.icon || '📊' }}</span
+      </template>
+      
+      <List
+        :items="monthlyTasks"
+        layout="vertical"
+        class="task-list"
+        :empty-text="'暂无月度任务'"
+        :empty-icon="'📊'"
+      >
+        <template #item="{ item }">
+          <Card
+            :variant="item.completed ? 'success' : 'default'"
+            size="small"
+            class="task-item"
           >
-          <h4 class="task-title">{{ task.title }}</h4>
-          <span class="task-progress-text">{{ task.progress }}/{{ task.target }}</span>
-          <button class="task-status-btn">{{ task.completed ? '已完成' : '未完成' }}</button>
-        </div>
-      </div>
-    </div>
-  </section>
+            <div class="task-content">
+              <span
+                class="task-icon"
+                aria-hidden="true"
+                >{{ item.icon || '📊' }}</span
+              >
+              <h4 class="task-title">{{ item.title }}</h4>
+              <span class="task-progress-text">{{ item.progress }}/{{ item.target }}</span>
+            </div>
+            <Button
+              :variant="item.completed ? 'success' : 'primary'"
+              size="small"
+              :disabled="item.completed"
+            >
+              {{ item.completed ? '已完成' : '未完成' }}
+            </Button>
+          </Card>
+        </template>
+      </List>
+    </Card>
+  </Panel>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'TaskSystemPanel',
-  props: {
-    tasks: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      isCollapsed: false,
-    };
-  },
-  computed: {
-    dailyTasks() {
-      return this.tasks.daily || [];
-    },
-    weeklyTasks() {
-      return this.tasks.weekly || [];
-    },
-    monthlyTasks() {
-      return this.tasks.monthly || [];
-    },
-  },
-  methods: {
-    toggleCollapse() {
-      this.isCollapsed = !this.isCollapsed;
-    },
-  },
-};
+<script setup lang="ts">
+import { computed } from 'vue';
+import Panel from '@/components/common/Panel/index.vue';
+import Card from '@/components/common/Card/index.vue';
+import List from '@/components/common/List/index.vue';
+import Button from '@/components/common/Button/index.vue';
+
+interface Task {
+  id: string;
+  title: string;
+  icon?: string;
+  progress: number;
+  target: number;
+  completed: boolean;
+}
+
+interface Tasks {
+  daily?: Task[];
+  weekly?: Task[];
+  monthly?: Task[];
+}
+
+const props = defineProps<{
+  tasks: Tasks;
+}>();
+
+// 计算属性：每日任务
+const dailyTasks = computed(() => {
+  return props.tasks.daily || [];
+});
+
+// 计算属性：周任务
+const weeklyTasks = computed(() => {
+  return props.tasks.weekly || [];
+});
+
+// 计算属性：月度任务
+const monthlyTasks = computed(() => {
+  return props.tasks.monthly || [];
+});
 </script>
 
 <style lang="scss" scoped>
 /* 任务面板 */
 .task-panel {
-  background: tokens.$bg-secondary;
-  border-radius: tokens.$radius-lg;
-  box-shadow: tokens.$shadow-md;
-  overflow: hidden;
-  border: 1px solid tokens.$border-light;
-}
-
-/* 面板头部 */
-.panel-header {
-  @include utils.panel-header;
-}
-
-.panel-title {
-  @include utils.panel-title;
-}
-
-.collapse-btn {
-  @include utils.collapse-btn;
-}
-
-.collapse-icon {
-  font-size: tokens.$font-size-sm;
-}
-
-/* 面板内容 */
-.panel-content {
-  @include utils.panel-content;
-
-  &.collapsed {
-    max-height: 0;
-    padding: 0;
-    overflow: hidden;
-  }
+  width: 100%;
 }
 
 /* 任务区域 */
 .task-section {
-  margin-bottom: tokens.$spacing-lg;
-
-  &:last-child {
-    margin-bottom: 0;
+  margin-bottom: tokens.$spacing-md;
+  
+  h4 {
+    margin: 0;
   }
 }
 
 .section-title {
   font-size: tokens.$font-size-sm;
-  font-weight: tokens.$font-weight-medium;
-  color: tokens.$text-muted;
-  margin-bottom: tokens.$spacing-md;
+  font-weight: tokens.$font-weight-semibold;
+  color: tokens.$text-primary;
+  margin: 0;
 }
 
-/* 任务卡片 */
-.task-bubble {
-  @include utils.flex-row(tokens.$spacing-md, center);
+/* 任务列表 */
+.task-list {
+  .list__item {
+    padding: 0;
+    border-bottom: none;
+    
+    &:hover {
+      background-color: transparent;
+    }
+  }
+  
+  .list__empty {
+    text-align: center;
+    padding: tokens.$spacing-lg;
+  }
+}
 
-  background: tokens.$bg-light;
-  border-radius: tokens.$radius-md;
-  padding: tokens.$spacing-sm tokens.$spacing-md;
-  border: 1px solid tokens.$border-light;
-  transition: all tokens.$transition-normal;
-  margin-bottom: tokens.$spacing-sm;
-
+/* 任务项 */
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: tokens.$spacing-xs;
+  
   &:hover {
-    background: tokens.$bg-lighter;
-    box-shadow: tokens.$shadow-md;
     transform: translateY(-1px);
   }
-
-  &.completed {
-    background: rgb(16 185 129 / 10%);
-    border-color: tokens.$success;
-  }
 }
 
+/* 任务内容 */
+.task-content {
+  display: flex;
+  align-items: center;
+  gap: tokens.$spacing-sm;
+  flex: 1;
+}
+
+/* 任务图标 */
 .task-icon {
   font-size: tokens.$font-size-base;
   background: tokens.$border-light;
@@ -227,21 +235,24 @@ export default {
   padding: tokens.$spacing-xs;
   color: tokens.$text-muted;
   flex-shrink: 0;
-
-  .task-bubble.completed & {
+  
+  /* 已完成任务的图标样式 */
+  .task-item:has(.btn--success) & {
     background: tokens.$success;
     color: white;
   }
 }
 
+/* 任务标题 */
 .task-title {
   font-size: tokens.$font-size-sm;
   font-weight: tokens.$font-weight-medium;
   color: tokens.$text-primary;
   margin: 0;
   flex: 1;
-
-  @include utils.text-truncate;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* 任务进度文本 */
@@ -251,107 +262,18 @@ export default {
   flex-shrink: 0;
 }
 
-/* 任务状态按钮 */
-.task-status-btn {
-  padding: tokens.$spacing-xs tokens.$spacing-md;
-  border: none;
-  border-radius: tokens.$radius-full;
-  font-size: tokens.$font-size-xs;
-  font-weight: tokens.$font-weight-medium;
-  cursor: pointer;
-  transition: all tokens.$transition-fast;
-  flex-shrink: 0;
-}
-
-.task-bubble {
-  &:not(.completed) {
-    .task-status-btn {
-      background-color: tokens.$primary-blue;
-      color: white;
-
-      &:hover {
-        background-color: tokens.$primary-dark;
-      }
-    }
-  }
-
-  &.completed {
-    .task-status-btn {
-      background-color: tokens.$success;
-      color: white;
-
-      &:hover {
-        background-color: tokens.$success-green;
-      }
-    }
-  }
-}
-
-.empty-tasks {
-  text-align: center;
-  padding: tokens.$spacing-xl tokens.$spacing-lg;
-  color: tokens.$text-muted;
-  background: tokens.$bg-light;
-  border-radius: tokens.$radius-md;
-  border: 1px dashed tokens.$border-light;
-
-  p {
-    margin: 0;
-  }
-}
-
 /* 响应式设计 */
 @include utils.mobile {
-  .panel-header {
-    padding: tokens.$spacing-sm tokens.$spacing-md;
+  .task-content {
+    gap: tokens.$spacing-xs;
   }
-
-  .panel-content {
-    padding: tokens.$spacing-md;
-  }
-
-  .task-bubble {
-    padding: tokens.$spacing-sm;
-  }
-
+  
   .task-title {
     font-size: tokens.$font-size-xs;
   }
-}
-
-/* 横屏手机适配 */
-@include utils.landscape-mobile {
-  .panel-header {
-    padding: tokens.$spacing-sm;
-  }
-
-  .panel-title {
-    font-size: tokens.$font-size-sm;
-  }
-
-  .panel-content {
-    padding: tokens.$spacing-sm;
-  }
-
-  .task-section {
-    margin-bottom: tokens.$spacing-md;
-  }
-
-  .section-title {
+  
+  .task-progress-text {
     font-size: tokens.$font-size-xs;
-    margin-bottom: tokens.$spacing-sm;
-  }
-
-  .task-bubble {
-    padding: tokens.$spacing-sm;
-  }
-
-  .task-title {
-    font-size: tokens.$font-size-xs;
-  }
-
-  .empty-tasks {
-    padding: tokens.$spacing-lg tokens.$spacing-md;
   }
 }
 </style>

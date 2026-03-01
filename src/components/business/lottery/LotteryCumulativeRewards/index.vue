@@ -1,9 +1,12 @@
 <template>
-  <div class="cumulative-rewards-panel-vertical">
-    <div class="panel-header">
-      <h3>累抽奖励</h3>
-      <span class="draw-count-info"> 当前累计：{{ lotteryStore.drawCount }}次</span>
-    </div>
+  <Panel class="cumulative-rewards-panel">
+    <!-- 面板头部 -->
+    <template #header>
+      <div class="header-content">
+        <h3>累抽奖励</h3>
+        <span class="draw-count-info"> 当前累计：{{ lotteryStore.drawCount }}次</span>
+      </div>
+    </template>
 
     <!-- 累抽进度 -->
     <div class="progress-bar-container">
@@ -22,51 +25,75 @@
     <!-- 竖向滚动的累抽奖励区�?-->
     <div class="vertical-rewards-list">
       <!-- 可领取奖�?-->
-      <div
-        v-if="availableCumulativeRewards.length > 0"
-        class="rewards-section available"
-      >
-        <h4>可领取</h4>
-        <div
-          v-for="reward in availableCumulativeRewards"
-          :key="reward.threshold"
-          class="vertical-reward-item available"
+      <Card v-if="availableCumulativeRewards.length > 0" class="rewards-section" variant="success">
+        <template #header>
+          <h4>可领取</h4>
+        </template>
+        
+        <List
+          :items="availableCumulativeRewards"
+          layout="vertical"
+          class="rewards-list"
         >
-          <div class="reward-info">
-            <span class="threshold">{{ reward.threshold }}次</span>
-            <span class="reward-name">{{ reward.reward.name }}</span>
-          </div>
-          <button
-            class="claim-button"
-            @click="claimCumulativeReward(reward.threshold)"
-          >
-            领取
-          </button>
-        </div>
-      </div>
+          <template #item="{ item }">
+            <Card
+              variant="success"
+              size="small"
+              class="reward-item"
+            >
+              <div class="reward-info">
+                <span class="threshold">{{ item.threshold }}次</span>
+                <span class="reward-name">{{ item.reward.name }}</span>
+              </div>
+              <Button
+                variant="success"
+                size="small"
+                @click="claimCumulativeReward(item.threshold)"
+              >
+                领取
+              </Button>
+            </Card>
+          </template>
+        </List>
+      </Card>
 
       <!-- 未达到奖�?-->
-      <div class="rewards-section unreached">
-        <h4>未达到</h4>
-        <div
-          v-for="item in unreachedCumulativeRewards"
-          :key="item.threshold"
-          class="vertical-reward-item unreached"
+      <Card class="rewards-section" variant="secondary">
+        <template #header>
+          <h4>未达到</h4>
+        </template>
+        
+        <List
+          :items="unreachedCumulativeRewards"
+          layout="vertical"
+          class="rewards-list"
         >
-          <div class="reward-info">
-            <span class="threshold">{{ item.threshold }}次</span>
-            <span class="reward-name">{{ item.reward.name }}</span>
-          </div>
-          <div class="progress-text">{{ lotteryStore.drawCount }}/{{ item.threshold }}</div>
-        </div>
-      </div>
+          <template #item="{ item }">
+            <Card
+              variant="secondary"
+              size="small"
+              class="reward-item"
+            >
+              <div class="reward-info">
+                <span class="threshold">{{ item.threshold }}次</span>
+                <span class="reward-name">{{ item.reward.name }}</span>
+              </div>
+              <div class="progress-text">{{ lotteryStore.drawCount }}/{{ item.threshold }}</div>
+            </Card>
+          </template>
+        </List>
+      </Card>
     </div>
-  </div>
+  </Panel>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useLotteryStore } from '@/stores/lotteryStore';
+import Panel from '@/components/common/Panel/index.vue';
+import Card from '@/components/common/Card/index.vue';
+import List from '@/components/common/List/index.vue';
+import Button from '@/components/common/Button/index.vue';
 
 const lotteryStore = useLotteryStore();
 
@@ -111,132 +138,138 @@ const claimCumulativeReward = (threshold: number): void => {
 </script>
 
 <style lang="scss" scoped>
-.cumulative-rewards-panel-vertical {
-  @include utils.flex-col(tokens.$spacing-0);
-
+/* 累抽奖励面板 */
+.cumulative-rewards-panel {
   height: 100%;
-  background-color: tokens.$bg-secondary;
-  border-radius: tokens.$radius-lg;
-  box-shadow: tokens.$shadow-md;
-  border: 1px solid tokens.$border-light;
   overflow: hidden;
-}
-
-.panel-header {
-  @include utils.flex-between;
-
-  padding: tokens.$spacing-sm tokens.$spacing-md;
-  background-color: tokens.$bg-light;
-  border-bottom: 1px solid tokens.$border-light;
-
-  h3 {
-    margin: 0;
-    font-size: tokens.$font-size-base;
-    font-weight: tokens.$font-weight-semibold;
-    color: tokens.$text-primary;
+  
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
   }
 }
 
+/* 累计抽奖次数信息 */
 .draw-count-info {
   font-size: tokens.$font-size-sm;
   color: tokens.$text-secondary;
 }
 
+/* 进度条容器 */
 .progress-bar-container {
   padding: tokens.$spacing-sm tokens.$spacing-md;
   background-color: tokens.$bg-light;
+  border-radius: tokens.$radius-md;
+  margin-bottom: tokens.$spacing-md;
 }
 
+/* 进度信息 */
 .progress-info {
-  @include utils.flex-between;
-
+  display: flex;
+  justify-content: space-between;
   margin-bottom: tokens.$spacing-xs;
   font-size: tokens.$font-size-xs;
   color: tokens.$text-secondary;
 }
 
+/* 进度条 */
 .progress-bar {
-  @include utils.progress-bar;
+  height: 8px;
+  background-color: tokens.$bg-secondary;
+  border-radius: tokens.$radius-full;
+  overflow: hidden;
 }
 
 .progress-fill {
-  @include utils.progress-fill(tokens.$success);
+  height: 100%;
+  background-color: tokens.$success;
+  border-radius: tokens.$radius-full;
+  transition: width tokens.$transition-normal;
 }
 
+/* 奖励列表 */
 .vertical-rewards-list {
   flex: 1;
   overflow-y: auto;
-  padding: 0 tokens.$spacing-md tokens.$spacing-md;
-
-  @include utils.flex-col(tokens.$spacing-md);
-  @include utils.custom-scrollbar;
+  padding: 0;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgb(0 0 0 / 10%);
+    border-radius: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgb(16 185 129 / 50%);
+    border-radius: 3px;
+    
+    &:hover {
+      background: rgb(16 185 129 / 80%);
+    }
+  }
 }
 
+/* 奖励区块 */
 .rewards-section {
-  @include utils.flex-col(tokens.$spacing-sm);
-
+  margin-bottom: tokens.$spacing-md;
+  
   h4 {
     margin: 0;
     font-size: tokens.$font-size-sm;
+    font-weight: tokens.$font-weight-semibold;
     color: tokens.$text-primary;
-    padding: tokens.$spacing-sm 0;
-    border-bottom: 1px solid tokens.$border-light;
   }
 }
 
-.vertical-reward-item {
-  @include utils.flex-between;
-
-  padding: tokens.$spacing-sm;
-  border-radius: tokens.$radius-sm;
-  transition: all tokens.$transition-fast;
-
-  &.available {
-    background-color: rgb(16 185 129 / 10%);
-    border: 1px solid tokens.$success;
-  }
-
-  &.unreached {
-    background-color: tokens.$bg-light;
-    border: 1px solid tokens.$border-light;
-    opacity: 0.7;
+/* 奖励列表 */
+.rewards-list {
+  .list__item {
+    padding: 0;
+    border-bottom: none;
+    
+    &:hover {
+      background-color: transparent;
+    }
   }
 }
 
+/* 奖励项 */
+.reward-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: tokens.$spacing-sm;
+}
+
+/* 奖励信息 */
 .reward-info {
-  @include utils.flex-col(3px, flex-start);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
+/* 阈值信息 */
 .threshold {
   font-weight: tokens.$font-weight-bold;
   color: tokens.$text-primary;
   font-size: tokens.$font-size-sm;
 }
 
+/* 奖励名称 */
 .reward-name {
   color: tokens.$text-secondary;
   font-size: tokens.$font-size-xs;
 }
 
-.claim-button {
-  padding: tokens.$spacing-xs tokens.$spacing-sm;
-  background-color: tokens.$success;
-  color: white;
-  border: none;
-  border-radius: tokens.$radius-sm;
-  cursor: pointer;
-  font-size: tokens.$font-size-xs;
-  font-weight: tokens.$font-weight-medium;
-  transition: all tokens.$transition-fast;
-
-  &:hover {
-    background-color: #059669;
-    transform: translateY(-1px);
-  }
-}
-
+/* 进度文本 */
 .progress-text {
   font-size: tokens.$font-size-xs;
   color: tokens.$text-muted;
+  font-weight: tokens.$font-weight-medium;
 }
 </style>

@@ -134,12 +134,12 @@ const isMergePreview = computed(() => {
 });
 
 // 激活窗口
-const activateWindow = () => {
+const activateWindow = (): void => {
   windowManagerStore.activateWindow(props.windowId);
 };
 
 // 开始拖拽
-const startDrag = (event: MouseEvent) => {
+const startDrag = (event: MouseEvent): void => {
   if (
     event.target &&
     (event.target as HTMLElement).closest(".window-tab-close")
@@ -158,7 +158,7 @@ const startDrag = (event: MouseEvent) => {
 };
 
 // 拖拽移动
-const handleDragMove = (event: MouseEvent) => {
+const handleDragMove = (event: MouseEvent): void => {
   if (!windowData.value.isDragging) return;
 
   const dx = event.clientX - dragStartPos.value.x;
@@ -172,7 +172,7 @@ const handleDragMove = (event: MouseEvent) => {
 };
 
 // 停止拖拽
-const stopDrag = () => {
+const stopDrag = (): void => {
   windowManagerStore.endDrag();
 
   document.removeEventListener("mousemove", handleDragMove);
@@ -187,45 +187,45 @@ const handleResize = (direction: string, dx: number, dy: number): void => {
   windowManagerStore.updateWindowSize(props.windowId, newWidth, newHeight);
 };
 
-const stopResize = () => {
+const stopResize = (): void => {
   // 调整大小结束
 };
 
 // 关闭窗口
-const closeWindow = () => {
+const closeWindow = (): void => {
   windowManagerStore.closeWindow(props.windowId);
 };
 
 // 切换选项卡
-const switchTab = (tabId: string) => {
+const switchTab = (tabId: string): void => {
   windowManagerStore.switchTab(props.windowId, tabId);
 };
 
 // 关闭选项卡
-const closeTab = (tabId: string) => {
+const closeTab = (tabId: string): void => {
   windowManagerStore.closeTab(props.windowId, tabId);
 };
 
 // 开始拖拽选项卡
-const startTabDrag = (tabId: string) => {
+const startTabDrag = (tabId: string): void => {
   tabDragData.value = { tabId, windowId: props.windowId };
 };
 
 // 处理选项卡拖拽结束
-const handleTabDragEnd = () => {
+const handleTabDragEnd = (): void => {
   if (tabDragData.value) {
     tabDragData.value = null;
   }
 };
 
 // 处理拖放事件
-const handleDragOver = (event: DragEvent) => {
+const handleDragOver = (event: DragEvent): void => {
   if (tabDragData.value && tabDragData.value.windowId !== props.windowId) {
     event.dataTransfer!.dropEffect = "move";
   }
 };
 
-const handleDrop = () => {
+const handleDrop = (): void => {
   if (tabDragData.value && tabDragData.value.windowId !== props.windowId) {
     // 将拖拽的选项卡合并到当前窗口
     const sourceWindow = windowManagerStore.windows.find(
@@ -256,7 +256,7 @@ onUnmounted(() => {
 });
 
 // 键盘事件处理
-const handleKeyDown = (event: KeyboardEvent) => {
+const handleKeyDown = (event: KeyboardEvent): void => {
   // Ctrl+Tab 切换到下一个选项卡
   if (event.ctrlKey && event.key === "Tab") {
     event.preventDefault();

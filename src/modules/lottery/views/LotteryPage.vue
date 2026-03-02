@@ -147,7 +147,7 @@ const getRarityText = (rarity: string): string => {
 };
 
 // 开始抽奖
-const startLottery = () => {
+const startLottery = (): void => {
   if (isSpinning.value || lotteryTickets.value <= 0) return;
 
   isSpinning.value = true;
@@ -169,7 +169,7 @@ const startLottery = () => {
 };
 
 // 完成抽奖
-const finishLottery = () => {
+const finishLottery = (): void => {
   // 根据概率计算结果
   const random = Math.random() * 100;
   let cumulativeProbability = 0;

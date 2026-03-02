@@ -225,8 +225,7 @@ const claimReward = (taskId: string): void => {
         }
       });
 
-      // 打印领取奖励信息
-      console.log("领取奖励:", rewards);
+      // 领取奖励信息处理完成
     }
   }
 };

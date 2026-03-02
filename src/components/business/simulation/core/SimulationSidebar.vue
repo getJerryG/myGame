@@ -16,7 +16,8 @@
           <span
             class="menu-arrow"
             :class="{ rotated: openSubMenus.includes('data') }"
-            >�?/span
+            >▼</span
+          >
           >
         </div>
         <ul v-if="openSubMenus.includes('data')" class="sub-menu">
@@ -75,7 +76,8 @@
           <span
             class="menu-arrow"
             :class="{ rotated: openSubMenus.includes('operations') }"
-            >�?/span
+            >▼</span
+          >
           >
         </div>
         <ul v-if="openSubMenus.includes('operations')" class="sub-menu">
@@ -124,7 +126,8 @@
           <span
             class="menu-arrow"
             :class="{ rotated: openSubMenus.includes('content') }"
-            >�?/span
+            >▼</span
+          >
           >
         </div>
         <ul v-if="openSubMenus.includes('content')" class="sub-menu">
@@ -154,7 +157,7 @@
               :class="{ active: activeSubMenu === 'gameOptimization' }"
               @click="navigateTo('content', 'gameOptimization')"
             >
-              <span class="sub-menu-icon">�?/span>
+              <span class="sub-menu-icon">⚡</span>
               <span class="sub-menu-text">游戏优化</span>
             </a>
           </li>
@@ -173,7 +176,8 @@
           <span
             class="menu-arrow"
             :class="{ rotated: openSubMenus.includes('rewards') }"
-            >�?/span
+            >▼</span
+          >
           >
         </div>
         <ul v-if="openSubMenus.includes('rewards')" class="sub-menu">
@@ -222,7 +226,8 @@
           <span
             class="menu-arrow"
             :class="{ rotated: openSubMenus.includes('tasks') }"
-            >�?/span
+            >▼</span
+          >
           >
         </div>
         <ul v-if="openSubMenus.includes('tasks')" class="sub-menu">
@@ -302,7 +307,6 @@ const navigateTo = (mainMenu: string, subMenu: string): void => {
 </script>
 
 <style lang="scss" scoped>
-
 .sidebar {
   width: tokens.$sidebar-width;
   background-color: tokens.$bg-dark;

@@ -175,7 +175,7 @@ const getStatusText = (): string => {
 };
 
 // 开始发布
-const startRelease = () => {
+const startRelease = (): void => {
   if (releaseConfig.value.selectedChannels.length === 0) {
     alert("请至少选择一个发布渠道");
     return;
@@ -210,7 +210,7 @@ const startRelease = () => {
 };
 
 // 关闭应用
-const closeApp = () => {
+const closeApp = (): void => {
   window.history.back();
 };
 </script>

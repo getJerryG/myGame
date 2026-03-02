@@ -138,17 +138,17 @@ const isDownloadCompleted = computed(() => {
 });
 
 // 处理点击事件
-const handleClick = () => {
+const handleClick = (): void => {
   emit("click", props.app);
 };
 
 // 处理删除应用
-const handleDelete = () => {
+const handleDelete = (): void => {
   showDeleteConfirm.value = true;
 };
 
 // 处理取消下载
-const handleCancelDownload = () => {
+const handleCancelDownload = (): void => {
   windowManagerStore.cancelDownload(props.app.id);
   showDeleteConfirm.value = false;
   isHovered.value = false;

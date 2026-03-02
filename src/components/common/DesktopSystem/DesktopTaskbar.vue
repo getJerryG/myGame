@@ -96,17 +96,17 @@ const gameDateDisplay = computed(() => {
 });
 
 // 事件处理函数
-const handleSaveGame = () => {
+const handleSaveGame = (): void => {
   emit("saveGame");
   closeStartMenu();
 };
 
-const handleRestartGame = () => {
+const handleRestartGame = (): void => {
   emit("restartGame");
   closeStartMenu();
 };
 
-const handleOpenSettings = () => {
+const handleOpenSettings = (): void => {
   emit("openSettings");
   closeStartMenu();
 };

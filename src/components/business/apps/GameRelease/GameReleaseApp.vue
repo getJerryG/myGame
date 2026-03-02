@@ -185,8 +185,7 @@ const confirmRelease = async (): Promise<void> => {
       alert("发布成功");
       loadData();
     }
-  } catch (error) {
-    console.error("发布失败:", error);
+  } catch {
     alert("发布失败");
   }
 };

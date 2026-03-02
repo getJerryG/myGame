@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="window-manager"
-    @click="handleBackgroundClick"
-  >
+  <div class="window-manager" @click="handleBackgroundClick">
     <!-- 窗口容器 -->
     <div class="windows-container">
       <SystemWindow
@@ -16,7 +13,6 @@
           :key="tab.id"
           :is="getWindowContentComponent(tab.content)"
           v-bind="tab.content.props || {}"
-          :slot="tab.id"
         />
         <!-- 单个窗口内容 -->
         <component
@@ -37,10 +33,7 @@
     </button>
 
     <!-- 合并预览指示�?-->
-    <div
-      v-if="windowManagerStore.mergePreview"
-      class="merge-preview-indicator"
-    >
+    <div v-if="windowManagerStore.mergePreview" class="merge-preview-indicator">
       <div class="merge-preview-arrow"></div>
       <div class="merge-preview-text">释放鼠标合并窗口</div>
     </div>
@@ -48,23 +41,18 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue';
-import { useWindowManagerStore } from '@/stores/windowManagerStore';
-import SystemWindow from './SystemWindow.vue';
+import { onMounted, onUnmounted } from "vue";
+import { useWindowManagerStore } from "@/stores/windowManagerStore";
+import SystemWindow from "./SystemWindow.vue";
 // 导入实际应用组件
-import HeroDevelopmentApp from '../../modules/game/views/HeroDevelopmentApp.vue';
-import GameReleaseApp from '../../modules/game/views/GameReleaseApp.vue';
+import HeroDevelopmentApp from "../../modules/game/views/HeroDevelopmentApp.vue";
+import GameReleaseApp from "../../modules/game/views/GameReleaseApp.vue";
 // 导入应用中心组件
-import AppStore from '../../components/business/apps/AppStore/AppStore.vue';
+import AppStore from "../../components/business/apps/AppStore/AppStore.vue";
 
 const windowManagerStore = useWindowManagerStore();
 
 // 类型定义
-interface WindowComponentProps {
-  title?: string;
-  imageUrl?: string;
-}
-
 interface WindowComponent {
   template?: string;
   props?: string[];
@@ -85,12 +73,16 @@ interface WindowContent {
 // 窗口内容组件映射
 const windowContentComponents: Record<
   string,
-  WindowComponent | typeof HeroDevelopmentApp | typeof GameReleaseApp | typeof AppStore
+  | WindowComponent
+  | typeof HeroDevelopmentApp
+  | typeof GameReleaseApp
+  | typeof AppStore
 > = {
   // 这里注册不同类型的窗口内容组件
   default: {
-    template: '<div class="default-window-content">{{ props.title || "窗口内容" }}</div>',
-    props: ['title'],
+    template:
+      '<div class="default-window-content">{{ props.title || "窗口内容" }}</div>',
+    props: ["title"],
   },
   // 英雄开发应用
   heroDevelopment: HeroDevelopmentApp,
@@ -102,81 +94,93 @@ const windowContentComponents: Record<
   textEditor: {
     template:
       '<div class="text-editor-window"><h3>{{ props.title }}</h3><textarea class="text-editor" placeholder="在这里输入文字..."></textarea></div>',
-    props: ['title'],
+    props: ["title"],
   },
   // 示例：图片查看窗口
   imageViewer: {
     template:
       '<div class="image-viewer-window"><h3>{{ props.title }}</h3><img :src="props.imageUrl" alt="Image" class="viewer-image"></div>',
-    props: ['title', 'imageUrl'],
+    props: ["title", "imageUrl"],
   },
 };
 
 // 获取窗口内容组件
-const getWindowContentComponent = (content: string | WindowContent): typeof windowContentComponents[keyof typeof windowContentComponents] => {
-  if (typeof content === 'string') {
+const getWindowContentComponent = (
+  content: string | WindowContent,
+): (typeof windowContentComponents)[keyof typeof windowContentComponents] => {
+  if (typeof content === "string") {
     return windowContentComponents[content] || windowContentComponents.default;
   }
   if (content?.type) {
     // 处理 app 类型的窗口内容
-    if (content.type === 'app') {
+    if (content.type === "app") {
       const appId = content.props?.app?.id;
       if (appId) {
         // 根据应用ID返回对应的组件
         switch (appId) {
-          case 'app-store':
+          case "app-store":
             return windowContentComponents.appStore;
-          case 'hero-development':
+          case "hero-development":
             return windowContentComponents.heroDevelopment;
-          case 'game-release':
+          case "game-release":
             return windowContentComponents.gameRelease;
-          // 可以根据需要添加更多应用类�?          default:
+          // 可以根据需要添加更多应用类型
+          default:
             return windowContentComponents.default;
         }
       }
     }
-    return windowContentComponents[content.type] || windowContentComponents.default;
+    return (
+      windowContentComponents[content.type] || windowContentComponents.default
+    );
   }
   return windowContentComponents.default;
 };
 
-// 创建新窗�?const createNewWindow = (): void => {
+// 创建新窗口
+const createNewWindow = (): void => {
   // 可用的窗口类型，排除default
-  const availableTypes = ['heroDevelopment', 'gameRelease', 'textEditor', 'imageViewer'];
-  const randomType = availableTypes[Math.floor(Math.random() * availableTypes.length)];
+  const availableTypes = [
+    "heroDevelopment",
+    "gameRelease",
+    "textEditor",
+    "imageViewer",
+  ];
+  const randomType =
+    availableTypes[Math.floor(Math.random() * availableTypes.length)];
 
-  let title = '';
+  let title = "";
   const windowConfig: WindowContent = { type: randomType };
 
   // 根据类型配置窗口
   switch (randomType) {
-    case 'heroDevelopment':
-      title = '英雄开发';
+    case "heroDevelopment":
+      title = "英雄开发";
       break;
-    case 'gameRelease':
-      title = '游戏发布';
+    case "gameRelease":
+      title = "游戏发布";
       break;
-    case 'textEditor':
-      title = '文本编辑器';
-      windowConfig.props = { title: '文本编辑器' };
+    case "textEditor":
+      title = "文本编辑器";
+      windowConfig.props = { title: "文本编辑器" };
       break;
-    case 'imageViewer':
-      title = '图片查看器';
+    case "imageViewer":
+      title = "图片查看器";
       windowConfig.props = {
-        title: '图片查看器',
+        title: "图片查看器",
         imageUrl: `https://picsum.photos/seed/${Math.random()}/600/400`,
       };
       break;
     default:
-      title = '默认窗口';
-      windowConfig.props = { title: '默认窗口' };
+      title = "默认窗口";
+      windowConfig.props = { title: "默认窗口" };
   }
 
   windowManagerStore.createWindow(title, windowConfig, {
     x: 100 + Math.random() * 200,
     y: 100 + Math.random() * 200,
-    width: randomType === 'heroDevelopment' ? 800 : 600,
-    height: randomType === 'heroDevelopment' ? 600 : 400,
+    width: randomType === "heroDevelopment" ? 800 : 600,
+    height: randomType === "heroDevelopment" ? 600 : 400,
   });
 };
 
@@ -188,19 +192,19 @@ const handleBackgroundClick = (): void => {
 // 全局键盘事件处理
 const handleGlobalKeyDown = (event: KeyboardEvent): void => {
   // Ctrl+Tab 切换到下一个窗口
-  if (event.ctrlKey && event.key === 'Tab') {
+  if (event.ctrlKey && event.key === "Tab") {
     event.preventDefault();
     windowManagerStore.nextWindow();
   }
 
   // Ctrl+Shift+Tab 切换到上一个窗口
-  if (event.ctrlKey && event.shiftKey && event.key === 'Tab') {
+  if (event.ctrlKey && event.shiftKey && event.key === "Tab") {
     event.preventDefault();
     windowManagerStore.prevWindow();
   }
 
   // Ctrl+N 创建新窗口
-  if (event.ctrlKey && event.key === 'n') {
+  if (event.ctrlKey && event.key === "n") {
     event.preventDefault();
     createNewWindow();
   }
@@ -208,30 +212,31 @@ const handleGlobalKeyDown = (event: KeyboardEvent): void => {
 
 // 组件挂载时添加全局事件监听
 onMounted(() => {
-  document.addEventListener('keydown', handleGlobalKeyDown);
+  document.addEventListener("keydown", handleGlobalKeyDown);
 
   // 初始化创建英雄开发窗口和其他示例窗口
   setTimeout(() => {
-    // 首先创建英雄开发窗�?    windowManagerStore.createWindow(
-      '英雄开�?,
-      { type: 'heroDevelopment' },
+    // 首先创建英雄开发窗口
+    windowManagerStore.createWindow(
+      "英雄开发",
+      { type: "heroDevelopment" },
       {
         x: 100,
         y: 100,
         width: 800,
         height: 600,
-      }
+      },
     );
     // 创建游戏发布窗口
     windowManagerStore.createWindow(
-      '游戏发布',
-      { type: 'gameRelease' },
+      "游戏发布",
+      { type: "gameRelease" },
       {
         x: 200,
         y: 150,
         width: 600,
         height: 400,
-      }
+      },
     );
     // 创建一个示例窗�?    setTimeout(() => createNewWindow(), 100);
   }, 100);
@@ -239,7 +244,7 @@ onMounted(() => {
 
 // 组件卸载时移除全局事件监听
 onUnmounted(() => {
-  document.removeEventListener('keydown', handleGlobalKeyDown);
+  document.removeEventListener("keydown", handleGlobalKeyDown);
 });
 </script>
 
@@ -387,5 +392,3 @@ onUnmounted(() => {
   }
 }
 </style>
-
-

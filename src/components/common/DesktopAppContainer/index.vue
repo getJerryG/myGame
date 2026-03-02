@@ -183,7 +183,7 @@ const isDragging = ref(false);
 const dragOffset = ref({ x: 0, y: 0 });
 
 // 开始拖拽容器
-const startDrag = (event: MouseEvent) => {
+const startDrag = (event: MouseEvent): void => {
   if (props.windowState.isMaximized) return;
   isDragging.value = true;
   dragOffset.value = {
@@ -195,12 +195,12 @@ const startDrag = (event: MouseEvent) => {
 };
 
 // 开始拖拽标题栏
-const startDragHeader = (event: MouseEvent) => {
+const startDragHeader = (event: MouseEvent): void => {
   startDrag(event);
 };
 
 // 处理拖拽
-const handleDrag = (event: MouseEvent) => {
+const handleDrag = (event: MouseEvent): void => {
   if (!isDragging.value) return;
   const newPosition = {
     x: event.clientX - dragOffset.value.x,
@@ -213,19 +213,19 @@ const handleDrag = (event: MouseEvent) => {
 };
 
 // 停止拖拽
-const stopDrag = () => {
+const stopDrag = (): void => {
   isDragging.value = false;
   document.removeEventListener("mousemove", handleDrag);
   document.removeEventListener("mouseup", stopDrag);
 };
 
 // 处理关闭
-const handleClose = () => {
+const handleClose = (): void => {
   emit("close", props.app.id);
 };
 
 // 处理模块切换
-const handleModuleChange = (moduleId: string) => {
+const handleModuleChange = (moduleId: string): void => {
   emit("update:windowState", {
     ...props.windowState,
     activeModule: moduleId,

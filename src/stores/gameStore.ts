@@ -397,21 +397,8 @@ export const useGameStore = defineStore("game", {
       // - 专家策划：解锁史诗皮肤
       // - 经理策划：解锁传说皮肤
       // - 总监策划：解锁更多活动类型
-
       // 暂时只记录到控制台
-      console.log(
-        `[解锁功能] 策划等级提升到 ${this.plannerLevel}${this.plannerSubLevel}-${this.levelInRank}`,
-      );
-
-      if (this.plannerLevel === "高级") {
-        console.log("  - 解锁新功能：更多英雄类型");
-      } else if (this.plannerLevel === "专家") {
-        console.log("  - 解锁新功能：史诗皮肤");
-      } else if (this.plannerLevel === "经理") {
-        console.log("  - 解锁新功能：传说皮肤");
-      } else if (this.plannerLevel === "总监") {
-        console.log("  - 解锁新功能：更多活动类型");
-      }
+      // 后续可以替换为系统通知或日志记录
     },
 
     // 更新活动倒计时
@@ -569,17 +556,7 @@ export const useGameStore = defineStore("game", {
       // 生成当日的数据报表
       // 这里可以记录到一个报表系统中
       // 暂时只记录到控制台
-      console.log(
-        `[每日报表] ${this.currentDate.year}年${this.currentDate.month}月${this.currentDate.day}日`,
-      );
-      console.log(`  - 资金: ${this.money}`);
-      console.log(`  - 声望: ${this.reputation}`);
-      console.log(`  - 热度: ${this.popularity}`);
-      console.log(`  - 口碑: ${this.wordOfMouth}`);
-      console.log(`  - 已上线英雄: ${this.heroCount}`);
-      console.log(`  - 已上线皮肤: ${this.skinCount}`);
-      console.log(`  - 进行中项目: ${this.ongoingProjects.length}`);
-      console.log(`  - 活跃事件: ${this.activeEvents.length}`);
+      // 后续可以替换为系统报表或日志记录
     },
   },
 

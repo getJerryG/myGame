@@ -3,7 +3,7 @@
     <div class="section-header">
       <div>
         <h3>游戏策划仪表板</h3>
-          <p>监控游戏关键指标，制定战略决策</p>
+        <p>监控游戏关键指标，制定战略决策</p>
       </div>
       <div class="time-range-selector">
         <select :value="timeRange" @change="handleTimeRangeChange($event)">
@@ -26,15 +26,15 @@
           <div class="kpi-value">
             {{
               numberFormat(
-                (simulationResults?.kpi?.winRateBalance || 0.5) * 100
+                (simulationResults?.kpi?.winRateBalance || 0.5) * 100,
               )
             }}%
           </div>
           <div class="kpi-trend" :class="getKPITrendClass('winRateBalance')">
             <span class="trend-icon">{{
-              getKPITrendIcon('winRateBalance')
-              }}</span>
-            <span>{{ getKPITrendValue('winRateBalance') }}%</span>
+              getKPITrendIcon("winRateBalance")
+            }}</span>
+            <span>{{ getKPITrendValue("winRateBalance") }}%</span>
           </div>
         </div>
       </div>
@@ -47,22 +47,22 @@
           <div class="kpi-value">
             {{
               numberFormat(
-                (simulationResults?.kpi?.playerRetention || 0.8) * 100
+                (simulationResults?.kpi?.playerRetention || 0.8) * 100,
               )
             }}%
           </div>
           <div class="kpi-trend" :class="getKPITrendClass('playerRetention')">
             <span class="trend-icon">{{
-              getKPITrendIcon('playerRetention')
-              }}</span>
-            <span>{{ getKPITrendValue('playerRetention') }}%</span>
+              getKPITrendIcon("playerRetention")
+            }}</span>
+            <span>{{ getKPITrendValue("playerRetention") }}%</span>
           </div>
         </div>
       </div>
       <div class="kpi-card">
         <div class="card-header">
           <span class="card-icon">💰</span>
-          <h4>总收�?/h4>
+          <h4>总收入</h4>
         </div>
         <div class="card-body">
           <div class="kpi-value">
@@ -70,9 +70,9 @@
           </div>
           <div class="kpi-trend" :class="getKPITrendClass('totalRevenue')">
             <span class="trend-icon">{{
-              getKPITrendIcon('totalRevenue')
-              }}</span>
-            <span>{{ getKPITrendValue('totalRevenue') }}%</span>
+              getKPITrendIcon("totalRevenue")
+            }}</span>
+            <span>{{ getKPITrendValue("totalRevenue") }}%</span>
           </div>
         </div>
       </div>
@@ -88,8 +88,8 @@
             }}%
           </div>
           <div class="kpi-trend" :class="getKPITrendClass('marketShare')">
-            <span class="trend-icon">{{ getKPITrendIcon('marketShare') }}</span>
-            <span>{{ getKPITrendValue('marketShare') }}%</span>
+            <span class="trend-icon">{{ getKPITrendIcon("marketShare") }}</span>
+            <span>{{ getKPITrendValue("marketShare") }}%</span>
           </div>
         </div>
       </div>
@@ -102,15 +102,24 @@
         <h3>游戏配置</h3>
         <div class="config-item">
           <label>游戏模式:</label>
-          <select :value="gameConfig.mode" @change="handleGameModeChange($event)">
+          <select
+            :value="gameConfig.mode"
+            @change="handleGameModeChange($event)"
+          >
             <option value="classic">经典模式</option>
-            <option value="quick">快速模�?/option>
-            <option value="ARAM">大乱�?/option>
+            <option value="quick">快速模�?/option></option>
+            <option value="ARAM">大乱�?/option></option>
           </select>
         </div>
         <div class="config-item">
           <label>模拟步数:</label>
-          <input :value="gameConfig.steps" type="number" min="10" max="500" @input="handleStepsChange($event)" />
+          <input
+            :value="gameConfig.steps"
+            type="number"
+            min="10"
+            max="500"
+            @input="handleStepsChange($event)"
+          />
         </div>
       </div>
 
@@ -120,41 +129,63 @@
         <div class="teams-section">
           <div class="team-config">
             <h4>蓝色队</h4>
-              <div v-for="(player, index) in blueTeam" :key="index" class="player-config">
-                <div class="player-slot">
-                  <select v-model="player.heroId" @change="updatePlayerHero('blue', index, player.heroId)">
-                    <option value="">选择英雄</option>
-                    <option v-for="hero in allHeroes" :key="hero.id" :value="hero.id">
-                      {{ hero.name }}
-                    </option>
-                  </select>
-                  <select v-model="player.lane">
-                    <option value="top">上路</option>
-                    <option value="mid">中路</option>
-                    <option value="bottom">下路</option>
-                    <option value="jungle">打野</option>
-                  </select>
-                </div>
+            <div
+              v-for="(player, index) in blueTeam"
+              :key="index"
+              class="player-config"
+            >
+              <div class="player-slot">
+                <select
+                  v-model="player.heroId"
+                  @change="updatePlayerHero('blue', index, player.heroId)"
+                >
+                  <option value="">选择英雄</option>
+                  <option
+                    v-for="hero in allHeroes"
+                    :key="hero.id"
+                    :value="hero.id"
+                  >
+                    {{ hero.name }}
+                  </option>
+                </select>
+                <select v-model="player.lane">
+                  <option value="top">上路</option>
+                  <option value="mid">中路</option>
+                  <option value="bottom">下路</option>
+                  <option value="jungle">打野</option>
+                </select>
               </div>
+            </div>
           </div>
           <div class="team-config">
             <h4>红色队</h4>
-              <div v-for="(player, index) in redTeam" :key="index" class="player-config">
-                <div class="player-slot">
-                  <select v-model="player.heroId" @change="updatePlayerHero('red', index, player.heroId)">
-                    <option value="">选择英雄</option>
-                    <option v-for="hero in allHeroes" :key="hero.id" :value="hero.id">
-                      {{ hero.name }}
-                    </option>
-                  </select>
-                  <select v-model="player.lane">
-                    <option value="top">上路</option>
-                    <option value="mid">中路</option>
-                    <option value="bottom">下路</option>
-                    <option value="jungle">打野</option>
-                  </select>
-                </div>
+            <div
+              v-for="(player, index) in redTeam"
+              :key="index"
+              class="player-config"
+            >
+              <div class="player-slot">
+                <select
+                  v-model="player.heroId"
+                  @change="updatePlayerHero('red', index, player.heroId)"
+                >
+                  <option value="">选择英雄</option>
+                  <option
+                    v-for="hero in allHeroes"
+                    :key="hero.id"
+                    :value="hero.id"
+                  >
+                    {{ hero.name }}
+                  </option>
+                </select>
+                <select v-model="player.lane">
+                  <option value="top">上路</option>
+                  <option value="mid">中路</option>
+                  <option value="bottom">下路</option>
+                  <option value="jungle">打野</option>
+                </select>
               </div>
+            </div>
           </div>
         </div>
       </div>
@@ -166,7 +197,7 @@
       <div class="winner-info">
         <h4>
           获胜方
-          {{ simulationResults.winner === 'blue' ? '蓝色方' : '红色方' }}
+          {{ simulationResults.winner === "blue" ? "蓝色方" : "红色方" }}
         </h4>
         <p>游戏时间: {{ simulationResults.time }}秒</p>
         <p>模拟步数: {{ simulationResults.steps }}</p>
@@ -174,19 +205,19 @@
       <div class="teams-results">
         <div class="team-result">
           <h5>蓝色方</h5>
-            <p>击杀: {{ simulationResults.teams.blue.kills }}</p>
-            <p>助攻: {{ simulationResults.teams.blue.assists }}</p>
-            <p>推塔: {{ 9 - simulationResults.teams.blue.towers }}</p>
-            <p>经济: {{ Math.round(simulationResults.teams.blue.gold) }}</p>
-            <p>基地血量: {{ simulationResults.teams.blue.baseHealth }}</p>
+          <p>击杀: {{ simulationResults.teams.blue.kills }}</p>
+          <p>助攻: {{ simulationResults.teams.blue.assists }}</p>
+          <p>推塔: {{ 9 - simulationResults.teams.blue.towers }}</p>
+          <p>经济: {{ Math.round(simulationResults.teams.blue.gold) }}</p>
+          <p>基地血量: {{ simulationResults.teams.blue.baseHealth }}</p>
         </div>
         <div class="team-result">
           <h5>红色方</h5>
-            <p>击杀: {{ simulationResults.teams.red.kills }}</p>
-            <p>助攻: {{ simulationResults.teams.red.assists }}</p>
-            <p>推塔: {{ 9 - simulationResults.teams.red.towers }}</p>
-            <p>经济: {{ Math.round(simulationResults.teams.red.gold) }}</p>
-            <p>基地血量: {{ simulationResults.teams.red.baseHealth }}</p>
+          <p>击杀: {{ simulationResults.teams.red.kills }}</p>
+          <p>助攻: {{ simulationResults.teams.red.assists }}</p>
+          <p>推塔: {{ 9 - simulationResults.teams.red.towers }}</p>
+          <p>经济: {{ Math.round(simulationResults.teams.red.gold) }}</p>
+          <p>基地血量: {{ simulationResults.teams.red.baseHealth }}</p>
         </div>
       </div>
     </div>
@@ -202,7 +233,6 @@
 </template>
 
 <script setup lang="ts">
-
 defineProps({
   timeRange: {
     type: String,
@@ -282,7 +312,6 @@ function updatePlayerHero(team: string, index: number, heroId: string): void {
 </script>
 
 <style lang="scss" scoped>
-
 .dashboard-section {
   @include utils.flex-col(tokens.$spacing-lg);
 

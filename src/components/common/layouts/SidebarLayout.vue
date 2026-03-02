@@ -17,15 +17,9 @@
     <!-- 右侧主内容区域 -->
     <div class="sidebar-layout-main">
       <!-- 内容头部 -->
-      <div
-        class="content-header"
-        v-if="showHeader"
-      >
+      <div class="content-header" v-if="showHeader">
         <h2>{{ currentItem?.name || "" }}</h2>
-        <div
-          class="module-core-data"
-          v-if="coreData"
-        >
+        <div class="module-core-data" v-if="coreData">
           <div
             class="core-data-item"
             v-for="(value, key) in coreData"
@@ -46,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from "vue";
 
 /**
  * 侧边栏布局组件 - 提供带有侧边导航和主内容区域的布局
@@ -88,7 +82,8 @@ export interface SidebarItem {
   icon: string;
 }
 
-// 定义属�?const props = withDefaults(
+// 定义属性
+const props = withDefaults(
   defineProps<{
     /**
      * 侧边栏项列表
@@ -120,12 +115,12 @@ export interface SidebarItem {
     labelMap?: Record<string, string>;
   }>(),
   {
-    className: '',
+    className: "",
     darkTheme: false,
     showHeader: true,
     coreData: () => ({}),
     labelMap: () => ({}),
-  }
+  },
 );
 
 // 定义事件
@@ -136,25 +131,27 @@ const emit = defineEmits<{
   /**
    * 侧边栏项激活状态变化事件
    */
-  'update:activeItemId': [id: string];
+  "update:activeItemId": [id: string];
   /**
    * 侧边栏项点击事件
    */
-  'item-click': [item: SidebarItem];
+  "item-click": [item: SidebarItem];
 }>();
 
 // 基础类名
-const baseClass = computed((): string => 'sidebar-layout');
+const baseClass = computed((): string => "sidebar-layout");
 
 // 当前选中的侧边栏项
 const currentItem = computed((): SidebarItem | null => {
-  return props.sidebarItems.find((item) => item.id === props.activeItemId) || null;
+  return (
+    props.sidebarItems.find((item) => item.id === props.activeItemId) || null
+  );
 });
 
 // 处理侧边栏项点击
 const handleItemClick = (item: SidebarItem): void => {
-  emit('update:activeItemId', item.id);
-  emit('item-click', item);
+  emit("update:activeItemId", item.id);
+  emit("item-click", item);
 };
 
 // 获取核心数据标签

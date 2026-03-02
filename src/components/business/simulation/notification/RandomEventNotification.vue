@@ -17,7 +17,7 @@
           v-if="currentEvent.type === 'hero_strength_recommendation'"
           class="recommendation-list"
         >
-          <h4>各职业强势英雄推�?/h4>
+          <h4>各职业强势英雄推荐</h4>
           <div class="recommendation-grid">
             <div
               v-for="recommendation in currentEvent.data"
@@ -28,7 +28,7 @@
                 class="profession-badge"
                 :style="{
                   backgroundColor: getProfessionColor(
-                    recommendation.profession
+                    recommendation.profession,
                   ),
                 }"
               >
@@ -58,7 +58,7 @@
             {{
               currentEvent.isActive
                 ? `有效期至: ${formatEventTime(currentEvent.expirationTime)}`
-                : '已过期'
+                : "已过期"
             }}
           </span>
         </div>
@@ -104,8 +104,8 @@
             <div class="event-item-header">
               <h4>{{ event.title }}</h4>
               <span class="event-status" :class="{ active: event.isActive }">
-              {{ event.isActive ? '进行中' : '已过期' }}
-            </span>
+                {{ event.isActive ? "进行中" : "已过期" }}
+              </span>
             </div>
             <p class="event-item-description">{{ event.description }}</p>
             <span class="event-item-time">{{
@@ -241,7 +241,7 @@ onMounted(() => {
       // 有新事件，显示通知
       const existingEventIds = new Set(activeEvents.value.map((e) => e.id));
       const newEvents = updatedEvents.filter(
-        (event) => !existingEventIds.has(event.id)
+        (event) => !existingEventIds.has(event.id),
       );
       if (newEvents.length > 0) {
         openNotification(newEvents[0]);
@@ -259,7 +259,7 @@ onUnmounted(() => {
 });
 </script>
 
-<style lang=scss scoped>
+<style lang="scss" scoped>
 .random-event-notification {
   position: fixed;
   top: 20px;

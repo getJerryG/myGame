@@ -163,12 +163,12 @@ const getRarityText = (rarity: string): string => {
 };
 
 // 选择英雄
-const selectHero = (hero: Hero) => {
+const selectHero = (hero: Hero): void => {
   selectedHero.value = hero;
 };
 
 // 升级英雄
-const upgradeHero = () => {
+const upgradeHero = (): void => {
   if (selectedHero.value) {
     selectedHero.value.level++;
     selectedHero.value.attack += 10;
@@ -178,13 +178,13 @@ const upgradeHero = () => {
 };
 
 // 打开技能面板
-const openSkillPanel = () => {
+const openSkillPanel = (): void => {
   // TODO: 实现技能面板
   alert("技能面板功能开发中...");
 };
 
 // 关闭应用
-const closeApp = () => {
+const closeApp = (): void => {
   // TODO: 实现关闭应用逻辑
   window.history.back();
 };

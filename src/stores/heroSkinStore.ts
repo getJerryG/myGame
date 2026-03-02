@@ -92,7 +92,7 @@ export const useHeroSkinStore = defineStore("heroSkin", {
         await this.loadDataFromStorage();
       } catch (error) {
         this.error = error instanceof Error ? error.message : "加载数据失败";
-        console.error("加载英雄皮肤数据失败:", error);
+        // 加载英雄皮肤数据失败，后续可以添加错误处理
       } finally {
         this.loading = false;
       }

@@ -114,7 +114,7 @@ const progressPercent = computed(() => {
 });
 
 // 重置配置
-const resetConfig = () => {
+const resetConfig = (): void => {
   simulationSpeed.value = 5;
   initialFunds.value = 100000;
   marketDifficulty.value = "normal";
@@ -122,7 +122,7 @@ const resetConfig = () => {
 };
 
 // 开始模拟
-const startSimulation = () => {
+const startSimulation = (): void => {
   isSimulating.value = true;
   currentDay.value = 0;
 

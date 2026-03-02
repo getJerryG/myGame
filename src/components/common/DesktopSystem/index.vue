@@ -660,13 +660,13 @@ const openGameSettings = (): void => {
 };
 
 // 处理直接退出
-const handleExit = () => {
+const handleExit = (): void => {
   showExitDialog.value = false;
   router.push("/");
 };
 
 // 处理保存后退出
-const handleSaveAndExit = () => {
+const handleSaveAndExit = (): void => {
   showExitDialog.value = false;
   saveGame();
   router.push("/");

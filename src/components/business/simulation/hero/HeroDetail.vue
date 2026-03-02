@@ -19,11 +19,11 @@
             <span class="info-value">{{ hero.strength }}</span>
           </div>
           <div class="info-item">
-            <span class="info-label">出场�?/span>
+            <span class="info-label">出场率</span>
             <span class="info-value">{{ hero.stats.pickRate }}%</span>
           </div>
           <div class="info-item">
-            <span class="info-label">Ban�?/span>
+            <span class="info-label">Ban率</span>
             <span class="info-value">{{ hero.stats.banRate }}%</span>
           </div>
         </div>
@@ -55,7 +55,7 @@
 
       <!-- 数值调整工�?-->
       <div class="detail-section">
-        <h5>数值调�?/h5>
+        <h5>数值调整</h5>
         <div class="adjustment-tools">
           <div
             v-for="(stat, key) in hero.stats.adjustable"
@@ -95,7 +95,7 @@
                   negative: stat.impact < 0,
                 }"
               >
-                {{ stat.impact > 0 ? '+' : '' }}{{ stat.impact }}%
+                {{ stat.impact > 0 ? "+" : "" }}{{ stat.impact }}%
               </span>
             </div>
           </div>
@@ -104,7 +104,7 @@
 
       <!-- 平衡性分�?-->
       <div class="detail-section">
-        <h5>平衡性分�?/h5>
+        <h5>平衡性分析</h5>
         <div class="balance-analysis">
           <div
             v-for="suggestion in balanceSuggestions"
@@ -139,7 +139,7 @@
     <div v-else class="hero-detail empty">
       <div class="empty-state">
         <span class="empty-icon">🏆</span>
-        <span class="empty-text">请从左侧选择一个英雄查看详�?/span>
+        <span class="empty-text">请从左侧选择一个英雄查看详情</span>
       </div>
     </div>
   </div>
@@ -243,7 +243,6 @@ const saveAdjustments = (): void => {
 </script>
 
 <style lang="scss" scoped>
-
 .hero-detail-container {
   @include utils.flex-col(tokens.$spacing-0, stretch, flex-start);
 

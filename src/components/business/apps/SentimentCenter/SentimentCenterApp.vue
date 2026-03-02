@@ -308,7 +308,6 @@ const satisfactionDistribution = ref({
 
 // 导出舆情报告
 const exportReport = (): void => {
-  console.log("导出舆情报告");
   alert("舆情报告导出成功");
 };
 </script>

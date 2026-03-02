@@ -190,7 +190,7 @@ const getEventDuration = (): number => {
 
 // 创建活动
 const createEvent = (): void => {
-  // 这里应该调用store来创建活动  console.log('创建活动:', selectedEvent.value);
+  // 这里应该调用store来创建活动
   // 模拟创建成功
   alert("活动创建成功");
 };

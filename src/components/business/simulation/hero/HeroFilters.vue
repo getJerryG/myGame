@@ -67,7 +67,7 @@
 
       <!-- 出场率排�?-->
       <div class="filter-group">
-        <label class="filter-label">出场�?/label>
+        <label class="filter-label">出场率</label>
         <select
           v-model="localFilters.pickRate"
           class="filter-select"
@@ -83,7 +83,8 @@
       <!-- 重置按钮 -->
       <button class="reset-btn" @click="resetFilters">
         <span class="reset-icon">🔄</span>
-        重置筛选      </button>
+        重置筛选
+      </button>
     </div>
   </div>
 </template>
@@ -109,7 +110,7 @@ watch(
   (newFilters) => {
     localFilters.value = { ...newFilters };
   },
-  { deep: true }
+  { deep: true },
 );
 
 // 更新筛选条件
@@ -124,7 +125,6 @@ const resetFilters = (): void => {
 </script>
 
 <style lang="scss" scoped>
-
 .filters {
   background: tokens.$text-primary;
   padding: tokens.$spacing-lg;

@@ -101,8 +101,8 @@ export class EventBus {
     listenersCopy.forEach((listener) => {
       try {
         listener.callback(data as T);
-      } catch (error) {
-        console.error(`Error in event listener for ${event}:`, error);
+      } catch {
+        // 忽略事件监听器错误
       }
     });
 

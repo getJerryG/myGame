@@ -130,7 +130,7 @@ const settings = reactive({
 });
 
 // 恢复默认设置
-const resetSettings = () => {
+const resetSettings = (): void => {
   settings.masterVolume = 80;
   settings.bgmVolume = 60;
   settings.sfxVolume = 70;
@@ -143,13 +143,13 @@ const resetSettings = () => {
 };
 
 // 保存设置
-const saveSettings = () => {
+const saveSettings = (): void => {
   // TODO: 实现保存设置逻辑
   alert("设置已保存！");
 };
 
 // 关闭应用
-const closeApp = () => {
+const closeApp = (): void => {
   window.history.back();
 };
 </script>

@@ -24,10 +24,7 @@
     <template #content>
       <div class="skin-development-content">
         <!-- 新建皮肤标签页 -->
-        <div
-          v-if="activeTab === 'new'"
-          class="tab-content"
-        >
+        <div v-if="activeTab === 'new'" class="tab-content">
           <div class="section-card">
             <h3 class="text-gold">皮肤立项</h3>
 
@@ -49,10 +46,7 @@
                   <span class="option-name">{{ hero.name }}</span>
                 </button>
               </div>
-              <div
-                v-else
-                class="no-heroes-message"
-              >
+              <div v-else class="no-heroes-message">
                 <p>暂无可用英雄，请先创建英雄</p>
               </div>
             </div>
@@ -67,7 +61,10 @@
                   class="option-btn"
                   :class="{ active: selectedQuality === quality.id }"
                   :style="{
-                    backgroundColor: selectedQuality === quality.id ? quality.color : 'rgba(74, 158, 255, 0.2)',
+                    backgroundColor:
+                      selectedQuality === quality.id
+                        ? quality.color
+                        : 'rgba(74, 158, 255, 0.2)',
                   }"
                   @click="selectedQuality = quality.id"
                 >
@@ -123,16 +120,8 @@
         </div>
 
         <!-- 皮肤管理标签页 -->
-        <div
-          v-else-if="activeTab === 'manage'"
-          class="tab-content"
-        >
-          <h3
-            class="text-gold"
-            style="margin-bottom: 20px"
-          >
-            皮肤管理
-          </h3>
+        <div v-else-if="activeTab === 'manage'" class="tab-content">
+          <h3 class="text-gold" style="margin-bottom: 20px">皮肤管理</h3>
           <div class="skin-list">
             <div
               v-for="skin in heroSkinStore.getAllSkins"
@@ -143,7 +132,9 @@
                 <div class="skin-icon">{{ skin.icon }}</div>
                 <div class="skin-info">
                   <h4 class="text-gold">{{ skin.name }}</h4>
-                  <p class="skin-hero">所属英雄：{{ getHeroName(skin.heroName) }}</p>
+                  <p class="skin-hero">
+                    所属英雄：{{ getHeroName(skin.heroName) }}
+                  </p>
                 </div>
                 <div class="skin-status">
                   <span
@@ -152,24 +143,15 @@
                   >
                     {{ skin.rarity }}
                   </span>
-                  <span
-                    v-if="skin.isDeveloping"
-                    class="status developing"
+                  <span v-if="skin.isDeveloping" class="status developing"
                     >研发中</span
                   >
-                  <span
-                    v-else
-                    class="status online"
-                    >已上线</span
-                  >
+                  <span v-else class="status online">已上线</span>
                 </div>
               </div>
 
               <!-- 研发进度 -->
-              <div
-                v-if="skin.isDeveloping"
-                class="development-progress"
-              >
+              <div v-if="skin.isDeveloping" class="development-progress">
                 <div class="progress-bar">
                   <div
                     class="progress-fill"
@@ -180,21 +162,22 @@
               </div>
 
               <!-- 已上线皮肤数据 -->
-              <div
-                v-else
-                class="skin-stats"
-              >
+              <div v-else class="skin-stats">
                 <div class="stat-item">
                   <span class="stat-label">销量</span>
                   <span class="stat-value text-gold">{{ skin.sales }} 份</span>
                 </div>
                 <div class="stat-item">
                   <span class="stat-label">价格</span>
-                  <span class="stat-value text-gold">{{ skin.price }} 点券</span>
+                  <span class="stat-value text-gold"
+                    >{{ skin.price }} 点券</span
+                  >
                 </div>
                 <div class="stat-item">
                   <span class="stat-label">特效</span>
-                  <span class="stat-value text-gold">{{ skin.effects }} 种</span>
+                  <span class="stat-value text-gold"
+                    >{{ skin.effects }} 种</span
+                  >
                 </div>
               </div>
 

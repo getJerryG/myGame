@@ -24,10 +24,7 @@
     <template #content>
       <div class="event-content">
         <!-- 新建活动 -->
-        <div
-          v-if="activeTab === 'new'"
-          class="tab-content"
-        >
+        <div v-if="activeTab === 'new'" class="tab-content">
           <div class="section">
             <h3 class="text-gold">活动类型</h3>
             <div class="options-grid">
@@ -66,59 +63,45 @@
           </div>
 
           <div class="action-section">
-            <button
-              class="confirm-btn"
-              @click="createEvent"
-            >
+            <button class="confirm-btn" @click="createEvent">
               确认开启活动
             </button>
           </div>
         </div>
 
         <!-- 活动管理 -->
-        <div
-          v-else-if="activeTab === 'manage'"
-          class="tab-content"
-        >
-          <h3
-            class="text-gold"
-            style="margin-bottom: 20px"
-          >
-            活动管理
-          </h3>
+        <div v-else-if="activeTab === 'manage'" class="tab-content">
+          <h3 class="text-gold" style="margin-bottom: 20px">活动管理</h3>
           <div class="event-list">
-            <div
-              v-for="event in events"
-              :key="event.id"
-              class="event-item"
-            >
+            <div v-for="event in events" :key="event.id" class="event-item">
               <div class="event-info">
                 <div class="event-name text-gold">{{ event.name }}</div>
                 <div class="event-meta">
                   <span class="event-type">{{ event.type }}</span>
-                  <span
-                    class="event-status"
-                    :class="event.status"
-                    >{{ event.status }}</span
-                  >
+                  <span class="event-status" :class="event.status">{{
+                    event.status
+                  }}</span>
                 </div>
-                <div class="event-time">{{ event.startDate }} �?{{ event.endDate }}</div>
+                <div class="event-time">
+                  {{ event.startDate }} �?{{ event.endDate }}
+                </div>
               </div>
               <div class="event-data">
                 <div class="data-item">
                   <span class="data-label">热度加成:</span>
-                  <span class="data-value text-gold">{{ event.heatBoost }}</span>
+                  <span class="data-value text-gold">{{
+                    event.heatBoost
+                  }}</span>
                 </div>
                 <div class="data-item">
                   <span class="data-label">收入加成:</span>
-                  <span class="data-value text-gold">{{ event.revenueBoost }}%</span>
+                  <span class="data-value text-gold"
+                    >{{ event.revenueBoost }}%</span
+                  >
                 </div>
               </div>
             </div>
-            <div
-              v-if="events.length === 0"
-              class="empty-state"
-            >
+            <div v-if="events.length === 0" class="empty-state">
               <p>暂无活动</p>
             </div>
           </div>

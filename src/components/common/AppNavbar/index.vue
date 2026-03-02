@@ -15,38 +15,20 @@
       aria-label="切换菜单"
       @click="toggleMenu"
     >
-      <span
-        class="menu-icon"
-        aria-hidden="true"
-        >{{ isMenuOpen ? '×' : '☰' }}</span
-      >
+      <span class="menu-icon" aria-hidden="true">{{
+        isMenuOpen ? "×" : "☰"
+      }}</span>
     </button>
-    <div
-      class="navbar-menu"
-      :class="{ 'menu-open': isMenuOpen }"
-    >
-      <router-link
-        to="/"
-        class="nav-link"
-        aria-current="page"
-        exact
-      >
+    <div class="navbar-menu" :class="{ 'menu-open': isMenuOpen }">
+      <router-link to="/" class="nav-link" aria-current="page" exact>
         <span class="link-text">首页</span>
         <span class="link-glow"></span>
       </router-link>
-      <router-link
-        to="/lottery"
-        class="nav-link"
-        aria-current="page"
-      >
+      <router-link to="/lottery" class="nav-link" aria-current="page">
         <span class="link-text">无相抽奖</span>
         <span class="link-glow"></span>
       </router-link>
-      <router-link
-        to="/simulation"
-        class="nav-link"
-        aria-current="page"
-      >
+      <router-link to="/simulation" class="nav-link" aria-current="page">
         <span class="link-text">策划模拟经营</span>
         <span class="link-glow"></span>
       </router-link>
@@ -115,7 +97,11 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 /* 导航栏样式 */
 .navbar {
-  background: linear-gradient(135deg, tokens.$gray-800 0%, tokens.$gray-700 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$gray-800 0%,
+    tokens.$gray-700 100%
+  );
   color: tokens.$text-primary;
   padding: tokens.$spacing-sm tokens.$spacing-lg;
 
@@ -209,11 +195,19 @@ onUnmounted(() => {
 
   /* 导航链接激活状态 */
   &.router-link-active {
-    background: linear-gradient(135deg, tokens.$success 0%, tokens.$success-green 100%);
+    background: linear-gradient(
+      135deg,
+      tokens.$success 0%,
+      tokens.$success-green 100%
+    );
     box-shadow: 0 4px 12px rgb(16 185 129 / 40%);
 
     &:hover {
-      background: linear-gradient(135deg, tokens.$success-green 0%, #3d8b40 100%);
+      background: linear-gradient(
+        135deg,
+        tokens.$success-green 0%,
+        #3d8b40 100%
+      );
       transform: translateY(-3px) scale(1.05);
     }
   }
@@ -254,7 +248,11 @@ onUnmounted(() => {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgb(255 255 255 / 20%) 0%, rgb(255 255 255 / 0%) 70%);
+  background: radial-gradient(
+    circle,
+    rgb(255 255 255 / 20%) 0%,
+    rgb(255 255 255 / 0%) 70%
+  );
   transform: scale(0);
   opacity: 0;
   transition: all 0.6s ease;
@@ -278,7 +276,11 @@ onUnmounted(() => {
     top: 100%;
     left: 0;
     right: 0;
-    background: linear-gradient(135deg, tokens.$gray-800 0%, tokens.$gray-700 100%);
+    background: linear-gradient(
+      135deg,
+      tokens.$gray-800 0%,
+      tokens.$gray-700 100%
+    );
     flex-direction: column;
     gap: 0;
     padding: 0;

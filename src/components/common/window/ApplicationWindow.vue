@@ -2,19 +2,12 @@
   <div class="application-window">
     <header class="app-window-header">
       <div class="header-title-section">
-        <span
-          v-if="titleIcon"
-          class="title-icon"
-          >{{ titleIcon }}</span
-        >
+        <span v-if="titleIcon" class="title-icon">{{ titleIcon }}</span>
         <h2 class="header-title">{{ displayTitle }}</h2>
       </div>
       <div class="header-actions">
         <slot name="header-actions"></slot>
-        <div
-          v-if="showWindowControls"
-          class="window-controls"
-        >
+        <div v-if="showWindowControls" class="window-controls">
           <button
             class="window-control-btn window-control-btn--close"
             @click="handleClose"
@@ -44,11 +37,7 @@
           >
             <span class="nav-item-icon">{{ item.icon }}</span>
             <span class="nav-item-text">{{ item.name }}</span>
-            <span
-              v-if="item.highlight"
-              class="nav-item-highlight"
-              >!</span
-            >
+            <span v-if="item.highlight" class="nav-item-highlight">!</span>
           </div>
         </nav>
       </aside>
@@ -95,7 +84,7 @@ const _props = withDefaults(
     showWindowControls: false,
     isMaximized: false,
     className: '',
-  }
+  },
 );
 
 const emit = defineEmits<{

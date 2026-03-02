@@ -1,29 +1,16 @@
 <template>
-  <div
-    v-if="isVisible"
-    class="modal-overlay"
-    @click="closeModal"
-  >
-    <div
-      class="modal-content"
-      @click.stop
-    >
+  <div v-if="isVisible" class="modal-overlay" @click="closeModal">
+    <div class="modal-content" @click.stop>
       <div class="modal-header">
         <h3 class="modal-title">{{ title }}</h3>
-        <button
-          class="close-btn"
-          @click="closeModal"
-        >
+        <button class="close-btn" @click="closeModal">
           <span class="close-icon">✖️</span>
         </button>
       </div>
       <div class="modal-body">
         <slot></slot>
       </div>
-      <div
-        v-if="showFooter"
-        class="modal-footer"
-      >
+      <div v-if="showFooter" class="modal-footer">
         <button
           v-for="button in buttons"
           :key="button.text"
@@ -78,7 +65,11 @@ const closeModal = (): void => {
 }
 
 .modal-content {
-  background: linear-gradient(135deg, tokens.$gray-50 0%, tokens.$gray-200 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$gray-50 0%,
+    tokens.$gray-200 100%
+  );
   border-radius: tokens.$radius-xl;
   box-shadow:
     0 10px 40px rgb(0 0 0 / 30%),
@@ -92,13 +83,18 @@ const closeModal = (): void => {
   overflow: hidden;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 20%), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(255 255 255 / 20%),
+      transparent
+    );
     transition: left 0.5s ease;
     z-index: 0;
   }
@@ -129,7 +125,7 @@ const closeModal = (): void => {
   text-shadow:
     0 0 10px rgb(255 255 255 / 80%),
     2px 2px 4px rgb(0 0 0 / 50%);
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: "Comic Sans MS", cursive, sans-serif;
   letter-spacing: 1px;
 }
 
@@ -171,7 +167,7 @@ const closeModal = (): void => {
   padding: tokens.$spacing-6;
   color: tokens.$gray-700;
   line-height: tokens.$line-height-relaxed;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: "Comic Sans MS", cursive, sans-serif;
   position: relative;
   z-index: 1;
   background: rgb(255 255 255 / 80%);
@@ -182,7 +178,11 @@ const closeModal = (): void => {
 
   padding: tokens.$spacing-5 tokens.$spacing-6;
   border-top: 3px solid tokens.$gray-300;
-  background: linear-gradient(135deg, tokens.$gray-100 0%, tokens.$gray-200 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$gray-100 0%,
+    tokens.$gray-200 100%
+  );
   border-radius: 0 0 tokens.$radius-lg tokens.$radius-lg;
   position: relative;
   z-index: 1;
@@ -196,7 +196,7 @@ const closeModal = (): void => {
   font-size: tokens.$font-size-base;
   font-weight: tokens.$font-weight-bold;
   transition: all tokens.$transition-normal;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: "Comic Sans MS", cursive, sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   position: relative;
@@ -205,13 +205,18 @@ const closeModal = (): void => {
   z-index: 1;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 40%), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(255 255 255 / 40%),
+      transparent
+    );
     transition: left 0.5s ease;
     z-index: -1;
   }

@@ -1,15 +1,14 @@
 <template>
-  <div
-    v-if="skin"
-    class="skin-detail"
-  >
+  <div v-if="skin" class="skin-detail">
     <!-- 皮肤基本信息 -->
     <div class="detail-section">
       <div class="skin-header">
         <div class="skin-avatar-large">{{ skin.avatar }}</div>
         <div class="skin-basic-info">
           <h4 class="skin-title">{{ skin.name }}</h4>
-          <div class="skin-subtitle">{{ skin.heroName }} - {{ getQualityLabel(skin.quality) }}</div>
+          <div class="skin-subtitle">
+            {{ skin.heroName }} - {{ getQualityLabel(skin.quality) }}
+          </div>
           <div class="skin-price">
             <span class="price-label">预计价格：</span>
             <span class="price-value">{{ skin.price }}点券</span>
@@ -63,10 +62,7 @@
 
         <div class="setting-item">
           <label class="setting-label">销售周期</label>
-          <select
-            v-model="releaseConfig.duration"
-            class="setting-select"
-          >
+          <select v-model="releaseConfig.duration" class="setting-select">
             <option value="7">7天</option>
             <option value="14">14天</option>
             <option value="30">30天</option>
@@ -102,10 +98,7 @@
         <div class="prediction-item">
           <div class="prediction-label">预计销量</div>
           <div class="prediction-value">{{ getPredictedSales() }}万</div>
-          <div
-            class="prediction-change"
-            :class="getSalesChangeClass()"
-          >
+          <div class="prediction-change" :class="getSalesChangeClass()">
             {{ getSalesChange() }}
           </div>
         </div>
@@ -113,10 +106,7 @@
         <div class="prediction-item">
           <div class="prediction-label">预计收入</div>
           <div class="prediction-value">{{ getPredictedRevenue() }}万</div>
-          <div
-            class="prediction-change"
-            :class="getRevenueChangeClass()"
-          >
+          <div class="prediction-change" :class="getRevenueChangeClass()">
             {{ getRevenueChange() }}
           </div>
         </div>
@@ -124,21 +114,14 @@
         <div class="prediction-item">
           <div class="prediction-label">玩家满意度</div>
           <div class="prediction-value">{{ getPredictedSatisfaction() }}%</div>
-          <div
-            class="prediction-change"
-            :class="getSatisfactionChangeClass()"
-          >
+          <div class="prediction-change" :class="getSatisfactionChangeClass()">
             {{ getSatisfactionChange() }}
           </div>
         </div>
 
         <div class="prediction-chart">
           <h6>预计销量趋势</h6>
-          <svg
-            width="100%"
-            height="100"
-            viewBox="0 0 400 100"
-          >
+          <svg width="100%" height="100" viewBox="0 0 400 100">
             <polyline
               :points="getTrendPoints(predictedTrend)"
               fill="none"
@@ -160,17 +143,11 @@
 
     <!-- 操作按钮 -->
     <div class="action-buttons">
-      <button
-        class="btn btn-secondary"
-        @click="resetReleaseConfig"
-      >
+      <button class="btn btn-secondary" @click="resetReleaseConfig">
         <span class="btn-icon">🔄</span>
         <span class="btn-text">重置设置</span>
       </button>
-      <button
-        class="btn btn-primary"
-        @click="confirmRelease"
-      >
+      <button class="btn btn-primary" @click="confirmRelease">
         <span class="btn-icon">📅</span>
         <span class="btn-text">确认发布</span>
       </button>
@@ -178,10 +155,7 @@
   </div>
 
   <!-- 未选择皮肤提示 -->
-  <div
-    v-else
-    class="skin-detail empty"
-  >
+  <div v-else class="skin-detail empty">
     <div class="empty-state">
       <span class="empty-icon">🎨</span>
       <span class="empty-text">请从左侧选择一个皮肤进行发布设置</span>
@@ -241,7 +215,7 @@ watch(
   () => props.skin,
   () => {
     resetReleaseConfig();
-  }
+  },
 );
 
 // 重置发布配置
@@ -319,7 +293,11 @@ const getSalesChangeClass = () => {
   if (!props.skin) return '';
   const baseSales = props.skin.expected.sales;
   const predictedSales = getPredictedSales();
-  return predictedSales > baseSales ? 'positive' : predictedSales < baseSales ? 'negative' : '';
+  return predictedSales > baseSales
+    ? 'positive'
+    : predictedSales < baseSales
+      ? 'negative'
+      : '';
 };
 
 // 获取收入变化
@@ -327,7 +305,10 @@ const getRevenueChange = () => {
   if (!props.skin) return '';
   const baseRevenue = (props.skin.expected.sales * props.skin.price) / 10000;
   const predictedRevenue = getPredictedRevenue();
-  const change = (((predictedRevenue - baseRevenue) / baseRevenue) * 100).toFixed(0);
+  const change = (
+    ((predictedRevenue - baseRevenue) / baseRevenue) *
+    100
+  ).toFixed(0);
   return change > 0 ? `+${change}%` : `${change}%`;
 };
 
@@ -336,7 +317,11 @@ const getRevenueChangeClass = () => {
   if (!props.skin) return '';
   const baseRevenue = (props.skin.expected.sales * props.skin.price) / 10000;
   const predictedRevenue = getPredictedRevenue();
-  return predictedRevenue > baseRevenue ? 'positive' : predictedRevenue < baseRevenue ? 'negative' : '';
+  return predictedRevenue > baseRevenue
+    ? 'positive'
+    : predictedRevenue < baseRevenue
+      ? 'negative'
+      : '';
 };
 
 // 获取满意度变化
@@ -518,7 +503,7 @@ const confirmRelease = () => {
   @include utils.flex-row(tokens.$spacing-sm, center);
 
   input {
-    &[type='checkbox'] {
+    &[type="checkbox"] {
       width: 16px;
       height: 16px;
       accent-color: tokens.$primary-gold;

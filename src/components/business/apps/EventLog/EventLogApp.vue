@@ -2,12 +2,7 @@
   <div class="event-log-app">
     <div class="app-header">
       <h2>事件日志</h2>
-      <button
-        class="filter-btn"
-        @click="showFilterModal = true"
-      >
-        筛选
-      </button>
+      <button class="filter-btn" @click="showFilterModal = true">筛选</button>
     </div>
 
     <div class="app-tabs">
@@ -23,27 +18,14 @@
     </div>
 
     <div class="app-content">
-      <div
-        v-if="currentEvents.length === 0"
-        class="empty-state"
-      >
+      <div v-if="currentEvents.length === 0" class="empty-state">
         <p>暂无事件记录</p>
       </div>
 
-      <div
-        v-else
-        class="event-list"
-      >
-        <div
-          v-for="event in currentEvents"
-          :key="event.id"
-          class="event-item"
-        >
+      <div v-else class="event-list">
+        <div v-for="event in currentEvents" :key="event.id" class="event-item">
           <div class="event-header">
-            <div
-              class="event-type"
-              :class="event.type"
-            >
+            <div class="event-type" :class="event.type">
               {{ getEventTypeLabel(event.type) }}
             </div>
             <div class="event-date">{{ event.date }}</div>
@@ -55,11 +37,10 @@
           </div>
 
           <div class="event-footer">
-            <div class="event-solution"><strong>解决方案：</strong>{{ event.solution }}</div>
-            <div
-              class="event-impact"
-              :class="event.impact.status"
-            >
+            <div class="event-solution">
+              <strong>解决方案：</strong>{{ event.solution }}
+            </div>
+            <div class="event-impact" :class="event.impact.status">
               <strong>影响：</strong>{{ event.impact.description }}
             </div>
           </div>
@@ -73,18 +54,10 @@
       class="modal-overlay"
       @click="showFilterModal = false"
     >
-      <div
-        class="modal-content"
-        @click.stop
-      >
+      <div class="modal-content" @click.stop>
         <div class="modal-header">
           <h3>筛选事件</h3>
-          <button
-            class="close-btn"
-            @click="showFilterModal = false"
-          >
-            ×
-          </button>
+          <button class="close-btn" @click="showFilterModal = false">×</button>
         </div>
 
         <div class="modal-body">
@@ -122,18 +95,8 @@
         </div>
 
         <div class="modal-footer">
-          <button
-            class="reset-btn"
-            @click="resetFilters"
-          >
-            重置
-          </button>
-          <button
-            class="apply-btn"
-            @click="applyFilters"
-          >
-            应用筛选
-          </button>
+          <button class="reset-btn" @click="resetFilters">重置</button>
+          <button class="apply-btn" @click="applyFilters">应用筛选</button>
         </div>
       </div>
     </div>
@@ -272,12 +235,16 @@ const currentEvents = computed(() => {
 
   // 根据标签页筛选事件类型
   if (activeTab.value !== 'all') {
-    filteredEvents = filteredEvents.filter((event) => event.type === activeTab.value);
+    filteredEvents = filteredEvents.filter(
+      (event) => event.type === activeTab.value,
+    );
   }
 
   // 应用筛选条件
   if (selectedFilters.value.status !== 'all') {
-    filteredEvents = filteredEvents.filter((event) => event.impact.status === selectedFilters.value.status);
+    filteredEvents = filteredEvents.filter(
+      (event) => event.impact.status === selectedFilters.value.status,
+    );
   }
 
   return filteredEvents;

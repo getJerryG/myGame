@@ -11,17 +11,11 @@
     <div class="hero-card-header">
       <div class="hero-name-rank">
         <h4 class="hero-name">{{ hero.name }}</h4>
-        <div
-          class="hero-rank"
-          :class="`rank-${hero.strength}`"
-        >
+        <div class="hero-rank" :class="`rank-${hero.strength}`">
           {{ hero.strength }}
         </div>
       </div>
-      <div
-        class="hero-category-badge"
-        :class="hero.category"
-      >
+      <div class="hero-category-badge" :class="hero.category">
         {{ hero.category }}
       </div>
     </div>

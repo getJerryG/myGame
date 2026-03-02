@@ -32,7 +32,11 @@ defineEmits<{
 .desktop-background {
   flex: 1;
   position: relative;
-  background: linear-gradient(135deg, tokens.$bg-dark 0%, color.adjust(tokens.$bg-dark, $lightness: -5%) 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$bg-dark 0%,
+    color.adjust(tokens.$bg-dark, $lightness: -5%) 100%
+  );
   overflow: hidden;
   margin-top: 0;
   padding-top: tokens.$spacing-lg;

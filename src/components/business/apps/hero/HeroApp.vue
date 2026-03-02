@@ -24,10 +24,7 @@
     <template #content>
       <div class="hero-development-content">
         <!-- 新建英雄标签页 -->
-        <div
-          v-if="activeTab === 'create'"
-          class="tab-content"
-        >
+        <div v-if="activeTab === 'create'" class="tab-content">
           <div class="section-card">
             <h3 class="text-gold">英雄立项</h3>
 
@@ -82,10 +79,7 @@
 
             <!-- 确认立项按钮 -->
             <div class="action-section">
-              <button
-                class="confirm-btn"
-                @click="confirmHeroCreation"
-              >
+              <button class="confirm-btn" @click="confirmHeroCreation">
                 确认立项
               </button>
             </div>
@@ -93,16 +87,8 @@
         </div>
 
         <!-- 英雄管理标签页 -->
-        <div
-          v-else-if="activeTab === 'manage'"
-          class="tab-content"
-        >
-          <h3
-            class="text-gold"
-            style="margin-bottom: 20px"
-          >
-            英雄管理
-          </h3>
+        <div v-else-if="activeTab === 'manage'" class="tab-content">
+          <h3 class="text-gold" style="margin-bottom: 20px">英雄管理</h3>
           <div class="hero-list">
             <div
               v-for="hero in heroSkinStore.getAllHeroes"
@@ -116,24 +102,15 @@
                   <p class="hero-role">{{ getRoleName(hero.role) }}</p>
                 </div>
                 <div class="hero-status">
-                  <span
-                    v-if="hero.isDeveloping"
-                    class="status developing"
+                  <span v-if="hero.isDeveloping" class="status developing"
                     >研发中</span
                   >
-                  <span
-                    v-else
-                    class="status online"
-                    >已上线</span
-                  >
+                  <span v-else class="status online">已上线</span>
                 </div>
               </div>
 
               <!-- 研发进度 -->
-              <div
-                v-if="hero.isDeveloping"
-                class="development-progress"
-              >
+              <div v-if="hero.isDeveloping" class="development-progress">
                 <div class="progress-bar">
                   <div
                     class="progress-fill"
@@ -144,10 +121,7 @@
               </div>
 
               <!-- 已上线英雄数据 -->
-              <div
-                v-else
-                class="hero-stats"
-              >
+              <div v-else class="hero-stats">
                 <div class="stat-item">
                   <span class="stat-label">胜率</span>
                   <span class="stat-value text-gold">{{ hero.winRate }}%</span>
@@ -251,7 +225,20 @@ const generateRandomHeroName = (): string => {
 
 // 生成随机英雄图标
 const generateRandomIcon = (): string => {
-  const icons = ['⚔️', '🛡️', '🔮', '🏹', '🗡️', '💚', '🦸', '🦹', '🧙', '🧝', '🧛', '🧟'];
+  const icons = [
+    '⚔️',
+    '🛡️',
+    '🔮',
+    '🏹',
+    '🗡️',
+    '💚',
+    '🦸',
+    '🦹',
+    '🧙',
+    '🧝',
+    '🧛',
+    '🧟',
+  ];
   return icons[Math.floor(Math.random() * icons.length)];
 };
 

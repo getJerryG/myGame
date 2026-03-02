@@ -4,7 +4,9 @@
     <div class="attributes-grid">
       <div
         class="attribute-card"
-        @mouseenter="$emit('show-tooltip', '物理攻击力：影响普通攻击和物理技能伤害')"
+        @mouseenter="
+          $emit('show-tooltip', '物理攻击力：影响普通攻击和物理技能伤害')
+        "
         @mouseleave="$emit('hide-tooltip')"
       >
         <div class="attribute-icon">⚔️</div>

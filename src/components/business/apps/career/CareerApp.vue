@@ -7,10 +7,7 @@
     @update:active-item-id="activeModule = $event"
   >
     <!-- 等级信息 -->
-    <section
-      v-if="activeModule === 'level-info'"
-      class="module-section"
-    >
+    <section v-if="activeModule === 'level-info'" class="module-section">
       <div class="section-header">
         <h2>等级信息</h2>
         <p>当前职级: {{ currentRankDisplay }}</p>
@@ -53,7 +50,8 @@
               <div class="condition-desc">{{ condition.description }}</div>
               <div class="condition-progress">
                 <div class="progress-text">
-                  <span class="text-gold">{{ condition.current }}</span> / {{ condition.required }}
+                  <span class="text-gold">{{ condition.current }}</span> /
+                  {{ condition.required }}
                 </div>
               </div>
             </div>
@@ -82,17 +80,11 @@
       <!-- 历史奖励记录 -->
       <div class="rewards-section">
         <h3>历史奖励记录</h3>
-        <button
-          class="rewards-btn"
-          @click="showRewards = !showRewards"
-        >
-          {{ showRewards ? '收起奖励记录' : '查看奖励记录' }}
-          <span class="arrow">{{ showRewards ? '↑' : '↓' }}</span>
+        <button class="rewards-btn" @click="showRewards = !showRewards">
+          {{ showRewards ? "收起奖励记录" : "查看奖励记录" }}
+          <span class="arrow">{{ showRewards ? "↑" : "↓" }}</span>
         </button>
-        <div
-          class="rewards-list"
-          v-if="showRewards"
-        >
+        <div class="rewards-list" v-if="showRewards">
           <div
             class="reward-item"
             v-for="reward in rewardsHistory"
@@ -104,19 +96,15 @@
               <div class="reward-desc">{{ reward.description }}</div>
             </div>
             <div class="reward-amounts">
-              <div
-                class="amount-item"
-                v-if="reward.money > 0"
-              >
+              <div class="amount-item" v-if="reward.money > 0">
                 <span class="amount-icon">💰</span>
                 <span class="text-gold amount-value">+{{ reward.money }}</span>
               </div>
-              <div
-                class="amount-item"
-                v-if="reward.reputation > 0"
-              >
+              <div class="amount-item" v-if="reward.reputation > 0">
                 <span class="amount-icon">🏆</span>
-                <span class="text-gold amount-value">+{{ reward.reputation }}</span>
+                <span class="text-gold amount-value"
+                  >+{{ reward.reputation }}</span
+                >
               </div>
             </div>
           </div>

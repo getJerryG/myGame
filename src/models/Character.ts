@@ -1,8 +1,17 @@
-import type { PlayerAttributes, PlayerStats, PlayerCareer } from '../types/player';
+import type {
+  PlayerAttributes,
+  PlayerStats,
+  PlayerCareer,
+} from '../types/player';
 import type { Skill } from '../types/skill';
 
 // 角色状态类型
-export type CharacterStatus = 'active' | 'resting' | 'injured' | 'dead' | 'retired';
+export type CharacterStatus =
+  | 'active'
+  | 'resting'
+  | 'injured'
+  | 'dead'
+  | 'retired';
 
 // 角色类
 export class Character {

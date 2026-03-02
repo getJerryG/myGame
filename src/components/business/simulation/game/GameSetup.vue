@@ -12,7 +12,11 @@
             :key="gameType.value"
             @click="selectedGameType = gameType.value"
             class="game-type-btn"
-            :class="[selectedGameType === gameType.value ? 'type-selected' : 'type-default']"
+            :class="[
+              selectedGameType === gameType.value
+                ? 'type-selected'
+                : 'type-default',
+            ]"
           >
             <div class="type-label">{{ gameType.label }}</div>
             <div class="type-desc">{{ gameType.description }}</div>
@@ -33,10 +37,7 @@
           @input="validateGameName"
         />
         <div class="input-footer">
-          <div
-            v-if="gameNameError"
-            class="error-text"
-          >
+          <div v-if="gameNameError" class="error-text">
             {{ gameNameError }}
           </div>
           <div class="char-count">{{ gameName.length }}/20</div>
@@ -44,11 +45,7 @@
       </div>
 
       <!-- 发布按钮 -->
-      <button
-        @click="publishGame"
-        :disabled="!canPublish"
-        class="btn-publish"
-      >
+      <button @click="publishGame" :disabled="!canPublish" class="btn-publish">
         发布游戏
       </button>
     </div>
@@ -128,7 +125,11 @@ const escapeHtml = (str: string): string => {
 
 // 计算是否可以发布
 const canPublish = computed(() => {
-  return gameName.value.trim().length > 0 && gameName.value.length <= 20 && !gameNameError.value;
+  return (
+    gameName.value.trim().length > 0 &&
+    gameName.value.length <= 20 &&
+    !gameNameError.value
+  );
 });
 
 // 发布游戏

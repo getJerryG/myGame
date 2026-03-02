@@ -7,7 +7,7 @@
       `card--${shape}`,
       { 'card--elevated': elevated },
       { 'card--hoverable': hoverable },
-      customClass
+      customClass,
     ]"
   >
     <!-- 卡片头部 -->
@@ -16,21 +16,21 @@
         <h3 v-if="title" class="card__title">{{ title }}</h3>
         <p v-if="subtitle" class="card__subtitle">{{ subtitle }}</p>
       </div>
-      <div v-if="$slots.header-actions" class="card__header-actions">
+      <div v-if="$slots.header - actions" class="card__header-actions">
         <slot name="header-actions"></slot>
       </div>
     </div>
-    
+
     <!-- 卡片图片 -->
     <div v-if="$slots.image" class="card__image">
       <slot name="image"></slot>
     </div>
-    
+
     <!-- 卡片内容 -->
     <div v-if="$slots.default" class="card__content">
       <slot></slot>
     </div>
-    
+
     <!-- 卡片标签 -->
     <div v-if="tags && tags.length > 0" class="card__tags">
       <span
@@ -42,7 +42,7 @@
         {{ tag.text }}
       </span>
     </div>
-    
+
     <!-- 卡片底部 -->
     <div v-if="$slots.footer" class="card__footer">
       <slot name="footer"></slot>
@@ -58,7 +58,7 @@ interface CardTag {
    * 标签文本
    */
   text: string;
-  
+
   /**
    * 标签样式变体
    */
@@ -69,43 +69,50 @@ interface CardProps {
   /**
    * 卡片样式变体
    */
-  variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info';
-  
+  variant?:
+    | 'default'
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'warning'
+    | 'danger'
+    | 'info';
+
   /**
    * 卡片尺寸
    */
   size?: 'small' | 'medium' | 'large';
-  
+
   /**
    * 卡片形状
    */
   shape?: 'square' | 'round';
-  
+
   /**
    * 是否显示阴影
    */
   elevated?: boolean;
-  
+
   /**
    * 是否可悬停
    */
   hoverable?: boolean;
-  
+
   /**
    * 卡片标题
    */
   title?: string;
-  
+
   /**
    * 卡片副标题
    */
   subtitle?: string;
-  
+
   /**
    * 卡片标签
    */
   tags?: CardTag[];
-  
+
   /**
    * 自定义类名
    */
@@ -121,7 +128,7 @@ const props = withDefaults(defineProps<CardProps>(), {
   title: '',
   subtitle: '',
   tags: () => [],
-  customClass: ''
+  customClass: '',
 });
 </script>
 
@@ -133,16 +140,16 @@ const props = withDefaults(defineProps<CardProps>(), {
   border-radius: tokens.$radius-md;
   overflow: hidden;
   transition: all tokens.$transition-normal;
-  
+
   /* 阴影效果 */
   &--elevated {
     box-shadow: tokens.$shadow-sm;
   }
-  
+
   /* 悬停效果 */
   &--hoverable {
     cursor: pointer;
-    
+
     &:hover {
       transform: translateY(-2px);
       box-shadow: tokens.$shadow-md;
@@ -153,17 +160,17 @@ const props = withDefaults(defineProps<CardProps>(), {
 /* 卡片尺寸 */
 .card--small {
   padding: tokens.$spacing-sm;
-  
+
   .card__header,
   .card__content,
   .card__footer {
     padding: tokens.$spacing-xs;
   }
-  
+
   .card__title {
     font-size: tokens.$font-size-base;
   }
-  
+
   .card__subtitle {
     font-size: tokens.$font-size-sm;
   }
@@ -175,7 +182,7 @@ const props = withDefaults(defineProps<CardProps>(), {
 
 .card--large {
   padding: tokens.$spacing-lg;
-  
+
   .card__title {
     font-size: tokens.$font-size-lg;
   }
@@ -188,7 +195,7 @@ const props = withDefaults(defineProps<CardProps>(), {
 
 .card--round {
   border-radius: tokens.$radius-xl;
-  
+
   .card__image {
     border-radius: tokens.$radius-lg;
   }
@@ -239,7 +246,7 @@ const props = withDefaults(defineProps<CardProps>(), {
   padding-bottom: tokens.$spacing-md;
   margin-bottom: tokens.$spacing-md;
   border-bottom: 1px solid tokens.$border-light;
-  
+
   /* 响应式调整 */
   @include utils.mobile {
     flex-direction: column;
@@ -278,7 +285,7 @@ const props = withDefaults(defineProps<CardProps>(), {
   margin-bottom: tokens.$spacing-md;
   border-radius: tokens.$radius-sm;
   overflow: hidden;
-  
+
   img {
     width: 100%;
     height: auto;
@@ -307,37 +314,37 @@ const props = withDefaults(defineProps<CardProps>(), {
   font-size: tokens.$font-size-xs;
   font-weight: tokens.$font-weight-medium;
   white-space: nowrap;
-  
+
   &--default {
     background-color: tokens.$bg-secondary;
     color: tokens.$text-primary;
     border: 1px solid tokens.$border-medium;
   }
-  
+
   &--primary {
     background-color: rgb(59 130 246 / 20%);
     color: tokens.$primary;
     border: 1px solid rgb(59 130 246 / 30%);
   }
-  
+
   &--success {
     background-color: rgb(16 185 129 / 20%);
     color: tokens.$success;
     border: 1px solid rgb(16 185 129 / 30%);
   }
-  
+
   &--warning {
     background-color: rgb(245 158 11 / 20%);
     color: tokens.$warning;
     border: 1px solid rgb(245 158 11 / 30%);
   }
-  
+
   &--danger {
     background-color: rgb(239 68 68 / 20%);
     color: tokens.$error;
     border: 1px solid rgb(239 68 68 / 30%);
   }
-  
+
   &--info {
     background-color: rgb(56 189 248 / 20%);
     color: tokens.$info;
@@ -352,7 +359,7 @@ const props = withDefaults(defineProps<CardProps>(), {
   display: flex;
   gap: tokens.$spacing-sm;
   justify-content: flex-end;
-  
+
   /* 响应式调整 */
   @include utils.mobile {
     flex-direction: column;
@@ -363,21 +370,21 @@ const props = withDefaults(defineProps<CardProps>(), {
 @include utils.mobile {
   .card--large {
     padding: tokens.$spacing-md;
-    
+
     .card__title {
       font-size: tokens.$font-size-base;
     }
   }
-  
+
   .card__header {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .card__header-actions {
     justify-content: flex-end;
   }
-  
+
   .card__footer {
     flex-direction: column;
   }

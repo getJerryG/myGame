@@ -33,10 +33,7 @@
     <!-- 标签页内容-->
     <div class="app-content">
       <!-- 每日奖励 -->
-      <div
-        v-if="activeTab === 'daily'"
-        class="tab-content"
-      >
+      <div v-if="activeTab === 'daily'" class="tab-content">
         <div class="rewards-grid">
           <div
             v-for="reward in dailyRewards"
@@ -58,17 +55,14 @@
               :disabled="reward.claimed"
               @click="claimDailyReward(reward.id)"
             >
-              {{ reward.claimed ? '已领取' : '领取' }}
+              {{ reward.claimed ? "已领取" : "领取" }}
             </button>
           </div>
         </div>
       </div>
 
       <!-- 成就奖励 -->
-      <div
-        v-else-if="activeTab === 'achievements'"
-        class="tab-content"
-      >
+      <div v-else-if="activeTab === 'achievements'" class="tab-content">
         <div class="achievements-list">
           <div
             v-for="achievement in achievements"
@@ -80,15 +74,21 @@
               <div class="achievement-icon">{{ achievement.icon }}</div>
               <div class="achievement-details">
                 <div class="achievement-name">{{ achievement.name }}</div>
-                <div class="achievement-description">{{ achievement.description }}</div>
+                <div class="achievement-description">
+                  {{ achievement.description }}
+                </div>
                 <div class="achievement-progress">
                   <div class="progress-bar">
                     <div
                       class="progress-fill"
-                      :style="{ width: `${(achievement.current / achievement.target) * 100}%` }"
+                      :style="{
+                        width: `${(achievement.current / achievement.target) * 100}%`,
+                      }"
                     ></div>
                   </div>
-                  <span class="progress-text">{{ achievement.current }}/{{ achievement.target }}</span>
+                  <span class="progress-text"
+                    >{{ achievement.current }}/{{ achievement.target }}</span
+                  >
                 </div>
               </div>
             </div>
@@ -99,7 +99,13 @@
                 :disabled="!achievement.completed || achievement.claimed"
                 @click="claimAchievementReward(achievement.id)"
               >
-                {{ achievement.claimed ? '已领取' : achievement.completed ? '领取' : '未完成' }}
+                {{
+                  achievement.claimed
+                    ? "已领取"
+                    : achievement.completed
+                      ? "领取"
+                      : "未完成"
+                }}
               </button>
             </div>
           </div>
@@ -107,10 +113,7 @@
       </div>
 
       <!-- 特殊奖励 -->
-      <div
-        v-else-if="activeTab === 'special'"
-        class="tab-content"
-      >
+      <div v-else-if="activeTab === 'special'" class="tab-content">
         <div class="special-rewards">
           <div
             v-for="reward in specialRewards"
@@ -128,7 +131,7 @@
               :disabled="reward.claimed"
               @click="claimSpecialReward(reward.id)"
             >
-              {{ reward.claimed ? '已领取' : '领取' }}
+              {{ reward.claimed ? "已领取" : "领取" }}
             </button>
           </div>
         </div>

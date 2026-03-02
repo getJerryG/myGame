@@ -47,6 +47,9 @@ module.exports = {
     // 强制使用const声明那些声明后不再被修改的变量
     'prefer-const': 'error',
 
+    // 禁止使用中文变量名
+    'id-match': ['error', '^[a-zA-Z][a-zA-Z0-9]*$', { 'properties': true, 'onlyDeclarations': true }],
+
     // 强制使用模板字面量而非字符串连接
     'prefer-template': 'warn',
 

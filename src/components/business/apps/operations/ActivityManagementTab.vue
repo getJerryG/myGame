@@ -11,13 +11,12 @@
           <div class="activity-icon">{{ activity.icon }}</div>
           <div class="activity-info">
             <h4 class="text-gold">{{ activity.name }}</h4>
-            <p class="activity-type">{{ getActivityTypeName(activity.type) }}</p>
+            <p class="activity-type">
+              {{ getActivityTypeName(activity.type) }}
+            </p>
           </div>
           <div class="activity-status">
-            <span
-              class="status-badge"
-              :class="activity.status"
-            >
+            <span class="status-badge" :class="activity.status">
               {{ getStatusLabel(activity.status) }}
             </span>
           </div>
@@ -39,7 +38,9 @@
         <div class="activity-rewards">
           <div class="reward-item">
             <span class="reward-label">金币:</span>
-            <span class="reward-value text-gold">{{ activity.goldReward }}</span>
+            <span class="reward-value text-gold">{{
+              activity.goldReward
+            }}</span>
           </div>
           <div class="reward-item">
             <span class="reward-label">经验:</span>
@@ -71,10 +72,7 @@
         </div>
       </div>
 
-      <div
-        v-if="activities.length === 0"
-        class="empty-state"
-      >
+      <div v-if="activities.length === 0" class="empty-state">
         <p>暂无活动，前往"创建活动"页创建</p>
       </div>
     </div>

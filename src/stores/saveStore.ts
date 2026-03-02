@@ -31,7 +31,9 @@ export const useSaveStore = defineStore('save', {
     // 获取当前存档
     getCurrentSave: (state) => {
       if (!state.currentSaveId) return null;
-      return state.saves.find((save) => save.id === state.currentSaveId) || null;
+      return (
+        state.saves.find((save) => save.id === state.currentSaveId) || null
+      );
     },
   },
 
@@ -152,7 +154,10 @@ export const useSaveStore = defineStore('save', {
     },
 
     // 反序列化游戏数据
-    deserializeGameData(gameStore: ReturnType<typeof useGameStore>, saveData: any) {
+    deserializeGameData(
+      gameStore: ReturnType<typeof useGameStore>,
+      saveData: any,
+    ) {
       gameStore.currentDate = { ...saveData.currentDate };
       gameStore.isPlayerTurn = saveData.isPlayerTurn;
       gameStore.money = saveData.money;

@@ -5,16 +5,8 @@
       <h1 class="not-found-title">页面未找到</h1>
       <p class="not-found-description">您访问的页面不存在或已被移除</p>
       <div class="not-found-actions">
-        <button
-          class="action-button"
-          @click="goHome"
-        >
-          返回首页
-        </button>
-        <button
-          class="action-button secondary"
-          @click="goBack"
-        >
+        <button class="action-button" @click="goHome">返回首页</button>
+        <button class="action-button secondary" @click="goBack">
           返回上一页
         </button>
       </div>
@@ -54,21 +46,38 @@ const goBack = () => {
 
   @include utils.flex-center;
 
-  background: linear-gradient(135deg, tokens.$bg-dark 0%, tokens.$bg-secondary 50%, tokens.$bg-tertiary 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$bg-dark 0%,
+    tokens.$bg-secondary 50%,
+    tokens.$bg-tertiary 100%
+  );
   overflow: hidden;
   position: relative;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-image:
-      radial-gradient(circle at 20% 50%, rgb(74 158 255 / 10%) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgb(255 215 0 / 10%) 0%, transparent 50%),
-      radial-gradient(circle at 40% 80%, rgb(255 107 107 / 10%) 0%, transparent 50%);
+      radial-gradient(
+        circle at 20% 50%,
+        rgb(74 158 255 / 10%) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 80% 20%,
+        rgb(255 215 0 / 10%) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 40% 80%,
+        rgb(255 107 107 / 10%) 0%,
+        transparent 50%
+      );
     animation: backgroundPulse 4s ease-in-out infinite alternate;
   }
 }
@@ -142,7 +151,11 @@ const goBack = () => {
   font-size: tokens.$font-size-lg;
   font-weight: tokens.$font-weight-medium;
   color: tokens.$text-primary;
-  background: linear-gradient(135deg, tokens.$primary 0%, tokens.$primary-dark 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$primary 0%,
+    tokens.$primary-dark 100%
+  );
   border: none;
   border-radius: tokens.$radius-full;
   cursor: pointer;
@@ -152,7 +165,11 @@ const goBack = () => {
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgb(74 158 255 / 60%);
-    background: linear-gradient(135deg, tokens.$primary-dark 0%, tokens.$primary 100%);
+    background: linear-gradient(
+      135deg,
+      tokens.$primary-dark 0%,
+      tokens.$primary 100%
+    );
   }
 
   &.secondary {

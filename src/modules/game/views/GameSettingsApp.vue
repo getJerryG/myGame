@@ -3,12 +3,7 @@
     <!-- 应用头部 -->
     <div class="app-header">
       <h2 class="app-title">游戏设置</h2>
-      <button
-        class="close-btn"
-        @click="closeApp"
-      >
-        ×
-      </button>
+      <button class="close-btn" @click="closeApp">×</button>
     </div>
 
     <!-- 设置内容 -->
@@ -56,10 +51,7 @@
         <h3 class="section-title">画面设置</h3>
         <div class="setting-item">
           <span class="setting-label">分辨率</span>
-          <select
-            v-model="settings.resolution"
-            class="setting-select"
-          >
+          <select v-model="settings.resolution" class="setting-select">
             <option value="1920x1080">1920x1080</option>
             <option value="1600x900">1600x900</option>
             <option value="1366x768">1366x768</option>
@@ -69,20 +61,14 @@
         <div class="setting-item">
           <span class="setting-label">全屏模式</span>
           <label class="toggle-switch">
-            <input
-              v-model="settings.fullscreen"
-              type="checkbox"
-            />
+            <input v-model="settings.fullscreen" type="checkbox" />
             <span class="toggle-slider"></span>
           </label>
         </div>
         <div class="setting-item">
           <span class="setting-label">垂直同步</span>
           <label class="toggle-switch">
-            <input
-              v-model="settings.vsync"
-              type="checkbox"
-            />
+            <input v-model="settings.vsync" type="checkbox" />
             <span class="toggle-slider"></span>
           </label>
         </div>
@@ -94,29 +80,20 @@
         <div class="setting-item">
           <span class="setting-label">自动保存</span>
           <label class="toggle-switch">
-            <input
-              v-model="settings.autoSave"
-              type="checkbox"
-            />
+            <input v-model="settings.autoSave" type="checkbox" />
             <span class="toggle-slider"></span>
           </label>
         </div>
         <div class="setting-item">
           <span class="setting-label">显示FPS</span>
           <label class="toggle-switch">
-            <input
-              v-model="settings.showFps"
-              type="checkbox"
-            />
+            <input v-model="settings.showFps" type="checkbox" />
             <span class="toggle-slider"></span>
           </label>
         </div>
         <div class="setting-item">
           <span class="setting-label">语言</span>
-          <select
-            v-model="settings.language"
-            class="setting-select"
-          >
+          <select v-model="settings.language" class="setting-select">
             <option value="zh-CN">简体中文</option>
             <option value="zh-TW">繁体中文</option>
             <option value="en">English</option>
@@ -128,18 +105,10 @@
 
     <!-- 底部按钮 -->
     <div class="settings-footer">
-      <button
-        class="footer-btn secondary"
-        @click="resetSettings"
-      >
+      <button class="footer-btn secondary" @click="resetSettings">
         恢复默认
       </button>
-      <button
-        class="footer-btn primary"
-        @click="saveSettings"
-      >
-        保存设置
-      </button>
+      <button class="footer-btn primary" @click="saveSettings">保存设置</button>
     </div>
   </div>
 </template>
@@ -199,7 +168,11 @@ const closeApp = () => {
   @include utils.flex-between;
 
   padding: tokens.$spacing-md tokens.$spacing-lg;
-  background: linear-gradient(135deg, tokens.$gray-600 0%, tokens.$gray-700 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$gray-600 0%,
+    tokens.$gray-700 100%
+  );
   color: tokens.$text-primary;
 
   .app-title {
@@ -358,7 +331,7 @@ const closeApp = () => {
 
     &::before {
       position: absolute;
-      content: '';
+      content: "";
       height: 18px;
       width: 18px;
       left: 2px;
@@ -388,7 +361,11 @@ const closeApp = () => {
     min-width: 120px;
 
     &.primary {
-      background: linear-gradient(135deg, tokens.$primary 0%, tokens.$primary-dark 100%);
+      background: linear-gradient(
+        135deg,
+        tokens.$primary 0%,
+        tokens.$primary-dark 100%
+      );
       color: tokens.$text-primary;
       box-shadow: 0 4px 15px rgb(74 158 255 / 40%);
 

@@ -37,7 +37,10 @@ interface GameState {
 }
 
 // 导入英雄皮肤管理工具
-import { getInDevelopmentProjects, advanceDevelopment } from '../utils/HeroSkinManager';
+import {
+  getInDevelopmentProjects,
+  advanceDevelopment,
+} from '../utils/HeroSkinManager';
 
 // 创建并导出游戏store
 export const useGameStore = defineStore('game', {
@@ -76,7 +79,13 @@ export const useGameStore = defineStore('game', {
     // 计算经验进度百分比
     expProgressPercent: (state) => {
       return Math.floor(
-        (state.plannerExp / getMaxExp(state.plannerLevel, state.plannerSubLevel, state.levelInRank)) * 100
+        (state.plannerExp /
+          getMaxExp(
+            state.plannerLevel,
+            state.plannerSubLevel,
+            state.levelInRank,
+          )) *
+          100,
       );
     },
 
@@ -141,7 +150,9 @@ export const useGameStore = defineStore('game', {
       // 实现收入计算逻辑
       // 根据英雄数量、皮肤数量、热度、口碑等计算每日收入
       const dailyIncome = Math.floor(
-        (this.popularity * this.wordOfMouth) / 100 + this.heroCount * 100 + this.skinCount * 50
+        (this.popularity * this.wordOfMouth) / 100 +
+          this.heroCount * 100 +
+          this.skinCount * 50,
       );
       this.money += dailyIncome;
       this.totalMoney += dailyIncome;
@@ -156,7 +167,11 @@ export const useGameStore = defineStore('game', {
           project.status = 'completed';
           // 项目完成后的处理逻辑
           if (project.type === 'hero') {
-            this.onlineHeroes.push({ id: project.id, name: project.name, ...project.details });
+            this.onlineHeroes.push({
+              id: project.id,
+              name: project.name,
+              ...project.details,
+            });
             this.heroCount++;
           } else if (project.type === 'skin') {
             this.onlineSkins.push({
@@ -170,7 +185,9 @@ export const useGameStore = defineStore('game', {
         }
       });
       // 移除已完成的项目
-      this.ongoingProjects = this.ongoingProjects.filter((project) => project.status !== 'completed');
+      this.ongoingProjects = this.ongoingProjects.filter(
+        (project) => project.status !== 'completed',
+      );
     },
 
     // 检查随机事件
@@ -197,7 +214,11 @@ export const useGameStore = defineStore('game', {
       // 实现升级条件检查逻辑
       if (this.canPromote) {
         // 升级逻辑
-        const currentMaxExp = getMaxExp(this.plannerLevel, this.plannerSubLevel, this.levelInRank);
+        const currentMaxExp = getMaxExp(
+          this.plannerLevel,
+          this.plannerSubLevel,
+          this.levelInRank,
+        );
 
         // 扣除升级所需经验值
         this.plannerExp -= currentMaxExp;
@@ -206,7 +227,7 @@ export const useGameStore = defineStore('game', {
         const { nextLevel, nextSubLevel, nextLevelInRank } = getNextLevelInfo(
           this.plannerLevel,
           this.plannerSubLevel,
-          this.levelInRank
+          this.levelInRank,
         );
 
         // 更新等级信息
@@ -236,17 +257,26 @@ export const useGameStore = defineStore('game', {
 
     // 处理事件
     handleEvent(eventId: string, optionId: string) {
-      const eventIndex = this.activeEvents.findIndex((event) => event.id === eventId);
+      const eventIndex = this.activeEvents.findIndex(
+        (event) => event.id === eventId,
+      );
       if (eventIndex !== -1) {
         const event = this.activeEvents[eventIndex];
-        const selectedOption = event.options.find((option: any) => option.id === optionId);
+        const selectedOption = event.options.find(
+          (option: any) => option.id === optionId,
+        );
         if (selectedOption) {
           // 应用事件效果
-          if (selectedOption.effects.money) this.money += selectedOption.effects.money;
-          if (selectedOption.effects.reputation) this.reputation += selectedOption.effects.reputation;
-          if (selectedOption.effects.popularity) this.popularity += selectedOption.effects.popularity;
-          if (selectedOption.effects.wordOfMouth) this.wordOfMouth += selectedOption.effects.wordOfMouth;
-          if (selectedOption.effects.exp) this.plannerExp += selectedOption.effects.exp;
+          if (selectedOption.effects.money)
+            this.money += selectedOption.effects.money;
+          if (selectedOption.effects.reputation)
+            this.reputation += selectedOption.effects.reputation;
+          if (selectedOption.effects.popularity)
+            this.popularity += selectedOption.effects.popularity;
+          if (selectedOption.effects.wordOfMouth)
+            this.wordOfMouth += selectedOption.effects.wordOfMouth;
+          if (selectedOption.effects.exp)
+            this.plannerExp += selectedOption.effects.exp;
         }
         // 移除已处理的事件
         this.activeEvents.splice(eventIndex, 1);
@@ -308,8 +338,10 @@ export const useGameStore = defineStore('game', {
 
       // 子等级和等级内等级的额外奖励
       const subLevelIndex = getSubLevelIndex(this.plannerSubLevel);
-      const extraMoney = (2 - subLevelIndex) * 500 + (this.levelInRank - 1) * 200;
-      const extraReputation = (2 - subLevelIndex) * 5 + (this.levelInRank - 1) * 2;
+      const extraMoney =
+        (2 - subLevelIndex) * 500 + (this.levelInRank - 1) * 200;
+      const extraReputation =
+        (2 - subLevelIndex) * 5 + (this.levelInRank - 1) * 2;
 
       // 应用奖励
       this.money += moneyReward + extraMoney;
@@ -331,7 +363,9 @@ export const useGameStore = defineStore('game', {
       // - 总监策划：解锁更多活动类型
 
       // 暂时只记录到控制台
-      console.log(`[解锁功能] 策划等级提升到 ${this.plannerLevel}${this.plannerSubLevel}-${this.levelInRank}`);
+      console.log(
+        `[解锁功能] 策划等级提升到 ${this.plannerLevel}${this.plannerSubLevel}-${this.levelInRank}`,
+      );
 
       if (this.plannerLevel === '高级') {
         console.log('  - 解锁新功能：更多英雄类型');
@@ -365,9 +399,18 @@ export const useGameStore = defineStore('game', {
         }
 
         // 随机更新一些统计数据
-        hero.stats.usageRate = Math.max(0, Math.min(100, hero.stats.usageRate + (Math.random() * 10 - 5)));
-        hero.stats.winRate = Math.max(30, Math.min(70, hero.stats.winRate + (Math.random() * 4 - 2)));
-        hero.stats.banRate = Math.max(0, Math.min(30, hero.stats.banRate + (Math.random() * 5 - 2.5)));
+        hero.stats.usageRate = Math.max(
+          0,
+          Math.min(100, hero.stats.usageRate + (Math.random() * 10 - 5)),
+        );
+        hero.stats.winRate = Math.max(
+          30,
+          Math.min(70, hero.stats.winRate + (Math.random() * 4 - 2)),
+        );
+        hero.stats.banRate = Math.max(
+          0,
+          Math.min(30, hero.stats.banRate + (Math.random() * 5 - 2.5)),
+        );
       });
     },
 
@@ -395,11 +438,23 @@ export const useGameStore = defineStore('game', {
 
         // 基础销量（根据皮肤品质设置不同的基础销量）
         const baseSales =
-          skin.quality === 'legendary' ? 1000 : skin.quality === 'epic' ? 500 : skin.quality === 'rare' ? 200 : 50;
+          skin.quality === 'legendary'
+            ? 1000
+            : skin.quality === 'epic'
+              ? 500
+              : skin.quality === 'rare'
+                ? 200
+                : 50;
 
         // 品质系数（根据皮肤品质设置不同的系数）
         const qualityCoeff =
-          skin.quality === 'legendary' ? 2.0 : skin.quality === 'epic' ? 1.5 : skin.quality === 'rare' ? 1.2 : 1.0;
+          skin.quality === 'legendary'
+            ? 2.0
+            : skin.quality === 'epic'
+              ? 1.5
+              : skin.quality === 'rare'
+                ? 1.2
+                : 1.0;
 
         // 热度系数（根据游戏热度计算）
         const popularityCoeff = Math.max(0.1, this.popularity / 100);
@@ -417,7 +472,9 @@ export const useGameStore = defineStore('game', {
                   : 1.0;
 
         // 计算当日销量
-        const dailySales = Math.floor(baseSales * qualityCoeff * popularityCoeff * levelCoeff);
+        const dailySales = Math.floor(
+          baseSales * qualityCoeff * popularityCoeff * levelCoeff,
+        );
 
         // 更新销量数据
         skin.sales.daily = dailySales;
@@ -425,7 +482,13 @@ export const useGameStore = defineStore('game', {
 
         // 将皮肤销售收入计入总流水和当前资金
         const skinPrice =
-          skin.quality === 'legendary' ? 1688 : skin.quality === 'epic' ? 888 : skin.quality === 'rare' ? 288 : 188;
+          skin.quality === 'legendary'
+            ? 1688
+            : skin.quality === 'epic'
+              ? 888
+              : skin.quality === 'rare'
+                ? 288
+                : 188;
 
         const skinRevenue = dailySales * skinPrice;
         this.money += skinRevenue;
@@ -455,8 +518,14 @@ export const useGameStore = defineStore('game', {
       popularityChange += this.activeEvents.length * 2;
 
       // 应用变化
-      this.popularity = Math.max(0, Math.min(200, this.popularity + popularityChange));
-      this.wordOfMouth = Math.max(-100, Math.min(100, this.wordOfMouth + wordOfMouthChange));
+      this.popularity = Math.max(
+        0,
+        Math.min(200, this.popularity + popularityChange),
+      );
+      this.wordOfMouth = Math.max(
+        -100,
+        Math.min(100, this.wordOfMouth + wordOfMouthChange),
+      );
     },
 
     // 生成每日数据报表
@@ -464,7 +533,9 @@ export const useGameStore = defineStore('game', {
       // 生成当日的数据报表
       // 这里可以记录到一个报表系统中
       // 暂时只记录到控制台
-      console.log(`[每日报表] ${this.currentDate.year}年${this.currentDate.month}月${this.currentDate.day}日`);
+      console.log(
+        `[每日报表] ${this.currentDate.year}年${this.currentDate.month}月${this.currentDate.day}日`,
+      );
       console.log(`  - 资金: ${this.money}`);
       console.log(`  - 声望: ${this.reputation}`);
       console.log(`  - 热度: ${this.popularity}`);
@@ -484,7 +555,16 @@ export const useGameStore = defineStore('game', {
 });
 
 // 职级列表（共8个职级）
-const plannerLevels = ['见习', '初级', '中级', '高级', '资深', '专家', '经理', '总监'];
+const plannerLevels = [
+  '见习',
+  '初级',
+  '中级',
+  '高级',
+  '资深',
+  '专家',
+  '经理',
+  '总监',
+];
 
 // 子等级列表
 const subLevels = ['III', 'II', 'I'];
@@ -500,14 +580,22 @@ function getSubLevelIndex(subLevel: string): number {
 }
 
 // 辅助函数：获取总等级数（0-47）
-function getTotalLevelIndex(level: string, subLevel: string, levelInRank: number): number {
+function getTotalLevelIndex(
+  level: string,
+  subLevel: string,
+  levelInRank: number,
+): number {
   const levelIndex = getLevelIndex(level);
   const subLevelIndex = getSubLevelIndex(subLevel);
   return levelIndex * 6 + subLevelIndex * 2 + (levelInRank - 1);
 }
 
 // 辅助函数：获取最大经验值（实现48级的经验值系统）
-function getMaxExp(level: string, subLevel: string, levelInRank: number): number {
+function getMaxExp(
+  level: string,
+  subLevel: string,
+  levelInRank: number,
+): number {
   // 总等级索引（0-47）
   const totalLevelIndex = getTotalLevelIndex(level, subLevel, levelInRank);
 
@@ -519,7 +607,11 @@ function getMaxExp(level: string, subLevel: string, levelInRank: number): number
 
 // 辅助函数：检查升级条件
 function checkPromotionRequirements(state: GameState): boolean {
-  const maxExp = getMaxExp(state.plannerLevel, state.plannerSubLevel, state.levelInRank);
+  const maxExp = getMaxExp(
+    state.plannerLevel,
+    state.plannerSubLevel,
+    state.levelInRank,
+  );
   return state.plannerExp >= maxExp;
 }
 
@@ -527,7 +619,7 @@ function checkPromotionRequirements(state: GameState): boolean {
 function getNextLevelInfo(
   level: string,
   subLevel: string,
-  levelInRank: number
+  levelInRank: number,
 ): { nextLevel: string; nextSubLevel: string; nextLevelInRank: number } {
   let nextLevel = level;
   let nextSubLevel = subLevel;
@@ -540,14 +632,17 @@ function getNextLevelInfo(
   if (nextLevelInRank > 2) {
     nextLevelInRank = 1;
     const subLevelIndex = getSubLevelIndex(nextSubLevel);
-    nextSubLevel = subLevelIndex > 0 ? subLevels[subLevelIndex - 1] : subLevels[0];
+    nextSubLevel =
+      subLevelIndex > 0 ? subLevels[subLevelIndex - 1] : subLevels[0];
 
     // 3. 如果子等级达到I且等级内等级达到3，重置为III并提升职级
     if (subLevel === 'I' && levelInRank === 2) {
       nextSubLevel = 'III';
       const levelIndex = getLevelIndex(nextLevel);
       nextLevel =
-        levelIndex < plannerLevels.length - 1 ? plannerLevels[levelIndex + 1] : plannerLevels[plannerLevels.length - 1];
+        levelIndex < plannerLevels.length - 1
+          ? plannerLevels[levelIndex + 1]
+          : plannerLevels[plannerLevels.length - 1];
     }
   }
 

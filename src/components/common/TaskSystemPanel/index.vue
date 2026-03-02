@@ -4,27 +4,18 @@
     <div class="task-system-header">
       <div class="task-system-title">任务系统</div>
       <div class="task-system-controls">
-        <button
-          class="control-btn"
-          @click="toggleTaskPanel"
-        >
-          {{ isPanelOpen ? '收起' : '展开' }}
+        <button class="control-btn" @click="toggleTaskPanel">
+          {{ isPanelOpen ? "收起" : "展开" }}
         </button>
       </div>
     </div>
 
     <!-- 任务系统面板 -->
-    <div
-      class="task-system-content"
-      v-show="isPanelOpen"
-    >
+    <div class="task-system-content" v-show="isPanelOpen">
       <!-- 任务列表 -->
       <div class="task-list">
         <!-- 成长任务 -->
-        <div
-          class="task-section"
-          v-if="growthTasks.length > 0"
-        >
+        <div class="task-section" v-if="growthTasks.length > 0">
           <div class="section-header">
             <span class="section-title">成长任务</span>
           </div>
@@ -44,10 +35,14 @@
                   <div class="progress-bar">
                     <div
                       class="progress-fill"
-                      :style="{ width: `${(task.progress / task.targetProgress) * 100}%` }"
+                      :style="{
+                        width: `${(task.progress / task.targetProgress) * 100}%`,
+                      }"
                     ></div>
                   </div>
-                  <span class="progress-text">{{ task.progress }}/{{ task.targetProgress }}</span>
+                  <span class="progress-text"
+                    >{{ task.progress }}/{{ task.targetProgress }}</span
+                  >
                 </div>
               </div>
               <div class="task-rewards">
@@ -56,7 +51,14 @@
                   v-for="reward in task.rewards"
                   :key="reward.type + reward.amount"
                 >
-                  {{ reward.amount }} {{ reward.type === 'funds' ? '资金' : reward.type === 'exp' ? '经验' : '其他' }}
+                  {{ reward.amount }}
+                  {{
+                    reward.type === "funds"
+                      ? "资金"
+                      : reward.type === "exp"
+                        ? "经验"
+                        : "其他"
+                  }}
                 </div>
               </div>
               <div class="task-actions">
@@ -73,7 +75,7 @@
                   @click="startTask(task.id)"
                   :disabled="task.status === 'in_progress'"
                 >
-                  {{ task.status === 'in_progress' ? '进行中' : '开始' }}
+                  {{ task.status === "in_progress" ? "进行中" : "开始" }}
                 </button>
               </div>
             </div>
@@ -81,10 +83,7 @@
         </div>
 
         <!-- 日常任务 -->
-        <div
-          class="task-section"
-          v-if="dailyTasks.length > 0"
-        >
+        <div class="task-section" v-if="dailyTasks.length > 0">
           <div class="section-header">
             <span class="section-title">日常任务</span>
           </div>
@@ -116,7 +115,8 @@
                   v-for="reward in task.rewards"
                   :key="reward.type"
                 >
-                  {{ reward.amount }} {{ reward.type === 'money' ? '资金' : '经验' }}
+                  {{ reward.amount }}
+                  {{ reward.type === "money" ? "资金" : "经验" }}
                 </div>
               </div>
               <div class="task-actions">
@@ -133,7 +133,7 @@
                   @click="startTask(task.id)"
                   :disabled="task.status === 'in_progress'"
                 >
-                  {{ task.status === 'in_progress' ? '进行中' : '开始' }}
+                  {{ task.status === "in_progress" ? "进行中" : "开始" }}
                 </button>
               </div>
             </div>
@@ -156,7 +156,7 @@ const simulationStore = useSimulationStore();
 // 获取任务系统 store
 const taskSystemStore = useSimulationTaskSystemStore();
 // 注入父组件提供的策划资金
-const 策划资金 = inject('策划资金', ref(0));
+const plannerFunds = inject('plannerFunds', ref(0));
 // 注入父组件提供的更新应用数据方法
 const updateAppData = inject('updateAppData', () => {});
 
@@ -170,12 +170,16 @@ const toggleTaskPanel = () => {
 
 // 计算属性：成长任务
 const growthTasks = computed(() => {
-  return taskSystemStore.getGrowthTasks.filter((task) => task.status === 'pending' || task.status === 'completed');
+  return taskSystemStore.getGrowthTasks.filter(
+    (task) => task.status === 'pending' || task.status === 'completed',
+  );
 });
 
 // 计算属性：日常任务
 const dailyTasks = computed(() => {
-  return taskSystemStore.getDailyTasks.filter((task) => task.status === 'pending' || task.status === 'completed');
+  return taskSystemStore.getDailyTasks.filter(
+    (task) => task.status === 'pending' || task.status === 'completed',
+  );
 });
 
 // 开始任务
@@ -215,7 +219,7 @@ const claimReward = (taskId: string) => {
             simulationStore.simulation.updatePlannerFunds(reward.amount);
           } else {
             // 如果Simulation实例不存在，直接更新策划资金
-            策划资金.value += reward.amount;
+            plannerFunds.value += reward.amount;
             updateAppData();
           }
         }

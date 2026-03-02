@@ -2,10 +2,7 @@
   <div class="skill-panel-container">
     <h2 class="text-xl font-bold mb-4">技能面板</h2>
 
-    <div
-      v-if="playerStore.player"
-      class="skills-list"
-    >
+    <div v-if="playerStore.player" class="skills-list">
       <div
         v-for="(skill, index) in playerStore.player.skills"
         :key="skill.id"
@@ -14,7 +11,9 @@
       >
         <div class="skill-header">
           <span class="skill-name">{{ skill.name }}</span>
-          <span class="skill-type">{{ skill.type === 'physical' ? '物理' : '魔法' }}</span>
+          <span class="skill-type">{{
+            skill.type === "physical" ? "物理" : "魔法"
+          }}</span>
           <span class="skill-key">
             {{ getSkillKey(index + 1) }}
           </span>
@@ -33,10 +32,7 @@
       </div>
     </div>
 
-    <div
-      v-else
-      class="no-skills"
-    >
+    <div v-else class="no-skills">
       <p>没有可用技能</p>
     </div>
 
@@ -44,7 +40,9 @@
       <h3 class="text-lg font-semibold mb-2">技能说明</h3>
       <ul class="tips-list">
         <li class="tip-item">• 物理技能造成物理伤害，受攻击力和防御力影响</li>
-        <li class="tip-item">• 魔法技能造成魔法伤害，受魔法攻击力和魔法防御力影响</li>
+        <li class="tip-item">
+          • 魔法技能造成魔法伤害，受魔法攻击力和魔法防御力影响
+        </li>
         <li class="tip-item">• 战斗中按数字键或点击技能释放</li>
         <li class="tip-item">• 击败怪物可以获得经验值，提升等级</li>
         <li class="tip-item">• 升级后属性会得到提升</li>
@@ -71,10 +69,14 @@ function getSkillKey(index: number): string {
   @include utils.flex-col(tokens.$spacing-lg, stretch, flex-start);
 
   padding: tokens.$spacing-lg;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: "Comic Sans MS", cursive, sans-serif;
   max-height: 100%;
   overflow: hidden auto;
-  background: linear-gradient(135deg, tokens.$panel-bg-start 0%, tokens.$panel-bg-end 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$panel-bg-start 0%,
+    tokens.$panel-bg-end 100%
+  );
   border-radius: tokens.$radius-xl;
   border: 3px solid tokens.$skill-magic-border;
   box-shadow:
@@ -83,7 +85,7 @@ function getSkillKey(index: number): string {
   position: relative;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background-image:
@@ -103,7 +105,11 @@ function getSkillKey(index: number): string {
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 2px;
-    background: linear-gradient(135deg, tokens.$skill-magic-border 0%, tokens.$skill-magic-dark 100%);
+    background: linear-gradient(
+      135deg,
+      tokens.$skill-magic-border 0%,
+      tokens.$skill-magic-dark 100%
+    );
     -webkit-text-fill-color: transparent;
     background-clip: text;
     position: relative;
@@ -121,12 +127,20 @@ function getSkillKey(index: number): string {
   }
 
   &::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, tokens.$skill-magic-border 0%, tokens.$skill-magic-dark 100%);
+    background: linear-gradient(
+      180deg,
+      tokens.$skill-magic-border 0%,
+      tokens.$skill-magic-dark 100%
+    );
     border-radius: tokens.$radius-sm;
     border: 2px solid rgb(255 255 255 / 50%);
 
     &:hover {
-      background: linear-gradient(180deg, tokens.$skill-magic-dark 0%, tokens.$skill-magic-border 100%);
+      background: linear-gradient(
+        180deg,
+        tokens.$skill-magic-dark 0%,
+        tokens.$skill-magic-border 100%
+      );
     }
   }
 }
@@ -150,13 +164,18 @@ function getSkillKey(index: number): string {
   box-shadow: tokens.$shadow-md;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 40%), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(255 255 255 / 40%),
+      transparent
+    );
     transition: left 0.5s ease;
     z-index: 0;
   }
@@ -179,14 +198,18 @@ function getSkillKey(index: number): string {
 
   /* 物理技能卡片样式 */
   &.skill-physical {
-    background: linear-gradient(135deg, tokens.$skill-physical-bg-start 0%, tokens.$skill-physical-bg-end 100%);
+    background: linear-gradient(
+      135deg,
+      tokens.$skill-physical-bg-start 0%,
+      tokens.$skill-physical-bg-end 100%
+    );
     border-color: tokens.$skill-physical-border;
     box-shadow:
       0 4px 15px rgb(245 158 11 / 20%),
       inset 0 1px 0 rgb(255 255 255 / 80%);
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
@@ -202,21 +225,29 @@ function getSkillKey(index: number): string {
     }
 
     .skill-type {
-      background: linear-gradient(135deg, tokens.$skill-physical-border 0%, tokens.$skill-physical-dark 100%);
+      background: linear-gradient(
+        135deg,
+        tokens.$skill-physical-border 0%,
+        tokens.$skill-physical-dark 100%
+      );
       border: 2px solid rgb(255 255 255 / 30%);
     }
   }
 
   /* 魔法技能卡片样式 */
   &.skill-magic {
-    background: linear-gradient(135deg, tokens.$skill-magic-bg-start 0%, tokens.$skill-magic-bg-end 100%);
+    background: linear-gradient(
+      135deg,
+      tokens.$skill-magic-bg-start 0%,
+      tokens.$skill-magic-bg-end 100%
+    );
     border-color: tokens.$skill-magic-border;
     box-shadow:
       0 4px 15px rgb(102 126 234 / 20%),
       inset 0 1px 0 rgb(255 255 255 / 80%);
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
@@ -232,7 +263,11 @@ function getSkillKey(index: number): string {
     }
 
     .skill-type {
-      background: linear-gradient(135deg, tokens.$skill-magic-border 0%, tokens.$skill-magic-dark 100%);
+      background: linear-gradient(
+        135deg,
+        tokens.$skill-magic-border 0%,
+        tokens.$skill-magic-dark 100%
+      );
       border: 2px solid rgb(255 255 255 / 30%);
     }
   }
@@ -273,7 +308,11 @@ function getSkillKey(index: number): string {
 
 /* 技能快捷键样式 */
 .skill-key {
-  background: linear-gradient(135deg, tokens.$gray-100 0%, tokens.$gray-300 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$gray-100 0%,
+    tokens.$gray-300 100%
+  );
   color: tokens.$gray-600;
   font-weight: tokens.$font-weight-bold;
   width: 32px;
@@ -355,7 +394,11 @@ function getSkillKey(index: number): string {
 
 /* 技能提示样式 */
 .skill-tips {
-  background: linear-gradient(135deg, tokens.$tips-bg-start 0%, tokens.$tips-bg-end 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$tips-bg-start 0%,
+    tokens.$tips-bg-end 100%
+  );
   padding: tokens.$spacing-lg;
   border-radius: tokens.$radius-lg;
   margin-top: tokens.$spacing-xl;

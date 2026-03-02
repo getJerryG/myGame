@@ -3,12 +3,28 @@ import type { GameReleaseData, GameReleaseResult } from '../types';
 // 定义游戏发布服务类
 export class GameReleaseService {
   // 获取游戏发布的内部类型
-  private getInternalReleaseTypes(): Array<{ id: string; name: string; description: string }> {
+  private getInternalReleaseTypes(): Array<{
+    id: string;
+    name: string;
+    description: string;
+  }> {
     return [
-      { id: 'major', name: '大版本更新', description: '包含重大功能和内容更新' },
-      { id: 'minor', name: '小版本更新', description: '包含bug修复和小功能改进' },
+      {
+        id: 'major',
+        name: '大版本更新',
+        description: '包含重大功能和内容更新',
+      },
+      {
+        id: 'minor',
+        name: '小版本更新',
+        description: '包含bug修复和小功能改进',
+      },
       { id: 'hotfix', name: '热修复', description: '紧急修复重大问题' },
-      { id: 'content', name: '内容更新', description: '仅包含新内容，无核心功能变更' },
+      {
+        id: 'content',
+        name: '内容更新',
+        description: '仅包含新内容，无核心功能变更',
+      },
     ];
   }
 

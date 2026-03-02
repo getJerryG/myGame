@@ -9,32 +9,20 @@
     @mousedown="startDrag"
   >
     <!-- 标题栏 -->
-    <div
-      class="modal-header"
-      @mousedown.stop="startDragHeader"
-    >
+    <div class="modal-header" @mousedown.stop="startDragHeader">
       <div class="modal-title">
         <span class="app-icon">{{ app.icon }}</span>
         <span class="app-name">{{ app.name }}</span>
       </div>
       <div class="modal-controls">
-        <button
-          class="control-button minimize"
-          @click.stop="$emit('minimize')"
-        >
+        <button class="control-button minimize" @click.stop="$emit('minimize')">
           <span>−</span>
         </button>
-        <button
-          class="control-button maximize"
-          @click.stop="$emit('maximize')"
-        >
+        <button class="control-button maximize" @click.stop="$emit('maximize')">
           <span v-if="!modal.isMaximized">□</span>
           <span v-else>❐</span>
         </button>
-        <button
-          class="control-button close"
-          @click.stop="$emit('close')"
-        >
+        <button class="control-button close" @click.stop="$emit('close')">
           <span>×</span>
         </button>
       </div>
@@ -169,11 +157,17 @@ const modalStyle = computed(() => {
 // 拖拽功能
 const startDrag = (e: MouseEvent): void => {
   // 排除控制按钮区域，防止点击按钮时触发拖拽
-  if ((e.target as Element).closest('.control-button') || (e.target as Element).closest('.modal-controls')) {
+  if (
+    (e.target as Element).closest('.control-button') ||
+    (e.target as Element).closest('.modal-controls')
+  ) {
     return;
   }
 
-  if (e.target.classList.contains('modal-header') || (e.target as Element).closest('.modal-header')) {
+  if (
+    e.target.classList.contains('modal-header') ||
+    (e.target as Element).closest('.modal-header')
+  ) {
     startDragHeader(e);
   }
 };
@@ -227,7 +221,8 @@ const drag = (e: MouseEvent): void => {
 const stopDrag = (): void => {
   if (
     isDragging.value &&
-    (dragPosition.value.x !== props.modal.position.x || dragPosition.value.y !== props.modal.position.y)
+    (dragPosition.value.x !== props.modal.position.x ||
+      dragPosition.value.y !== props.modal.position.y)
   ) {
     // 只有当位置发生变化时才更新modal
     const updatedModal = {

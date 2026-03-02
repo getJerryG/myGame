@@ -19,23 +19,15 @@
             @click="$emit('load', save.id)"
             :disabled="save.isCurrent"
           >
-            {{ save.isCurrent ? '当前存档' : '加载' }}
+            {{ save.isCurrent ? "当前存档" : "加载" }}
           </button>
-          <button
-            class="action-btn delete"
-            @click="$emit('delete', save.id)"
-          >
+          <button class="action-btn delete" @click="$emit('delete', save.id)">
             删除
           </button>
         </div>
       </div>
     </div>
-    <button
-      class="save-btn"
-      @click="$emit('create')"
-    >
-      新建存档
-    </button>
+    <button class="save-btn" @click="$emit('create')">新建存档</button>
   </div>
 </template>
 

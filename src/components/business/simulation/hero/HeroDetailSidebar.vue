@@ -2,12 +2,7 @@
   <div class="hero-detail-sidebar">
     <div class="sidebar-header">
       <h4>英雄详情</h4>
-      <button
-        class="close-detail-btn"
-        @click="$emit('close')"
-      >
-        ×
-      </button>
+      <button class="close-detail-btn" @click="$emit('close')">×</button>
     </div>
     <div class="sidebar-content">
       <!-- 英雄基本信息 -->
@@ -18,10 +13,7 @@
         <div class="hero-detail-header">
           <h3>{{ hero.name }}</h3>
           <div class="hero-detail-categories">
-            <span
-              class="detail-category-badge"
-              :class="hero.category"
-            >
+            <span class="detail-category-badge" :class="hero.category">
               {{ hero.category }}
             </span>
             <span
@@ -75,11 +67,7 @@
       <div class="hero-skills-overview">
         <h5>技能概览</h5>
         <div class="skills-list">
-          <div
-            v-for="skill in hero.skills"
-            :key="skill.id"
-            class="skill-item"
-          >
+          <div v-for="skill in hero.skills" :key="skill.id" class="skill-item">
             <div class="skill-icon">{{ skill.icon }}</div>
             <div class="skill-info">
               <div class="skill-name">{{ skill.name }}</div>
@@ -310,7 +298,11 @@ const emit = defineEmits<{
         }
 
         &.ban-rate-bar {
-          background: linear-gradient(90deg, tokens.$error 0%, color.adjust(tokens.$error, $lightness: -20%) 100%);
+          background: linear-gradient(
+            90deg,
+            tokens.$error 0%,
+            color.adjust(tokens.$error, $lightness: -20%) 100%
+          );
         }
       }
 

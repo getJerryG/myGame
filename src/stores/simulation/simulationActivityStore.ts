@@ -54,32 +54,43 @@ export const useSimulationActivityStore = defineStore('simulationActivity', {
   getters: {
     // 获取活跃活动
     activeActivities: (state) => {
-      return state.currentActivities.filter((activity) => activity.status === 'active');
+      return state.currentActivities.filter(
+        (activity) => activity.status === 'active',
+      );
     },
 
     // 获取即将开始的活动
     upcomingActivities: (state) => {
-      return state.currentActivities.filter((activity) => activity.status === 'upcoming');
+      return state.currentActivities.filter(
+        (activity) => activity.status === 'upcoming',
+      );
     },
 
     // 获取已完成的活动
     completedActivities: (state) => {
       return [
-        ...state.currentActivities.filter((activity) => activity.status === 'completed'),
+        ...state.currentActivities.filter(
+          (activity) => activity.status === 'completed',
+        ),
         ...state.historicalActivities,
       ];
     },
 
     // 根据ID获取活动
     getActivityById: (state) => (activityId: string) => {
-      return [...state.currentActivities, ...state.historicalActivities].find((activity) => activity.id === activityId);
+      return [...state.currentActivities, ...state.historicalActivities].find(
+        (activity) => activity.id === activityId,
+      );
     },
   },
 
   actions: {
     // 创建新活动
     createActivity(activityData: Omit<Activity, 'id' | 'participationCount'>) {
-      if (this.currentActivities.length >= this.activityConfig.maxConcurrentActivities) {
+      if (
+        this.currentActivities.length >=
+        this.activityConfig.maxConcurrentActivities
+      ) {
         throw new Error('已达到最大活动数量限制');
       }
 
@@ -94,16 +105,24 @@ export const useSimulationActivityStore = defineStore('simulationActivity', {
     },
 
     // 更新活动状态
-    updateActivityStatus(activityId: string, status: 'upcoming' | 'active' | 'completed') {
+    updateActivityStatus(
+      activityId: string,
+      status: 'upcoming' | 'active' | 'completed',
+    ) {
       const activity = this.getActivityById(activityId);
       if (activity) {
         activity.status = status;
 
         // 如果活动已完成，将其移至历史活动
         if (status === 'completed') {
-          const currentIndex = this.currentActivities.findIndex((a) => a.id === activityId);
+          const currentIndex = this.currentActivities.findIndex(
+            (a) => a.id === activityId,
+          );
           if (currentIndex !== -1) {
-            const [completedActivity] = this.currentActivities.splice(currentIndex, 1);
+            const [completedActivity] = this.currentActivities.splice(
+              currentIndex,
+              1,
+            );
             this.historicalActivities.push(completedActivity);
           }
         }
@@ -128,7 +147,7 @@ export const useSimulationActivityStore = defineStore('simulationActivity', {
     // 领取活动奖励
     claimActivityRewards(activityId: string) {
       const recordIndex = this.participationRecords.findIndex(
-        (record) => record.activityId === activityId && !record.rewardsClaimed
+        (record) => record.activityId === activityId && !record.rewardsClaimed,
       );
 
       if (recordIndex !== -1) {
@@ -141,10 +160,13 @@ export const useSimulationActivityStore = defineStore('simulationActivity', {
     // 清理过期活动
     cleanExpiredActivities() {
       const now = Date.now();
-      const expiredDays = this.activityConfig.autoExpireDays * 24 * 60 * 60 * 1000;
+      const expiredDays =
+        this.activityConfig.autoExpireDays * 24 * 60 * 60 * 1000;
 
       // 清理历史活动中超过过期天数的活动
-      this.historicalActivities = this.historicalActivities.filter((activity) => now - activity.endTime < expiredDays);
+      this.historicalActivities = this.historicalActivities.filter(
+        (activity) => now - activity.endTime < expiredDays,
+      );
     },
   },
 

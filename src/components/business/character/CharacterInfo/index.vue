@@ -67,10 +67,14 @@ const showAchievements = (): void => {
   @include utils.flex-col(tokens.$spacing-lg, stretch, flex-start);
 
   padding: tokens.$spacing-lg;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: "Comic Sans MS", cursive, sans-serif;
   height: 100%;
   overflow-y: auto;
-  background: linear-gradient(135deg, tokens.$panel-bg-start 0%, tokens.$panel-bg-end 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$panel-bg-start 0%,
+    tokens.$panel-bg-end 100%
+  );
   position: relative;
 }
 </style>

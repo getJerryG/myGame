@@ -108,19 +108,24 @@ export const useSimulationGameStateStore = defineStore('simulationGameState', {
       return {
         fps: metrics.averageFPS >= thresholds.minFPS ? 'good' : 'poor',
         loadTime: metrics.loadTime <= thresholds.maxLoadTime ? 'good' : 'poor',
-        crashRate: metrics.crashRate <= thresholds.maxCrashRate ? 'good' : 'poor',
+        crashRate:
+          metrics.crashRate <= thresholds.maxCrashRate ? 'good' : 'poor',
       };
     },
 
     // 获取游戏状态变化趋势
     stateTrend: (state) => {
-      return state.stateHistory.slice(-30).sort((a, b) => a.timestamp - b.timestamp);
+      return state.stateHistory
+        .slice(-30)
+        .sort((a, b) => a.timestamp - b.timestamp);
     },
 
     // 获取当前版本生命周期
     versionLifecycle: (state) => {
       if (!state.currentState.releaseDate) return 0;
-      return Math.floor((Date.now() - state.currentState.releaseDate) / (24 * 60 * 60 * 1000));
+      return Math.floor(
+        (Date.now() - state.currentState.releaseDate) / (24 * 60 * 60 * 1000),
+      );
     },
   },
 
@@ -134,7 +139,11 @@ export const useSimulationGameStateStore = defineStore('simulationGameState', {
       });
 
       // 更新当前状态
-      this.currentState = { ...this.currentState, ...updates, lastUpdate: Date.now() };
+      this.currentState = {
+        ...this.currentState,
+        ...updates,
+        lastUpdate: Date.now(),
+      };
 
       // 清理旧的历史记录
       this.cleanStateHistory();
@@ -148,9 +157,14 @@ export const useSimulationGameStateStore = defineStore('simulationGameState', {
     },
 
     // 更新性能指标
-    updatePerformanceMetrics(updates: Partial<GameState['performanceMetrics']>) {
+    updatePerformanceMetrics(
+      updates: Partial<GameState['performanceMetrics']>,
+    ) {
       this.updateGameState({
-        performanceMetrics: { ...this.currentState.performanceMetrics, ...updates },
+        performanceMetrics: {
+          ...this.currentState.performanceMetrics,
+          ...updates,
+        },
       });
     },
 
@@ -163,10 +177,13 @@ export const useSimulationGameStateStore = defineStore('simulationGameState', {
 
     // 清理旧的状态历史
     cleanStateHistory() {
-      const retentionTime = this.gameConfig.stateHistoryRetentionDays * 24 * 60 * 60 * 1000;
+      const retentionTime =
+        this.gameConfig.stateHistoryRetentionDays * 24 * 60 * 60 * 1000;
       const cutoffTime = Date.now() - retentionTime;
 
-      this.stateHistory = this.stateHistory.filter((entry) => entry.timestamp >= cutoffTime);
+      this.stateHistory = this.stateHistory.filter(
+        (entry) => entry.timestamp >= cutoffTime,
+      );
     },
 
     // 发布游戏

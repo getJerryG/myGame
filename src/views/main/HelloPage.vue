@@ -3,12 +3,7 @@
     <!-- 主要内容 -->
     <div class="hello-content">
       <!-- 关闭按钮 -->
-      <button
-        class="close-button"
-        @click="emit('close')"
-      >
-        ×
-      </button>
+      <button class="close-button" @click="emit('close')">×</button>
 
       <!-- 左侧：欢迎信息 -->
       <div class="left-column">
@@ -29,17 +24,10 @@
       <div class="right-column">
         <div class="form-container">
           <h3 class="form-title">开始新游戏</h3>
-          <form
-            @submit.prevent="handleSubmit"
-            class="user-form"
-          >
+          <form @submit.prevent="handleSubmit" class="user-form">
             <!-- 策划名输入 -->
             <div class="form-group">
-              <label
-                for="plannerName"
-                class="form-label"
-                >策划名</label
-              >
+              <label for="plannerName" class="form-label">策划名</label>
               <input
                 type="text"
                 id="plannerName"
@@ -50,10 +38,7 @@
                 maxlength="15"
                 @input="validateField('plannerName')"
               />
-              <div
-                v-if="errors.plannerName"
-                class="error-message"
-              >
+              <div v-if="errors.plannerName" class="error-message">
                 {{ errors.plannerName }}
               </div>
               <div class="char-count">{{ formData.plannerName.length }}/15</div>
@@ -61,11 +46,7 @@
 
             <!-- 游戏名输入 -->
             <div class="form-group">
-              <label
-                for="gameName"
-                class="form-label"
-                >游戏名</label
-              >
+              <label for="gameName" class="form-label">游戏名</label>
               <input
                 type="text"
                 id="gameName"
@@ -76,10 +57,7 @@
                 maxlength="20"
                 @input="validateField('gameName')"
               />
-              <div
-                v-if="errors.gameName"
-                class="error-message"
-              >
+              <div v-if="errors.gameName" class="error-message">
                 {{ errors.gameName }}
               </div>
               <div class="char-count">{{ formData.gameName.length }}/20</div>
@@ -91,13 +69,16 @@
               class="submit-button"
               :disabled="!isFormValid"
             >
-              {{ submitting ? '提交中...' : '开始游戏' }}
+              {{ submitting ? "提交中..." : "开始游戏" }}
             </button>
 
             <!-- 提交结果反馈 -->
             <div
               v-if="submitResult"
-              :class="['submit-result', submitResult.success ? 'success' : 'error']"
+              :class="[
+                'submit-result',
+                submitResult.success ? 'success' : 'error',
+              ]"
             >
               {{ submitResult.message }}
             </div>
@@ -107,10 +88,7 @@
     </div>
 
     <!-- 新手引导系统 -->
-    <NewbieGuide
-      :is-visible="showGuide"
-      @close="showGuide = false"
-    />
+    <NewbieGuide :is-visible="showGuide" @close="showGuide = false" />
   </div>
 </template>
 
@@ -146,7 +124,8 @@ const validateField = (field: 'plannerName' | 'gameName') => {
   errors.value[field] = '';
 
   if (!value.trim()) {
-    errors.value[field] = field === 'plannerName' ? '请输入策划名' : '请输入游戏名';
+    errors.value[field] =
+      field === 'plannerName' ? '请输入策划名' : '请输入游戏名';
     return;
   }
 
@@ -191,7 +170,7 @@ const handleSubmit = async () => {
       JSON.stringify({
         plannerName: formData.value.plannerName,
         gameName: formData.value.gameName,
-      })
+      }),
     );
 
     // 显示成功消息
@@ -236,7 +215,12 @@ watch(showGuide, (newVal) => {
 
   font-family: tokens.$font-family-base;
   position: relative;
-  background: linear-gradient(135deg, tokens.$bg-dark 0%, tokens.$bg-secondary 50%, tokens.$bg-tertiary 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$bg-dark 0%,
+    tokens.$bg-secondary 50%,
+    tokens.$bg-tertiary 100%
+  );
   border-radius: tokens.$radius-xl;
   overflow: hidden;
   box-shadow: tokens.$shadow-xl;
@@ -441,7 +425,11 @@ watch(showGuide, (newVal) => {
   font-size: tokens.$font-size-xl;
   font-weight: tokens.$font-weight-bold;
   color: tokens.$text-primary;
-  background: linear-gradient(135deg, tokens.$primary 0%, tokens.$primary-dark 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$primary 0%,
+    tokens.$primary-dark 100%
+  );
   border: none;
   border-radius: tokens.$radius-full;
   cursor: pointer;
@@ -458,7 +446,11 @@ watch(showGuide, (newVal) => {
     &:not(:disabled) {
       transform: translateY(-3px);
       box-shadow: 0 6px 20px rgb(74 158 255 / 60%);
-      background: linear-gradient(135deg, tokens.$primary-dark 0%, tokens.$primary 100%);
+      background: linear-gradient(
+        135deg,
+        tokens.$primary-dark 0%,
+        tokens.$primary 100%
+      );
     }
   }
 

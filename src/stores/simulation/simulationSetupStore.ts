@@ -103,7 +103,10 @@ export const useSimulationSetupStore = defineStore('simulationSetup', {
     // 获取活跃的游戏设置
     activeSetups: (state) => {
       return state.gameSetups.filter(
-        (setup) => setup.status === 'planning' || setup.status === 'in_development' || setup.status === 'testing'
+        (setup) =>
+          setup.status === 'planning' ||
+          setup.status === 'in_development' ||
+          setup.status === 'testing',
       );
     },
 
@@ -114,7 +117,9 @@ export const useSimulationSetupStore = defineStore('simulationSetup', {
 
     // 根据平台获取配置
     getPlatformConfig: (state) => (platformId: string) => {
-      return state.platformConfig.find((platform) => platform.id === platformId);
+      return state.platformConfig.find(
+        (platform) => platform.id === platformId,
+      );
     },
 
     // 根据ID获取游戏设置
@@ -125,7 +130,9 @@ export const useSimulationSetupStore = defineStore('simulationSetup', {
 
   actions: {
     // 创建新游戏设置
-    createGameSetup(setupData: Omit<GameSetup, 'id' | 'createdAt' | 'updatedAt' | 'features'>) {
+    createGameSetup(
+      setupData: Omit<GameSetup, 'id' | 'createdAt' | 'updatedAt' | 'features'>,
+    ) {
       if (this.activeSetups.length >= this.setupConfig.maxSimultaneousSetups) {
         throw new Error('已达到最大同时设置数量限制');
       }
@@ -216,12 +223,18 @@ export const useSimulationSetupStore = defineStore('simulationSetup', {
       }
 
       // 团队规模成本
-      const teamSize = Object.values(setup.requiredTeamSize).reduce((sum, count) => sum + count, 0);
+      const teamSize = Object.values(setup.requiredTeamSize).reduce(
+        (sum, count) => sum + count,
+        0,
+      );
       totalCost *= 1 + teamSize * 0.1;
 
       // 特性成本
       const selectedFeatures = setup.features.filter((f) => f.isSelected);
-      const featuresCost = selectedFeatures.reduce((sum, feature) => sum + feature.cost, 0);
+      const featuresCost = selectedFeatures.reduce(
+        (sum, feature) => sum + feature.cost,
+        0,
+      );
       totalCost += featuresCost;
 
       return Math.round(totalCost);
@@ -240,7 +253,10 @@ export const useSimulationSetupStore = defineStore('simulationSetup', {
 
       // 特性开发时间
       const selectedFeatures = setup.features.filter((f) => f.isSelected);
-      const featuresTime = selectedFeatures.reduce((sum, feature) => sum + feature.developmentTime, 0);
+      const featuresTime = selectedFeatures.reduce(
+        (sum, feature) => sum + feature.developmentTime,
+        0,
+      );
       totalTime += featuresTime;
 
       return Math.round(totalTime);

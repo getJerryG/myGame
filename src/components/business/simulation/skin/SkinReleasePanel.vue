@@ -8,15 +8,12 @@
         aria-expanded="!isCollapsed"
         @click="toggleCollapse"
       >
-        <span class="collapse-icon">{{ isCollapsed ? '▶️' : '▼' }}</span>
+        <span class="collapse-icon">{{ isCollapsed ? "▶️" : "▼" }}</span>
       </button>
     </div>
 
     <!-- 面板内容 -->
-    <div
-      class="panel-content"
-      :class="{ collapsed: isCollapsed }"
-    >
+    <div class="panel-content" :class="{ collapsed: isCollapsed }">
       <!-- 皮肤库 -->
       <div class="skin-showcase">
         <h4 class="section-subtitle">皮肤库</h4>
@@ -39,10 +36,7 @@
         />
 
         <!-- 皮肤特色展示 -->
-        <div
-          class="skin-features"
-          v-if="selectedSkin"
-        >
+        <div class="skin-features" v-if="selectedSkin">
           <h4 class="section-subtitle">特色技能展示</h4>
           <div class="features-grid">
             <div
@@ -298,7 +292,7 @@ const handleSkinReleased = (data) => {
   overflow: hidden;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;

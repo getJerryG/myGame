@@ -210,7 +210,10 @@ export const useLotteryStore = defineStore('lottery', {
      * 归一化概率，确保总和为1
      */
     normalizeProbabilities() {
-      const totalProbability = this.lotteryItems.reduce((sum, item) => sum + item.probability, 0);
+      const totalProbability = this.lotteryItems.reduce(
+        (sum, item) => sum + item.probability,
+        0,
+      );
       if (totalProbability > 0) {
         this.lotteryItems.forEach((item) => {
           item.probability /= totalProbability;
@@ -224,9 +227,15 @@ export const useLotteryStore = defineStore('lottery', {
     getCumulativeReward(): LotteryItem | null {
       // 每100抽获得一个传说奖励
       if (this.cumulativeDraws % 100 === 0 && this.cumulativeDraws > 0) {
-        const legendaryItems = this.lotteryItems.filter((item) => item.rarity === 'legendary');
+        const legendaryItems = this.lotteryItems.filter(
+          (item) => item.rarity === 'legendary',
+        );
         if (legendaryItems.length > 0) {
-          return { ...legendaryItems[Math.floor(Math.random() * legendaryItems.length)] };
+          return {
+            ...legendaryItems[
+              Math.floor(Math.random() * legendaryItems.length)
+            ],
+          };
         }
       }
       return null;

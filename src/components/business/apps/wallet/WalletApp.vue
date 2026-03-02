@@ -18,10 +18,7 @@
     <template #content>
       <div class="wallet-content">
         <!-- 余额信息模块 -->
-        <div
-          v-if="activeModule === 'balance-info'"
-          class="module-content"
-        >
+        <div v-if="activeModule === 'balance-info'" class="module-content">
           <h3 class="text-gold">余额信息</h3>
           <div class="balance-container">
             <div class="balance-card">
@@ -34,11 +31,15 @@
               <div class="balance-details">
                 <div class="detail-item">
                   <span class="detail-label">可用余额</span>
-                  <span class="detail-value">{{ gameData?.gameState?.plannerFunds || app.coreData.balance }}</span>
+                  <span class="detail-value">{{
+                    gameData?.gameState?.plannerFunds || app.coreData.balance
+                  }}</span>
                 </div>
                 <div class="detail-item">
                   <span class="detail-label">本月收入</span>
-                  <span class="detail-value positive">{{ gameData?.businessData?.totalRevenue || 0 }}</span>
+                  <span class="detail-value positive">{{
+                    gameData?.businessData?.totalRevenue || 0
+                  }}</span>
                 </div>
                 <div class="detail-item">
                   <span class="detail-label">本月支出</span>
@@ -69,13 +70,10 @@
                 class="transaction-amount"
                 :class="transaction.amount >= 0 ? 'positive' : 'negative'"
               >
-                {{ transaction.amount >= 0 ? '+' : '' }}{{ transaction.amount }}
+                {{ transaction.amount >= 0 ? "+" : "" }}{{ transaction.amount }}
               </div>
             </div>
-            <div
-              class="no-transactions"
-              v-if="transactionHistory.length === 0"
-            >
+            <div class="no-transactions" v-if="transactionHistory.length === 0">
               <p>暂无交易记录</p>
             </div>
           </div>

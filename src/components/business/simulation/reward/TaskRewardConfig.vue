@@ -2,15 +2,13 @@
   <div class="task-reward-config">
     <div class="config-section">
       <h4 class="section-title">任务奖励配置</h4>
-      <p class="section-description">设置各类任务的奖励，鼓励玩家参与游戏活动</p>
+      <p class="section-description">
+        设置各类任务的奖励，鼓励玩家参与游戏活动
+      </p>
 
       <!-- 任务列表 -->
       <div class="task-list">
-        <div
-          v-for="task in tasks"
-          :key="task.id"
-          class="task-item"
-        >
+        <div v-for="task in tasks" :key="task.id" class="task-item">
           <div class="task-header">
             <div class="task-info">
               <span class="task-icon">{{ task.icon }}</span>
@@ -20,10 +18,7 @@
               </div>
             </div>
             <div class="task-actions">
-              <button
-                class="btn btn-sm btn-secondary"
-                @click="editTask(task)"
-              >
+              <button class="btn btn-sm btn-secondary" @click="editTask(task)">
                 编辑
               </button>
             </div>

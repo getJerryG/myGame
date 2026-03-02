@@ -3,12 +3,7 @@
     <!-- 应用头部 -->
     <div class="app-header">
       <h2 class="app-title">英雄开发</h2>
-      <button
-        class="close-btn"
-        @click="closeApp"
-      >
-        ×
-      </button>
+      <button class="close-btn" @click="closeApp">×</button>
     </div>
 
     <!-- 应用内容 -->
@@ -29,10 +24,7 @@
               <div class="hero-name">{{ hero.name }}</div>
               <div class="hero-level">Lv.{{ hero.level }}</div>
             </div>
-            <div
-              class="hero-rarity"
-              :class="hero.rarity"
-            >
+            <div class="hero-rarity" :class="hero.rarity">
               {{ getRarityText(hero.rarity) }}
             </div>
           </div>
@@ -40,18 +32,12 @@
       </div>
 
       <!-- 英雄详情 -->
-      <div
-        v-if="selectedHero"
-        class="hero-detail-section"
-      >
+      <div v-if="selectedHero" class="hero-detail-section">
         <div class="detail-header">
           <div class="detail-avatar">{{ selectedHero.avatar }}</div>
           <div class="detail-info">
             <h3 class="detail-name">{{ selectedHero.name }}</h3>
-            <div
-              class="detail-rarity"
-              :class="selectedHero.rarity"
-            >
+            <div class="detail-rarity" :class="selectedHero.rarity">
               {{ getRarityText(selectedHero.rarity) }}
             </div>
           </div>
@@ -77,25 +63,16 @@
         </div>
 
         <div class="detail-actions">
-          <button
-            class="action-btn upgrade"
-            @click="upgradeHero"
-          >
+          <button class="action-btn upgrade" @click="upgradeHero">
             升级英雄
           </button>
-          <button
-            class="action-btn skill"
-            @click="openSkillPanel"
-          >
+          <button class="action-btn skill" @click="openSkillPanel">
             技能管理
           </button>
         </div>
       </div>
 
-      <div
-        v-else
-        class="no-selection"
-      >
+      <div v-else class="no-selection">
         <div class="no-selection-icon">👆</div>
         <p>请选择一位英雄查看详情</p>
       </div>
@@ -119,11 +96,56 @@ interface Hero {
 }
 
 const heroes = ref<Hero[]>([
-  { id: 1, name: '战士', avatar: '⚔️', level: 10, rarity: 'common', attack: 100, defense: 80, hp: 1000 },
-  { id: 2, name: '法师', avatar: '🔮', level: 15, rarity: 'rare', attack: 150, defense: 50, hp: 800 },
-  { id: 3, name: '刺客', avatar: '🗡️', level: 12, rarity: 'epic', attack: 180, defense: 60, hp: 900 },
-  { id: 4, name: '坦克', avatar: '🛡️', level: 20, rarity: 'legendary', attack: 80, defense: 200, hp: 2000 },
-  { id: 5, name: '射手', avatar: '🏹', level: 8, rarity: 'common', attack: 120, defense: 40, hp: 700 },
+  {
+    id: 1,
+    name: '战士',
+    avatar: '⚔️',
+    level: 10,
+    rarity: 'common',
+    attack: 100,
+    defense: 80,
+    hp: 1000,
+  },
+  {
+    id: 2,
+    name: '法师',
+    avatar: '🔮',
+    level: 15,
+    rarity: 'rare',
+    attack: 150,
+    defense: 50,
+    hp: 800,
+  },
+  {
+    id: 3,
+    name: '刺客',
+    avatar: '🗡️',
+    level: 12,
+    rarity: 'epic',
+    attack: 180,
+    defense: 60,
+    hp: 900,
+  },
+  {
+    id: 4,
+    name: '坦克',
+    avatar: '🛡️',
+    level: 20,
+    rarity: 'legendary',
+    attack: 80,
+    defense: 200,
+    hp: 2000,
+  },
+  {
+    id: 5,
+    name: '射手',
+    avatar: '🏹',
+    level: 8,
+    rarity: 'common',
+    attack: 120,
+    defense: 40,
+    hp: 700,
+  },
 ]);
 
 // 选中的英雄
@@ -182,7 +204,11 @@ const closeApp = () => {
   @include utils.flex-between;
 
   padding: tokens.$spacing-md tokens.$spacing-lg;
-  background: linear-gradient(135deg, tokens.$primary 0%, tokens.$primary-dark 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$primary 0%,
+    tokens.$primary-dark 100%
+  );
   color: tokens.$text-primary;
 
   .app-title {
@@ -304,7 +330,11 @@ const closeApp = () => {
     }
 
     &.legendary {
-      background: linear-gradient(135deg, tokens.$primary-gold 0%, #f59e0b 100%);
+      background: linear-gradient(
+        135deg,
+        tokens.$primary-gold 0%,
+        #f59e0b 100%
+      );
       color: tokens.$gray-900;
     }
   }
@@ -361,7 +391,11 @@ const closeApp = () => {
       }
 
       &.legendary {
-        background: linear-gradient(135deg, tokens.$primary-gold 0%, #f59e0b 100%);
+        background: linear-gradient(
+          135deg,
+          tokens.$primary-gold 0%,
+          #f59e0b 100%
+        );
         color: tokens.$gray-900;
       }
     }
@@ -418,7 +452,11 @@ const closeApp = () => {
     }
 
     &.skill {
-      background: linear-gradient(135deg, tokens.$primary 0%, tokens.$primary-dark 100%);
+      background: linear-gradient(
+        135deg,
+        tokens.$primary 0%,
+        tokens.$primary-dark 100%
+      );
       color: tokens.$text-primary;
 
       &:hover {

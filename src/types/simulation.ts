@@ -101,7 +101,13 @@ export interface SimulationEventOption {
 }
 
 export interface SimulationEventRequirement {
-  type: 'money' | 'reputation' | 'popularity' | 'level' | 'heroCount' | 'skinCount';
+  type:
+    | 'money'
+    | 'reputation'
+    | 'popularity'
+    | 'level'
+    | 'heroCount'
+    | 'skinCount';
   value: number;
   operator: '>=' | '<=' | '>' | '<' | '==';
 }

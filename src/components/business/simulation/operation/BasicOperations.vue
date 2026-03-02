@@ -6,7 +6,9 @@
       <!-- 发布普通皮肤 -->
       <div class="operation-card skin-release">
         <h3 class="card-title">发布普通皮肤</h3>
-        <p class="card-description">为英雄发布一款普通皮肤，提升玩家活跃度和收入</p>
+        <p class="card-description">
+          为英雄发布一款普通皮肤，提升玩家活跃度和收入
+        </p>
 
         <div class="form-group">
           <label class="form-label">选择英雄</label>
@@ -19,17 +21,10 @@
 
         <div class="form-group">
           <label class="form-label">皮肤名称</label>
-          <input
-            type="text"
-            placeholder="请输入皮肤名称"
-            class="form-input"
-          />
+          <input type="text" placeholder="请输入皮肤名称" class="form-input" />
         </div>
 
-        <button
-          @click="releaseCommonSkin"
-          class="action-btn primary"
-        >
+        <button @click="releaseCommonSkin" class="action-btn primary">
           发布皮肤
         </button>
 
@@ -69,10 +64,7 @@
           </div>
         </div>
 
-        <button
-          @click="setDailyLoginRewards"
-          class="action-btn success"
-        >
+        <button @click="setDailyLoginRewards" class="action-btn success">
           保存设置
         </button>
 
@@ -90,30 +82,16 @@
         <p class="card-description">修复游戏中的基础BUG，提升游戏体验</p>
 
         <div class="bugs-list">
-          <div
-            v-for="(bug, index) in bugs"
-            :key="index"
-            class="bug-item"
-          >
-            <input
-              type="checkbox"
-              :id="`bug-${index}`"
-              class="bug-checkbox"
-            />
-            <label
-              :for="`bug-${index}`"
-              class="bug-label"
-            >
+          <div v-for="(bug, index) in bugs" :key="index" class="bug-item">
+            <input type="checkbox" :id="`bug-${index}`" class="bug-checkbox" />
+            <label :for="`bug-${index}`" class="bug-label">
               <div class="bug-title">{{ bug.title }}</div>
               <div class="bug-description">{{ bug.description }}</div>
             </label>
           </div>
         </div>
 
-        <button
-          @click="fixBasicBugs"
-          class="action-btn warning"
-        >
+        <button @click="fixBasicBugs" class="action-btn warning">
           修复选中BUG
         </button>
 

@@ -25,10 +25,7 @@
       </div>
 
       <!-- 应对方案 -->
-      <div
-        v-if="selectedCrisis"
-        class="solution-section"
-      >
+      <div v-if="selectedCrisis" class="solution-section">
         <h5>应对方案</h5>
         <div class="solutions-list">
           <div

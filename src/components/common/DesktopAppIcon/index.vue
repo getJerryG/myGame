@@ -1,7 +1,10 @@
 <template>
   <div
     class="desktop-app-icon"
-    :class="{ downloading: isDownloading, 'download-completed': isDownloadCompleted }"
+    :class="{
+      downloading: isDownloading,
+      'download-completed': isDownloadCompleted,
+    }"
     :style="{
       left: `${position.x}px`,
       top: `${position.y}px`,
@@ -13,32 +16,23 @@
   >
     <div class="icon-container">
       <div class="app-icon">{{ app.icon }}</div>
-      <div
-        class="app-badge"
-        v-if="hasCoreData"
-      >
+      <div class="app-badge" v-if="hasCoreData">
         <span>{{ coreDataDisplay }}</span>
       </div>
 
       <!-- 下载进度条（居中显示在图标上） -->
-      <div
-        v-if="isDownloading"
-        class="download-progress-overlay"
-      >
+      <div v-if="isDownloading" class="download-progress-overlay">
         <div class="progress-circle">
           <svg viewBox="0 0 100 100">
-            <circle
-              class="progress-bg"
-              cx="50"
-              cy="50"
-              r="45"
-            ></circle>
+            <circle class="progress-bg" cx="50" cy="50" r="45"></circle>
             <circle
               class="progress-fill"
               cx="50"
               cy="50"
               r="45"
-              :style="{ strokeDashoffset: 283 - (283 * downloadProgress) / 100 }"
+              :style="{
+                strokeDashoffset: 283 - (283 * downloadProgress) / 100,
+              }"
             ></circle>
           </svg>
           <div class="progress-text">{{ downloadProgress }}%</div>
@@ -49,17 +43,8 @@
     <div class="app-name">{{ app.name }}</div>
 
     <!-- 操作菜单（鼠标悬停时显示） -->
-    <div
-      v-if="isHovered && isDownloading"
-      class="app-context-menu"
-      @click.stop
-    >
-      <button
-        class="menu-item"
-        @click="handleDelete"
-      >
-        取消下载
-      </button>
+    <div v-if="isHovered && isDownloading" class="app-context-menu" @click.stop>
+      <button class="menu-item" @click="handleDelete">取消下载</button>
     </div>
 
     <!-- 删除确认模态框 -->
@@ -68,10 +53,7 @@
       class="delete-confirm-overlay"
       @click="showDeleteConfirm = false"
     >
-      <div
-        class="confirm-modal"
-        @click.stop
-      >
+      <div class="confirm-modal" @click.stop>
         <div class="confirm-modal-header">
           <h3>确认删除</h3>
         </div>
@@ -79,16 +61,10 @@
           <p>确定要取消下载「{{ app.name }}」吗？</p>
         </div>
         <div class="confirm-modal-footer">
-          <button
-            class="btn-cancel"
-            @click="showDeleteConfirm = false"
-          >
+          <button class="btn-cancel" @click="showDeleteConfirm = false">
             取消
           </button>
-          <button
-            class="btn-delete"
-            @click="handleCancelDownload"
-          >
+          <button class="btn-delete" @click="handleCancelDownload">
             确定删除
           </button>
         </div>

@@ -6,11 +6,7 @@
 
       <!-- 段位奖励配置 -->
       <div class="rank-rewards">
-        <div
-          v-for="rank in ranks"
-          :key="rank.id"
-          class="rank-item"
-        >
+        <div v-for="rank in ranks" :key="rank.id" class="rank-item">
           <div class="rank-header">
             <span class="rank-icon">{{ rank.icon }}</span>
             <span class="rank-name">{{ rank.name }}</span>
@@ -26,10 +22,7 @@
               <span class="reward-amount">{{ reward.amount }}</span>
             </div>
           </div>
-          <button
-            class="edit-btn"
-            @click="editRankReward(rank)"
-          >
+          <button class="edit-btn" @click="editRankReward(rank)">
             编辑奖励
           </button>
         </div>

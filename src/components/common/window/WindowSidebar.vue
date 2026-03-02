@@ -1,8 +1,5 @@
 <template>
-  <aside
-    v-if="items && items.length > 0"
-    class="window-sidebar"
-  >
+  <aside v-if="items && items.length > 0" class="window-sidebar">
     <nav class="sidebar-nav">
       <div
         v-for="item in items"
@@ -16,11 +13,7 @@
       >
         <span class="nav-item-icon">{{ item.icon }}</span>
         <span class="nav-item-text">{{ item.name }}</span>
-        <span
-          v-if="item.highlight"
-          class="nav-item-highlight"
-          >!</span
-        >
+        <span v-if="item.highlight" class="nav-item-highlight">!</span>
       </div>
     </nav>
   </aside>

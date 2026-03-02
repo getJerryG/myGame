@@ -106,7 +106,10 @@ export const useLotteryRewardsStore = defineStore('lotteryRewards', {
   getters: {
     // 根据奖励池ID获取奖励池
     getRewardPool: (state) => (poolId: string) => {
-      return state.rewardPools.find((pool) => pool.poolId === poolId) || state.rewardPools[0];
+      return (
+        state.rewardPools.find((pool) => pool.poolId === poolId) ||
+        state.rewardPools[0]
+      );
     },
 
     // 获取特定稀有度的奖励
@@ -153,7 +156,9 @@ export const useLotteryRewardsStore = defineStore('lotteryRewards', {
 
     // 记录获得的奖励
     recordObtainedReward(rewardId: string, count = 1) {
-      const existingReward = this.obtainedRewards.find((r) => r.rewardId === rewardId);
+      const existingReward = this.obtainedRewards.find(
+        (r) => r.rewardId === rewardId,
+      );
 
       if (existingReward) {
         existingReward.count += count;

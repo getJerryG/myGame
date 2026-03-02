@@ -1,14 +1,11 @@
 <template>
   <div class="storage-box-panel">
-    <div
-      class="panel-header"
-      @click="toggleStorageBox"
-    >
+    <div class="panel-header" @click="toggleStorageBox">
       <h3>收纳箱</h3>
       <span class="total-decompose-points">
         总分解积分 <span class="points-value">+{{ totalDecomposePoints }}</span>
       </span>
-      <span class="toggle-icon">{{ isStorageBoxOpen ? '▼' : '▶' }}</span>
+      <span class="toggle-icon">{{ isStorageBoxOpen ? "▼" : "▶" }}</span>
     </div>
     <button
       v-if="isStorageBoxOpen"
@@ -18,14 +15,8 @@
     >
       全部分解
     </button>
-    <div
-      v-if="isStorageBoxOpen"
-      class="storage-list"
-    >
-      <div
-        v-if="organizedStorageBox.length === 0"
-        class="empty-message"
-      >
+    <div v-if="isStorageBoxOpen" class="storage-list">
+      <div v-if="organizedStorageBox.length === 0" class="empty-message">
         收纳盒是空的，快去抽奖吧�?
       </div>
       <div
@@ -52,7 +43,10 @@
             />
             <button
               class="decompose-button"
-              :disabled="decomposeQuantities[index] <= 0 || decomposeQuantities[index] > item.totalCount"
+              :disabled="
+                decomposeQuantities[index] <= 0 ||
+                decomposeQuantities[index] > item.totalCount
+              "
               @click="handleDecompose(item, index)"
             >
               分解
@@ -60,7 +54,11 @@
           </div>
           <div class="decompose-reward">
             可获�?
-            <span class="reward-points">+{{ calculateDecomposePoints(item, decomposeQuantities[index]) }}积分</span>
+            <span class="reward-points"
+              >+{{
+                calculateDecomposePoints(item, decomposeQuantities[index])
+              }}积分</span
+            >
           </div>
         </div>
       </div>
@@ -120,9 +118,11 @@ const organizedStorageBox = computed<OrganizedStorageItem[]>(() => {
 watch(
   () => organizedStorageBox.value,
   () => {
-    decomposeQuantities.value = new Array(organizedStorageBox.value.length).fill(1);
+    decomposeQuantities.value = new Array(
+      organizedStorageBox.value.length,
+    ).fill(1);
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 // 切换收纳盒展开状态
@@ -131,7 +131,10 @@ const toggleStorageBox = (): void => {
 };
 
 // 验证分解数量
-const validateDecomposeQuantity = (item: OrganizedStorageItem, index: number): void => {
+const validateDecomposeQuantity = (
+  item: OrganizedStorageItem,
+  index: number,
+): void => {
   if (decomposeQuantities.value[index] < 1) {
     decomposeQuantities.value[index] = 1;
   } else if (decomposeQuantities.value[index] > item.totalCount) {
@@ -140,7 +143,10 @@ const validateDecomposeQuantity = (item: OrganizedStorageItem, index: number): v
 };
 
 // 计算分解积分
-const calculateDecomposePoints = (item: OrganizedStorageItem, quantity: number): number => {
+const calculateDecomposePoints = (
+  item: OrganizedStorageItem,
+  quantity: number,
+): number => {
   return item.pointsValue * quantity;
 };
 

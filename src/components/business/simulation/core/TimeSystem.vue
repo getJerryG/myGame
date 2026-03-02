@@ -22,16 +22,9 @@
           :aria-disabled="isGameOver"
           @click="$emit('next-day')"
         >
-          <span
-            class="btn-icon"
-            aria-hidden="true"
-            >▶️</span
-          >
+          <span class="btn-icon" aria-hidden="true">▶️</span>
           <span class="btn-text">下一天</span>
-          <span
-            class="btn-glow"
-            aria-hidden="true"
-          ></span>
+          <span class="btn-glow" aria-hidden="true"></span>
         </button>
       </div>
     </div>
@@ -57,7 +50,11 @@ const emit = defineEmits<{
   'next-day': [];
 }>();
 
-const formatDate = (date?: { year: number; month: number; day: number }): string => {
+const formatDate = (date?: {
+  year: number;
+  month: number;
+  day: number;
+}): string => {
   if (!date) return '加载中...';
   return `${date.year}年${date.month}月${date.day}日`;
 };
@@ -80,7 +77,10 @@ const getPhaseName = (phase?: string): string => {
 const formattedDate = computed(() => formatDate(props.currentDate));
 const formattedTime = computed(() => {
   if (!props.currentDate) return '--:--';
-  return formatTime(Math.floor(props.currentDate.hour), Math.floor(props.currentDate.minute));
+  return formatTime(
+    Math.floor(props.currentDate.hour),
+    Math.floor(props.currentDate.minute),
+  );
 });
 const phaseName = computed(() => getPhaseName(props.currentPhase));
 </script>
@@ -170,7 +170,11 @@ const phaseName = computed(() => getPhaseName(props.currentPhase));
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle, rgb(255 255 255 / 30%) 0%, transparent 70%);
+      background: radial-gradient(
+        circle,
+        rgb(255 255 255 / 30%) 0%,
+        transparent 70%
+      );
       border-radius: tokens.$radius-md;
       opacity: 0;
       transition: opacity tokens.$transition-fast;

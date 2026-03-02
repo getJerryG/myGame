@@ -26,7 +26,11 @@ const routes = [
     component: () => import('../views/main/DesktopPage.vue'),
     props: true, // 启用props传递，组件内可直接通过props接收day参数
     meta: { title: '游戏桌面', requiresAuth: true },
-    beforeEnter: (to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) => {
+    beforeEnter: (
+      to: RouteLocationNormalized,
+      _from: RouteLocationNormalized,
+      next: NavigationGuardNext,
+    ) => {
       // 路由守卫：验证day参数是否为有效数字
       const day = Number(to.params.day);
       if (!isNaN(day) && day > 0) {
@@ -44,9 +48,19 @@ const routes = [
     component: () => import('../views/main/AppPage.vue'),
     props: true, // 启用props传递，组件内可直接通过props接收page参数
     meta: { title: '应用页面', requiresAuth: true },
-    beforeEnter: (to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) => {
+    beforeEnter: (
+      to: RouteLocationNormalized,
+      _from: RouteLocationNormalized,
+      next: NavigationGuardNext,
+    ) => {
       // 路由守卫：验证page参数是否为允许的应用名称
-      const allowedPages = ['hero', 'game', 'settings', 'lottery', 'simulation'];
+      const allowedPages = [
+        'hero',
+        'game',
+        'settings',
+        'lottery',
+        'simulation',
+      ];
       if (allowedPages.includes(to.params.page as string)) {
         next();
       } else {
@@ -62,7 +76,11 @@ const routes = [
     component: () => import('../views/game/SettlementPage.vue'),
     props: true, // 启用props传递，组件内可直接通过props接收day参数
     meta: { title: '游戏报告', requiresAuth: true },
-    beforeEnter: (to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) => {
+    beforeEnter: (
+      to: RouteLocationNormalized,
+      _from: RouteLocationNormalized,
+      next: NavigationGuardNext,
+    ) => {
       // 路由守卫：验证day参数是否为有效数字
       const day = Number(to.params.day);
       if (!isNaN(day) && day > 0) {

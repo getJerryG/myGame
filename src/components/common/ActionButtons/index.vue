@@ -70,7 +70,7 @@ const showAchievements = (): void => {
   border-radius: tokens.$radius-lg;
   font-size: tokens.$font-size-base;
   font-weight: tokens.$font-weight-bold;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: "Comic Sans MS", cursive, sans-serif;
   cursor: pointer;
   transition: all tokens.$transition-normal;
   position: relative;
@@ -79,13 +79,18 @@ const showAchievements = (): void => {
   letter-spacing: 1px;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 40%), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(255 255 255 / 40%),
+      transparent
+    );
     transition: left 0.5s ease;
   }
 
@@ -115,7 +120,11 @@ const showAchievements = (): void => {
 
 /* 按钮样式变体 */
 .inventory-btn {
-  background: linear-gradient(135deg, tokens.$success 0%, tokens.$success-green 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$success 0%,
+    tokens.$success-green 100%
+  );
   color: tokens.$text-primary;
   box-shadow: 0 5px 15px rgb(16 185 129 / 40%);
 }

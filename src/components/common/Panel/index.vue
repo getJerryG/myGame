@@ -7,7 +7,7 @@
       { 'panel--collapsible': collapsible },
       { 'panel--collapsed': isCollapsed },
       { 'panel--disabled': disabled },
-      customClass
+      customClass,
     ]"
   >
     <!-- 面板头部 -->
@@ -20,22 +20,22 @@
         aria-label="折叠/展开面板"
         @click="toggleCollapse"
       >
-        <span class="panel__collapse-icon">{{ isCollapsed ? '▶️' : '▼' }}</span>
+        <span class="panel__collapse-icon">{{ isCollapsed ? "▶️" : "▼" }}</span>
       </button>
-      
+
       <!-- 头部内容 -->
       <div class="panel__header-content">
         <slot name="header">
           <h3 v-if="title" class="panel__title">{{ title }}</h3>
         </slot>
       </div>
-      
+
       <!-- 头部操作区 -->
-      <div v-if="$slots.header-actions" class="panel__header-actions">
+      <div v-if="$slots.header - actions" class="panel__header-actions">
         <slot name="header-actions"></slot>
       </div>
     </div>
-    
+
     <!-- 面板内容 -->
     <div
       v-if="!isCollapsed || !collapsible"
@@ -44,9 +44,12 @@
     >
       <slot></slot>
     </div>
-    
+
     <!-- 面板底部 -->
-    <div v-if="$slots.footer && (!isCollapsed || !collapsible)" class="panel__footer">
+    <div
+      v-if="$slots.footer && (!isCollapsed || !collapsible)"
+      class="panel__footer"
+    >
       <slot name="footer"></slot>
     </div>
   </div>
@@ -59,38 +62,45 @@ interface PanelProps {
   /**
    * 面板样式变体
    */
-  variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info';
-  
+  variant?:
+    | 'default'
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'warning'
+    | 'danger'
+    | 'info';
+
   /**
    * 面板尺寸
    */
   size?: 'small' | 'medium' | 'large';
-  
+
   /**
    * 是否可折叠
    */
   collapsible?: boolean;
-  
+
   /**
    * 是否默认折叠
    */
   defaultCollapsed?: boolean;
-  
+
   /**
    * 当前折叠状态（受控模式）
    */
   collapsed?: boolean;
-  
+
   /**
    * 是否禁用
    */
   disabled?: boolean;
-  
+
   /**
    * 面板标题
    */
   title?: string;
-  
+
   /**
    * 自定义类名
    */
@@ -105,7 +115,7 @@ const props = withDefaults(defineProps<PanelProps>(), {
   collapsed: undefined,
   disabled: false,
   title: '',
-  customClass: ''
+  customClass: '',
 });
 
 const emit = defineEmits<{
@@ -119,16 +129,20 @@ const emit = defineEmits<{
 const isCollapsed = ref(props.defaultCollapsed);
 
 // 监听外部collapsed属性变化（受控模式）
-watch(() => props.collapsed, (newValue) => {
-  if (newValue !== undefined) {
-    isCollapsed.value = newValue;
-  }
-}, { immediate: true });
+watch(
+  () => props.collapsed,
+  (newValue) => {
+    if (newValue !== undefined) {
+      isCollapsed.value = newValue;
+    }
+  },
+  { immediate: true },
+);
 
 // 切换折叠状态
 const toggleCollapse = () => {
   if (props.disabled) return;
-  
+
   const newState = !isCollapsed.value;
   isCollapsed.value = newState;
   emit('collapse-change', newState);
@@ -143,7 +157,7 @@ const toggleCollapse = () => {
   border-radius: tokens.$radius-lg;
   overflow: hidden;
   transition: all tokens.$transition-normal;
-  
+
   /* 禁用状态 */
   &--disabled {
     opacity: 0.6;
@@ -154,19 +168,19 @@ const toggleCollapse = () => {
 /* 面板尺寸 */
 .panel--small {
   padding: tokens.$spacing-sm;
-  
+
   .panel__header {
     padding: tokens.$spacing-xs tokens.$spacing-sm;
   }
-  
+
   .panel__content {
     padding: tokens.$spacing-sm;
   }
-  
+
   .panel__footer {
     padding: tokens.$spacing-xs tokens.$spacing-sm;
   }
-  
+
   .panel__title {
     font-size: tokens.$font-size-base;
   }
@@ -178,7 +192,7 @@ const toggleCollapse = () => {
 
 .panel--large {
   padding: tokens.$spacing-lg;
-  
+
   .panel__title {
     font-size: tokens.$font-size-lg;
   }
@@ -229,12 +243,12 @@ const toggleCollapse = () => {
   background-color: tokens.$bg-secondary;
   border-bottom: 1px solid tokens.$border-light;
   margin: -1px -1px 0;
-  
+
   /* 可折叠面板头部样式 */
   .panel--collapsible & {
     cursor: pointer;
     transition: all tokens.$transition-normal;
-    
+
     &:hover {
       background-color: tokens.$bg-light;
     }
@@ -254,7 +268,7 @@ const toggleCollapse = () => {
   cursor: pointer;
   color: tokens.$text-secondary;
   transition: all tokens.$transition-fast;
-  
+
   &:hover {
     color: tokens.$text-primary;
     transform: scale(1.1);
@@ -292,7 +306,7 @@ const toggleCollapse = () => {
   padding: tokens.$spacing-md;
   color: tokens.$text-primary;
   line-height: 1.6;
-  
+
   /* 可折叠内容的过渡效果 */
   &--collapsible {
     transition: all tokens.$transition-normal;
@@ -318,7 +332,7 @@ const toggleCollapse = () => {
     overflow: hidden;
     border: none;
   }
-  
+
   .panel__footer {
     max-height: 0;
     padding: 0;
@@ -331,20 +345,20 @@ const toggleCollapse = () => {
 @include utils.mobile {
   .panel--large {
     padding: tokens.$spacing-md;
-    
+
     .panel__title {
       font-size: tokens.$font-size-base;
     }
   }
-  
+
   .panel__header {
     padding: tokens.$spacing-xs;
   }
-  
+
   .panel__content {
     padding: tokens.$spacing-sm;
   }
-  
+
   .panel__footer {
     padding: tokens.$spacing-xs;
     flex-direction: column;

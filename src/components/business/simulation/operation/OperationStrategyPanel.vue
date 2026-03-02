@@ -8,15 +8,12 @@
         aria-expanded="!isCollapsed"
         @click="toggleCollapse"
       >
-        <span class="collapse-icon">{{ isCollapsed ? '▶️' : '▼' }}</span>
+        <span class="collapse-icon">{{ isCollapsed ? "▶️" : "▼" }}</span>
       </button>
     </div>
 
     <!-- 面板内容 -->
-    <div
-      class="panel-content"
-      :class="{ collapsed: isCollapsed }"
-    >
+    <div class="panel-content" :class="{ collapsed: isCollapsed }">
       <!-- 策略类型标签页 -->
       <div class="strategy-tabs">
         <button
@@ -34,10 +31,7 @@
       <!-- 策略配置内容 -->
       <div class="strategy-content">
         <!-- 广告投放配置 -->
-        <div
-          v-if="activeTab === 'advertisement'"
-          class="tab-content"
-        >
+        <div v-if="activeTab === 'advertisement'" class="tab-content">
           <AdvertisingConfig
             :channels="advertisementChannels"
             :settings="advertisementSettings"
@@ -48,10 +42,7 @@
         </div>
 
         <!-- 合作联动配置 -->
-        <div
-          v-if="activeTab === 'collaboration'"
-          class="tab-content"
-        >
+        <div v-if="activeTab === 'collaboration'" class="tab-content">
           <CollaborationConfig
             :options="collaborationOptions"
             @select-option="selectCollaboration"
@@ -61,10 +52,7 @@
         </div>
 
         <!-- 危机应对配置 -->
-        <div
-          v-if="activeTab === 'crisis'"
-          class="tab-content"
-        >
+        <div v-if="activeTab === 'crisis'" class="tab-content">
           <CrisisConfig
             :crisis-types="crisisTypes"
             :crisis-solutions="crisisSolutions"
@@ -76,17 +64,11 @@
 
       <!-- 操作按钮 -->
       <div class="action-buttons">
-        <button
-          class="btn btn-secondary"
-          @click="resetSettings"
-        >
+        <button class="btn btn-secondary" @click="resetSettings">
           <span class="btn-icon">🔄</span>
           <span class="btn-text">重置设置</span>
         </button>
-        <button
-          class="btn btn-primary"
-          @click="confirmStrategy"
-        >
+        <button class="btn btn-primary" @click="confirmStrategy">
           <span class="btn-icon">📋</span>
           <span class="btn-text">确认策略</span>
         </button>
@@ -386,7 +368,8 @@ function resetSettings(): void {
 function confirmStrategy(): void {
   emit('strategy-confirmed', {
     type: activeTab.value,
-    settings: activeTab.value === 'advertisement' ? advertisementSettings.value : {},
+    settings:
+      activeTab.value === 'advertisement' ? advertisementSettings.value : {},
     selectedChannels: selectedChannels.value,
     selectedCrisis: selectedCrisis.value,
     selectedSolution: selectedSolution.value,

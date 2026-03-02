@@ -42,7 +42,7 @@
             class="funds-change-indicator"
             :class="{ positive: fundChange > 0, negative: fundChange < 0 }"
           >
-            {{ fundChange > 0 ? '+' : '' }}{{ fundChange }}
+            {{ fundChange > 0 ? "+" : "" }}{{ fundChange }}
           </span>
         </transition>
       </div>
@@ -101,11 +101,15 @@ watch(
       showFundChange.value = false;
     }, 1000);
   },
-  { immediate: false }
+  { immediate: false },
 );
 
 // 数字滚动动画函数
-const animateValue = (start: number, end: number, duration: number): Promise<void> => {
+const animateValue = (
+  start: number,
+  end: number,
+  duration: number,
+): Promise<void> => {
   return new Promise((resolve) => {
     const startTime = performance.now();
     const startValue = Math.floor(start);
@@ -168,7 +172,11 @@ const handleAfterEnter = (el: Element) => {
 // 刘海栏容器
 .notch-bar {
   height: tokens.$notch-bar-height;
-  background: linear-gradient(135deg, tokens.$bg-dark 0%, tokens.$bg-medium 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$bg-dark 0%,
+    tokens.$bg-medium 100%
+  );
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -204,7 +212,11 @@ const handleAfterEnter = (el: Element) => {
   width: 40px;
   height: 40px;
   border-radius: tokens.$radius-md;
-  background: linear-gradient(135deg, tokens.$primary-gold 0%, tokens.$warning 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$primary-gold 0%,
+    tokens.$warning 100%
+  );
 
   @include utils.flex-center;
 
@@ -230,7 +242,11 @@ const handleAfterEnter = (el: Element) => {
   @include utils.flex-col(tokens.$spacing-xs, center);
 
   padding: tokens.$spacing-sm tokens.$spacing-md;
-  background: linear-gradient(135deg, rgb(255 255 255 / 10%) 0%, rgb(255 255 255 / 5%) 100%);
+  background: linear-gradient(
+    135deg,
+    rgb(255 255 255 / 10%) 0%,
+    rgb(255 255 255 / 5%) 100%
+  );
   border-radius: tokens.$radius-full;
   font-size: tokens.$font-size-sm;
   border: 1px solid rgb(255 215 0 / 20%);
@@ -332,7 +348,11 @@ const handleAfterEnter = (el: Element) => {
 
 .exp-progress {
   height: 100%;
-  background: linear-gradient(90deg, tokens.$primary-gold 0%, tokens.$warning 100%);
+  background: linear-gradient(
+    90deg,
+    tokens.$primary-gold 0%,
+    tokens.$warning 100%
+  );
   border-radius: 3px;
   transition: width 0.3s ease;
   box-shadow: 0 0 8px rgb(255 215 0 / 50%);

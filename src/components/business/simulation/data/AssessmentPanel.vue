@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="showAssessment"
-    class="assessment-panel"
-  >
+  <div v-if="showAssessment" class="assessment-panel">
     <div class="assessment-content">
       <h2 class="assessment-title">月度考核结果</h2>
       <div class="assessment-results">
@@ -11,8 +8,14 @@
           :class="{ passed: assessmentResult.downloads }"
         >
           <span class="result-label">下载量:</span>
-          <span class="result-value">{{ businessData.downloads }}/{{ assessment.currentMonthTarget.downloads }}</span>
-          <span class="result-status">{{ assessmentResult.downloads ? '✓' : '✗' }}</span>
+          <span class="result-value"
+            >{{ businessData.downloads }}/{{
+              assessment.currentMonthTarget.downloads
+            }}</span
+          >
+          <span class="result-status">{{
+            assessmentResult.downloads ? "✓" : "✗"
+          }}</span>
         </div>
         <div
           class="result-item"
@@ -20,9 +23,13 @@
         >
           <span class="result-label">活跃用户:</span>
           <span class="result-value"
-            >{{ businessData.activeUsers }}/{{ assessment.currentMonthTarget.activeUsers }}</span
+            >{{ businessData.activeUsers }}/{{
+              assessment.currentMonthTarget.activeUsers
+            }}</span
           >
-          <span class="result-status">{{ assessmentResult.activeUsers ? '✓' : '✗' }}</span>
+          <span class="result-status">{{
+            assessmentResult.activeUsers ? "✓" : "✗"
+          }}</span>
         </div>
         <div
           class="result-item"
@@ -30,36 +37,36 @@
         >
           <span class="result-label">好评率:</span>
           <span class="result-value"
-            >{{ businessData.positiveReviews }}/{{ assessment.currentMonthTarget.positiveReviews }}</span
+            >{{ businessData.positiveReviews }}/{{
+              assessment.currentMonthTarget.positiveReviews
+            }}</span
           >
-          <span class="result-status">{{ assessmentResult.positiveReviews ? '✓' : '✗' }}</span>
+          <span class="result-status">{{
+            assessmentResult.positiveReviews ? "✓" : "✗"
+          }}</span>
         </div>
-        <div
-          class="result-item"
-          :class="{ passed: assessmentResult.revenue }"
-        >
+        <div class="result-item" :class="{ passed: assessmentResult.revenue }">
           <span class="result-label">收入:</span>
           <span class="result-value"
-            >¥{{ businessData.totalRevenue }}/¥{{ assessment.currentMonthTarget.revenue }}</span
+            >¥{{ businessData.totalRevenue }}/¥{{
+              assessment.currentMonthTarget.revenue
+            }}</span
           >
-          <span class="result-status">{{ assessmentResult.revenue ? '✓' : '✗' }}</span>
+          <span class="result-status">{{
+            assessmentResult.revenue ? "✓" : "✗"
+          }}</span>
         </div>
       </div>
       <div
         class="assessment-conclusion"
         :class="{ passed: assessmentResult.allPassed }"
       >
-        <h3>{{ assessmentResult.allPassed ? '考核通过!' : '考核失败!' }}</h3>
+        <h3>{{ assessmentResult.allPassed ? "考核通过!" : "考核失败!" }}</h3>
         <p>
-          {{ assessmentResult.allPassed ? '下个月目标已提高' : '游戏结束' }}
+          {{ assessmentResult.allPassed ? "下个月目标已提高" : "游戏结束" }}
         </p>
       </div>
-      <button
-        class="assessment-close"
-        @click="closeAssessment"
-      >
-        关闭
-      </button>
+      <button class="assessment-close" @click="closeAssessment">关闭</button>
     </div>
   </div>
 </template>

@@ -4,19 +4,13 @@
     :title="selectedItem?.name || '物品详情'"
     @close="$emit('close')"
   >
-    <div
-      v-if="selectedItem"
-      class="item-detail"
-    >
+    <div v-if="selectedItem" class="item-detail">
       <div class="item-header">
         <div class="item-type-badge">{{ selectedItem.type }}</div>
         <h3 class="item-name">{{ selectedItem.name }}</h3>
       </div>
       <div class="item-description">{{ selectedItem.description }}</div>
-      <div
-        v-if="selectedItem.effects"
-        class="item-effects"
-      >
+      <div v-if="selectedItem.effects" class="item-effects">
         <h4 class="item-section-title">效果</h4>
         <div class="effects-grid">
           <div
@@ -30,10 +24,7 @@
         </div>
       </div>
     </div>
-    <div
-      v-else
-      class="empty-detail"
-    >
+    <div v-else class="empty-detail">
       <div class="empty-icon">📦</div>
       <p>没有选中的物品</p>
     </div>

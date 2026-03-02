@@ -1,9 +1,5 @@
 <template>
-  <GameModal
-    :is-visible="isVisible"
-    title="背包"
-    @close="$emit('close')"
-  >
+  <GameModal :is-visible="isVisible" title="背包" @close="$emit('close')">
     <div class="full-inventory">
       <div class="inventory-header">
         <h3>我的背包</h3>
@@ -28,10 +24,7 @@
             使用
           </button>
         </div>
-        <div
-          v-if="inventory.length === 0"
-          class="empty-inventory"
-        >
+        <div v-if="inventory.length === 0" class="empty-inventory">
           <div class="empty-icon">🎒</div>
           <p>背包是空的</p>
         </div>

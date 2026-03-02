@@ -1,13 +1,6 @@
 <template>
-  <div
-    v-if="isVisible"
-    class="exit-dialog-overlay"
-    @click="handleOverlayClick"
-  >
-    <div
-      class="exit-dialog"
-      @click.stop
-    >
+  <div v-if="isVisible" class="exit-dialog-overlay" @click="handleOverlayClick">
+    <div class="exit-dialog" @click.stop>
       <div class="exit-dialog-header">
         <h3 class="exit-dialog-title">{{ title }}</h3>
       </div>
@@ -15,16 +8,10 @@
         <p class="exit-dialog-message">{{ message }}</p>
       </div>
       <div class="exit-dialog-footer">
-        <button
-          class="exit-dialog-button exit-button"
-          @click="handleExit"
-        >
+        <button class="exit-dialog-button exit-button" @click="handleExit">
           直接退出
         </button>
-        <button
-          class="exit-dialog-button save-button"
-          @click="handleSave"
-        >
+        <button class="exit-dialog-button save-button" @click="handleSave">
           立即保存
         </button>
       </div>

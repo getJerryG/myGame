@@ -1,14 +1,6 @@
 <template>
-  <div
-    class="top-core-data"
-    aria-labelledby="core-data-header"
-  >
-    <h2
-      id="core-data-header"
-      class="sr-only"
-    >
-      核心数据
-    </h2>
+  <div class="top-core-data" aria-labelledby="core-data-header">
+    <h2 id="core-data-header" class="sr-only">核心数据</h2>
 
     <!-- 上方：策划信息和时间系统 -->
     <div class="top-section">
@@ -156,7 +148,10 @@ const marketShareChange = computed(() => {
 });
 
 const playerSatisfaction = computed(() => {
-  return Math.min(100, Math.max(0, props.businessData?.playerSatisfaction || 0));
+  return Math.min(
+    100,
+    Math.max(0, props.businessData?.playerSatisfaction || 0),
+  );
 });
 
 const satisfactionChange = computed(() => {
@@ -238,7 +233,11 @@ const getPhaseName = (phase: string) => {
 };
 
 // 动画效果
-const animateValue = (target: number, setter: (val: number) => void, duration = 1000) => {
+const animateValue = (
+  target: number,
+  setter: (val: number) => void,
+  duration = 1000,
+) => {
   const start = performance.now();
   const initialValue = 0;
 

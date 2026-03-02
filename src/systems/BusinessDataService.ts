@@ -45,8 +45,13 @@ export class BusinessDataService {
   }
 
   // 获取历史业务数据
-  getHistoricalBusinessData(startDate: number, endDate: number): BusinessData[] {
-    return this.historicalData.filter((data) => data.timestamp >= startDate && data.timestamp <= endDate);
+  getHistoricalBusinessData(
+    startDate: number,
+    endDate: number,
+  ): BusinessData[] {
+    return this.historicalData.filter(
+      (data) => data.timestamp >= startDate && data.timestamp <= endDate,
+    );
   }
 
   // 更新业务数据
@@ -89,9 +94,18 @@ export class BusinessDataService {
 
     // 计算自然增长（基于当前数据和增长率）
     const naturalGrowth = {
-      downloads: Math.floor((this.currentData.downloads * (this.currentData.dailyGrowthRate / 24)) / 100),
-      activeUsers: Math.floor((this.currentData.activeUsers * (this.currentData.dailyGrowthRate / 24)) / 100),
-      revenue: (this.currentData.revenue * (this.currentData.dailyGrowthRate / 24)) / 100,
+      downloads: Math.floor(
+        (this.currentData.downloads * (this.currentData.dailyGrowthRate / 24)) /
+          100,
+      ),
+      activeUsers: Math.floor(
+        (this.currentData.activeUsers *
+          (this.currentData.dailyGrowthRate / 24)) /
+          100,
+      ),
+      revenue:
+        (this.currentData.revenue * (this.currentData.dailyGrowthRate / 24)) /
+        100,
     };
 
     // 更新下载量
@@ -119,7 +133,10 @@ export class BusinessDataService {
   // 更新下载量
   updateDownloads(): void {
     // 基于当前下载量和保留率计算新的下载量
-    const newDownloads = Math.floor(this.currentData.downloads * (1 + this.currentData.dailyGrowthRate / 24 / 100));
+    const newDownloads = Math.floor(
+      this.currentData.downloads *
+        (1 + this.currentData.dailyGrowthRate / 24 / 100),
+    );
     this.currentData.downloads = newDownloads;
     this.currentData.timestamp = Date.now();
     this.ensureDataInRange();
@@ -132,7 +149,8 @@ export class BusinessDataService {
     // 基于当前活跃用户和保留率计算新的活跃用户数
     const retentionFactor = this.currentData.retentionRate / 100;
     const newActiveUsers = Math.floor(
-      this.currentData.activeUsers * retentionFactor + this.currentData.downloads * 0.1
+      this.currentData.activeUsers * retentionFactor +
+        this.currentData.downloads * 0.1,
     );
     this.currentData.activeUsers = newActiveUsers;
     this.currentData.timestamp = Date.now();
@@ -145,7 +163,9 @@ export class BusinessDataService {
   updateRevenue(): void {
     // 基于活跃用户和平均消费计算收入
     const averageSpending = 0.1; // 平均每用户消费
-    const newRevenue = this.currentData.revenue + this.currentData.activeUsers * averageSpending * Math.random();
+    const newRevenue =
+      this.currentData.revenue +
+      this.currentData.activeUsers * averageSpending * Math.random();
     this.currentData.revenue = newRevenue;
     this.currentData.timestamp = Date.now();
     this.ensureDataInRange();
@@ -159,7 +179,10 @@ export class BusinessDataService {
     const ratingChange = (Math.random() - 0.5) * 2;
     const feedbackChange = Math.floor(Math.random() * 5);
 
-    this.currentData.rating = Math.max(0, Math.min(10, this.currentData.rating + ratingChange));
+    this.currentData.rating = Math.max(
+      0,
+      Math.min(10, this.currentData.rating + ratingChange),
+    );
     this.currentData.feedbackCount += feedbackChange;
 
     this.currentData.timestamp = Date.now();
@@ -173,21 +196,39 @@ export class BusinessDataService {
     // 确保下载量为非负
     this.currentData.downloads = Math.max(0, this.currentData.downloads);
     // 确保活跃用户不超过下载量
-    this.currentData.activeUsers = Math.min(this.currentData.activeUsers, this.currentData.downloads);
+    this.currentData.activeUsers = Math.min(
+      this.currentData.activeUsers,
+      this.currentData.downloads,
+    );
     // 确保好评率为非负
     this.currentData.rating = Math.max(0, this.currentData.rating);
     // 确保收入为非负
     this.currentData.revenue = Math.max(0, this.currentData.revenue);
     // 确保市场份额在0-100之间
-    this.currentData.marketShare = Math.max(0, Math.min(100, this.currentData.marketShare));
+    this.currentData.marketShare = Math.max(
+      0,
+      Math.min(100, this.currentData.marketShare),
+    );
     // 确保留存率在0-100之间
-    this.currentData.retentionRate = Math.max(0, Math.min(100, this.currentData.retentionRate));
+    this.currentData.retentionRate = Math.max(
+      0,
+      Math.min(100, this.currentData.retentionRate),
+    );
     // 确保平均游戏时长为非负
-    this.currentData.averagePlayTime = Math.max(0, this.currentData.averagePlayTime);
+    this.currentData.averagePlayTime = Math.max(
+      0,
+      this.currentData.averagePlayTime,
+    );
     // 确保日增长率在0-100之间
-    this.currentData.dailyGrowthRate = Math.max(0, Math.min(100, this.currentData.dailyGrowthRate));
+    this.currentData.dailyGrowthRate = Math.max(
+      0,
+      Math.min(100, this.currentData.dailyGrowthRate),
+    );
     // 确保反馈数为非负
-    this.currentData.feedbackCount = Math.max(0, this.currentData.feedbackCount);
+    this.currentData.feedbackCount = Math.max(
+      0,
+      this.currentData.feedbackCount,
+    );
   }
 
   // 发布业务数据更新事件
@@ -198,7 +239,9 @@ export class BusinessDataService {
   // 限制历史数据长度，只保留最近30天的数据
   private limitHistoricalDataLength(): void {
     const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
-    this.historicalData = this.historicalData.filter((data) => data.timestamp >= thirtyDaysAgo);
+    this.historicalData = this.historicalData.filter(
+      (data) => data.timestamp >= thirtyDaysAgo,
+    );
   }
 
   // 重置每日数据

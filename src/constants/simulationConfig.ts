@@ -109,10 +109,24 @@ export const SIMULATION_CONFIG = {
   // 财务配置
   FINANCIAL_CONFIG: {
     // 收入来源
-    REVENUE_SOURCES: ['Game Sales', 'DLC', 'Microtransactions', 'Subscriptions', 'Licensing', 'Merchandise'],
+    REVENUE_SOURCES: [
+      'Game Sales',
+      'DLC',
+      'Microtransactions',
+      'Subscriptions',
+      'Licensing',
+      'Merchandise',
+    ],
 
     // 支出类别
-    EXPENSE_CATEGORIES: ['Development', 'Marketing', 'Operations', 'Salaries', 'Licensing', 'Maintenance'],
+    EXPENSE_CATEGORIES: [
+      'Development',
+      'Marketing',
+      'Operations',
+      'Salaries',
+      'Licensing',
+      'Maintenance',
+    ],
 
     // 税率配置
     TAX_RATES: {
@@ -196,7 +210,15 @@ export const SIMULATION_CONFIG = {
   // 技术配置
   TECHNOLOGY_CONFIG: {
     // 技术栈
-    TECH_STACKS: ['Unity', 'Unreal Engine', 'Godot', 'Custom Engine', 'HTML5/JS', 'React Native', 'Flutter'],
+    TECH_STACKS: [
+      'Unity',
+      'Unreal Engine',
+      'Godot',
+      'Custom Engine',
+      'HTML5/JS',
+      'React Native',
+      'Flutter',
+    ],
 
     // 技术成本
     TECH_COSTS: {

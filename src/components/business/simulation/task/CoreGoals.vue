@@ -6,7 +6,9 @@
     <div class="stage-nav">
       <div class="stage-header">
         <div class="stage-title">当前阶段</div>
-        <div class="stage-count">第{{ simulationStore.coreGoals.currentStage }}个月目标</div>
+        <div class="stage-count">
+          第{{ simulationStore.coreGoals.currentStage }}个月目标
+        </div>
       </div>
 
       <div class="stage-progress">
@@ -46,19 +48,13 @@
 
     <!-- 当前阶段目标 -->
     <div class="current-stage-card">
-      <h3 class="card-title">{{ currentStage?.name }}（第{{ currentStage?.month }}个月）</h3>
+      <h3 class="card-title">
+        {{ currentStage?.name }}（第{{ currentStage?.month }}个月）
+      </h3>
 
-      <div
-        v-if="!currentStage"
-        class="empty-state"
-      >
-        暂无目标
-      </div>
+      <div v-if="!currentStage" class="empty-state">暂无目标</div>
 
-      <div
-        v-else
-        class="goals-list"
-      >
+      <div v-else class="goals-list">
         <div
           v-for="(goal, index) in currentStage.goals"
           :key="index"
@@ -71,7 +67,11 @@
               class="goal-status"
               :class="goal.completed ? 'status-completed' : 'status-pending'"
             >
-              {{ goal.completed ? '✓ 已完成' : `${formatValue(goal.current)}/${formatValue(goal.target)}` }}
+              {{
+                goal.completed
+                  ? "✓ 已完成"
+                  : `${formatValue(goal.current)}/${formatValue(goal.target)}`
+              }}
             </div>
           </div>
 
@@ -91,10 +91,7 @@
       </div>
 
       <!-- 阶段奖励 -->
-      <div
-        v-if="currentStage && !currentStage.completed"
-        class="stage-rewards"
-      >
+      <div v-if="currentStage && !currentStage.completed" class="stage-rewards">
         <div class="rewards-title">阶段奖励</div>
         <div class="rewards-list">
           <div>• 解锁新的高级操作</div>
@@ -117,17 +114,11 @@
     <div class="history-card">
       <h3 class="card-title">历史阶段记录</h3>
 
-      <div
-        v-if="completedStages.length === 0"
-        class="empty-state"
-      >
+      <div v-if="completedStages.length === 0" class="empty-state">
         暂无完成的阶段
       </div>
 
-      <div
-        v-else
-        class="history-list"
-      >
+      <div v-else class="history-list">
         <div
           v-for="stage in completedStages"
           :key="stage.id"
@@ -137,7 +128,11 @@
             <div class="history-name">{{ stage.name }}</div>
             <div class="history-month">第{{ stage.month }}个月完成</div>
           </div>
-          <div class="history-progress">完成了{{ completedGoalsCount(stage) }}/{{ stage.goals.length }}个目标</div>
+          <div class="history-progress">
+            完成了{{ completedGoalsCount(stage) }}/{{
+              stage.goals.length
+            }}个目标
+          </div>
         </div>
       </div>
     </div>
@@ -168,7 +163,9 @@ const simulationStore = useSimulationStore();
 
 // 获取当前阶段
 const currentStage = computed<CoreGoalStage | undefined>(() => {
-  return simulationStore.coreGoals.stages.find((stage) => stage.month === simulationStore.coreGoals.currentStage);
+  return simulationStore.coreGoals.stages.find(
+    (stage) => stage.month === simulationStore.coreGoals.currentStage,
+  );
 });
 
 // 获取已完成阶段
@@ -219,7 +216,7 @@ watch(
   () => simulationStore.gameState.dayCount,
   () => {
     simulationStore.updateCoreGoalsProgress();
-  }
+  },
 );
 </script>
 

@@ -9,19 +9,13 @@
     @mousedown="startDrag"
   >
     <!-- 标题栏 -->
-    <div
-      class="app-header"
-      @mousedown.stop="startDragHeader"
-    >
+    <div class="app-header" @mousedown.stop="startDragHeader">
       <div class="app-title">
         <span class="app-icon">{{ app.icon }}</span>
         <span class="app-name">{{ app.name }}</span>
       </div>
       <div class="app-controls">
-        <button
-          class="control-button close"
-          @click.stop="handleClose"
-        >
+        <button class="control-button close" @click.stop="handleClose">
           <span>×</span>
         </button>
       </div>
@@ -30,10 +24,7 @@
     <!-- 主要内容区域 - 支持侧边栏和主内容布局 -->
     <div class="app-content">
       <!-- 侧边栏（可选） -->
-      <aside
-        v-if="app.modules && app.modules.length > 1"
-        class="app-sidebar"
-      >
+      <aside v-if="app.modules && app.modules.length > 1" class="app-sidebar">
         <nav class="sidebar-nav">
           <div
             v-for="module in app.modules"
@@ -42,7 +33,9 @@
             :class="{ active: windowState.activeModule === module.id }"
             @click="handleModuleChange(module.id)"
           >
-            <span class="sidebar-item-icon">{{ getModuleIcon(module.id) }}</span>
+            <span class="sidebar-item-icon">{{
+              getModuleIcon(module.id)
+            }}</span>
             <span class="sidebar-item-name">{{ module.name }}</span>
           </div>
         </nav>

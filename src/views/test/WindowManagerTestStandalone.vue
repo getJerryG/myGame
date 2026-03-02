@@ -20,7 +20,7 @@ import WindowManager from '../components/common/window/WindowManager.vue';
   height: 100vh;
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f0f0f0;
   overflow: hidden;
 }

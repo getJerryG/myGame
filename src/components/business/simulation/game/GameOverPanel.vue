@@ -1,11 +1,8 @@
 <template>
-  <div
-    v-if="gameState && gameState.isGameOver"
-    class="game-over-panel"
-  >
+  <div v-if="gameState && gameState.isGameOver" class="game-over-panel">
     <div class="game-over-content">
       <h2 class="game-over-title">游戏结束</h2>
-      <p class="game-over-reason">{{ gameState?.gameOverReason || '' }}</p>
+      <p class="game-over-reason">{{ gameState?.gameOverReason || "" }}</p>
       <div class="final-stats">
         <h3 class="stats-title">最终数据</h3>
         <div class="stat-item">
@@ -19,7 +16,8 @@
         <div class="stat-item">
           <span class="stat-label">最高日活用户:</span>
           <span class="stat-value">{{
-            businessData?.dailyLoginHistory && businessData.dailyLoginHistory.length > 0
+            businessData?.dailyLoginHistory &&
+            businessData.dailyLoginHistory.length > 0
               ? Math.max(...businessData.dailyLoginHistory.map((h) => h.value))
               : 0
           }}</span>
@@ -29,12 +27,7 @@
           <span class="stat-value">¥{{ businessData?.totalRevenue || 0 }}</span>
         </div>
       </div>
-      <button
-        class="restart-btn"
-        @click="resetGame"
-      >
-        重新开始
-      </button>
+      <button class="restart-btn" @click="resetGame">重新开始</button>
     </div>
   </div>
 </template>

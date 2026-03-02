@@ -85,7 +85,9 @@ export const useLotteryStorageStore = defineStore('lotteryStorage', {
 
     // 获取缓存的抽奖结果
     getCachedResults: (state) => (cacheKey: string) => {
-      const cachedItem = state.resultCache.cachedResults.find((item) => item.cacheKey === cacheKey);
+      const cachedItem = state.resultCache.cachedResults.find(
+        (item) => item.cacheKey === cacheKey,
+      );
       if (cachedItem && cachedItem.expiration > Date.now()) {
         return cachedItem.results;
       }
@@ -108,7 +110,9 @@ export const useLotteryStorageStore = defineStore('lotteryStorage', {
     // 缓存抽奖结果
     cacheResults(cacheKey: string, results: any[], expirationMinutes = 60) {
       // 移除旧的相同key的缓存
-      this.resultCache.cachedResults = this.resultCache.cachedResults.filter((item) => item.cacheKey !== cacheKey);
+      this.resultCache.cachedResults = this.resultCache.cachedResults.filter(
+        (item) => item.cacheKey !== cacheKey,
+      );
 
       // 添加新缓存
       this.resultCache.cachedResults.push({
@@ -119,14 +123,25 @@ export const useLotteryStorageStore = defineStore('lotteryStorage', {
       });
 
       // 清理超出最大数量的缓存
-      if (this.resultCache.cachedResults.length > this.resultCache.maxCacheSize) {
-        this.resultCache.cachedResults.sort((a, b) => a.timestamp - b.timestamp);
-        this.resultCache.cachedResults = this.resultCache.cachedResults.slice(-this.resultCache.maxCacheSize);
+      if (
+        this.resultCache.cachedResults.length > this.resultCache.maxCacheSize
+      ) {
+        this.resultCache.cachedResults.sort(
+          (a, b) => a.timestamp - b.timestamp,
+        );
+        this.resultCache.cachedResults = this.resultCache.cachedResults.slice(
+          -this.resultCache.maxCacheSize,
+        );
       }
     },
 
     // 更新抽奖统计
-    updateStatistics(date: string, drawCount: number, cost: number, rewardValue: number) {
+    updateStatistics(
+      date: string,
+      drawCount: number,
+      cost: number,
+      rewardValue: number,
+    ) {
       // 更新每日统计
       if (!this.statistics.daily[date]) {
         this.statistics.daily[date] = {
@@ -150,7 +165,9 @@ export const useLotteryStorageStore = defineStore('lotteryStorage', {
     // 清理过期缓存
     cleanExpiredCache() {
       const now = Date.now();
-      this.resultCache.cachedResults = this.resultCache.cachedResults.filter((item) => item.expiration > now);
+      this.resultCache.cachedResults = this.resultCache.cachedResults.filter(
+        (item) => item.expiration > now,
+      );
     },
 
     // 重置统计数据

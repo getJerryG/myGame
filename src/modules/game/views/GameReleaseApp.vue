@@ -3,22 +3,14 @@
     <!-- 应用头部 -->
     <div class="app-header">
       <h2 class="app-title">游戏发布</h2>
-      <button
-        class="close-btn"
-        @click="closeApp"
-      >
-        ×
-      </button>
+      <button class="close-btn" @click="closeApp">×</button>
     </div>
 
     <!-- 应用内容 -->
     <div class="app-content">
       <!-- 发布状态 -->
       <div class="release-status">
-        <div
-          class="status-card"
-          :class="releaseStatus"
-        >
+        <div class="status-card" :class="releaseStatus">
           <div class="status-icon">{{ getStatusIcon() }}</div>
           <div class="status-text">{{ getStatusText() }}</div>
         </div>
@@ -104,7 +96,7 @@
           :disabled="isReleasing"
           @click="startRelease"
         >
-          {{ isReleasing ? '发布中...' : '开始发布' }}
+          {{ isReleasing ? "发布中..." : "开始发布" }}
         </button>
       </div>
     </div>
@@ -286,12 +278,20 @@ const closeApp = () => {
     transition: all tokens.$transition-normal;
 
     &.idle {
-      background: linear-gradient(135deg, tokens.$bg-light 0%, tokens.$bg-lighter 100%);
+      background: linear-gradient(
+        135deg,
+        tokens.$bg-light 0%,
+        tokens.$bg-lighter 100%
+      );
       border: 2px solid tokens.$border-light;
     }
 
     &.releasing {
-      background: linear-gradient(135deg, tokens.$primary 0%, tokens.$primary-dark 100%);
+      background: linear-gradient(
+        135deg,
+        tokens.$primary 0%,
+        tokens.$primary-dark 100%
+      );
       animation: pulse 1.5s ease-in-out infinite;
     }
 

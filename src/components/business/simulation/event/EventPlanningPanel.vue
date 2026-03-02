@@ -8,15 +8,12 @@
         aria-expanded="!isCollapsed"
         @click="toggleCollapse"
       >
-        <span class="collapse-icon">{{ isCollapsed ? '▶️' : '🔽' }}</span>
+        <span class="collapse-icon">{{ isCollapsed ? "▶️" : "🔽" }}</span>
       </button>
     </div>
 
     <!-- 面板内容 -->
-    <div
-      class="panel-content"
-      :class="{ collapsed: isCollapsed }"
-    >
+    <div class="panel-content" :class="{ collapsed: isCollapsed }">
       <!-- 活动类型选择器 -->
       <EventTypeSelector
         :event-types="eventTypes"
@@ -43,10 +40,7 @@
 
       <!-- 快速策划按钮 -->
       <div class="quick-plan-section">
-        <button
-          class="quick-plan-btn"
-          @click="quickPlan"
-        >
+        <button class="quick-plan-btn" @click="quickPlan">
           <span class="btn-icon">⚡</span>
           <span class="btn-text">快速策划</span>
         </button>
@@ -60,10 +54,7 @@
       />
 
       <!-- 影响预览区域 -->
-      <div
-        class="impact-preview"
-        v-if="showImpactPreview"
-      >
+      <div class="impact-preview" v-if="showImpactPreview">
         <h4 class="section-subtitle">影响预览</h4>
         <div class="impact-grid">
           <div
@@ -79,7 +70,8 @@
                 negative: impact.change < 0,
               }"
             >
-              {{ impact.change > 0 ? '📈' : '📉' }}{{ Math.abs(impact.change) }}%
+              {{ impact.change > 0 ? "📈" : "📉"
+              }}{{ Math.abs(impact.change) }}%
             </div>
             <div class="impact-desc">{{ impact.description }}</div>
           </div>
@@ -354,7 +346,10 @@ const applyTemplate = (template: EventTemplate): void => {
 // 快速策划
 const quickPlan = (): void => {
   // 随机选择一个模板
-  const randomTemplate = eventTemplates.value[Math.floor(Math.random() * eventTemplates.value.length)];
+  const randomTemplate =
+    eventTemplates.value[
+      Math.floor(Math.random() * eventTemplates.value.length)
+    ];
   applyTemplate(randomTemplate);
 };
 

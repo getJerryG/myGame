@@ -1,10 +1,7 @@
 <template>
   <div class="taskbar">
     <div class="taskbar-left">
-      <div
-        class="start-button"
-        @click="toggleStartMenu"
-      >
+      <div class="start-button" @click="toggleStartMenu">
         <span>开始</span>
       </div>
     </div>
@@ -13,34 +10,21 @@
     </div>
 
     <!-- 开始菜单 -->
-    <div
-      v-if="isStartMenuOpen"
-      class="start-menu"
-      @click.stop
-    >
+    <div v-if="isStartMenuOpen" class="start-menu" @click.stop>
       <div class="start-menu-header">
         <h2>开始</h2>
       </div>
       <div class="start-menu-content">
         <div class="start-menu-buttons">
-          <button
-            class="start-menu-button"
-            @click="handleSaveGame"
-          >
+          <button class="start-menu-button" @click="handleSaveGame">
             <span class="button-icon">💾</span>
             <span class="button-text">保存副本</span>
           </button>
-          <button
-            class="start-menu-button"
-            @click="handleRestartGame"
-          >
+          <button class="start-menu-button" @click="handleRestartGame">
             <span class="button-icon">🔄</span>
             <span class="button-text">重新开始</span>
           </button>
-          <button
-            class="start-menu-button"
-            @click="handleOpenSettings"
-          >
+          <button class="start-menu-button" @click="handleOpenSettings">
             <span class="button-icon">⚙️</span>
             <span class="button-text">游戏设置</span>
           </button>
@@ -87,7 +71,15 @@ const closeStartMenu = (): void => {
 
 // 计算游戏日期对应的星期几
 const getDayOfWeek = (year: number, month: number, day: number): string => {
-  const daysOfWeek = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+  const daysOfWeek = [
+    '星期日',
+    '星期一',
+    '星期二',
+    '星期三',
+    '星期四',
+    '星期五',
+    '星期六',
+  ];
   const totalDays = (year - 1) * 365 + (month - 1) * 30 + day;
   return daysOfWeek[totalDays % 7];
 };

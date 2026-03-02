@@ -121,12 +121,16 @@ const baseStats = ref<ActivityStats>({
 });
 
 // 参与趋势数据
-const participationTrend = ref<number[]>([30, 45, 60, 55, 70, 85, 90, 75, 80, 95, 100, 85]);
+const participationTrend = ref<number[]>([
+  30, 45, 60, 55, 70, 85, 90, 75, 80, 95, 100, 85,
+]);
 
 // 计算属性
 const computedStats = computed<ActivityStats>(() => {
   const ongoing = activities.value.filter((a) => a.status === 'ongoing').length;
-  const completed = activities.value.filter((a) => a.status === 'completed').length;
+  const completed = activities.value.filter(
+    (a) => a.status === 'completed',
+  ).length;
   const total = activities.value.length;
 
   return {

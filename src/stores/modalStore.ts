@@ -63,7 +63,7 @@ export const useModalStore = defineStore('modal', {
         size?: { width: number; height: number };
         position?: { x: number; y: number };
         activeModule?: string;
-      }
+      },
     ) {
       // 生成唯一ID
       const id = `modal-${this.modalCounter++}`;
@@ -99,7 +99,9 @@ export const useModalStore = defineStore('modal', {
       isMinimized?: boolean;
       activeModule?: string;
     }) {
-      const index = this.modals.findIndex((modal) => modal.id === updatedModal.id);
+      const index = this.modals.findIndex(
+        (modal) => modal.id === updatedModal.id,
+      );
       if (index !== -1) {
         this.modals[index] = {
           ...this.modals[index],

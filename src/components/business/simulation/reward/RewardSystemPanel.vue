@@ -8,15 +8,12 @@
         aria-expanded="!isCollapsed"
         @click="toggleCollapse"
       >
-        <span class="collapse-icon">{{ isCollapsed ? '▶️' : '▼' }}</span>
+        <span class="collapse-icon">{{ isCollapsed ? "▶️" : "▼" }}</span>
       </button>
     </div>
 
     <!-- 面板内容 -->
-    <div
-      class="panel-content"
-      :class="{ collapsed: isCollapsed }"
-    >
+    <div class="panel-content" :class="{ collapsed: isCollapsed }">
       <!-- 奖励类型标签页 -->
       <div class="reward-tabs">
         <button
@@ -34,10 +31,7 @@
       <!-- 奖励配置内容 -->
       <div class="reward-content">
         <!-- 登录奖励配置 -->
-        <div
-          v-if="activeTab === 'login'"
-          class="tab-content"
-        >
+        <div v-if="activeTab === 'login'" class="tab-content">
           <LoginRewardConfig
             :login-rewards="loginRewards"
             @drag-start="onDragStart"
@@ -49,21 +43,12 @@
         </div>
 
         <!-- 任务奖励配置 -->
-        <div
-          v-if="activeTab === 'task'"
-          class="tab-content"
-        >
-          <TaskRewardConfig
-            :tasks="tasks"
-            @edit-task="editTask"
-          />
+        <div v-if="activeTab === 'task'" class="tab-content">
+          <TaskRewardConfig :tasks="tasks" @edit-task="editTask" />
         </div>
 
         <!-- 赛季奖励配置 -->
-        <div
-          v-if="activeTab === 'season'"
-          class="tab-content"
-        >
+        <div v-if="activeTab === 'season'" class="tab-content">
           <SeasonRewardConfig
             :ranks="ranks"
             @edit-rank-reward="editRankReward"
@@ -81,18 +66,19 @@
           </div>
           <div class="calculator-item">
             <span class="calculator-label">预计留存提升</span>
-            <span class="calculator-value">{{ calculateRetentionIncrease() }}%</span>
+            <span class="calculator-value"
+              >{{ calculateRetentionIncrease() }}%</span
+            >
           </div>
           <div class="calculator-item">
             <span class="calculator-label">预期参与率</span>
-            <span class="calculator-value">{{ calculateParticipationRate() }}%</span>
+            <span class="calculator-value"
+              >{{ calculateParticipationRate() }}%</span
+            >
           </div>
           <div class="calculator-item">
             <span class="calculator-label">ROI估算</span>
-            <span
-              class="calculator-value"
-              :class="getROIClass()"
-            >
+            <span class="calculator-value" :class="getROIClass()">
               {{ calculateROI() }}%
             </span>
           </div>
@@ -101,17 +87,11 @@
 
       <!-- 操作按钮 -->
       <div class="action-buttons">
-        <button
-          class="btn btn-secondary"
-          @click="resetConfig"
-        >
+        <button class="btn btn-secondary" @click="resetConfig">
           <span class="btn-icon">🔄</span>
           <span class="btn-text">重置配置</span>
         </button>
-        <button
-          class="btn btn-primary"
-          @click="saveConfig"
-        >
+        <button class="btn btn-primary" @click="saveConfig">
           <span class="btn-icon">💾</span>
           <span class="btn-text">保存配置</span>
         </button>

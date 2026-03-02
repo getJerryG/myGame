@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="isVisible"
-    class="guide-overlay"
-  >
+  <div v-if="isVisible" class="guide-overlay">
     <div class="guide-content">
       <div class="guide-header">
         <h3 class="guide-title">游戏指南</h3>
@@ -13,10 +10,7 @@
       </div>
       <div class="guide-body">
         <div class="guide-text">{{ guideSteps[currentStep].text }}</div>
-        <div
-          v-if="guideSteps[currentStep].image"
-          class="guide-image"
-        >
+        <div v-if="guideSteps[currentStep].image" class="guide-image">
           <!-- 这里可以添加引导图片 -->
         </div>
       </div>
@@ -28,18 +22,10 @@
         >
           上一步
         </button>
-        <button
-          class="guide-btn next"
-          @click="nextStep"
-        >
-          {{ currentStep === guideSteps.length - 1 ? '完成' : '下一步' }}
+        <button class="guide-btn next" @click="nextStep">
+          {{ currentStep === guideSteps.length - 1 ? "完成" : "下一步" }}
         </button>
-        <button
-          class="guide-btn skip"
-          @click="skipGuide"
-        >
-          跳过
-        </button>
+        <button class="guide-btn skip" @click="skipGuide">跳过</button>
       </div>
     </div>
 
@@ -157,13 +143,18 @@ onMounted(() => {
   overflow: hidden;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 30%), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(255 255 255 / 30%),
+      transparent
+    );
     transition: left 0.6s ease;
     z-index: 0;
   }
@@ -195,7 +186,7 @@ onMounted(() => {
   text-shadow:
     0 0 10px rgb(255 255 255 / 80%),
     2px 2px 4px rgb(0 0 0 / 50%);
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: "Comic Sans MS", cursive, sans-serif;
   letter-spacing: 1px;
 }
 
@@ -245,7 +236,7 @@ onMounted(() => {
   line-height: 1.8;
   color: #4a5568;
   margin-bottom: 20px;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: "Comic Sans MS", cursive, sans-serif;
   background: linear-gradient(135deg, #fff 0%, #f1f5f9 100%);
   padding: 15px;
   border-radius: 12px;
@@ -295,7 +286,7 @@ onMounted(() => {
   font-size: 16px;
   font-weight: bold;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: "Comic Sans MS", cursive, sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   position: relative;
@@ -305,13 +296,18 @@ onMounted(() => {
   min-width: 100px;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 40%), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(255 255 255 / 40%),
+      transparent
+    );
     transition: left 0.5s ease;
     z-index: -1;
   }
@@ -393,7 +389,7 @@ onMounted(() => {
   filter: drop-shadow(0 5px 10px rgb(0 0 0 / 30%));
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 10px;
     left: -12px;

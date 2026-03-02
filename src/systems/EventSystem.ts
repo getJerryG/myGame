@@ -7,7 +7,13 @@ import type {
 } from '../types/simulation';
 
 // 导入事件相关类型
-export type EventType = 'market' | 'player' | 'system' | 'story' | 'random' | 'achievement';
+export type EventType =
+  | 'market'
+  | 'player'
+  | 'system'
+  | 'story'
+  | 'random'
+  | 'achievement';
 export type EventCategory =
   | 'finance'
   | 'reputation'
@@ -23,8 +29,10 @@ export class EventSystem {
   private events: SimulationEvent[] = [];
   private activeEvents: Set<string> = new Set();
   private eventHistory: SimulationEvent[] = [];
-  private eventHandlers: Map<EventType, Array<(event: SimulationEvent) => Promise<SimulationEventOption[]>>> =
-    new Map();
+  private eventHandlers: Map<
+    EventType,
+    Array<(event: SimulationEvent) => Promise<SimulationEventOption[]>>
+  > = new Map();
   private state: SimulationState | null = null;
   private eventEffects: Map<string, SimulationEventEffect[]> = new Map(); // 存储事件效果
   private eventCategories: Map<EventCategory, EventType[]> = new Map(); // 事件分类映射
@@ -52,7 +60,7 @@ export class EventSystem {
   // 注册事件处理器
   public registerEventHandler(
     type: EventType,
-    handler: (event: SimulationEvent) => Promise<SimulationEventOption[]>
+    handler: (event: SimulationEvent) => Promise<SimulationEventOption[]>,
   ): void {
     if (!this.eventHandlers.has(type)) {
       this.eventHandlers.set(type, []);
@@ -63,7 +71,7 @@ export class EventSystem {
   // 移除事件处理器
   public removeEventHandler(
     type: EventType,
-    handler: (event: SimulationEvent) => Promise<SimulationEventOption[]>
+    handler: (event: SimulationEvent) => Promise<SimulationEventOption[]>,
   ): void {
     const handlers = this.eventHandlers.get(type);
     if (handlers) {
@@ -80,7 +88,8 @@ export class EventSystem {
 
     // 简单的事件生成逻辑，实际项目中可以根据游戏状态和概率生成更复杂的事件
     const eventTypes: EventType[] = ['market', 'random', 'system'];
-    const randomType = eventTypes[Math.floor(Math.random() * eventTypes.length)];
+    const randomType =
+      eventTypes[Math.floor(Math.random() * eventTypes.length)];
     const randomId = `event-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
     // 随机选择事件分类
@@ -93,7 +102,8 @@ export class EventSystem {
       'system',
       'story',
     ];
-    const randomCategory = eventCategories[Math.floor(Math.random() * eventCategories.length)];
+    const randomCategory =
+      eventCategories[Math.floor(Math.random() * eventCategories.length)];
 
     // 生成事件对象
     const newEvent: SimulationEvent = {
@@ -160,10 +170,16 @@ export class EventSystem {
         '出现了一个突发状况，需要快速决策。',
         '遇到了一个随机事件，结果难以预测。',
       ],
-      achievement: ['恭喜你解锁了新的成就！', '你达成了一个重要的里程碑，值得庆祝。', '获得了一项荣誉，继续保持！'],
+      achievement: [
+        '恭喜你解锁了新的成就！',
+        '你达成了一个重要的里程碑，值得庆祝。',
+        '获得了一项荣誉，继续保持！',
+      ],
     };
     const typeDescriptions = descriptions[type];
-    return typeDescriptions[Math.floor(Math.random() * typeDescriptions.length)];
+    return typeDescriptions[
+      Math.floor(Math.random() * typeDescriptions.length)
+    ];
   }
 
   // 获取随机影响程度
@@ -184,7 +200,12 @@ export class EventSystem {
 
   // 获取随机严重程度
   private getRandomSeverity(): 'low' | 'medium' | 'high' | 'critical' {
-    const severities: Array<'low' | 'medium' | 'high' | 'critical'> = ['low', 'medium', 'high', 'critical'];
+    const severities: Array<'low' | 'medium' | 'high' | 'critical'> = [
+      'low',
+      'medium',
+      'high',
+      'critical',
+    ];
     const weights = [0.5, 0.3, 0.15, 0.05]; // 权重：低50%，中30%，高15%，严重5%
 
     const random = Math.random();
@@ -199,7 +220,10 @@ export class EventSystem {
   }
 
   // 生成事件选项
-  private generateEventOptions(type: EventType, category: EventCategory): SimulationEventOption[] {
+  private generateEventOptions(
+    type: EventType,
+    category: EventCategory,
+  ): SimulationEventOption[] {
     const options: SimulationEventOption[] = [];
     const optionCount = Math.floor(Math.random() * 2) + 2; // 2-3个选项
 
@@ -207,22 +231,29 @@ export class EventSystem {
       const optionId = `option-${Date.now()}-${i}`;
       let optionText = '';
       let optionDescription = '';
-      const optionEffects = this.generateEventEffectForOption(type, category, i);
+      const optionEffects = this.generateEventEffectForOption(
+        type,
+        category,
+        i,
+      );
       const optionCost = this.generateOptionCost(type, category);
 
       // 根据选项索引生成不同的选项文本
       switch (i) {
         case 0:
           optionText = '积极应对';
-          optionDescription = '采取积极措施应对该事件，可能会带来较好的结果，但需要一定的成本。';
+          optionDescription =
+            '采取积极措施应对该事件，可能会带来较好的结果，但需要一定的成本。';
           break;
         case 1:
           optionText = '消极应对';
-          optionDescription = '采取保守措施应对该事件，成本较低，但可能效果不佳。';
+          optionDescription =
+            '采取保守措施应对该事件，成本较低，但可能效果不佳。';
           break;
         case 2:
           optionText = '忽略';
-          optionDescription = '完全忽略该事件，没有成本，但可能会带来负面效果。';
+          optionDescription =
+            '完全忽略该事件，没有成本，但可能会带来负面效果。';
           break;
       }
 
@@ -244,7 +275,7 @@ export class EventSystem {
   private generateEventEffectForOption(
     _type: EventType,
     category: EventCategory,
-    optionIndex: number
+    optionIndex: number,
   ): SimulationEventEffect[] {
     const effects: SimulationEventEffect[] = [];
 
@@ -266,7 +297,11 @@ export class EventSystem {
         effects.push({
           type: 'reputation',
           value:
-            optionIndex === 0 ? Math.random() * 20 + 10 : optionIndex === 1 ? Math.random() * 10 : -Math.random() * 20,
+            optionIndex === 0
+              ? Math.random() * 20 + 10
+              : optionIndex === 1
+                ? Math.random() * 10
+                : -Math.random() * 20,
           isPermanent: true,
         });
         break;
@@ -274,7 +309,11 @@ export class EventSystem {
         effects.push({
           type: 'popularity',
           value:
-            optionIndex === 0 ? Math.random() * 20 + 10 : optionIndex === 1 ? Math.random() * 10 : -Math.random() * 20,
+            optionIndex === 0
+              ? Math.random() * 20 + 10
+              : optionIndex === 1
+                ? Math.random() * 10
+                : -Math.random() * 20,
           isPermanent: true,
         });
         break;
@@ -282,8 +321,15 @@ export class EventSystem {
         effects.push({
           type: 'popularity',
           value:
-            optionIndex === 0 ? Math.random() * 15 + 5 : optionIndex === 1 ? Math.random() * 5 : -Math.random() * 15,
-          duration: optionIndex === 0 ? Math.floor(Math.random() * 30) + 15 : Math.floor(Math.random() * 10) + 5,
+            optionIndex === 0
+              ? Math.random() * 15 + 5
+              : optionIndex === 1
+                ? Math.random() * 5
+                : -Math.random() * 15,
+          duration:
+            optionIndex === 0
+              ? Math.floor(Math.random() * 30) + 15
+              : Math.floor(Math.random() * 10) + 5,
         });
         break;
     }
@@ -292,7 +338,10 @@ export class EventSystem {
   }
 
   // 生成选项成本
-  private generateOptionCost(type: EventType, _category: EventCategory): SimulationEventOption['cost'] | undefined {
+  private generateOptionCost(
+    type: EventType,
+    _category: EventCategory,
+  ): SimulationEventOption['cost'] | undefined {
     // 只有积极应对的选项有成本
     if (type === 'random' || type === 'system') {
       return {
@@ -323,7 +372,10 @@ export class EventSystem {
   }
 
   // 生成事件效果
-  private generateEventEffects(type: EventType, _category: EventCategory): SimulationEventEffect[] {
+  private generateEventEffects(
+    type: EventType,
+    _category: EventCategory,
+  ): SimulationEventEffect[] {
     const effects: SimulationEventEffect[] = [];
 
     // 根据事件类型和分类生成不同的效果
@@ -356,7 +408,9 @@ export class EventSystem {
         break;
       case 'random':
         effects.push({
-          type: ['money', 'reputation', 'popularity'][Math.floor(Math.random() * 3)] as any,
+          type: ['money', 'reputation', 'popularity'][
+            Math.floor(Math.random() * 3)
+          ] as any,
           value: Math.random() * 50 - 25, // -25 到 +25
           duration: Math.floor(Math.random() * 30) + 10, // 10-40天
         });
@@ -381,7 +435,9 @@ export class EventSystem {
   }
 
   // 触发事件
-  public async triggerEvent(event: SimulationEvent): Promise<SimulationEventOption[]> {
+  public async triggerEvent(
+    event: SimulationEvent,
+  ): Promise<SimulationEventOption[]> {
     const handlers = this.eventHandlers.get(event.type as EventType) || [];
     const results: SimulationEventOption[][] = [];
 
@@ -400,7 +456,7 @@ export class EventSystem {
   // 处理事件选项选择
   public resolveEvent(
     eventId: string,
-    optionId: string
+    optionId: string,
   ): { success: boolean; effects: SimulationEventEffect[]; message: string } {
     const event = this.events.find((e) => e.id === eventId);
     if (!event || event.isResolved || !event.isActive) {
@@ -412,7 +468,9 @@ export class EventSystem {
     }
 
     // 查找选择的选项
-    const selectedOption = event.options.find((option) => option.id === optionId);
+    const selectedOption = event.options.find(
+      (option) => option.id === optionId,
+    );
     if (!selectedOption) {
       return {
         success: false,
@@ -423,7 +481,9 @@ export class EventSystem {
 
     // 检查选项要求
     if (selectedOption.requirements) {
-      const requirementsMet = this.checkRequirements(selectedOption.requirements);
+      const requirementsMet = this.checkRequirements(
+        selectedOption.requirements,
+      );
       if (!requirementsMet) {
         return {
           success: false,
@@ -449,7 +509,7 @@ export class EventSystem {
         selectedOption.effects.map((effect) => ({
           ...effect,
           value: effect.value * 0.5, // 失败时效果减半或变为负面
-        }))
+        })),
       );
     }
 
@@ -470,7 +530,9 @@ export class EventSystem {
   }
 
   // 检查选项要求
-  private checkRequirements(requirements: SimulationEventRequirement[]): boolean {
+  private checkRequirements(
+    requirements: SimulationEventRequirement[],
+  ): boolean {
     if (!this.state) return false;
 
     for (const requirement of requirements) {
@@ -526,7 +588,9 @@ export class EventSystem {
   }
 
   // 应用事件效果
-  private applyEventEffects(effects: SimulationEventEffect[]): SimulationEventEffect[] {
+  private applyEventEffects(
+    effects: SimulationEventEffect[],
+  ): SimulationEventEffect[] {
     const appliedEffects: SimulationEventEffect[] = [];
     if (!this.state) return appliedEffects;
 
@@ -535,7 +599,8 @@ export class EventSystem {
       switch (effect.type) {
         case 'money':
           this.state.stats.currentFunds += effect.value;
-          this.state.stats.totalExpenses += effect.value < 0 ? Math.abs(effect.value) : 0;
+          this.state.stats.totalExpenses +=
+            effect.value < 0 ? Math.abs(effect.value) : 0;
           this.state.stats.totalRevenue += effect.value > 0 ? effect.value : 0;
           break;
         case 'reputation':
@@ -568,12 +633,15 @@ export class EventSystem {
     if (!this.state) return;
 
     // 更新净利润
-    this.state.stats.netProfit = this.state.stats.totalRevenue - this.state.stats.totalExpenses;
+    this.state.stats.netProfit =
+      this.state.stats.totalRevenue - this.state.stats.totalExpenses;
 
     // 更新平均每日收入
     const daysPassed = this.calculateDaysPassed();
     if (daysPassed > 0) {
-      this.state.stats.averageDailyRevenue = Math.floor(this.state.stats.totalRevenue / daysPassed);
+      this.state.stats.averageDailyRevenue = Math.floor(
+        this.state.stats.totalRevenue / daysPassed,
+      );
     }
   }
 
@@ -585,7 +653,11 @@ export class EventSystem {
     const current = this.state.currentTime;
 
     // 简单计算天数差（不考虑月份和年份的差异）
-    return (current.year - start.year) * 365 + (current.month - start.month) * 30 + (current.day - start.day);
+    return (
+      (current.year - start.year) * 365 +
+      (current.month - start.month) * 30 +
+      (current.day - start.day)
+    );
   }
 
   // 更新事件状态

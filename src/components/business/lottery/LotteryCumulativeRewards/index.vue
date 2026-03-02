@@ -4,7 +4,9 @@
     <template #header>
       <div class="header-content">
         <h3>累抽奖励</h3>
-        <span class="draw-count-info"> 当前累计：{{ lotteryStore.drawCount }}次</span>
+        <span class="draw-count-info">
+          当前累计：{{ lotteryStore.drawCount }}次</span
+        >
       </div>
     </template>
 
@@ -25,22 +27,22 @@
     <!-- 竖向滚动的累抽奖励区�?-->
     <div class="vertical-rewards-list">
       <!-- 可领取奖�?-->
-      <Card v-if="availableCumulativeRewards.length > 0" class="rewards-section" variant="success">
+      <Card
+        v-if="availableCumulativeRewards.length > 0"
+        class="rewards-section"
+        variant="success"
+      >
         <template #header>
           <h4>可领取</h4>
         </template>
-        
+
         <List
           :items="availableCumulativeRewards"
           layout="vertical"
           class="rewards-list"
         >
           <template #item="{ item }">
-            <Card
-              variant="success"
-              size="small"
-              class="reward-item"
-            >
+            <Card variant="success" size="small" class="reward-item">
               <div class="reward-info">
                 <span class="threshold">{{ item.threshold }}次</span>
                 <span class="reward-name">{{ item.reward.name }}</span>
@@ -62,23 +64,21 @@
         <template #header>
           <h4>未达到</h4>
         </template>
-        
+
         <List
           :items="unreachedCumulativeRewards"
           layout="vertical"
           class="rewards-list"
         >
           <template #item="{ item }">
-            <Card
-              variant="secondary"
-              size="small"
-              class="reward-item"
-            >
+            <Card variant="secondary" size="small" class="reward-item">
               <div class="reward-info">
                 <span class="threshold">{{ item.threshold }}次</span>
                 <span class="reward-name">{{ item.reward.name }}</span>
               </div>
-              <div class="progress-text">{{ lotteryStore.drawCount }}/{{ item.threshold }}</div>
+              <div class="progress-text">
+                {{ lotteryStore.drawCount }}/{{ item.threshold }}
+              </div>
             </Card>
           </template>
         </List>
@@ -99,7 +99,9 @@ const lotteryStore = useLotteryStore();
 
 // 计算当前进度百分比
 const progressPercentage = computed(() => {
-  const nextReward = lotteryStore.cumulativeRewards.find((reward) => reward.threshold > lotteryStore.drawCount);
+  const nextReward = lotteryStore.cumulativeRewards.find(
+    (reward) => reward.threshold > lotteryStore.drawCount,
+  );
   const previousReward = lotteryStore.cumulativeRewards
     .filter((reward) => reward.threshold <= lotteryStore.drawCount)
     .sort((a, b) => b.threshold - a.threshold)[0];
@@ -117,7 +119,8 @@ const progressPercentage = computed(() => {
 const availableCumulativeRewards = computed(() => {
   return lotteryStore.cumulativeRewards.filter(
     (reward) =>
-      reward.threshold <= lotteryStore.drawCount && !lotteryStore.claimedCumulativeRewards.includes(reward.threshold)
+      reward.threshold <= lotteryStore.drawCount &&
+      !lotteryStore.claimedCumulativeRewards.includes(reward.threshold),
   );
 });
 
@@ -126,7 +129,8 @@ const unreachedCumulativeRewards = computed(() => {
   return lotteryStore.cumulativeRewards
     .filter(
       (reward) =>
-        reward.threshold > lotteryStore.drawCount || lotteryStore.claimedCumulativeRewards.includes(reward.threshold)
+        reward.threshold > lotteryStore.drawCount ||
+        lotteryStore.claimedCumulativeRewards.includes(reward.threshold),
     )
     .sort((a, b) => a.threshold - b.threshold);
 });
@@ -142,7 +146,7 @@ const claimCumulativeReward = (threshold: number): void => {
 .cumulative-rewards-panel {
   height: 100%;
   overflow: hidden;
-  
+
   .header-content {
     display: flex;
     align-items: center;
@@ -194,20 +198,20 @@ const claimCumulativeReward = (threshold: number): void => {
   flex: 1;
   overflow-y: auto;
   padding: 0;
-  
+
   &::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: rgb(0 0 0 / 10%);
     border-radius: 3px;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background: rgb(16 185 129 / 50%);
     border-radius: 3px;
-    
+
     &:hover {
       background: rgb(16 185 129 / 80%);
     }
@@ -217,7 +221,7 @@ const claimCumulativeReward = (threshold: number): void => {
 /* 奖励区块 */
 .rewards-section {
   margin-bottom: tokens.$spacing-md;
-  
+
   h4 {
     margin: 0;
     font-size: tokens.$font-size-sm;
@@ -231,7 +235,7 @@ const claimCumulativeReward = (threshold: number): void => {
   .list__item {
     padding: 0;
     border-bottom: none;
-    
+
     &:hover {
       background-color: transparent;
     }

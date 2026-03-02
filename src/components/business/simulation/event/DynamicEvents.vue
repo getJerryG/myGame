@@ -7,7 +7,9 @@
       <div class="event-panel">
         <h3 class="panel-header-title">
           <span class="header-icon">⚠️</span> 当前事件
-          <span class="event-count">({{ simulationStore.dynamicEvents.currentEvents.length }}个)</span>
+          <span class="event-count"
+            >({{ simulationStore.dynamicEvents.currentEvents.length }}个)</span
+          >
         </h3>
 
         <div
@@ -17,15 +19,18 @@
           暂无当前事件
         </div>
 
-        <div
-          v-else
-          class="events-list"
-        >
+        <div v-else class="events-list">
           <div
             v-for="event in simulationStore.dynamicEvents.currentEvents"
             :key="event.id"
             class="event-card"
-            :class="[event.type === 'positive' ? 'positive' : event.type === 'negative' ? 'negative' : 'neutral']"
+            :class="[
+              event.type === 'positive'
+                ? 'positive'
+                : event.type === 'negative'
+                  ? 'negative'
+                  : 'neutral',
+            ]"
           >
             <div class="event-header">
               <div
@@ -46,7 +51,13 @@
                   high: event.severity === 'high',
                 }"
               >
-                {{ event.severity === 'low' ? '低' : event.severity === 'medium' ? '中' : '高' }}影响
+                {{
+                  event.severity === "low"
+                    ? "低"
+                    : event.severity === "medium"
+                      ? "中"
+                      : "高"
+                }}影响
               </div>
             </div>
 
@@ -118,12 +129,7 @@
             >
               立即处理
             </button>
-            <div
-              v-else-if="event.handled"
-              class="handled-badge"
-            >
-              ✓ 已处理
-            </div>
+            <div v-else-if="event.handled" class="handled-badge">✓ 已处理</div>
           </div>
         </div>
       </div>
@@ -132,7 +138,9 @@
       <div class="history-panel">
         <h3 class="panel-header-title">
           <span class="header-icon">📜</span> 历史事件
-          <span class="event-count">({{ simulationStore.dynamicEvents.history.length }}个)</span>
+          <span class="event-count"
+            >({{ simulationStore.dynamicEvents.history.length }}个)</span
+          >
         </h3>
 
         <div
@@ -142,10 +150,7 @@
           暂无历史事件
         </div>
 
-        <div
-          v-else
-          class="history-list"
-        >
+        <div v-else class="history-list">
           <div
             v-for="(event, index) in sortedHistory"
             :key="index"
@@ -170,7 +175,13 @@
                   neutral: event.type === 'neutral',
                 }"
               >
-                {{ event.type === 'positive' ? '正面' : event.type === 'negative' ? '负面' : '中性' }}
+                {{
+                  event.type === "positive"
+                    ? "正面"
+                    : event.type === "negative"
+                      ? "负面"
+                      : "中性"
+                }}
               </div>
             </div>
 
@@ -194,12 +205,7 @@
               </div>
             </div>
 
-            <div
-              v-if="event.handled"
-              class="handled-badge"
-            >
-              ✓ 已处理
-            </div>
+            <div v-if="event.handled" class="handled-badge">✓ 已处理</div>
           </div>
         </div>
       </div>
@@ -542,7 +548,11 @@ const formatDate = (date: Date): string => {
   }
 
   .tips-panel {
-    background: linear-gradient(135deg, tokens.$tips-bg-start 0%, tokens.$tips-bg-end 100%);
+    background: linear-gradient(
+      135deg,
+      tokens.$tips-bg-start 0%,
+      tokens.$tips-bg-end 100%
+    );
     border-left: 4px solid tokens.$tips-border;
     border-radius: 0 tokens.$radius-md tokens.$radius-md 0;
     padding: tokens.$spacing-md;

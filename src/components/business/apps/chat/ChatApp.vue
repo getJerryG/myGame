@@ -21,10 +21,7 @@
               {{ contact.lastMessage }}
             </div>
           </div>
-          <div
-            class="contact-unread"
-            v-if="contact.unread > 0"
-          >
+          <div class="contact-unread" v-if="contact.unread > 0">
             {{ contact.unread }}
           </div>
         </div>
@@ -43,17 +40,16 @@
             v-for="(message, index) in chatMessages"
             :key="index"
             class="message"
-            :class="message.sender === 'contact' ? 'contact-message' : 'user-message'"
+            :class="
+              message.sender === 'contact' ? 'contact-message' : 'user-message'
+            "
           >
             <div class="message-content">{{ message.content }}</div>
             <div class="message-time">{{ message.time }}</div>
           </div>
         </div>
 
-        <div
-          class="chat-options-area"
-          v-if="replyOptions.length > 0"
-        >
+        <div class="chat-options-area" v-if="replyOptions.length > 0">
           <div class="options-header">选择回复</div>
           <div class="options-list">
             <button
@@ -153,7 +149,10 @@ const selectContact = (contactId: number): void => {
 };
 
 const currentContact = computed(() => {
-  return contacts.value.find((contact) => contact.id === activeContactId.value) || contacts.value[0];
+  return (
+    contacts.value.find((contact) => contact.id === activeContactId.value) ||
+    contacts.value[0]
+  );
 });
 
 const generateChatContent = (contactId: number): void => {
@@ -307,7 +306,8 @@ const selectReply = (option: string): void => {
       '我会尽快跟进此事',
       '没问题，我会调整方案',
     ];
-    const randomReply = autoReplies[Math.floor(Math.random() * autoReplies.length)];
+    const randomReply =
+      autoReplies[Math.floor(Math.random() * autoReplies.length)];
 
     chatMessages.value.push({
       sender: 'contact',
@@ -332,7 +332,7 @@ watch(
       generateChatContent(newContact.id);
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>
 

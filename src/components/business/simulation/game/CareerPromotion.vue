@@ -13,28 +13,33 @@
           <div class="badge-name">
             {{ currentLevel.name }}
           </div>
-          <div class="badge-level">第{{ simulationStore.careerSystem.currentLevel }}级 / 共{{ totalLevels }}级</div>
+          <div class="badge-level">
+            第{{ simulationStore.careerSystem.currentLevel }}级 / 共{{
+              totalLevels
+            }}级
+          </div>
         </div>
 
         <!-- 职级效果 -->
         <div class="level-effects">
           <div class="effect-item">
             <div class="effect-label">可用预算</div>
-            <div class="effect-value effect-budget">💰 {{ simulationStore.decisionMaking.resources.budget }}</div>
+            <div class="effect-value effect-budget">
+              💰 {{ simulationStore.decisionMaking.resources.budget }}
+            </div>
           </div>
           <div class="effect-item">
             <div class="effect-label">团队精力</div>
-            <div class="effect-value effect-team">👥 {{ simulationStore.decisionMaking.resources.teamEffort }}</div>
+            <div class="effect-value effect-team">
+              👥 {{ simulationStore.decisionMaking.resources.teamEffort }}
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <!-- 晋升进度 -->
-    <div
-      v-if="nextLevel"
-      class="progress-card"
-    >
+    <div v-if="nextLevel" class="progress-card">
       <h3 class="card-title">晋升进度</h3>
 
       <div class="progress-content">
@@ -42,7 +47,9 @@
         <div class="overall-progress">
           <div class="progress-header">
             <div class="progress-label">晋升到{{ nextLevel.name }}进度</div>
-            <div class="progress-percent">{{ promotionProgress?.average }}%</div>
+            <div class="progress-percent">
+              {{ promotionProgress?.average }}%
+            </div>
           </div>
           <div class="progress-bar">
             <div
@@ -58,7 +65,9 @@
             <div class="detail-header">
               <div class="detail-label">运营天数</div>
               <div class="detail-value">
-                {{ simulationStore.gameState.dayCount }}/{" }{{ nextLevel.requirements.dayCount }}
+                {{ simulationStore.gameState.dayCount }}/{" }{{
+                  nextLevel.requirements.dayCount
+                }}
                 天
               </div>
             </div>
@@ -91,9 +100,8 @@
             <div class="detail-header">
               <div class="detail-label">总收入</div>
               <div class="detail-value">
-                {{ formatValue(simulationStore.businessData.totalRevenue) }}/{" }{{
-                  formatValue(nextLevel.requirements.revenue)
-                }}
+                {{ formatValue(simulationStore.businessData.totalRevenue) }}/{"
+                }{{ formatValue(nextLevel.requirements.revenue) }}
               </div>
             </div>
             <div class="progress-bar small">
@@ -108,7 +116,9 @@
             <div class="detail-header">
               <div class="detail-label">市场情绪</div>
               <div class="detail-value">
-                {{ simulationStore.businessData.marketSentiment }}/{" }{{ nextLevel.requirements.marketSentiment }}
+                {{ simulationStore.businessData.marketSentiment }}/{" }{{
+                  nextLevel.requirements.marketSentiment
+                }}
               </div>
             </div>
             <div class="progress-bar small">
@@ -135,10 +145,7 @@
     </div>
 
     <!-- 下一级信息 -->
-    <div
-      v-if="nextLevel"
-      class="next-level-card"
-    >
+    <div v-if="nextLevel" class="next-level-card">
       <h3 class="card-title">下一级：{{ nextLevel.name }}</h3>
 
       <div class="next-level-grid">
@@ -175,10 +182,7 @@
     </div>
 
     <!-- 已达最高级 -->
-    <div
-      v-else
-      class="max-level-card"
-    >
+    <div v-else class="max-level-card">
       <div class="max-level-content">
         <div class="max-icon">🎉</div>
         <div class="max-title">恭喜！已达最高职级</div>
@@ -412,7 +416,11 @@ const getOperationName = (operationKey: string): string => {
   transition: width tokens.$transition-normal;
 
   &.gradient-fill {
-    background: linear-gradient(90deg, tokens.$primary-blue 0%, tokens.$lottery-purple 100%);
+    background: linear-gradient(
+      90deg,
+      tokens.$primary-blue 0%,
+      tokens.$lottery-purple 100%
+    );
   }
 
   &.blue-fill {
@@ -468,7 +476,11 @@ const getOperationName = (operationKey: string): string => {
 .btn-promote {
   width: 100%;
   padding: tokens.$spacing-md;
-  background: linear-gradient(135deg, tokens.$primary-blue 0%, tokens.$lottery-purple 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$primary-blue 0%,
+    tokens.$lottery-purple 100%
+  );
   color: white;
   font-weight: tokens.$font-weight-medium;
   border-radius: tokens.$radius-md;

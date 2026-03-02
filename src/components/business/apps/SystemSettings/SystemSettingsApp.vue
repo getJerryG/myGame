@@ -43,10 +43,7 @@
         />
 
         <!-- 系统信息 -->
-        <div
-          v-else-if="activeTab === 'info'"
-          class="system-info-tab"
-        >
+        <div v-else-if="activeTab === 'info'" class="system-info-tab">
           <h3 class="text-gold">系统信息</h3>
           <div class="info-list">
             <div class="info-item">
@@ -58,12 +55,14 @@
               <span class="info-value">{{
                 gameData?.gameState?.currentDate
                   ? `${gameData.gameState.currentDate.year}年${gameData.gameState.currentDate.month}月${gameData.gameState.currentDate.day}日`
-                  : '加载中...'
+                  : "加载中..."
               }}</span>
             </div>
             <div class="info-item">
               <span class="info-label">策划等级</span>
-              <span class="info-value">{{ gameData?.careerData?.currentLevel?.name || 'N/A' }}</span>
+              <span class="info-value">{{
+                gameData?.careerData?.currentLevel?.name || "N/A"
+              }}</span>
             </div>
           </div>
         </div>

@@ -35,19 +35,13 @@
                 <div class="reward-amount">{{ day.reward.amount }}个</div>
               </div>
             </div>
-            <button
-              class="edit-btn"
-              @click="openRewardEditor(day, index)"
-            >
+            <button class="edit-btn" @click="openRewardEditor(day, index)">
               编辑
             </button>
           </div>
 
           <!-- 添加奖励按钮 -->
-          <div
-            class="day-item add-item"
-            @click="addLoginReward"
-          >
+          <div class="day-item add-item" @click="addLoginReward">
             <span class="add-icon">+</span>
             <span class="add-label">添加奖励</span>
           </div>
@@ -81,7 +75,7 @@ watch(
   (newRewards) => {
     localLoginRewards.value = [...newRewards];
   },
-  { deep: true }
+  { deep: true },
 );
 
 // 监听本地状态变化，通知父组件
@@ -90,7 +84,7 @@ watch(
   (newRewards) => {
     emit('update:loginRewards', [...newRewards]);
   },
-  { deep: true }
+  { deep: true },
 );
 
 // 拖拽开始

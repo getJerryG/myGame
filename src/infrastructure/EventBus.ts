@@ -28,7 +28,11 @@ export class EventBus {
   private listeners: Map<EventType, ListenerConfig[]> = new Map();
 
   // 订阅事件
-  on<T = any>(event: EventType, callback: EventListener<T>, priority = 0): () => void {
+  on<T = any>(
+    event: EventType,
+    callback: EventListener<T>,
+    priority = 0,
+  ): () => void {
     if (!this.listeners.has(event)) {
       this.listeners.set(event, []);
     }
@@ -55,7 +59,11 @@ export class EventBus {
   }
 
   // 订阅一次性事件
-  once<T = any>(event: EventType, callback: EventListener<T>, priority = 0): () => void {
+  once<T = any>(
+    event: EventType,
+    callback: EventListener<T>,
+    priority = 0,
+  ): () => void {
     const onceCallback: EventListener<T> = (data) => {
       callback(data);
       this.off(event, onceCallback);
@@ -109,7 +117,10 @@ export class EventBus {
   listenerCount(event?: EventType): number {
     if (!event) {
       // 返回所有事件的监听器总数
-      return Array.from(this.listeners.values()).reduce((total, listeners) => total + listeners.length, 0);
+      return Array.from(this.listeners.values()).reduce(
+        (total, listeners) => total + listeners.length,
+        0,
+      );
     }
 
     const listeners = this.listeners.get(event);

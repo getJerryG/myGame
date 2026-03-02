@@ -155,7 +155,12 @@ defineProps({
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 30%), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 30%),
+    transparent
+  );
   animation: glow 2s infinite;
 }
 
@@ -171,12 +176,20 @@ defineProps({
 
 .health-fill {
   background-color: tokens.$health-red;
-  background-image: linear-gradient(90deg, tokens.$health-red-dark, tokens.$health-red);
+  background-image: linear-gradient(
+    90deg,
+    tokens.$health-red-dark,
+    tokens.$health-red
+  );
 }
 
 .exp-fill {
   background-color: tokens.$exp-blue;
-  background-image: linear-gradient(90deg, tokens.$exp-blue-dark, tokens.$exp-blue);
+  background-image: linear-gradient(
+    90deg,
+    tokens.$exp-blue-dark,
+    tokens.$exp-blue
+  );
 }
 
 .stat-text {

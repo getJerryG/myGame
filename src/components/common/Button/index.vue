@@ -8,7 +8,7 @@
       { 'btn--disabled': disabled || loading },
       { 'btn--loading': loading },
       { 'btn--block': block },
-      customClass
+      customClass,
     ]"
     :disabled="disabled || loading"
     :type="type"
@@ -18,12 +18,16 @@
     <div v-if="loading" class="btn__loading">
       <div class="btn__spinner"></div>
     </div>
-    
+
     <!-- 图标 -->
-    <div v-if="icon" class="btn__icon" :class="{ 'btn__icon--right': iconPosition === 'right' }">
+    <div
+      v-if="icon"
+      class="btn__icon"
+      :class="{ 'btn__icon--right': iconPosition === 'right' }"
+    >
       {{ icon }}
     </div>
-    
+
     <!-- 文本内容 -->
     <slot></slot>
   </button>
@@ -37,47 +41,47 @@ interface ButtonProps {
    * 按钮类型
    */
   type?: 'button' | 'submit' | 'reset';
-  
+
   /**
    * 按钮样式变体
    */
   variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info';
-  
+
   /**
    * 按钮尺寸
    */
   size?: 'small' | 'medium' | 'large';
-  
+
   /**
    * 按钮形状
    */
   shape?: 'square' | 'round' | 'circle';
-  
+
   /**
    * 是否禁用
    */
   disabled?: boolean;
-  
+
   /**
    * 是否显示加载状态
    */
   loading?: boolean;
-  
+
   /**
    * 是否为块级按钮
    */
   block?: boolean;
-  
+
   /**
    * 图标
    */
   icon?: string;
-  
+
   /**
    * 图标位置
    */
   iconPosition?: 'left' | 'right';
-  
+
   /**
    * 自定义类名
    */
@@ -94,7 +98,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   block: false,
   icon: '',
   iconPosition: 'left',
-  customClass: ''
+  customClass: '',
 });
 
 const emit = defineEmits<{
@@ -125,19 +129,19 @@ const handleClick = (event: MouseEvent) => {
   cursor: pointer;
   transition: all tokens.$transition-fast;
   position: relative;
-  
+
   /* 文本溢出处理 */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  
+
   /* 禁用状态 */
   &.btn--disabled {
     cursor: not-allowed;
     opacity: 0.6;
     pointer-events: none;
   }
-  
+
   /* 块级按钮 */
   &.btn--block {
     width: 100%;
@@ -174,25 +178,25 @@ const handleClick = (event: MouseEvent) => {
   padding: tokens.$spacing-sm;
   min-width: 36px;
   min-height: 36px;
-  
+
   .btn--small & {
     min-width: 28px;
     min-height: 28px;
     padding: tokens.$spacing-xs;
   }
-  
+
   .btn--large & {
     min-width: 44px;
     min-height: 44px;
     padding: tokens.$spacing-md;
   }
-  
+
   /* 圆形按钮只显示图标 */
   &:not(.btn--loading) {
     > :not(.btn__icon) {
       display: none;
     }
-    
+
     .btn__icon {
       margin: 0;
     }
@@ -203,7 +207,7 @@ const handleClick = (event: MouseEvent) => {
 .btn--primary {
   background-color: tokens.$primary;
   color: white;
-  
+
   &:hover {
     &:not(.btn--disabled) {
       background-color: tokens.$primary-dark;
@@ -211,7 +215,7 @@ const handleClick = (event: MouseEvent) => {
       transform: translateY(-1px);
     }
   }
-  
+
   &:active {
     &:not(.btn--disabled) {
       transform: translateY(0);
@@ -224,7 +228,7 @@ const handleClick = (event: MouseEvent) => {
   background-color: tokens.$bg-secondary;
   color: tokens.$text-primary;
   border: 1px solid tokens.$border-medium;
-  
+
   &:hover {
     &:not(.btn--disabled) {
       background-color: tokens.$bg-light;
@@ -233,7 +237,7 @@ const handleClick = (event: MouseEvent) => {
       transform: translateY(-1px);
     }
   }
-  
+
   &:active {
     &:not(.btn--disabled) {
       transform: translateY(0);
@@ -245,7 +249,7 @@ const handleClick = (event: MouseEvent) => {
 .btn--success {
   background-color: tokens.$success;
   color: white;
-  
+
   &:hover {
     &:not(.btn--disabled) {
       background-color: tokens.$success-green;
@@ -253,7 +257,7 @@ const handleClick = (event: MouseEvent) => {
       transform: translateY(-1px);
     }
   }
-  
+
   &:active {
     &:not(.btn--disabled) {
       transform: translateY(0);
@@ -265,7 +269,7 @@ const handleClick = (event: MouseEvent) => {
 .btn--warning {
   background-color: tokens.$warning;
   color: white;
-  
+
   &:hover {
     &:not(.btn--disabled) {
       background-color: tokens.$warning-yellow;
@@ -273,7 +277,7 @@ const handleClick = (event: MouseEvent) => {
       transform: translateY(-1px);
     }
   }
-  
+
   &:active {
     &:not(.btn--disabled) {
       transform: translateY(0);
@@ -285,7 +289,7 @@ const handleClick = (event: MouseEvent) => {
 .btn--danger {
   background-color: tokens.$error;
   color: white;
-  
+
   &:hover {
     &:not(.btn--disabled) {
       background-color: tokens.$error-red;
@@ -293,7 +297,7 @@ const handleClick = (event: MouseEvent) => {
       transform: translateY(-1px);
     }
   }
-  
+
   &:active {
     &:not(.btn--disabled) {
       transform: translateY(0);
@@ -305,7 +309,7 @@ const handleClick = (event: MouseEvent) => {
 .btn--info {
   background-color: tokens.$info;
   color: white;
-  
+
   &:hover {
     &:not(.btn--disabled) {
       background-color: tokens.$info-blue;
@@ -313,7 +317,7 @@ const handleClick = (event: MouseEvent) => {
       transform: translateY(-1px);
     }
   }
-  
+
   &:active {
     &:not(.btn--disabled) {
       transform: translateY(0);
@@ -327,7 +331,7 @@ const handleClick = (event: MouseEvent) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   &--right {
     order: 1;
   }
@@ -336,7 +340,7 @@ const handleClick = (event: MouseEvent) => {
 /* 加载状态 */
 .btn--loading {
   position: relative;
-  
+
   > :not(.btn__loading) {
     visibility: hidden;
   }
@@ -359,7 +363,7 @@ const handleClick = (event: MouseEvent) => {
   border-top-color: white;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
-  
+
   /* 针对非白色背景的调整 */
   .btn--secondary &,
   .btn--info & {
@@ -380,7 +384,7 @@ const handleClick = (event: MouseEvent) => {
     padding: tokens.$spacing-sm tokens.$spacing-md;
     font-size: tokens.$font-size-base;
   }
-  
+
   .btn--block {
     width: 100%;
   }

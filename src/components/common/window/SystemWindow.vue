@@ -76,10 +76,7 @@
     </div>
 
     <!-- 调整大小手柄 -->
-    <WindowResizeHandle
-      @resize="handleResize"
-      @resize-end="stopResize"
-    />
+    <WindowResizeHandle @resize="handleResize" @resize-end="stopResize" />
   </div>
 </template>
 
@@ -143,7 +140,10 @@ const activateWindow = () => {
 
 // 开始拖拽
 const startDrag = (event: MouseEvent) => {
-  if (event.target && (event.target as HTMLElement).closest('.window-tab-close')) {
+  if (
+    event.target &&
+    (event.target as HTMLElement).closest('.window-tab-close')
+  ) {
     return;
   }
 
@@ -164,7 +164,11 @@ const handleDragMove = (event: MouseEvent) => {
   const dx = event.clientX - dragStartPos.value.x;
   const dy = event.clientY - dragStartPos.value.y;
 
-  windowManagerStore.updateWindowPosition(props.windowId, windowStartPos.value.x + dx, windowStartPos.value.y + dy);
+  windowManagerStore.updateWindowPosition(
+    props.windowId,
+    windowStartPos.value.x + dx,
+    windowStartPos.value.y + dy,
+  );
 };
 
 // 停止拖拽
@@ -224,9 +228,13 @@ const handleDragOver = (event: DragEvent) => {
 const handleDrop = () => {
   if (tabDragData.value && tabDragData.value.windowId !== props.windowId) {
     // 将拖拽的选项卡合并到当前窗口
-    const sourceWindow = windowManagerStore.windows.find((w) => w.id === tabDragData.value.windowId);
+    const sourceWindow = windowManagerStore.windows.find(
+      (w) => w.id === tabDragData.value.windowId,
+    );
     if (sourceWindow?.tabs) {
-      const tab = sourceWindow.tabs.find((t) => t.id === tabDragData.value!.tabId);
+      const tab = sourceWindow.tabs.find(
+        (t) => t.id === tabDragData.value!.tabId,
+      );
       if (tab) {
         // 这里需要实现选项卡合并逻辑
       }

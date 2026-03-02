@@ -96,7 +96,10 @@ export const getModuleIcon = (moduleId: string): string => {
  * const customLabel = getCoreDataLabel('customKey', { customKey: '自定义标签' }); // 返回 '自定义标签'
  * ```
  */
-export const getCoreDataLabel = (key: string, customLabels: Record<string, string> = {}): string => {
+export const getCoreDataLabel = (
+  key: string,
+  customLabels: Record<string, string> = {},
+): string => {
   return customLabels[key] || CORE_DATA_LABELS[key] || key;
 };
 
@@ -264,7 +267,7 @@ export const generateRandomColor = (): string => {
  */
 export const debounce = <T extends (...args: any[]) => any>(
   func: T,
-  delay: number
+  delay: number,
 ): ((...args: Parameters<T>) => void) => {
   let timeoutId: ReturnType<typeof setTimeout>;
   return (...args: Parameters<T>) => {
@@ -289,7 +292,7 @@ export const debounce = <T extends (...args: any[]) => any>(
  */
 export const throttle = <T extends (...args: any[]) => any>(
   func: T,
-  delay: number
+  delay: number,
 ): ((...args: Parameters<T>) => void) => {
   let lastCall = 0;
   return (...args: Parameters<T>) => {

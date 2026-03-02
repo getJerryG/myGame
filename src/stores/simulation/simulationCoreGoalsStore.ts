@@ -63,7 +63,9 @@ export const useSimulationCoreGoalsStore = defineStore('simulationCoreGoals', {
 
     // 获取高优先级目标
     highPriorityGoals: (state) => {
-      return state.coreGoals.filter((goal) => goal.status === 'active' && goal.priority === 'high');
+      return state.coreGoals.filter(
+        (goal) => goal.status === 'active' && goal.priority === 'high',
+      );
     },
 
     // 获取目标完成率
@@ -75,13 +77,20 @@ export const useSimulationCoreGoalsStore = defineStore('simulationCoreGoals', {
 
     // 根据ID获取目标
     getGoalById: (state) => (goalId: string) => {
-      return [...state.coreGoals, ...state.completedGoals].find((goal) => goal.id === goalId);
+      return [...state.coreGoals, ...state.completedGoals].find(
+        (goal) => goal.id === goalId,
+      );
     },
   },
 
   actions: {
     // 创建核心目标
-    createCoreGoal(goalData: Omit<CoreGoal, 'id' | 'currentValue' | 'progress' | 'status' | 'milestones'>) {
+    createCoreGoal(
+      goalData: Omit<
+        CoreGoal,
+        'id' | 'currentValue' | 'progress' | 'status' | 'milestones'
+      >,
+    ) {
       if (this.activeCoreGoals.length >= this.goalsConfig.maxActiveGoals) {
         throw new Error('已达到最大活跃目标数量限制');
       }
@@ -104,7 +113,10 @@ export const useSimulationCoreGoalsStore = defineStore('simulationCoreGoals', {
       const goal = this.getGoalById(goalId);
       if (goal) {
         goal.currentValue = currentValue;
-        goal.progress = Math.min(100, Math.round((currentValue / goal.targetValue) * 100));
+        goal.progress = Math.min(
+          100,
+          Math.round((currentValue / goal.targetValue) * 100),
+        );
 
         // 检查是否完成
         if (goal.progress >= 100 && goal.status === 'active') {
@@ -130,14 +142,21 @@ export const useSimulationCoreGoalsStore = defineStore('simulationCoreGoals', {
     },
 
     // 添加里程碑
-    addMilestone(goalId: string, milestone: Omit<CoreGoal['milestones'][0], 'id' | 'achieved' | 'achievedAt'>) {
+    addMilestone(
+      goalId: string,
+      milestone: Omit<
+        CoreGoal['milestones'][0],
+        'id' | 'achieved' | 'achievedAt'
+      >,
+    ) {
       const goal = this.getGoalById(goalId);
       if (goal) {
         goal.milestones.push({
           ...milestone,
           id: `milestone_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
           achieved: goal.currentValue >= milestone.targetValue,
-          achievedAt: goal.currentValue >= milestone.targetValue ? Date.now() : undefined,
+          achievedAt:
+            goal.currentValue >= milestone.targetValue ? Date.now() : undefined,
         });
       }
     },
@@ -170,7 +189,9 @@ export const useSimulationCoreGoalsStore = defineStore('simulationCoreGoals', {
         });
 
         // 如果在已完成列表中，移回活跃列表
-        const completedIndex = this.completedGoals.findIndex((g) => g.id === goalId);
+        const completedIndex = this.completedGoals.findIndex(
+          (g) => g.id === goalId,
+        );
         if (completedIndex !== -1) {
           const [resetGoal] = this.completedGoals.splice(completedIndex, 1);
           this.coreGoals.push(resetGoal);

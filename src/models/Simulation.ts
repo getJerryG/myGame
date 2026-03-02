@@ -41,7 +41,7 @@ export class Simulation {
       startingLevel: 1,
       enableRandomEvents: true,
       eventFrequency: 0.5,
-    }
+    },
   ) {
     this.id = id;
     this.name = name;
@@ -254,7 +254,9 @@ export class Simulation {
     // 计算平均每日收入
     const daysElapsed = this.calculateDaysElapsed();
     if (daysElapsed > 0) {
-      this.stats.averageDailyRevenue = Math.floor(this.stats.totalRevenue / daysElapsed);
+      this.stats.averageDailyRevenue = Math.floor(
+        this.stats.totalRevenue / daysElapsed,
+      );
     }
 
     // 更新状态中的统计数据
@@ -263,8 +265,16 @@ export class Simulation {
 
   // 计算已过天数
   private calculateDaysElapsed(): number {
-    const start = new Date(this.startTime.year, this.startTime.month - 1, this.startTime.day);
-    const current = new Date(this.currentTime.year, this.currentTime.month - 1, this.currentTime.day);
+    const start = new Date(
+      this.startTime.year,
+      this.startTime.month - 1,
+      this.startTime.day,
+    );
+    const current = new Date(
+      this.currentTime.year,
+      this.currentTime.month - 1,
+      this.currentTime.day,
+    );
 
     const diffTime = Math.abs(current.getTime() - start.getTime());
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -298,8 +308,16 @@ export class Simulation {
 
   // 计算总天数
   private calculateTotalDays(): number {
-    const start = new Date(this.startTime.year, this.startTime.month - 1, this.startTime.day);
-    const end = new Date(this.endTime.year, this.endTime.month - 1, this.endTime.day);
+    const start = new Date(
+      this.startTime.year,
+      this.startTime.month - 1,
+      this.startTime.day,
+    );
+    const end = new Date(
+      this.endTime.year,
+      this.endTime.month - 1,
+      this.endTime.day,
+    );
 
     const diffTime = Math.abs(end.getTime() - start.getTime());
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24));

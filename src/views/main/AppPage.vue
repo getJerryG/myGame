@@ -2,12 +2,7 @@
   <div class="app-page">
     <div class="app-header">
       <h1>{{ getPageTitle() }}</h1>
-      <button
-        class="back-button"
-        @click="goBack"
-      >
-        返回桌面
-      </button>
+      <button class="back-button" @click="goBack">返回桌面</button>
     </div>
 
     <div class="app-content">
@@ -35,7 +30,8 @@ const appComponents: Record<string, () => Promise<{ default: any }>> = {
   game: () => import('../../modules/game/views/GameReleaseApp.vue'),
   settings: () => import('../../modules/game/views/GameSettingsApp.vue'),
   lottery: () => import('../../modules/lottery/views/LotteryPage.vue'),
-  simulation: () => import('../../modules/simulation/views/NewSimulationPanel.vue'),
+  simulation: () =>
+    import('../../modules/simulation/views/NewSimulationPanel.vue'),
 };
 
 // 根据page参数获取当前应用组件

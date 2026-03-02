@@ -10,10 +10,7 @@
     <template #header-actions> </template>
 
     <!-- 核心数据模块 -->
-    <div
-      v-if="activeModule === 'core-data'"
-      class="module-content"
-    >
+    <div v-if="activeModule === 'core-data'" class="module-content">
       <h3>核心数据概览</h3>
       <div class="data-grid">
         <!-- 游戏核心数�?-->
@@ -82,7 +79,9 @@
             </div>
             <div class="data-item">
               <span class="data-label">市场情绪</span>
-              <span class="data-value">{{ coreOverviewData.marketSentiment }}</span>
+              <span class="data-value">{{
+                coreOverviewData.marketSentiment
+              }}</span>
             </div>
           </div>
         </div>
@@ -95,15 +94,21 @@
           <div class="data-card-body">
             <div class="data-item">
               <span class="data-label">总收入</span>
-              <span class="data-value">{{ coreOverviewData.totalRevenue }}</span>
+              <span class="data-value">{{
+                coreOverviewData.totalRevenue
+              }}</span>
             </div>
             <div class="data-item">
               <span class="data-label">日收入</span>
-              <span class="data-value">{{ coreOverviewData.dailyRevenue }}</span>
+              <span class="data-value">{{
+                coreOverviewData.dailyRevenue
+              }}</span>
             </div>
             <div class="data-item">
               <span class="data-label">付费率</span>
-              <span class="data-value">{{ coreOverviewData.paymentRate }}%</span>
+              <span class="data-value"
+                >{{ coreOverviewData.paymentRate }}%</span
+              >
             </div>
             <div class="data-item">
               <span class="data-label">ARPU</span>
@@ -111,17 +116,16 @@
             </div>
             <div class="data-item">
               <span class="data-label">七日留存率</span>
-              <span class="data-value">{{ coreOverviewData.sevenDayRetention }}%</span>
+              <span class="data-value"
+                >{{ coreOverviewData.sevenDayRetention }}%</span
+              >
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div
-      v-else-if="activeModule === 'revenue-analysis'"
-      class="module-content"
-    >
+    <div v-else-if="activeModule === 'revenue-analysis'" class="module-content">
       <h3>收入分析</h3>
       <div class="data-card">
         <div class="data-card-header">
@@ -145,18 +149,12 @@
       </div>
     </div>
 
-    <div
-      v-else-if="activeModule === 'user-profile'"
-      class="module-content"
-    >
+    <div v-else-if="activeModule === 'user-profile'" class="module-content">
       <h3>用户画像</h3>
       <p>用户画像功能开发中...</p>
     </div>
 
-    <div
-      v-else-if="activeModule === 'data-trends'"
-      class="module-content"
-    >
+    <div v-else-if="activeModule === 'data-trends'" class="module-content">
       <h3>数据趋势</h3>
       <p>数据趋势功能开发中...</p>
     </div>
@@ -203,7 +201,10 @@ const sidebarItems = computed((): SidebarItem[] => {
 
 // 当前激活的模块
 const currentModule = computed(() => {
-  return props.app.modules.find((m) => utils.id === activeModule.value) || props.app.modules[0];
+  return (
+    props.app.modules.find((m) => utils.id === activeModule.value) ||
+    props.app.modules[0]
+  );
 });
 
 // 核心数据概览

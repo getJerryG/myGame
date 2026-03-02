@@ -2,7 +2,9 @@
   <div class="collaboration-config">
     <div class="config-section">
       <h4 class="section-title">合作联动配置</h4>
-      <p class="section-description">选择合适的合作对象和联动方式，提升游戏影响力</p>
+      <p class="section-description">
+        选择合适的合作对象和联动方式，提升游戏影响力
+      </p>
 
       <!-- 合作联动列表 -->
       <div class="collaboration-list">
@@ -26,7 +28,7 @@
               :class="{ active: selectedOptionId === option.id }"
               @click.stop="toggleCollaboration(option)"
             >
-              {{ selectedOptionId === option.id ? '取消' : '选择' }}
+              {{ selectedOptionId === option.id ? "取消" : "选择" }}
             </button>
           </div>
 
@@ -50,10 +52,7 @@
 
       <!-- 操作按钮 -->
       <div class="collab-actions">
-        <button
-          class="btn btn-secondary"
-          @click="resetSelection"
-        >
+        <button class="btn btn-secondary" @click="resetSelection">
           <span class="btn-icon">🔄</span>
           <span class="btn-text">重置选择</span>
         </button>
@@ -93,7 +92,11 @@ defineProps({
   },
 });
 
-const emit = defineEmits(['select-option', 'confirm-collaboration', 'reset-selection']);
+const emit = defineEmits([
+  'select-option',
+  'confirm-collaboration',
+  'reset-selection',
+]);
 
 // 选中的合作选项
 const selectedOptionId = ref<string | null>(null);

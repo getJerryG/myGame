@@ -11,7 +11,9 @@
       >
         <span class="tab-icon">{{ quality.icon }}</span>
         <span class="tab-label">{{ quality.label }}</span>
-        <span class="tab-count">({{ getSkinCountByQuality(quality.value) }})</span>
+        <span class="tab-count"
+          >({{ getSkinCountByQuality(quality.value) }})</span
+        >
       </button>
     </div>
 
@@ -26,10 +28,7 @@
       >
         <div class="skin-preview">
           <span class="skin-avatar">{{ skin.avatar }}</span>
-          <div
-            class="skin-quality-badge"
-            :class="skin.quality"
-          >
+          <div class="skin-quality-badge" :class="skin.quality">
             {{ getQualityLabel(skin.quality) }}
           </div>
         </div>

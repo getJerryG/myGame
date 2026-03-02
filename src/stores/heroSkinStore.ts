@@ -143,7 +143,9 @@ export const useHeroSkinStore = defineStore('heroSkin', {
     async updateHero(updatedHero: Hero) {
       try {
         // 查找英雄索引
-        const index = this.heroes.findIndex((hero) => hero.id === updatedHero.id);
+        const index = this.heroes.findIndex(
+          (hero) => hero.id === updatedHero.id,
+        );
         if (index === -1) {
           throw new Error('英雄不存在');
         }
@@ -202,7 +204,9 @@ export const useHeroSkinStore = defineStore('heroSkin', {
     async updateSkin(updatedSkin: Skin) {
       try {
         // 查找皮肤索引
-        const index = this.skins.findIndex((skin) => skin.id === updatedSkin.id);
+        const index = this.skins.findIndex(
+          (skin) => skin.id === updatedSkin.id,
+        );
         if (index === -1) {
           throw new Error('皮肤不存在');
         }
@@ -233,7 +237,8 @@ export const useHeroSkinStore = defineStore('heroSkin', {
         // 保存到本地存储
         await this.saveDataToStorage();
       } catch (error) {
-        this.error = error instanceof Error ? error.message : '更新皮肤市场数据失败';
+        this.error =
+          error instanceof Error ? error.message : '更新皮肤市场数据失败';
         throw error;
       }
     },
@@ -261,7 +266,8 @@ export const useHeroSkinStore = defineStore('heroSkin', {
         // 保存到本地存储
         await this.saveDataToStorage();
       } catch (error) {
-        this.error = error instanceof Error ? error.message : '批量删除皮肤失败';
+        this.error =
+          error instanceof Error ? error.message : '批量删除皮肤失败';
         throw error;
       }
     },

@@ -46,10 +46,7 @@
           <div class="task-info">
             <div class="task-header">
               <div class="task-name">{{ task.name }}</div>
-              <div
-                class="task-status"
-                :class="task.status"
-              >
+              <div class="task-status" :class="task.status">
                 {{ getStatusLabel(task.status) }}
               </div>
             </div>
@@ -92,10 +89,7 @@
           </div>
         </div>
 
-        <div
-          v-if="currentTasks.length === 0"
-          class="empty-state"
-        >
+        <div v-if="currentTasks.length === 0" class="empty-state">
           <p>暂无任务</p>
         </div>
       </div>
@@ -178,7 +172,10 @@ const getTaskProgress = (task: any) => {
     return sum + cond.current / cond.target;
   }, 0);
 
-  return Math.min(100, Math.round((totalProgress / task.conditions.length) * 100));
+  return Math.min(
+    100,
+    Math.round((totalProgress / task.conditions.length) * 100),
+  );
 };
 
 // 获取任务进度文本
@@ -187,7 +184,9 @@ const getTaskProgressText = (task: any) => {
     return '';
   }
 
-  return task.conditions.map((cond: any) => `${cond.current}/${cond.target}`).join(', ');
+  return task.conditions
+    .map((cond: any) => `${cond.current}/${cond.target}`)
+    .join(', ');
 };
 
 // 获取奖励显示

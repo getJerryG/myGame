@@ -1,15 +1,11 @@
 <template>
-  <Panel
-    title="任务"
-    collapsible
-    class="task-panel"
-  >
+  <Panel title="任务" collapsible class="task-panel">
     <!-- 每日任务 -->
     <Card class="task-section" variant="info" size="small">
       <template #header>
         <h3 class="section-title">每日任务</h3>
       </template>
-      
+
       <List
         :items="dailyTasks"
         layout="vertical"
@@ -24,20 +20,20 @@
             class="task-item"
           >
             <div class="task-content">
-              <span
-                class="task-icon"
-                aria-hidden="true"
-                >{{ item.icon || '📋' }}</span
-              >
+              <span class="task-icon" aria-hidden="true">{{
+                item.icon || "📋"
+              }}</span>
               <h4 class="task-title">{{ item.title }}</h4>
-              <span class="task-progress-text">{{ item.progress }}/{{ item.target }}</span>
+              <span class="task-progress-text"
+                >{{ item.progress }}/{{ item.target }}</span
+              >
             </div>
             <Button
               :variant="item.completed ? 'success' : 'primary'"
               size="small"
               :disabled="item.completed"
             >
-              {{ item.completed ? '已完成' : '未完成' }}
+              {{ item.completed ? "已完成" : "未完成" }}
             </Button>
           </Card>
         </template>
@@ -49,7 +45,7 @@
       <template #header>
         <h3 class="section-title">周任务</h3>
       </template>
-      
+
       <List
         :items="weeklyTasks"
         layout="vertical"
@@ -64,20 +60,20 @@
             class="task-item"
           >
             <div class="task-content">
-              <span
-                class="task-icon"
-                aria-hidden="true"
-                >{{ item.icon || '📅' }}</span
-              >
+              <span class="task-icon" aria-hidden="true">{{
+                item.icon || "📅"
+              }}</span>
               <h4 class="task-title">{{ item.title }}</h4>
-              <span class="task-progress-text">{{ item.progress }}/{{ item.target }}</span>
+              <span class="task-progress-text"
+                >{{ item.progress }}/{{ item.target }}</span
+              >
             </div>
             <Button
               :variant="item.completed ? 'success' : 'primary'"
               size="small"
               :disabled="item.completed"
             >
-              {{ item.completed ? '已完成' : '未完成' }}
+              {{ item.completed ? "已完成" : "未完成" }}
             </Button>
           </Card>
         </template>
@@ -89,7 +85,7 @@
       <template #header>
         <h3 class="section-title">月度任务</h3>
       </template>
-      
+
       <List
         :items="monthlyTasks"
         layout="vertical"
@@ -104,20 +100,20 @@
             class="task-item"
           >
             <div class="task-content">
-              <span
-                class="task-icon"
-                aria-hidden="true"
-                >{{ item.icon || '📊' }}</span
-              >
+              <span class="task-icon" aria-hidden="true">{{
+                item.icon || "📊"
+              }}</span>
               <h4 class="task-title">{{ item.title }}</h4>
-              <span class="task-progress-text">{{ item.progress }}/{{ item.target }}</span>
+              <span class="task-progress-text"
+                >{{ item.progress }}/{{ item.target }}</span
+              >
             </div>
             <Button
               :variant="item.completed ? 'success' : 'primary'"
               size="small"
               :disabled="item.completed"
             >
-              {{ item.completed ? '已完成' : '未完成' }}
+              {{ item.completed ? "已完成" : "未完成" }}
             </Button>
           </Card>
         </template>
@@ -177,7 +173,7 @@ const monthlyTasks = computed(() => {
 /* 任务区域 */
 .task-section {
   margin-bottom: tokens.$spacing-md;
-  
+
   h4 {
     margin: 0;
   }
@@ -195,12 +191,12 @@ const monthlyTasks = computed(() => {
   .list__item {
     padding: 0;
     border-bottom: none;
-    
+
     &:hover {
       background-color: transparent;
     }
   }
-  
+
   .list__empty {
     text-align: center;
     padding: tokens.$spacing-lg;
@@ -213,7 +209,7 @@ const monthlyTasks = computed(() => {
   align-items: center;
   justify-content: space-between;
   margin-bottom: tokens.$spacing-xs;
-  
+
   &:hover {
     transform: translateY(-1px);
   }
@@ -235,7 +231,7 @@ const monthlyTasks = computed(() => {
   padding: tokens.$spacing-xs;
   color: tokens.$text-muted;
   flex-shrink: 0;
-  
+
   /* 已完成任务的图标样式 */
   .task-item:has(.btn--success) & {
     background: tokens.$success;
@@ -267,11 +263,11 @@ const monthlyTasks = computed(() => {
   .task-content {
     gap: tokens.$spacing-xs;
   }
-  
+
   .task-title {
     font-size: tokens.$font-size-xs;
   }
-  
+
   .task-progress-text {
     font-size: tokens.$font-size-xs;
   }

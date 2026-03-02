@@ -28,7 +28,9 @@
         <div class="resource-icon resource-time">⏱️</div>
         <div class="resource-info">
           <div class="resource-label">可用时间</div>
-          <div class="resource-value">{{ simulationStore.decisionMaking.resources.time }} 天</div>
+          <div class="resource-value">
+            {{ simulationStore.decisionMaking.resources.time }} 天
+          </div>
         </div>
       </div>
     </div>
@@ -38,17 +40,11 @@
       <div class="decision-card">
         <h3 class="card-title">可用决策</h3>
 
-        <div
-          v-if="availableDecisions.length === 0"
-          class="empty-state"
-        >
+        <div v-if="availableDecisions.length === 0" class="empty-state">
           暂无可用决策
         </div>
 
-        <div
-          v-else
-          class="decision-list"
-        >
+        <div v-else class="decision-list">
           <div
             v-for="decision in availableDecisions"
             :key="decision.id"
@@ -63,7 +59,7 @@
                   'status-unavailable': !canExecuteDecision(decision.id),
                 }"
               >
-                {{ canExecuteDecision(decision.id) ? '可执行' : '资源不足' }}
+                {{ canExecuteDecision(decision.id) ? "可执行" : "资源不足" }}
               </div>
             </div>
 
@@ -76,7 +72,9 @@
               <div class="section-label">成本</div>
               <div class="cost-list">
                 <div class="cost-item">💰 {{ decision.cost.budget || 0 }}</div>
-                <div class="cost-item">👥 {{ decision.cost.teamEffort || 0 }}</div>
+                <div class="cost-item">
+                  👥 {{ decision.cost.teamEffort || 0 }}
+                </div>
                 <div class="cost-item">⏱️ {{ decision.cost.time || 0 }} 天</div>
               </div>
             </div>
@@ -106,7 +104,13 @@
                   'risk-high': decision.risk.type === 'high',
                 }"
               >
-                {{ decision.risk.type === 'low' ? '低' : decision.risk.type === 'medium' ? '中' : '高' }}风险:
+                {{
+                  decision.risk.type === "low"
+                    ? "低"
+                    : decision.risk.type === "medium"
+                      ? "中"
+                      : "高"
+                }}风险:
                 {{ decision.risk.description }}
               </div>
             </div>
@@ -131,17 +135,11 @@
       <div class="decision-card">
         <h3 class="card-title">决策历史</h3>
 
-        <div
-          v-if="decisionHistory.length === 0"
-          class="empty-state"
-        >
+        <div v-if="decisionHistory.length === 0" class="empty-state">
           暂无决策历史
         </div>
 
-        <div
-          v-else
-          class="history-list"
-        >
+        <div v-else class="history-list">
           <div
             v-for="(history, index) in decisionHistory"
             :key="index"
@@ -169,12 +167,16 @@
                 >
                   <div class="comparison-label">{{ getEffectLabel(key) }}</div>
                   <div class="comparison-values">
-                    <div class="expected-value">预期: {{ formatEffectValue(key, expectedValue) }}</div>
+                    <div class="expected-value">
+                      预期: {{ formatEffectValue(key, expectedValue) }}
+                    </div>
                     <div
                       class="actual-value"
                       :class="{
-                        'value-better': history.actualEffects[key] >= expectedValue,
-                        'value-worse': history.actualEffects[key] < expectedValue,
+                        'value-better':
+                          history.actualEffects[key] >= expectedValue,
+                        'value-worse':
+                          history.actualEffects[key] < expectedValue,
                       }"
                     >
                       实际:
@@ -213,7 +215,9 @@ const simulationStore = useSimulationStore();
 
 // 获取可用决策
 const availableDecisions = computed(() => {
-  return simulationStore.decisionMaking.availableDecisions.filter((decision) => decision.isAvailable);
+  return simulationStore.decisionMaking.availableDecisions.filter(
+    (decision) => decision.isAvailable,
+  );
 });
 
 // 获取决策历史

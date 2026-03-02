@@ -25,9 +25,9 @@
           <div class="info-item">
             <label class="info-label">发布日期</label>
             <div class="info-value">
-              第{{ simulationStore.gameState.year }}年{{ simulationStore.gameState.month }}月{{
-                simulationStore.gameState.day
-              }}日
+              第{{ simulationStore.gameState.year }}年{{
+                simulationStore.gameState.month
+              }}月{{ simulationStore.gameState.day }}日
             </div>
           </div>
 
@@ -46,11 +46,9 @@
                   disabled
                   class="channel-checkbox"
                 />
-                <label
-                  :for="`channel-${channel}`"
-                  class="channel-label"
-                  >{{ channel }}</label
-                >
+                <label :for="`channel-${channel}`" class="channel-label">{{
+                  channel
+                }}</label>
               </div>
             </div>
           </div>
@@ -73,12 +71,16 @@
         <h3 class="card-title">发布公告</h3>
 
         <div class="announcement-box">
-          <div class="announcement-title">🎉 {{ simulationStore.gameSetup.gameName }} 正式发布 🎉</div>
+          <div class="announcement-title">
+            🎉 {{ simulationStore.gameSetup.gameName }} 正式发布 🎉
+          </div>
 
           <div class="announcement-content">
             <p>亲爱的玩家们：</p>
             <p>
-              经过精心策划和开发，{{ gameTypeLabels[simulationStore.gameSetup.gameType] }}游戏《{{
+              经过精心策划和开发，{{
+                gameTypeLabels[simulationStore.gameSetup.gameType]
+              }}游戏《{{
                 simulationStore.gameSetup.gameName
               }}》正式与大家见面了！
             </p>
@@ -91,15 +93,14 @@
             </ul>
             <p>我们将持续更新内容，为大家带来更好的游戏体验。</p>
             <p>感谢大家的支持与期待！</p>
-            <p class="announcement-footer">——《{{ simulationStore.gameSetup.gameName }}》开发团队</p>
+            <p class="announcement-footer">
+              ——《{{ simulationStore.gameSetup.gameName }}》开发团队
+            </p>
           </div>
         </div>
 
         <div class="regenerate-action">
-          <button
-            @click="generateNewAnnouncement"
-            class="btn-regenerate"
-          >
+          <button @click="generateNewAnnouncement" class="btn-regenerate">
             🔄 重新生成公告
           </button>
         </div>
@@ -107,10 +108,7 @@
     </div>
 
     <!-- 发布结果 -->
-    <div
-      v-if="releaseResult"
-      class="result-card"
-    >
+    <div v-if="releaseResult" class="result-card">
       <h3 class="result-title">发布成功！</h3>
 
       <div class="result-stats">
@@ -293,7 +291,11 @@ const generateNewAnnouncement = (): void => {
 .btn-release {
   width: 100%;
   padding: tokens.$spacing-md;
-  background: linear-gradient(135deg, tokens.$primary-blue 0%, tokens.$lottery-purple 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$primary-blue 0%,
+    tokens.$lottery-purple 100%
+  );
   color: white;
   font-weight: tokens.$font-weight-medium;
   border-radius: tokens.$radius-md;

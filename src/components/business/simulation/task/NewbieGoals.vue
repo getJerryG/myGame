@@ -7,7 +7,9 @@
       <div class="progress-section">
         <div class="progress-header">
           <div class="progress-title">完成进度</div>
-          <div class="progress-count">{{ completedCount }}/{{ totalGoals }} 个目标</div>
+          <div class="progress-count">
+            {{ completedCount }}/{{ totalGoals }} 个目标
+          </div>
         </div>
         <div class="progress-bar">
           <div
@@ -37,7 +39,9 @@
                 }"
               >
                 <span v-if="goal.isCompleted">✓</span>
-                <span v-else>{{ simulationStore.newbieGoals.goals.indexOf(goal) + 1 }}</span>
+                <span v-else>{{
+                  simulationStore.newbieGoals.goals.indexOf(goal) + 1
+                }}</span>
               </div>
               <div class="goal-info">
                 <div class="goal-title">{{ goal.title }}</div>
@@ -80,28 +84,21 @@
               >
                 领取奖励
               </button>
-              <button
-                v-else
-                disabled
-                class="btn-disabled"
-              >
-                未完成
-              </button>
+              <button v-else disabled class="btn-disabled">未完成</button>
             </div>
           </div>
         </div>
       </div>
 
       <!-- 完成所有目标提示 -->
-      <div
-        v-if="completedCount === totalGoals"
-        class="completion-notice"
-      >
+      <div v-if="completedCount === totalGoals" class="completion-notice">
         <div class="notice-content">
           <div class="notice-icon">🎉</div>
           <div class="notice-text">
             <strong class="notice-title">恭喜完成所有新手目标！</strong>
-            <p class="notice-desc">已解锁中期权限，可以开始更高级的运营操作了。</p>
+            <p class="notice-desc">
+              已解锁中期权限，可以开始更高级的运营操作了。
+            </p>
           </div>
         </div>
       </div>
@@ -133,7 +130,8 @@ const simulationStore = useSimulationStore();
 
 // 计算已完成目标数量
 const completedCount = computed(() => {
-  return simulationStore.newbieGoals.goals.filter((goal) => goal.isCompleted).length;
+  return simulationStore.newbieGoals.goals.filter((goal) => goal.isCompleted)
+    .length;
 });
 
 // 计算总目标数量
@@ -227,7 +225,11 @@ const claimReward = (goalId: string): void => {
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, tokens.$primary-blue 0%, tokens.$primary-light 100%);
+  background: linear-gradient(
+    90deg,
+    tokens.$primary-blue 0%,
+    tokens.$primary-light 100%
+  );
   border-radius: tokens.$radius-full;
   transition: width tokens.$transition-normal;
 }

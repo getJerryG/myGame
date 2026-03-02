@@ -33,10 +33,7 @@
     <!-- 标签页内容-->
     <div class="app-content">
       <!-- 实时舆情 -->
-      <div
-        v-if="activeTab === 'realtime'"
-        class="tab-content"
-      >
+      <div v-if="activeTab === 'realtime'" class="tab-content">
         <div class="sentiment-stats">
           <div class="stat-card positive">
             <div class="stat-label">正面舆情</div>
@@ -69,10 +66,7 @@
                 <div class="comment-time">{{ comment.time }}</div>
               </div>
               <div class="comment-content">{{ comment.content }}</div>
-              <div
-                class="comment-sentiment"
-                :class="comment.sentiment"
-              >
+              <div class="comment-sentiment" :class="comment.sentiment">
                 {{ getSentimentLabel(comment.sentiment) }}
               </div>
             </div>
@@ -81,10 +75,7 @@
       </div>
 
       <!-- 口碑变化 -->
-      <div
-        v-else-if="activeTab === 'reputation'"
-        class="tab-content"
-      >
+      <div v-else-if="activeTab === 'reputation'" class="tab-content">
         <div class="chart-section">
           <h3>口碑变化趋势</h3>
           <div class="chart-placeholder">
@@ -130,10 +121,7 @@
       </div>
 
       <!-- 玩家满意度 -->
-      <div
-        v-else-if="activeTab === 'satisfaction'"
-        class="tab-content"
-      >
+      <div v-else-if="activeTab === 'satisfaction'" class="tab-content">
         <div class="satisfaction-score">
           <h3>玩家满意度</h3>
           <div class="score-circle">
@@ -150,9 +138,13 @@
               <div class="satisfaction-bar">
                 <div
                   class="satisfaction-fill"
-                  :style="{ width: `${satisfactionDistribution.verySatisfied}%` }"
+                  :style="{
+                    width: `${satisfactionDistribution.verySatisfied}%`,
+                  }"
                 ></div>
-                <div class="satisfaction-percentage">{{ satisfactionDistribution.verySatisfied }}%</div>
+                <div class="satisfaction-percentage">
+                  {{ satisfactionDistribution.verySatisfied }}%
+                </div>
               </div>
             </div>
             <div class="satisfaction-item">
@@ -162,7 +154,9 @@
                   class="satisfaction-fill"
                   :style="{ width: `${satisfactionDistribution.satisfied}%` }"
                 ></div>
-                <div class="satisfaction-percentage">{{ satisfactionDistribution.satisfied }}%</div>
+                <div class="satisfaction-percentage">
+                  {{ satisfactionDistribution.satisfied }}%
+                </div>
               </div>
             </div>
             <div class="satisfaction-item">
@@ -172,7 +166,9 @@
                   class="satisfaction-fill"
                   :style="{ width: `${satisfactionDistribution.neutral}%` }"
                 ></div>
-                <div class="satisfaction-percentage">{{ satisfactionDistribution.neutral }}%</div>
+                <div class="satisfaction-percentage">
+                  {{ satisfactionDistribution.neutral }}%
+                </div>
               </div>
             </div>
             <div class="satisfaction-item">
@@ -180,9 +176,13 @@
               <div class="satisfaction-bar">
                 <div
                   class="satisfaction-fill"
-                  :style="{ width: `${satisfactionDistribution.dissatisfied}%` }"
+                  :style="{
+                    width: `${satisfactionDistribution.dissatisfied}%`,
+                  }"
                 ></div>
-                <div class="satisfaction-percentage">{{ satisfactionDistribution.dissatisfied }}%</div>
+                <div class="satisfaction-percentage">
+                  {{ satisfactionDistribution.dissatisfied }}%
+                </div>
               </div>
             </div>
             <div class="satisfaction-item">
@@ -190,9 +190,13 @@
               <div class="satisfaction-bar">
                 <div
                   class="satisfaction-fill"
-                  :style="{ width: `${satisfactionDistribution.veryDissatisfied}%` }"
+                  :style="{
+                    width: `${satisfactionDistribution.veryDissatisfied}%`,
+                  }"
                 ></div>
-                <div class="satisfaction-percentage">{{ satisfactionDistribution.veryDissatisfied }}%</div>
+                <div class="satisfaction-percentage">
+                  {{ satisfactionDistribution.veryDissatisfied }}%
+                </div>
               </div>
             </div>
           </div>
@@ -201,12 +205,7 @@
 
       <!-- 导出舆情报告按钮 -->
       <div class="action-section">
-        <button
-          class="export-btn"
-          @click="exportReport"
-        >
-          导出舆情报告
-        </button>
+        <button class="export-btn" @click="exportReport">导出舆情报告</button>
       </div>
     </div>
   </div>
@@ -288,8 +287,8 @@ const latestComments = ref([
 
 // 口碑趋势数据
 const reputationTrend = ref([
-  65, 68, 70, 72, 75, 73, 76, 78, 80, 79, 82, 85, 83, 86, 88, 90, 89, 92, 94, 93, 95, 97, 96, 98, 100, 99, 102, 105,
-  103, 106,
+  65, 68, 70, 72, 75, 73, 76, 78, 80, 79, 82, 85, 83, 86, 88, 90, 89, 92, 94,
+  93, 95, 97, 96, 98, 100, 99, 102, 105, 103, 106,
 ]);
 
 // 当前口碑

@@ -32,10 +32,7 @@
     <template #content>
       <div class="lottery-content">
         <!-- 抽奖标签页 -->
-        <div
-          v-if="activeTab === 'draw'"
-          class="tab-content"
-        >
+        <div v-if="activeTab === 'draw'" class="tab-content">
           <div class="lottery-machine">
             <div class="machine-header">
               <h3 class="text-gold">幸运抽奖</h3>
@@ -46,10 +43,7 @@
             </div>
 
             <div class="lottery-wheel">
-              <div
-                class="wheel-container"
-                :class="{ spinning: isSpinning }"
-              >
+              <div class="wheel-container" :class="{ spinning: isSpinning }">
                 <div
                   v-for="(prize, index) in prizes"
                   :key="index"
@@ -70,20 +64,12 @@
                 :disabled="isSpinning || tickets <= 0"
                 @click="startDraw"
               >
-                {{ isSpinning ? '抽奖中...' : '开始抽奖' }}
+                {{ isSpinning ? "抽奖中..." : "开始抽奖" }}
               </button>
-              <button
-                class="buy-btn"
-                @click="buyTickets"
-              >
-                购买抽奖券
-              </button>
+              <button class="buy-btn" @click="buyTickets">购买抽奖券</button>
             </div>
 
-            <div
-              v-if="lastPrize"
-              class="prize-result"
-            >
+            <div v-if="lastPrize" class="prize-result">
               <div class="result-title">恭喜获得</div>
               <div class="result-prize">
                 <span class="result-icon">{{ lastPrize.icon }}</span>
@@ -94,16 +80,8 @@
         </div>
 
         <!-- 抽奖记录标签页 -->
-        <div
-          v-else-if="activeTab === 'history'"
-          class="tab-content"
-        >
-          <h3
-            class="text-gold"
-            style="margin-bottom: 20px"
-          >
-            抽奖记录
-          </h3>
+        <div v-else-if="activeTab === 'history'" class="tab-content">
+          <h3 class="text-gold" style="margin-bottom: 20px">抽奖记录</h3>
           <div class="history-list">
             <div
               v-for="(record, index) in drawHistory"
@@ -117,26 +95,15 @@
               <div class="history-time">{{ record.time }}</div>
             </div>
 
-            <div
-              v-if="drawHistory.length === 0"
-              class="empty-state"
-            >
+            <div v-if="drawHistory.length === 0" class="empty-state">
               <p>暂无抽奖记录</p>
             </div>
           </div>
         </div>
 
         <!-- 奖品列表标签页 -->
-        <div
-          v-else-if="activeTab === 'prizes'"
-          class="tab-content"
-        >
-          <h3
-            class="text-gold"
-            style="margin-bottom: 20px"
-          >
-            奖品列表
-          </h3>
+        <div v-else-if="activeTab === 'prizes'" class="tab-content">
+          <h3 class="text-gold" style="margin-bottom: 20px">奖品列表</h3>
           <div class="prizes-grid">
             <div
               v-for="(prize, index) in prizes"
@@ -147,8 +114,12 @@
               <div class="prize-icon-large">{{ prize.icon }}</div>
               <div class="prize-info">
                 <div class="prize-name">{{ prize.name }}</div>
-                <div class="prize-rarity">{{ getRarityLabel(prize.rarity) }}</div>
-                <div class="prize-probability">概率: {{ prize.probability }}%</div>
+                <div class="prize-rarity">
+                  {{ getRarityLabel(prize.rarity) }}
+                </div>
+                <div class="prize-probability">
+                  概率: {{ prize.probability }}%
+                </div>
               </div>
             </div>
           </div>
@@ -242,7 +213,9 @@ const startDraw = (): void => {
       }
 
       // 找到选中的奖品索引
-      const prizeIndex = prizes.value.findIndex((p) => p.name === selectedPrize.name);
+      const prizeIndex = prizes.value.findIndex(
+        (p) => p.name === selectedPrize.name,
+      );
       currentIndex.value = prizeIndex;
       lastPrize.value = selectedPrize;
 

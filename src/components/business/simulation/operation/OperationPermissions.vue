@@ -7,19 +7,15 @@
       <div class="permission-card unlocked">
         <h3 class="card-title">
           <span class="title-icon">✅</span> 已解锁操作
-          <span class="title-count">({{ unlockedOperations.length }}/{{ totalOperations }})</span>
+          <span class="title-count"
+            >({{ unlockedOperations.length }}/{{ totalOperations }})</span
+          >
         </h3>
 
-        <div
-          v-if="unlockedOperations.length === 0"
-          class="empty-state"
-        >
+        <div v-if="unlockedOperations.length === 0" class="empty-state">
           暂无解锁的操作
         </div>
-        <div
-          v-else
-          class="operations-list"
-        >
+        <div v-else class="operations-list">
           <div
             v-for="operation in unlockedOperations"
             :key="operation.id"
@@ -36,18 +32,14 @@
 
       <!-- 待解锁操作 -->
       <div class="permission-card locked">
-        <h3 class="card-title"><span class="title-icon">🔒</span> 待解锁操作</h3>
+        <h3 class="card-title">
+          <span class="title-icon">🔒</span> 待解锁操作
+        </h3>
 
-        <div
-          v-if="lockedOperations.length === 0"
-          class="empty-state"
-        >
+        <div v-if="lockedOperations.length === 0" class="empty-state">
           所有操作已解锁
         </div>
-        <div
-          v-else
-          class="operations-list"
-        >
+        <div v-else class="operations-list">
           <div
             v-for="operation in lockedOperations"
             :key="operation.id"
@@ -65,7 +57,9 @@
                 ></div>
               </div>
               <div class="progress-text">
-                {{ simulationStore.gameState.dayCount }}/{{ operation.unlockDay }}
+                {{ simulationStore.gameState.dayCount }}/{{
+                  operation.unlockDay
+                }}
                 天
               </div>
             </div>
@@ -139,12 +133,16 @@ const categories = ref<OperationCategory[]>([
 
 // 已解锁操作
 const unlockedOperations = computed<OperationPermission[]>(() => {
-  return simulationStore.operationPermissions.operations.filter((op) => op.isUnlocked);
+  return simulationStore.operationPermissions.operations.filter(
+    (op) => op.isUnlocked,
+  );
 });
 
 // 待解锁操作
 const lockedOperations = computed<OperationPermission[]>(() => {
-  return simulationStore.operationPermissions.operations.filter((op) => !op.isUnlocked);
+  return simulationStore.operationPermissions.operations.filter(
+    (op) => !op.isUnlocked,
+  );
 });
 
 // 总操作数
@@ -154,12 +152,19 @@ const totalOperations = computed(() => {
 
 // 计算解锁进度
 const calculateUnlockProgress = (operation: OperationPermission): number => {
-  return Math.min(100, Math.round((simulationStore.gameState.dayCount / operation.unlockDay) * 100));
+  return Math.min(
+    100,
+    Math.round(
+      (simulationStore.gameState.dayCount / operation.unlockDay) * 100,
+    ),
+  );
 };
 
 // 获取分类操作数
 const getCategoryCount = (category: string): number => {
-  return simulationStore.operationPermissions.operations.filter((op) => op.category === category).length;
+  return simulationStore.operationPermissions.operations.filter(
+    (op) => op.category === category,
+  ).length;
 };
 </script>
 
@@ -293,7 +298,11 @@ const getCategoryCount = (category: string): number => {
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, tokens.$primary-blue, tokens.$primary-light);
+  background: linear-gradient(
+    90deg,
+    tokens.$primary-blue,
+    tokens.$primary-light
+  );
   border-radius: tokens.$radius-sm;
   transition: width tokens.$transition-normal;
 }

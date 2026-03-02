@@ -11,11 +11,7 @@
 
     <div class="app-store-content">
       <div class="app-list">
-        <div
-          v-for="app in filteredApps"
-          :key="app.id"
-          class="app-item"
-        >
+        <div v-for="app in filteredApps" :key="app.id" class="app-item">
           <div class="app-info">
             <div class="app-icon">{{ app.icon }}</div>
             <div class="app-details">
@@ -26,16 +22,14 @@
                 <span
                   :class="{
                     'status-locked': !canUnlockApp(app),
-                    'status-available': canUnlockApp(app) && !isInstalled(app.id),
+                    'status-available':
+                      canUnlockApp(app) && !isInstalled(app.id),
                     'status-installed': isInstalled(app.id),
                   }"
                 >
                   <span class="text-gold">{{ getAppStatusText(app) }}</span>
                 </span>
-                <span
-                  v-if="!canUnlockApp(app)"
-                  class="lock-reason"
-                >
+                <span v-if="!canUnlockApp(app)" class="lock-reason">
                   (需达到{{ getUnlockConditionText(app) }})
                 </span>
               </div>
@@ -43,38 +37,31 @@
           </div>
           <div class="app-actions">
             <button
-              v-if="!isDownloading(app.id) && !isInstalled(app.id) && canUnlockApp(app)"
+              v-if="
+                !isDownloading(app.id) &&
+                !isInstalled(app.id) &&
+                canUnlockApp(app)
+              "
               class="download-btn"
               @click="startDownload(app)"
             >
               下载
             </button>
-            <button
-              v-else-if="!canUnlockApp(app)"
-              class="locked-btn"
-              disabled
-            >
+            <button v-else-if="!canUnlockApp(app)" class="locked-btn" disabled>
               未解锁
             </button>
-            <div
-              v-else-if="isDownloading(app.id)"
-              class="download-progress"
-            >
+            <div v-else-if="isDownloading(app.id)" class="download-progress">
               <div class="progress-bar">
                 <div
                   class="progress-fill"
                   :style="{ width: `${getDownloadProgress(app.id)}%` }"
                 ></div>
               </div>
-              <div class="progress-text">{{ getDownloadProgress(app.id) }}%</div>
+              <div class="progress-text">
+                {{ getDownloadProgress(app.id) }}%
+              </div>
             </div>
-            <button
-              v-else
-              class="installed-btn"
-              disabled
-            >
-              已安装
-            </button>
+            <button v-else class="installed-btn" disabled>已安装</button>
           </div>
         </div>
       </div>
@@ -320,7 +307,9 @@ const getSubLevelName = (levelId: string, subLevelOrder: number): string => {
 
 const getUnlockConditionText = (app: AvailableApp): string => {
   const levelName = getLevelNameById(app.requiredLevelId);
-  const subLevelName = app.requiredSubLevel ? getSubLevelName(app.requiredLevelId, app.requiredSubLevel) : '';
+  const subLevelName = app.requiredSubLevel
+    ? getSubLevelName(app.requiredLevelId, app.requiredSubLevel)
+    : '';
   return `${levelName}${subLevelName}`;
 };
 
@@ -354,7 +343,10 @@ const simulateDownload = (app: AvailableApp): void => {
     const currentProgress = windowManagerStore.getDownloadProgress(app.id);
 
     if (windowManagerStore.isDownloading(app.id)) {
-      const newProgress = Math.min(currentProgress + Math.floor(Math.random() * 10) + 5, 100);
+      const newProgress = Math.min(
+        currentProgress + Math.floor(Math.random() * 10) + 5,
+        100,
+      );
       windowManagerStore.updateDownloadProgress(app.id, newProgress);
 
       if (newProgress >= 100) {

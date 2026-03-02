@@ -19,10 +19,7 @@
       <!-- 核心数据概览 -->
       <div class="content-header">
         <h2>{{ currentModule.name }}</h2>
-        <div
-          class="module-core-data"
-          v-if="app.coreData"
-        >
+        <div class="module-core-data" v-if="app.coreData">
           <div
             class="core-data-item"
             v-for="(value, key) in app.coreData"
@@ -37,19 +34,13 @@
       <!-- 模块内容 -->
       <div class="content-body">
         <!-- 英雄管理模块 -->
-        <div
-          v-if="activeModule === 'hero-management'"
-          class="module-content"
-        >
+        <div v-if="activeModule === 'hero-management'" class="module-content">
           <h3>英雄管理</h3>
           <p>英雄管理功能开发中...</p>
         </div>
 
         <!-- 皮肤发布模块 -->
-        <div
-          v-else-if="activeModule === 'skin-release'"
-          class="module-content"
-        >
+        <div v-else-if="activeModule === 'skin-release'" class="module-content">
           <h3>皮肤发布</h3>
           <p>皮肤发布功能开发中...</p>
         </div>
@@ -87,7 +78,10 @@ const emit = defineEmits(['update:activeModule']);
 
 // 当前激活的模块
 const currentModule = computed(() => {
-  return props.app.modules.find((m) => utils.id === activeModule.value) || props.app.modules[0];
+  return (
+    props.app.modules.find((m) => utils.id === activeModule.value) ||
+    props.app.modules[0]
+  );
 });
 
 // 切换模块

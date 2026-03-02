@@ -26,10 +26,7 @@
     <!-- 标签页内容-->
     <div class="app-content">
       <!-- 待发布内容-->
-      <div
-        v-if="activeTab === 'pending'"
-        class="tab-content"
-      >
+      <div v-if="activeTab === 'pending'" class="tab-content">
         <div class="content-list">
           <div
             v-for="item in pendingContent"
@@ -37,7 +34,9 @@
             class="content-item"
           >
             <div class="content-info">
-              <div class="content-type">{{ GameReleaseService.getItemTypeLabel(item.type) }}</div>
+              <div class="content-type">
+                {{ GameReleaseService.getItemTypeLabel(item.type) }}
+              </div>
               <div class="content-name">{{ item.name }}</div>
               <div class="content-meta">
                 <span class="content-status">{{ item.status }}</span>
@@ -69,29 +68,18 @@
               </div>
             </div>
           </div>
-          <div
-            v-if="pendingContent.length === 0"
-            class="empty-state"
-          >
+          <div v-if="pendingContent.length === 0" class="empty-state">
             <p>暂无待发布内容</p>
           </div>
         </div>
 
         <div class="action-section">
-          <button
-            class="confirm-btn"
-            @click="confirmRelease"
-          >
-            确认发布
-          </button>
+          <button class="confirm-btn" @click="confirmRelease">确认发布</button>
         </div>
       </div>
 
       <!-- 版本历史 -->
-      <div
-        v-else-if="activeTab === 'history'"
-        class="tab-content"
-      >
+      <div v-else-if="activeTab === 'history'" class="tab-content">
         <div class="version-list">
           <div
             v-for="version in versionHistory"
@@ -103,10 +91,7 @@
                 <div class="version-name">版本 {{ version.version }}</div>
                 <div class="version-date">{{ version.releaseDate }}</div>
               </div>
-              <div
-                class="version-status"
-                :class="version.status"
-              >
+              <div class="version-status" :class="version.status">
                 {{ version.status }}
               </div>
             </div>
@@ -115,11 +100,10 @@
               <div class="content-section">
                 <h4>更新内容</h4>
                 <ul class="update-list">
-                  <li
-                    v-for="(item, index) in version.content"
-                    :key="index"
-                  >
-                    {{ GameReleaseService.getItemTypeLabel(item.type) }}：{{ item.name }}
+                  <li v-for="(item, index) in version.content" :key="index">
+                    {{ GameReleaseService.getItemTypeLabel(item.type) }}：{{
+                      item.name
+                    }}
                   </li>
                 </ul>
               </div>
@@ -129,24 +113,27 @@
                 <div class="feedback-stats">
                   <div class="feedback-item">
                     <span class="feedback-label">好评率：</span>
-                    <span class="feedback-value">{{ version.feedback.positiveRate }}%</span>
+                    <span class="feedback-value"
+                      >{{ version.feedback.positiveRate }}%</span
+                    >
                   </div>
                   <div class="feedback-item">
                     <span class="feedback-label">BUG报告：</span>
-                    <span class="feedback-value">{{ version.feedback.bugReports }}</span>
+                    <span class="feedback-value">{{
+                      version.feedback.bugReports
+                    }}</span>
                   </div>
                   <div class="feedback-item">
                     <span class="feedback-label">建议数量：</span>
-                    <span class="feedback-value">{{ version.feedback.suggestions }}</span>
+                    <span class="feedback-value">{{
+                      version.feedback.suggestions
+                    }}</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div
-            v-if="versionHistory.length === 0"
-            class="empty-state"
-          >
+          <div v-if="versionHistory.length === 0" class="empty-state">
             <p>暂无版本历史</p>
           </div>
         </div>
@@ -191,7 +178,9 @@ const loadData = () => {
 // 确认发布
 const confirmRelease = async () => {
   try {
-    const result = await GameReleaseService.confirmRelease(pendingContent.value);
+    const result = await GameReleaseService.confirmRelease(
+      pendingContent.value,
+    );
     if (result) {
       alert('发布成功');
       // 重新加载数据
@@ -343,7 +332,7 @@ onMounted(() => {
             cursor: pointer;
 
             input {
-              &[type='radio'] {
+              &[type="radio"] {
                 accent-color: tokens.$primary-blue;
               }
             }
@@ -467,7 +456,7 @@ onMounted(() => {
           position: relative;
 
           &::before {
-            content: '•';
+            content: "•";
             color: tokens.$primary-blue;
             font-weight: tokens.$font-weight-bold;
             position: absolute;

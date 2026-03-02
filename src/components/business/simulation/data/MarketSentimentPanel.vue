@@ -4,12 +4,7 @@
     <div class="sentiment-dashboard">
       <h3 class="panel-title">市场情绪</h3>
       <div class="dashboard-container">
-        <svg
-          class="gauge"
-          width="200"
-          height="150"
-          viewBox="0 0 200 150"
-        >
+        <svg class="gauge" width="200" height="150" viewBox="0 0 200 150">
           <!-- 背景弧线 -->
           <path
             class="gauge-bg"
@@ -73,10 +68,7 @@
 
         <div class="sentiment-info">
           <div class="sentiment-value">{{ sentimentValue }}%</div>
-          <div
-            class="sentiment-status"
-            :class="sentimentClass"
-          >
+          <div class="sentiment-status" :class="sentimentClass">
             {{ sentimentStatus }}
           </div>
         </div>
@@ -106,11 +98,9 @@
     <div class="pending-decisions">
       <h3 class="panel-title">
         待处理决策
-        <span
-          v-if="pendingDecisions.length > 0"
-          class="badge"
-          >{{ pendingDecisions.length }}</span
-        >
+        <span v-if="pendingDecisions.length > 0" class="badge">{{
+          pendingDecisions.length
+        }}</span>
       </h3>
       <div class="decisions-list">
         <div
@@ -124,10 +114,7 @@
             <div class="decision-due">{{ decision.due }}</div>
           </div>
         </div>
-        <div
-          v-if="pendingDecisions.length === 0"
-          class="empty-state"
-        >
+        <div v-if="pendingDecisions.length === 0" class="empty-state">
           <span class="empty-icon">✓</span>
           <span class="empty-text">暂无待处理决策</span>
         </div>
@@ -249,7 +236,10 @@ export default {
     simulateSentimentChange(): void {
       setInterval(() => {
         const change = (Math.random() - 0.5) * 5;
-        this.sentimentValue = Math.max(0, Math.min(100, this.sentimentValue + change));
+        this.sentimentValue = Math.max(
+          0,
+          Math.min(100, this.sentimentValue + change),
+        );
       }, 5000);
     },
   },

@@ -1,10 +1,7 @@
 <template>
   <div class="window-title-bar">
     <!-- 选项卡区域 -->
-    <div
-      v-if="tabs && tabs.length > 1"
-      class="window-tabs"
-    >
+    <div v-if="tabs && tabs.length > 1" class="window-tabs">
       <div
         v-for="tab in tabs"
         :key="tab.id"
@@ -31,10 +28,7 @@
       </div>
     </div>
     <!-- 普通标题 -->
-    <div
-      v-else
-      class="window-title"
-    >
+    <div v-else class="window-title">
       {{ title }}
     </div>
 

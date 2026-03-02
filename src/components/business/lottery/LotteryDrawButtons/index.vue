@@ -5,14 +5,18 @@
       :disabled="lotteryStore.stones < (lotteryStore.firstDraw ? 10 : 100)"
       @click="handleSingleDraw"
     >
-      单抽 {{ lotteryStore.firstDraw ? '(1�?del>10�?/del>)' : '(10�?' }} ({{ lotteryStore.firstDraw ? 10 : 100 }}祈愿�?
+      单抽 {{ lotteryStore.firstDraw ? "(1�?del>10�?/del>)" : "(10�?" }} ({{
+        lotteryStore.firstDraw ? 10 : 100
+      }}祈愿�?
     </button>
     <button
       class="draw-button ten"
       :disabled="lotteryStore.stones < 1000"
       @click="handleTenDraws"
     >
-      10连抽 {{ lotteryStore.firstTenDraw ? '(91�?del>100�?/del>)' : '(100�?' }} (1000祈愿�?
+      10连抽
+      {{ lotteryStore.firstTenDraw ? "(91�?del>100�?/del>)" : "(100�?" }}
+      (1000祈愿�?
     </button>
   </div>
 </template>
@@ -78,21 +82,37 @@ const handleTenDraws = (): void => {
   }
 
   &.single {
-    background: linear-gradient(135deg, tokens.$info 0%, color.adjust(tokens.$info, $lightness: -10%) 100%);
+    background: linear-gradient(
+      135deg,
+      tokens.$info 0%,
+      color.adjust(tokens.$info, $lightness: -10%) 100%
+    );
 
     &:hover {
       &:not(:disabled) {
-        background: linear-gradient(135deg, color.adjust(tokens.$info, $lightness: 5%) 0%, tokens.$info 100%);
+        background: linear-gradient(
+          135deg,
+          color.adjust(tokens.$info, $lightness: 5%) 0%,
+          tokens.$info 100%
+        );
       }
     }
   }
 
   &.ten {
-    background: linear-gradient(135deg, tokens.$warning 0%, color.adjust(tokens.$warning, $lightness: -10%) 100%);
+    background: linear-gradient(
+      135deg,
+      tokens.$warning 0%,
+      color.adjust(tokens.$warning, $lightness: -10%) 100%
+    );
 
     &:hover {
       &:not(:disabled) {
-        background: linear-gradient(135deg, color.adjust(tokens.$warning, $lightness: 5%) 0%, tokens.$warning 100%);
+        background: linear-gradient(
+          135deg,
+          color.adjust(tokens.$warning, $lightness: 5%) 0%,
+          tokens.$warning 100%
+        );
       }
     }
   }

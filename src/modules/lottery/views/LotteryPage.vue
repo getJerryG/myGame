@@ -34,10 +34,7 @@
       </div>
 
       <!-- 抽奖结果 -->
-      <div
-        v-if="lotteryResult"
-        class="lottery-result"
-      >
+      <div v-if="lotteryResult" class="lottery-result">
         <div class="result-header">
           <span class="result-icon">🎉</span>
           <span class="result-text">恭喜获得</span>
@@ -45,10 +42,7 @@
         <div class="result-item">
           <span class="result-item-icon">{{ lotteryResult.icon }}</span>
           <span class="result-item-name">{{ lotteryResult.name }}</span>
-          <span
-            class="result-item-rarity"
-            :class="lotteryResult.rarity"
-          >
+          <span class="result-item-rarity" :class="lotteryResult.rarity">
             {{ getRarityText(lotteryResult.rarity) }}
           </span>
         </div>
@@ -83,17 +77,11 @@
         >
           <span class="history-time">{{ record.time }}</span>
           <span class="history-prize">{{ record.prizeName }}</span>
-          <span
-            class="history-rarity"
-            :class="record.rarity"
-          >
+          <span class="history-rarity" :class="record.rarity">
             {{ getRarityText(record.rarity) }}
           </span>
         </div>
-        <div
-          v-if="lotteryHistory.length === 0"
-          class="no-history"
-        >
+        <div v-if="lotteryHistory.length === 0" class="no-history">
           暂无抽奖记录
         </div>
       </div>
@@ -250,7 +238,11 @@ const finishLottery = () => {
   @include utils.flex-col(tokens.$spacing-md, center, center);
 
   padding: tokens.$spacing-xl;
-  background: linear-gradient(135deg, tokens.$bg-lighter 0%, tokens.$bg-light 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$bg-lighter 0%,
+    tokens.$bg-light 100%
+  );
   border-radius: tokens.$radius-xl;
   border: 3px solid tokens.$border-medium;
   box-shadow: tokens.$shadow-lg;
@@ -301,7 +293,11 @@ const finishLottery = () => {
   font-size: tokens.$font-size-xl;
   font-weight: tokens.$font-weight-bold;
   color: tokens.$text-primary;
-  background: linear-gradient(135deg, tokens.$primary 0%, tokens.$primary-dark 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$primary 0%,
+    tokens.$primary-dark 100%
+  );
   border: none;
   border-radius: tokens.$radius-full;
   cursor: pointer;
@@ -387,7 +383,11 @@ const finishLottery = () => {
       }
 
       &.legendary {
-        background: linear-gradient(135deg, tokens.$primary-gold 0%, #f59e0b 100%);
+        background: linear-gradient(
+          135deg,
+          tokens.$primary-gold 0%,
+          #f59e0b 100%
+        );
         color: tokens.$gray-900;
       }
     }
@@ -468,7 +468,11 @@ const finishLottery = () => {
   &.legendary {
     border-color: tokens.$primary-gold;
     box-shadow: 0 0 15px rgb(255 215 0 / 50%);
-    background: linear-gradient(135deg, rgb(255 215 0 / 10%) 0%, transparent 100%);
+    background: linear-gradient(
+      135deg,
+      rgb(255 215 0 / 10%) 0%,
+      transparent 100%
+    );
   }
 
   .prize-icon {
@@ -554,7 +558,11 @@ const finishLottery = () => {
     }
 
     &.legendary {
-      background: linear-gradient(135deg, tokens.$primary-gold 0%, #f59e0b 100%);
+      background: linear-gradient(
+        135deg,
+        tokens.$primary-gold 0%,
+        #f59e0b 100%
+      );
       color: tokens.$gray-900;
     }
   }

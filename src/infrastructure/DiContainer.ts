@@ -1,7 +1,11 @@
 // 移除未使用的导入，简化服务类型定义
 
 // 定义服务类型
-export type ServiceType = 'EventSystem' | 'TimeManager' | 'CareerSystem' | 'BusinessDataService';
+export type ServiceType =
+  | 'EventSystem'
+  | 'TimeManager'
+  | 'CareerSystem'
+  | 'BusinessDataService';
 
 // 定义服务构造函数类型
 type ServiceConstructor<T> = new (...args: any[]) => T;
@@ -28,7 +32,7 @@ export class DIContainer {
   register<T>(
     serviceType: ServiceType,
     constructor: ServiceConstructor<T>,
-    options: ServiceRegistrationOptions = { isSingleton: true }
+    options: ServiceRegistrationOptions = { isSingleton: true },
   ): void {
     this.serviceRegistry.set(serviceType, {
       constructor,

@@ -18,7 +18,9 @@
             <div class="channel-stats">
               <div class="stat-item">
                 <span class="stat-label">转化率</span>
-                <span class="stat-value">{{ channel.stats.conversionRate }}%</span>
+                <span class="stat-value"
+                  >{{ channel.stats.conversionRate }}%</span
+                >
               </div>
               <div class="stat-item">
                 <span class="stat-label">成本</span>
@@ -53,10 +55,7 @@
         <!-- 投放时长 -->
         <div class="setting-item">
           <label class="setting-label">投放时长</label>
-          <select
-            v-model="localSettings.duration"
-            class="setting-select"
-          >
+          <select v-model="localSettings.duration" class="setting-select">
             <option value="7">7天</option>
             <option value="14">14天</option>
             <option value="30">30天</option>
@@ -67,10 +66,7 @@
         <!-- 目标受众 -->
         <div class="setting-item">
           <label class="setting-label">目标受众</label>
-          <select
-            v-model="localSettings.targetAudience"
-            class="setting-select"
-          >
+          <select v-model="localSettings.targetAudience" class="setting-select">
             <option value="youngAdult">青少年</option>
             <option value="adult">成年人</option>
             <option value="senior">中老年</option>
@@ -90,7 +86,9 @@
         </div>
         <div class="prediction-card">
           <div class="prediction-label">预计转化率</div>
-          <div class="prediction-value">{{ getPredictedConversionRate() }}%</div>
+          <div class="prediction-value">
+            {{ getPredictedConversionRate() }}%
+          </div>
         </div>
         <div class="prediction-card">
           <div class="prediction-label">预计ROI</div>
@@ -131,7 +129,7 @@ watch(
   (newSettings) => {
     localSettings.value = { ...newSettings };
   },
-  { deep: true }
+  { deep: true },
 );
 
 watch(
@@ -139,7 +137,7 @@ watch(
   (newIds) => {
     localSelectedChannelIds.value = [...newIds];
   },
-  { deep: true }
+  { deep: true },
 );
 
 // 监听本地状态变化，通知父组件
@@ -148,7 +146,7 @@ watch(
   (newSettings) => {
     emit('update:settings', { ...newSettings });
   },
-  { deep: true }
+  { deep: true },
 );
 
 watch(
@@ -156,7 +154,7 @@ watch(
   (newIds) => {
     emit('update:selectedChannelIds', [...newIds]);
   },
-  { deep: true }
+  { deep: true },
 );
 
 // 检查渠道是否被选中

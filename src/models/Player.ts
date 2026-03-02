@@ -1,4 +1,9 @@
-import type { PlayerState, PlayerAttributes, PlayerStats, PlayerCareer } from '../types/player';
+import type {
+  PlayerState,
+  PlayerAttributes,
+  PlayerStats,
+  PlayerCareer,
+} from '../types/player';
 // 移除未使用的导入
 
 import { Character } from './Character';

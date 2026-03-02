@@ -41,10 +41,7 @@
       <div class="config-item">
         <label class="config-label">市场难度</label>
         <div class="config-control">
-          <select
-            v-model="marketDifficulty"
-            class="config-select"
-          >
+          <select v-model="marketDifficulty" class="config-select">
             <option value="easy">简单</option>
             <option value="normal">普通</option>
             <option value="hard">困难</option>
@@ -71,25 +68,14 @@
 
     <!-- 操作按钮 -->
     <div class="panel-actions">
-      <button
-        class="action-button secondary"
-        @click="resetConfig"
-      >
-        重置
-      </button>
-      <button
-        class="action-button primary"
-        @click="startSimulation"
-      >
+      <button class="action-button secondary" @click="resetConfig">重置</button>
+      <button class="action-button primary" @click="startSimulation">
         开始模拟
       </button>
     </div>
 
     <!-- 模拟状态显示 -->
-    <div
-      v-if="isSimulating"
-      class="simulation-status"
-    >
+    <div v-if="isSimulating" class="simulation-status">
       <div class="status-header">
         <span class="status-icon">⏳</span>
         <span class="status-text">模拟进行中...</span>
@@ -295,7 +281,11 @@ const startSimulation = () => {
   min-width: 120px;
 
   &.primary {
-    background: linear-gradient(135deg, tokens.$primary 0%, tokens.$primary-dark 100%);
+    background: linear-gradient(
+      135deg,
+      tokens.$primary 0%,
+      tokens.$primary-dark 100%
+    );
     color: tokens.$text-primary;
     box-shadow: 0 4px 15px rgb(74 158 255 / 40%);
 
@@ -320,7 +310,11 @@ const startSimulation = () => {
 .simulation-status {
   margin-top: tokens.$spacing-lg;
   padding: tokens.$spacing-md;
-  background: linear-gradient(135deg, tokens.$primary 0%, tokens.$primary-dark 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$primary 0%,
+    tokens.$primary-dark 100%
+  );
   border-radius: tokens.$radius-md;
   color: tokens.$text-primary;
 

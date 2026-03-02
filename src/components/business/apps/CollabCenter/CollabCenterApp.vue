@@ -3,10 +3,7 @@
     <!-- 应用标题 -->
     <div class="app-header">
       <h2>联动中心</h2>
-      <button
-        class="create-collab-btn"
-        @click="showCreateModal = true"
-      >
+      <button class="create-collab-btn" @click="showCreateModal = true">
         创建联动
       </button>
     </div>
@@ -44,15 +41,15 @@
           v-for="collab in currentCollabs"
           :key="collab.id"
           class="collab-item"
-          :class="{ ongoing: collab.status === '进行中', completed: collab.status === '已结束' }"
+          :class="{
+            ongoing: collab.status === '进行中',
+            completed: collab.status === '已结束',
+          }"
         >
           <div class="collab-info">
             <div class="collab-header">
               <div class="collab-name">{{ collab.name }}</div>
-              <div
-                class="collab-status"
-                :class="collab.status"
-              >
+              <div class="collab-status" :class="collab.status">
                 {{ collab.status }}
               </div>
             </div>
@@ -60,7 +57,9 @@
             <div class="collab-meta">
               <span class="meta-item">开始时间: {{ collab.startTime }}</span>
               <span class="meta-item">结束时间: {{ collab.endTime }}</span>
-              <span class="meta-item">预期收益: {{ collab.expectedRevenue }}</span>
+              <span class="meta-item"
+                >预期收益: {{ collab.expectedRevenue }}</span
+              >
             </div>
           </div>
           <div class="collab-actions">
@@ -82,16 +81,10 @@
       </div>
 
       <!-- 空状态 -->
-      <div
-        v-if="currentCollabs.length === 0"
-        class="empty-state"
-      >
+      <div v-if="currentCollabs.length === 0" class="empty-state">
         <div class="empty-icon">📊</div>
         <div class="empty-text">暂无联动项目</div>
-        <button
-          class="create-first-btn"
-          @click="showCreateModal = true"
-        >
+        <button class="create-first-btn" @click="showCreateModal = true">
           创建第一个联动
         </button>
       </div>
@@ -103,18 +96,10 @@
       class="modal-overlay"
       @click="showCreateModal = false"
     >
-      <div
-        class="modal-content"
-        @click.stop
-      >
+      <div class="modal-content" @click.stop>
         <div class="modal-header">
           <h3>创建新联动</h3>
-          <button
-            class="close-btn"
-            @click="showCreateModal = false"
-          >
-            ×
-          </button>
+          <button class="close-btn" @click="showCreateModal = false">×</button>
         </div>
         <div class="modal-body">
           <form @submit.prevent="createCollab">
@@ -157,12 +142,7 @@
               >
                 取消
               </button>
-              <button
-                type="submit"
-                class="btn-create"
-              >
-                创建
-              </button>
+              <button type="submit" class="btn-create">创建</button>
             </div>
           </form>
         </div>
@@ -239,7 +219,9 @@ const createCollab = () => {
     name: newCollab.value.name,
     description: newCollab.value.description,
     startTime: now.toISOString().split('T')[0],
-    endTime: new Date(now.setMonth(now.getMonth() + 1)).toISOString().split('T')[0],
+    endTime: new Date(now.setMonth(now.getMonth() + 1))
+      .toISOString()
+      .split('T')[0],
     status: '进行中',
     expectedRevenue: newCollab.value.expectedRevenue,
   };
@@ -265,7 +247,9 @@ const endCollab = (collabId: string) => {
   if (collab) {
     collab.status = '已结束';
     // 模拟实际收益
-    collab.actualRevenue = Math.floor(collab.expectedRevenue * (0.8 + Math.random() * 0.4));
+    collab.actualRevenue = Math.floor(
+      collab.expectedRevenue * (0.8 + Math.random() * 0.4),
+    );
   }
 };
 </script>

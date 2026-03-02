@@ -17,10 +17,7 @@
 
       <div class="control-group">
         <label>等级名称：{{ levelName }}</label>
-        <input
-          v-model="levelName"
-          type="text"
-        />
+        <input v-model="levelName" type="text" />
       </div>
 
       <div class="control-group">
@@ -36,18 +33,12 @@
 
       <div class="control-group">
         <label>当前经验：{{ currentExp }}</label>
-        <input
-          v-model.number="currentExp"
-          type="number"
-        />
+        <input v-model.number="currentExp" type="number" />
       </div>
 
       <div class="control-group">
         <label>最大经验：{{ maxExp }}</label>
-        <input
-          v-model.number="maxExp"
-          type="number"
-        />
+        <input v-model.number="maxExp" type="number" />
       </div>
     </div>
 
@@ -204,7 +195,7 @@ const subtractFunds = (amount: number) => {
       font-size: 14px;
 
       &::before {
-        content: '✓ ';
+        content: "✓ ";
         color: #22c55e;
         font-weight: bold;
         margin-right: 8px;

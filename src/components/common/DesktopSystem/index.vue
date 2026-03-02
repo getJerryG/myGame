@@ -2,11 +2,11 @@
   <div class="desktop-system">
     <!-- 刘海栏 -->
     <NotchBar
-      :levelName="策划职级名称"
-      :levelRank="策划段位"
-      :currentExp="策划经验"
-      :maxExp="策划升级经验"
-      :funds="策划资金"
+      :levelName="plannerRankName"
+      :levelRank="plannerTier"
+      :currentExp="plannerExp"
+      :maxExp="plannerLevelUpExp"
+      :funds="plannerFunds"
     />
 
     <!-- 任务系统面板 -->
@@ -29,10 +29,7 @@
     />
 
     <!-- 桌面背景和图标 -->
-    <DesktopBackground
-      :apps="allDesktopApps"
-      @click="openApp"
-    />
+    <DesktopBackground :apps="allDesktopApps" @click="openApp" />
 
     <!-- 任务栏（包含开始菜单） -->
     <DesktopTaskbar
@@ -142,14 +139,14 @@ const simulationStore = useSimulationStore();
 const windowManagerStore = useWindowManagerStore();
 
 // 策划相关数据
-const 策划等级 = ref(1);
-const 策划经验 = ref(0);
-const 策划升级经验 = ref(100);
-const 策划资金 = ref(10000);
-const 策划职级名称 = ref('初级策划');
-const 策划段位 = ref('I');
+const plannerLevel = ref(1);
+const plannerExp = ref(0);
+const plannerLevelUpExp = ref(100);
+const plannerFunds = ref(10000);
+const plannerRankName = ref('初级策划');
+const plannerTier = ref('I');
 const expProgress = ref(0);
-const 策划名称 = ref('我是策划');
+const plannerName = ref('我是策划');
 // 退出确认对话框状态
 const showExitDialog = ref(false);
 
@@ -160,17 +157,17 @@ watch(
     if (newSimulation) {
       // 立即获取最新资金
       const results = newSimulation.getResults();
-      策划资金.value = results.gameState.plannerFunds;
+      plannerFunds.value = results.gameState.plannerFunds;
       updateAppData();
 
       // 设置资金变化回调函数，实现真正的响应式更新
       newSimulation.setFundsUpdateCallback((newFunds) => {
-        策划资金.value = newFunds;
+        plannerFunds.value = newFunds;
         updateAppData();
       });
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 // 记录上一次的等级，用于判断是否需要显示升级特效
@@ -182,8 +179,11 @@ const levelUpMessage = ref('');
 
 // 计算属性：经验进度百分比
 const expProgressPercent = computed(() => {
-  if (策划升级经验.value === 0) return 100;
-  return Math.min(100, Math.floor((策划经验.value / 策划升级经验.value) * 100));
+  if (plannerLevelUpExp.value === 0) return 100;
+  return Math.min(
+    100,
+    Math.floor((plannerExp.value / plannerLevelUpExp.value) * 100),
+  );
 });
 
 // 更新策划数据
@@ -206,20 +206,20 @@ const updateCareerData = (): void => {
   }
 
   // 更新所有策划数据
-  策划等级.value = newLevel;
-  策划职级名称.value = currentLevel.name;
-  策划段位.value = currentSubLevel.name; // 设置段位（如 I, II, III）
-  策划经验.value = careerSystemStore.exp;
+  plannerLevel.value = newLevel;
+  plannerRankName.value = currentLevel.name;
+  plannerTier.value = currentSubLevel.name; // 设置段位（如 I, II, III）
+  plannerExp.value = careerSystemStore.exp;
   // 当前级别的最大经验值是当前小等级所需的升级经验
-  策划升级经验.value = currentSubLevel.expRequired;
+  plannerLevelUpExp.value = currentSubLevel.expRequired;
 };
 
 // 提供策划数据给子组件
-provide('策划等级', 策划等级);
-provide('策划职级名称', 策划职级名称);
-provide('策划经验', 策划经验);
-provide('策划升级经验', 策划升级经验);
-provide('策划资金', 策划资金);
+provide('plannerLevel', plannerLevel);
+provide('plannerRankName', plannerRankName);
+provide('plannerExp', plannerExp);
+provide('plannerLevelUpExp', plannerLevelUpExp);
+provide('plannerFunds', plannerFunds);
 provide('expProgress', expProgress);
 
 // 提供更新策划经验的方法
@@ -234,7 +234,7 @@ const addExp = (amount: number): void => {
       simulationStore.simulation.updatePlannerFunds(expResult.fundsEarned);
     } else {
       // 如果Simulation实例不存在，直接更新策划资金
-      策划资金.value += expResult.fundsEarned;
+      plannerFunds.value += expResult.fundsEarned;
       updateAppData();
     }
   }
@@ -249,21 +249,21 @@ watch(
   () => careerSystemStore.currentLevelIndex,
   () => {
     updateCareerData();
-  }
+  },
 );
 
 watch(
   () => careerSystemStore.currentSubLevelIndex,
   () => {
     updateCareerData();
-  }
+  },
 );
 
 watch(
   () => careerSystemStore.exp,
   () => {
     updateCareerData();
-  }
+  },
 );
 
 // 初始化数据
@@ -442,11 +442,16 @@ const allDesktopApps = computed(() => {
   const apps = [...desktopApps.value];
 
   // 添加下载中的应用（如果还不在桌面应用列表中）
-  if (windowManagerStore.downloadProgress && Array.isArray(windowManagerStore.downloadProgress)) {
+  if (
+    windowManagerStore.downloadProgress &&
+    Array.isArray(windowManagerStore.downloadProgress)
+  ) {
     windowManagerStore.downloadProgress.forEach((download) => {
       const exists = apps.some((app) => app.id === download.appId);
       if (!exists) {
-        const appInfo = availableAppsForDownload.find((a) => a.id === download.appId);
+        const appInfo = availableAppsForDownload.find(
+          (a) => a.id === download.appId,
+        );
         if (appInfo) {
           apps.push({
             id: appInfo.id,
@@ -494,7 +499,9 @@ const desktopApps = ref<DesktopApp[]>(loadDesktopApps());
 // 处理应用安装事件
 const handleAppInstalled = (app: App): void => {
   // 检查应用是否已存在
-  const exists = desktopApps.value.some((existingApp) => existingApp.id === app.id);
+  const exists = desktopApps.value.some(
+    (existingApp) => existingApp.id === app.id,
+  );
   if (exists) return;
 
   // 根据应用类型配置不同的modules
@@ -669,7 +676,9 @@ const handleSaveAndExit = () => {
 onMounted(() => {
   updateAppData();
 
-  const gameReleaseApp = desktopApps.value.find((app) => app.id === 'game-release');
+  const gameReleaseApp = desktopApps.value.find(
+    (app) => app.id === 'game-release',
+  );
   if (!gameReleaseApp) {
     desktopApps.value.push({
       id: 'game-release',
@@ -690,7 +699,7 @@ const updateAppData = (): void => {
   const walletApp = desktopApps.value.find((app) => app.id === 'wallet');
   if (walletApp) {
     walletApp.coreData = {
-      balance: 策划资金.value, // 余额与策划资金保持一致
+      balance: plannerFunds.value, // 余额与策划资金保持一致
     };
     // 保存桌面应用到本地存储
     saveDesktopApps();
@@ -703,7 +712,7 @@ watch(
   () => {
     updateAppData();
   },
-  { deep: true }
+  { deep: true },
 );
 
 // 打开应用
@@ -723,7 +732,9 @@ const openApp = (app: DesktopApp): void => {
   }
 
   // 检查是否已打开
-  const existingModal = openModals.value.find((modal) => modal.appId === app.id);
+  const existingModal = openModals.value.find(
+    (modal) => modal.appId === app.id,
+  );
   if (!existingModal) {
     const windowId = `window-${app.id}-${Date.now()}`;
     openModals.value.push({
@@ -749,7 +760,9 @@ const closeApp = (appId: string): void => {
 
 // 更新模态框
 const updateModal = (updatedModal: Modal): void => {
-  const index = openModals.value.findIndex((modal) => modal.id === updatedModal.id);
+  const index = openModals.value.findIndex(
+    (modal) => modal.id === updatedModal.id,
+  );
   if (index !== -1) {
     openModals.value[index] = updatedModal;
   }

@@ -26,7 +26,12 @@
         <input
           type="text"
           :value="activityName"
-          @input="$emit('update:activityName', ($event.target as HTMLInputElement).value)"
+          @input="
+            $emit(
+              'update:activityName',
+              ($event.target as HTMLInputElement).value,
+            )
+          "
           placeholder="请输入活动名称"
           class="input-field"
         />
@@ -37,7 +42,12 @@
         <h4>活动描述</h4>
         <textarea
           :value="activityDescription"
-          @input="$emit('update:activityDescription', ($event.target as HTMLTextAreaElement).value)"
+          @input="
+            $emit(
+              'update:activityDescription',
+              ($event.target as HTMLTextAreaElement).value,
+            )
+          "
           placeholder="请输入活动描述"
           class="textarea-field"
           rows="3"
@@ -53,7 +63,12 @@
             <input
               type="datetime-local"
               :value="startTime"
-              @input="$emit('update:startTime', ($event.target as HTMLInputElement).value)"
+              @input="
+                $emit(
+                  'update:startTime',
+                  ($event.target as HTMLInputElement).value,
+                )
+              "
               class="input-field"
             />
           </div>
@@ -62,7 +77,12 @@
             <input
               type="datetime-local"
               :value="endTime"
-              @input="$emit('update:endTime', ($event.target as HTMLInputElement).value)"
+              @input="
+                $emit(
+                  'update:endTime',
+                  ($event.target as HTMLInputElement).value,
+                )
+              "
               class="input-field"
             />
           </div>
@@ -78,7 +98,12 @@
             <input
               type="number"
               :value="goldReward"
-              @input="$emit('update:goldReward', Number(($event.target as HTMLInputElement).value))"
+              @input="
+                $emit(
+                  'update:goldReward',
+                  Number(($event.target as HTMLInputElement).value),
+                )
+              "
               placeholder="0"
               class="input-field"
             />
@@ -88,7 +113,12 @@
             <input
               type="number"
               :value="expReward"
-              @input="$emit('update:expReward', Number(($event.target as HTMLInputElement).value))"
+              @input="
+                $emit(
+                  'update:expReward',
+                  Number(($event.target as HTMLInputElement).value),
+                )
+              "
               placeholder="0"
               class="input-field"
             />
@@ -144,7 +174,11 @@ const emit = defineEmits<{
 }>();
 
 const canCreate = computed(() => {
-  return props.activityName.trim() !== '' && props.startTime !== '' && props.endTime !== '';
+  return (
+    props.activityName.trim() !== '' &&
+    props.startTime !== '' &&
+    props.endTime !== ''
+  );
 });
 </script>
 

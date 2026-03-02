@@ -40,11 +40,13 @@ export interface RandomEventConfig {
 // 默认事件配置
 const defaultEventConfig: RandomEventConfig = {
   intervalDays: skinSimulationConfig.randomEvents.intervalDays,
-  recommendProfessionCount: skinSimulationConfig.randomEvents.recommendProfessionCount,
+  recommendProfessionCount:
+    skinSimulationConfig.randomEvents.recommendProfessionCount,
   strengthRange: skinSimulationConfig.randomEvents.strengthRange,
   professions: skinSimulationConfig.professions,
   eventDurations: {
-    hero_strength_recommendation: skinSimulationConfig.randomEvents.intervalDays * 24 * 60 * 60 * 1000, // 事件持续时间与间隔相同
+    hero_strength_recommendation:
+      skinSimulationConfig.randomEvents.intervalDays * 24 * 60 * 60 * 1000, // 事件持续时间与间隔相同
   },
 };
 
@@ -128,7 +130,10 @@ const getActiveEvents = (): RandomEventData[] => {
 };
 
 // 生成英雄强度推荐事件
-const generateHeroStrengthRecommendationEvent = (profession: string, eventDuration: number): RandomEventData => {
+const generateHeroStrengthRecommendationEvent = (
+  profession: string,
+  eventDuration: number,
+): RandomEventData => {
   const now = new Date();
   const startDate = now.toISOString();
   const endDate = new Date(now.getTime() + eventDuration).toISOString();
@@ -139,7 +144,10 @@ const generateHeroStrengthRecommendationEvent = (profession: string, eventDurati
     title: `${profession}英雄强度推荐`,
     description: `当前版本${profession}英雄强度推荐，请查看详情了解推荐理由`,
     profession,
-    strengthScore: generateRandomStrength(defaultEventConfig.strengthRange.min, defaultEventConfig.strengthRange.max),
+    strengthScore: generateRandomStrength(
+      defaultEventConfig.strengthRange.min,
+      defaultEventConfig.strengthRange.max,
+    ),
     reason: getRandomElement(RECOMMENDATION_REASONS),
     createdAt: now.toISOString(),
     startDate,
@@ -156,17 +164,24 @@ const updateBiweeklyHeroStrengthRecommendations = (): void => {
 
   // 检查是否需要生成新事件
   const lastEvent = events
-    .filter((event) => event.type === RandomEventType.HERO_STRENGTH_RECOMMENDATION)
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0];
+    .filter(
+      (event) => event.type === RandomEventType.HERO_STRENGTH_RECOMMENDATION,
+    )
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    )[0];
 
   // 计算是否需要生成新事件
   let shouldGenerateNewEvents = !lastEvent;
   if (!shouldGenerateNewEvents) {
     // 计算距离上次事件的天数
     const daysSinceLastEvent = Math.ceil(
-      (now.getTime() - new Date(lastEvent.createdAt).getTime()) / (1000 * 3600 * 24)
+      (now.getTime() - new Date(lastEvent.createdAt).getTime()) /
+        (1000 * 3600 * 24),
     );
-    shouldGenerateNewEvents = daysSinceLastEvent >= defaultEventConfig.intervalDays;
+    shouldGenerateNewEvents =
+      daysSinceLastEvent >= defaultEventConfig.intervalDays;
   }
 
   if (!shouldGenerateNewEvents) {
@@ -178,7 +193,9 @@ const updateBiweeklyHeroStrengthRecommendations = (): void => {
   const selectedProfessions = new Set<string>();
 
   // 选择要推荐的职业
-  while (selectedProfessions.size < defaultEventConfig.recommendProfessionCount) {
+  while (
+    selectedProfessions.size < defaultEventConfig.recommendProfessionCount
+  ) {
     const randomProfession = getRandomElement(defaultEventConfig.professions);
     selectedProfessions.add(randomProfession);
   }
@@ -187,7 +204,9 @@ const updateBiweeklyHeroStrengthRecommendations = (): void => {
   for (const profession of selectedProfessions) {
     const event = generateHeroStrengthRecommendationEvent(
       profession,
-      defaultEventConfig.eventDurations[RandomEventType.HERO_STRENGTH_RECOMMENDATION]
+      defaultEventConfig.eventDurations[
+        RandomEventType.HERO_STRENGTH_RECOMMENDATION
+      ],
     );
     newEvents.push(event);
   }
@@ -208,7 +227,9 @@ export const getLatestHeroStrengthRecommendations = (): RandomEventData[] => {
 
   // 获取所有活跃的英雄强度推荐事件
   const activeEvents = getActiveEvents();
-  return activeEvents.filter((event) => event.type === RandomEventType.HERO_STRENGTH_RECOMMENDATION);
+  return activeEvents.filter(
+    (event) => event.type === RandomEventType.HERO_STRENGTH_RECOMMENDATION,
+  );
 };
 
 /**
@@ -278,7 +299,9 @@ export const batchGenerateTestEvents = (count: number): void => {
     const profession = getRandomElement(defaultEventConfig.professions);
     const event = generateHeroStrengthRecommendationEvent(
       profession,
-      defaultEventConfig.eventDurations[RandomEventType.HERO_STRENGTH_RECOMMENDATION]
+      defaultEventConfig.eventDurations[
+        RandomEventType.HERO_STRENGTH_RECOMMENDATION
+      ],
     );
     newEvents.push(event);
   }
@@ -309,8 +332,13 @@ export const simulatePastEvents = (count: number): void => {
     const profession = getRandomElement(defaultEventConfig.professions);
     const now = new Date();
     // 随机生成过去的日期
-    const pastDate = new Date(now.getTime() - Math.random() * 365 * 24 * 60 * 60 * 1000);
-    const eventDuration = defaultEventConfig.eventDurations[RandomEventType.HERO_STRENGTH_RECOMMENDATION];
+    const pastDate = new Date(
+      now.getTime() - Math.random() * 365 * 24 * 60 * 60 * 1000,
+    );
+    const eventDuration =
+      defaultEventConfig.eventDurations[
+        RandomEventType.HERO_STRENGTH_RECOMMENDATION
+      ];
 
     const event = {
       id: generateId(),
@@ -318,7 +346,10 @@ export const simulatePastEvents = (count: number): void => {
       title: `${profession}英雄强度推荐`,
       description: `当前版本${profession}英雄强度推荐，请查看详情了解推荐理由`,
       profession,
-      strengthScore: generateRandomStrength(defaultEventConfig.strengthRange.min, defaultEventConfig.strengthRange.max),
+      strengthScore: generateRandomStrength(
+        defaultEventConfig.strengthRange.min,
+        defaultEventConfig.strengthRange.max,
+      ),
       reason: getRandomElement(RECOMMENDATION_REASONS),
       createdAt: pastDate.toISOString(),
       startDate: pastDate.toISOString(),

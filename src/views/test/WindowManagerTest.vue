@@ -1,25 +1,27 @@
 <template>
   <div class="window-manager-test">
-    <h1 class="page-title">窗口管理器测�?/h1>
-    <p class="page-description">这是一个模拟Windows系统窗口层级管理的测试页面。您可以�?/p>
+    <h1 class="page-title">窗口管理器测试</h1>
+    <p class="page-description">
+      这是一个模拟Windows系统窗口层级管理的测试页面。您可以
+    </p>
     <ul class="feature-list">
       <li>拖拽窗口标题栏来移动窗口</li>
       <li>点击窗口激活并提升层级</li>
-      <li>拖拽窗口标题栏到另一个窗口标题栏上进行合�?/li>
+      <li>拖拽窗口标题栏到另一个窗口标题栏上进行合并</li>
       <li>拖拽选项卡离开标题栏来分离窗口</li>
-      <li>点击选项卡切换窗口内�?/li>
+      <li>点击选项卡切换窗口内容</li>
       <li>使用Ctrl+Tab切换窗口</li>
       <li>使用Ctrl+Shift+Tab反向切换窗口</li>
-      <li>使用Ctrl+N创建新窗�?/li>
+      <li>使用Ctrl+N创建新窗口</li>
     </ul>
 
-    <!-- 窗口管理器组�?-->
+    <!-- 窗口管理器组件 -->
     <WindowManager class="window-manager-container" />
   </div>
 </template>
 
 <script setup lang="ts">
-import WindowManager from '../components/common/window/WindowManager.vue';
+import WindowManager from "../components/common/window/WindowManager.vue";
 </script>
 
 <style lang="scss" scoped>
@@ -28,7 +30,7 @@ import WindowManager from '../components/common/window/WindowManager.vue';
   height: 100vh;
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f0f0f0;
   overflow: hidden;
 }

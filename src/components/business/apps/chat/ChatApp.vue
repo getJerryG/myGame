@@ -68,72 +68,72 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
-import ApplicationWindow from '@/components/common/window/ApplicationWindow.vue';
+import { ref, computed, watch } from "vue";
+import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
 
 defineProps<{
-  app?: any;
-  gameData?: any;
-  modal?: any;
+  app?: unknown;
+  gameData?: unknown;
+  modal?: unknown;
 }>();
 
-const activeContactId = ref(null);
+const activeContactId = ref<number | null>(null);
 const contacts = ref([
   {
     id: 1,
-    name: '研发',
-    avatar: '👨‍💻',
-    lastMessage: '新英雄技能设计已完成，需要您确认',
+    name: "研发",
+    avatar: "👨‍💻",
+    lastMessage: "新英雄技能设计已完成，需要您确认",
     unread: 1,
-    stage: 'early',
+    stage: "early",
   },
   {
     id: 2,
-    name: '美术',
-    avatar: '🎨',
-    lastMessage: '皮肤设计稿已更新，请查看',
+    name: "美术",
+    avatar: "🎨",
+    lastMessage: "皮肤设计稿已更新，请查看",
     unread: 2,
-    stage: 'mid',
+    stage: "mid",
   },
   {
     id: 3,
-    name: '运营',
-    avatar: '📊',
-    lastMessage: '本周活动方案已准备好',
+    name: "运营",
+    avatar: "📊",
+    lastMessage: "本周活动方案已准备好",
     unread: 0,
-    stage: 'early',
+    stage: "early",
   },
   {
     id: 4,
-    name: '玩家社区',
-    avatar: '👥',
-    lastMessage: '玩家对新英雄反响热烈',
+    name: "玩家社区",
+    avatar: "👥",
+    lastMessage: "玩家对新英雄反响热烈",
     unread: 0,
-    stage: 'late',
+    stage: "late",
   },
   {
     id: 5,
-    name: '老板',
-    avatar: '👑',
-    lastMessage: '需要一份季度运营报告',
+    name: "老板",
+    avatar: "👑",
+    lastMessage: "需要一份季度运营报告",
     unread: 0,
-    stage: 'late',
+    stage: "late",
   },
   {
     id: 6,
-    name: 'IP合作',
-    avatar: '🤝',
-    lastMessage: '关于联动项目的进一步讨论',
+    name: "IP合作",
+    avatar: "🤝",
+    lastMessage: "关于联动项目的进一步讨论",
     unread: 0,
-    stage: 'mid',
+    stage: "mid",
   },
 ]);
 
 const chatMessages = ref([
   {
-    sender: 'contact',
-    content: '您好，欢迎来到游戏策划模拟系统！',
-    time: '10:00',
+    sender: "contact",
+    content: "您好，欢迎来到游戏策划模拟系统！",
+    time: "10:00",
   },
 ]);
 
@@ -163,136 +163,136 @@ const generateChatContent = (contactId: number): void => {
   replyOptions.value = [];
 
   switch (contact.name) {
-    case '研发':
+    case "研发":
       chatMessages.value = [
         {
-          sender: 'contact',
-          content: '新英雄技能设计已完成，您需要进行确认',
-          time: '10:00',
+          sender: "contact",
+          content: "新英雄技能设计已完成，您需要进行确认",
+          time: "10:00",
         },
         {
-          sender: 'contact',
-          content: '技能：造成物理伤害并减速',
-          time: '10:01',
+          sender: "contact",
+          content: "技能：造成物理伤害并减速",
+          time: "10:01",
         },
         {
-          sender: 'contact',
-          content: '技能：位移并强化下次攻击',
-          time: '10:01',
+          sender: "contact",
+          content: "技能：位移并强化下次攻击",
+          time: "10:01",
         },
         {
-          sender: 'contact',
-          content: '大招：AOE伤害并眩晕',
-          time: '10:01',
+          sender: "contact",
+          content: "大招：AOE伤害并眩晕",
+          time: "10:01",
         },
       ];
-      replyOptions.value = ['确认通过', '需要调整技能数值', '重新设计技能机制'];
+      replyOptions.value = ["确认通过", "需要调整技能数值", "重新设计技能机制"];
       break;
 
-    case '美术':
+    case "美术":
       chatMessages.value = [
         {
-          sender: 'contact',
-          content: '皮肤设计稿已更新，请查看',
-          time: '10:30',
+          sender: "contact",
+          content: "皮肤设计稿已更新，请查看",
+          time: "10:30",
         },
         {
-          sender: 'contact',
-          content: '设计风格：古风',
-          time: '10:31',
+          sender: "contact",
+          content: "设计风格：古风",
+          time: "10:31",
         },
         {
-          sender: 'contact',
-          content: '特效颜色：金色为主',
-          time: '10:31',
+          sender: "contact",
+          content: "特效颜色：金色为主",
+          time: "10:31",
         },
       ];
-      replyOptions.value = ['设计通过', '调整颜色方案', '修改设计风格'];
+      replyOptions.value = ["设计通过", "调整颜色方案", "修改设计风格"];
       break;
 
-    case '运营':
+    case "运营":
       chatMessages.value = [
         {
-          sender: 'contact',
-          content: '本周活动方案已准备好，请审阅',
-          time: '11:00',
+          sender: "contact",
+          content: "本周活动方案已准备好，请审阅",
+          time: "11:00",
         },
         {
-          sender: 'contact',
-          content: '活动类型：新英雄折扣',
-          time: '11:01',
+          sender: "contact",
+          content: "活动类型：新英雄折扣",
+          time: "11:01",
         },
         {
-          sender: 'contact',
-          content: '活动力度：中等',
-          time: '11:01',
+          sender: "contact",
+          content: "活动力度：中等",
+          time: "11:01",
         },
       ];
-      replyOptions.value = ['方案通过', '调整活动力度', '更换活动类型'];
+      replyOptions.value = ["方案通过", "调整活动力度", "更换活动类型"];
       break;
 
-    case '玩家社区':
+    case "玩家社区":
       chatMessages.value = [
         {
-          sender: 'contact',
-          content: '玩家对新英雄反响热烈，胜率达到52%',
-          time: '14:00',
+          sender: "contact",
+          content: "玩家对新英雄反响热烈，胜率达到52%",
+          time: "14:00",
         },
         {
-          sender: 'contact',
-          content: '部分玩家反映技能操作难度较高',
-          time: '14:01',
+          sender: "contact",
+          content: "部分玩家反映技能操作难度较高",
+          time: "14:01",
         },
       ];
-      replyOptions.value = ['保持现状', '小幅降低技能难度', '加强英雄强度'];
+      replyOptions.value = ["保持现状", "小幅降低技能难度", "加强英雄强度"];
       break;
 
-    case '老板':
+    case "老板":
       chatMessages.value = [
         {
-          sender: 'contact',
-          content: '需要一份季度运营报告，明天下午之前提交',
-          time: '15:00',
+          sender: "contact",
+          content: "需要一份季度运营报告，明天下午之前提交",
+          time: "15:00",
         },
       ];
-      replyOptions.value = ['立即准备报告', '需要更多时间', '请求协助'];
+      replyOptions.value = ["立即准备报告", "需要更多时间", "请求协助"];
       break;
 
-    case 'IP合作':
+    case "IP合作":
       chatMessages.value = [
         {
-          sender: 'contact',
-          content: '关于联动项目，我们希望增加更多定制内容',
-          time: '16:00',
+          sender: "contact",
+          content: "关于联动项目，我们希望增加更多定制内容",
+          time: "16:00",
         },
         {
-          sender: 'contact',
-          content: '预算可能需要增加20%',
-          time: '16:01',
+          sender: "contact",
+          content: "预算可能需要增加20%",
+          time: "16:01",
         },
       ];
-      replyOptions.value = ['同意增加预算', '协商调整内容', '拒绝修改方案'];
+      replyOptions.value = ["同意增加预算", "协商调整内容", "拒绝修改方案"];
       break;
 
     default:
       chatMessages.value = [
         {
-          sender: 'contact',
-          content: '您好，我�?{contact.name}，有什么可以帮助您的吗？',
-          time: '10:00',
+          sender: "contact",
+          content: "您好，我�?{contact.name}，有什么可以帮助您的吗？",
+          time: "10:00",
         },
       ];
-      replyOptions.value = ['询问当前工作', '请求帮助', '结束对话'];
+      replyOptions.value = ["询问当前工作", "请求帮助", "结束对话"];
   }
 };
 
 const selectReply = (option: string): void => {
   chatMessages.value.push({
-    sender: 'user',
+    sender: "user",
     content: option,
-    time: new Date().toLocaleTimeString('zh-CN', {
-      hour: '2-digit',
-      minute: '2-digit',
+    time: new Date().toLocaleTimeString("zh-CN", {
+      hour: "2-digit",
+      minute: "2-digit",
     }),
   });
 
@@ -300,27 +300,27 @@ const selectReply = (option: string): void => {
 
   setTimeout(() => {
     const autoReplies = [
-      '好的，我会按照您的指示处理',
-      '收到，立即执行',
-      '明白了，感谢您的反馈',
-      '我会尽快跟进此事',
-      '没问题，我会调整方案',
+      "好的，我会按照您的指示处理",
+      "收到，立即执行",
+      "明白了，感谢您的反馈",
+      "我会尽快跟进此事",
+      "没问题，我会调整方案",
     ];
     const randomReply =
       autoReplies[Math.floor(Math.random() * autoReplies.length)];
 
     chatMessages.value.push({
-      sender: 'contact',
+      sender: "contact",
       content: randomReply,
-      time: new Date().toLocaleTimeString('zh-CN', {
-        hour: '2-digit',
-        minute: '2-digit',
+      time: new Date().toLocaleTimeString("zh-CN", {
+        hour: "2-digit",
+        minute: "2-digit",
       }),
     });
 
     const contact = contacts.value.find((c) => c.id === activeContactId.value);
-    if (contact?.name === '研发') {
-      replyOptions.value = ['继续推进', '需要进一步讨论', '查看研发进度'];
+    if (contact?.name === "研发") {
+      replyOptions.value = ["继续推进", "需要进一步讨论", "查看研发进度"];
     }
   }, 1000);
 };

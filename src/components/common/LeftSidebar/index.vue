@@ -10,7 +10,7 @@
             @click="changeSystem('dashboard')"
           >
             <span class="nav-icon">📋</span>
-            <span class="nav-text">仪表�?/span>
+            <span class="nav-text">仪表盘</span>
           </li>
           <li
             class="nav-item"
@@ -54,7 +54,7 @@
             :class="{ active: activeSystem === 'lifecycle' }"
             @click="changeSystem('lifecycle')"
           >
-            <span class="nav-icon">�?/span>
+            <span class="nav-icon">🔄</span>
             <span class="nav-text">生命周期</span>
           </li>
           <li
@@ -71,25 +71,25 @@
   </aside>
 </template>
 
-<script lang=ts>
+<script lang="ts">
 export default {
-  name: 'LeftSidebar',
+  name: "LeftSidebar",
   props: {
     activeSystem: {
       type: String,
-      default: 'dashboard',
+      default: "dashboard",
     },
   },
-  emits: ['update:activeSystem'],
+  emits: ["update:activeSystem"],
   methods: {
     changeSystem(newSystem: string): void {
-      this.$emit('update:activeSystem', newSystem);
+      this.$emit("update:activeSystem", newSystem);
     },
   },
 };
 </script>
 
-<style lang=scss scoped>
+<style lang="scss" scoped>
 .left-sidebar {
   width: 220px;
   background-color: #f8f9fa;

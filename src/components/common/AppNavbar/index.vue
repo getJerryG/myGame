@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from "vue";
 
 // 公共导航栏组件
 const isMenuOpen = ref(false);
@@ -81,13 +81,13 @@ const checkMobile = (): void => {
 
 onMounted(() => {
   checkMobile();
-  window.addEventListener('resize', checkMobile);
+  window.addEventListener("resize", checkMobile);
   // 初始状态隐藏
   isHidden.value = true;
 });
 
 onUnmounted(() => {
-  window.removeEventListener('resize', checkMobile);
+  window.removeEventListener("resize", checkMobile);
   if (hideTimer.value) {
     clearTimeout(hideTimer.value);
   }

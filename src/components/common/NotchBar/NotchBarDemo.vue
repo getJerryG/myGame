@@ -66,20 +66,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import NotchBar from './index.vue';
+import { ref } from "vue";
+import NotchBar from "./index.vue";
 
 const funds = ref(10000);
-const levelName = ref('策划');
-const levelRank = ref('III');
+const levelName = ref("策划");
+const levelRank = ref("III");
 const currentExp = ref(75);
 const maxExp = ref(100);
 
-const addFunds = (amount: number) => {
+const addFunds = (amount: number): void => {
   funds.value += amount;
 };
 
-const subtractFunds = (amount: number) => {
+const subtractFunds = (amount: number): void => {
   if (funds.value >= amount) {
     funds.value -= amount;
   }

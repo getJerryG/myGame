@@ -1,14 +1,11 @@
 <template>
   <div class="storage-box-panel">
-    <div
-      class="panel-header"
-      @click="toggleStorageBox"
-    >
-      <h3>收纳�?/h3>
+    <div class="panel-header" @click="toggleStorageBox">
+      <h3>收纳盒</h3>
       <span class="total-decompose-points">
-        总分解积�?        <span class="points-value">+{{ totalDecomposePoints }}</span>
+        总分解积分 <span class="points-value">+{{ totalDecomposePoints }}</span>
       </span>
-      <span class="toggle-icon">{{ isStorageBoxOpen ? '�? : '�? }}</span>
+      <span class="toggle-icon">{{ isStorageBoxOpen ? "▼" : "▲" }}</span>
     </div>
     <button
       v-if="isStorageBoxOpen"
@@ -18,15 +15,10 @@
     >
       全部分解
     </button>
-    <div
-      v-if="isStorageBoxOpen"
-      class="storage-list"
-    >
-      <div
-        v-if="organizedStorageBox.length === 0"
-        class="empty-message"
-      >
-        收纳盒是空的，快去抽奖吧�?      </div>
+    <div v-if="isStorageBoxOpen" class="storage-list">
+      <div v-if="organizedStorageBox.length === 0" class="empty-message">
+        收纳盒是空的，快去抽奖吧!
+      </div>
       <div
         v-for="(item, index) in organizedStorageBox"
         v-else
@@ -51,15 +43,22 @@
             />
             <button
               class="decompose-button"
-              :disabled="decomposeQuantities[index] <= 0 || decomposeQuantities[index] > item.totalCount"
+              :disabled="
+                decomposeQuantities[index] <= 0 ||
+                decomposeQuantities[index] > item.totalCount
+              "
               @click="handleDecompose(item, index)"
             >
               分解
             </button>
           </div>
           <div class="decompose-reward">
-            可获�?
-            <span class="reward-points">+{{ calculateDecomposePoints(item, decomposeQuantities[index]) }}积分</span>
+            可获得:
+            <span class="reward-points"
+              >+{{
+                calculateDecomposePoints(item, decomposeQuantities[index])
+              }}积分</span
+            >
           </div>
         </div>
       </div>
@@ -89,71 +88,81 @@ defineProps({
 });
 
 // 定义emit事件
-const emit = defineEmits(['toggle-storage-box', 'decompose-all', 'decompose-item', 'validate-decompose-quantity']);
+const emit = defineEmits([
+  "toggle-storage-box",
+  "decompose-all",
+  "decompose-item",
+  "validate-decompose-quantity",
+]);
 
-// 切换收纳盒展开/折叠状�?function toggleStorageBox(): void {
-  emit('toggle-storage-box');
-}
+// 切换收纳盒展开/折叠状态
+const toggleStorageBox = (): void => {
+  emit("toggle-storage-box");
+};
 
 // 全部分解
-function handleDecomposeAll(): void {
-  emit('decompose-all');
-}
+const handleDecomposeAll = (): void => {
+  emit("decompose-all");
+};
 
 // 定义存储物品类型
 interface StorageItem {
-  type: 'skin_fragment' | 'item' | 'permanent_skin';
+  type: "skin_fragment" | "item" | "permanent_skin";
   displayName: string;
   totalCount: number;
   skinName?: string;
 }
 
 // 计算分解积分
-function calculateDecomposePoints(item: StorageItem, quantity = 1): number {
+const calculateDecomposePoints = (item: StorageItem, quantity = 1): number => {
   if (!quantity || quantity <= 0) return 0;
 
   let totalPoints = 0;
 
-  // 根据物品类型和名称确定分解积�?  if (item.type === 'skin_fragment') {
+  // 根据物品类型和名称确定分解积分
+  if (item.type === "skin_fragment") {
     totalPoints = quantity * 5; // 每组5积分
-  } else if (item.type === 'item') {
+  } else if (item.type === "item") {
     totalPoints = quantity * 5; // 每组5积分
-  } else if (item.type === 'permanent_skin') {
-    if (item.skinName === '伴生皮肤') {
+  } else if (item.type === "permanent_skin") {
+    if (item.skinName === "伴生皮肤") {
       totalPoints = quantity * 10;
-    } else if (item.skinName === '勇者皮�?) {
+    } else if (item.skinName === "勇者皮肤") {
       totalPoints = quantity * 20;
-    } else if (item.skinName === '史诗皮肤') {
+    } else if (item.skinName === "史诗皮肤") {
       totalPoints = quantity * 40;
     }
   }
 
   return totalPoints;
-}
+};
 
 // 处理分解操作
-function handleDecompose(item: StorageItem, index: number): void {
-  emit('decompose-item', item, index);
-}
+const handleDecompose = (item: StorageItem, index: number): void => {
+  emit("decompose-item", item, index);
+};
 
 // 处理数量变化
-function handleQuantityChange(event: Event, item: StorageItem, index: number): void {
+const handleQuantityChange = (
+  event: Event,
+  item: StorageItem,
+  index: number,
+): void => {
   const value = parseInt((event.target as HTMLInputElement).value, 10) || 0;
-  emit('update:decomposeQuantities', {
+  emit("update:decomposeQuantities", {
     index,
     value,
   });
   validateDecomposeQuantity(item, index);
-}
+};
 
 // 验证分解数量
-function validateDecomposeQuantity(item: StorageItem, index: number): void {
-  emit('validate-decompose-quantity', item, index);
-}
+const validateDecomposeQuantity = (item: StorageItem, index: number): void => {
+  emit("validate-decompose-quantity", item, index);
+};
 </script>
 
 <style lang="scss" scoped>
-
 /* 收纳盒面板 */
 .storage-box-panel {
   background-color: tokens.$bg-secondary;
@@ -354,5 +363,3 @@ function validateDecomposeQuantity(item: StorageItem, index: number): void {
   font-weight: tokens.$font-weight-bold;
 }
 </style>
-
-

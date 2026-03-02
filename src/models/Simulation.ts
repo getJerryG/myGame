@@ -6,9 +6,10 @@ import type {
   SimulationDecision,
   SimulationEvent,
   SimulationHero,
-} from '../types/simulation';
-import { EventSystem } from '../systems/EventSystem';
-import { TimeManager } from '../systems/TimeManager';
+  SimulationFullState,
+} from "../types/simulation";
+import { EventSystem } from "../systems/EventSystem";
+import { TimeManager } from "../systems/TimeManager";
 
 // 模拟游戏核心类
 export class Simulation {
@@ -36,7 +37,7 @@ export class Simulation {
     name: string,
     config: SimulationConfig = {
       timeScale: 1,
-      difficulty: 'normal',
+      difficulty: "normal",
       startingFunds: 10000,
       startingLevel: 1,
       enableRandomEvents: true,
@@ -72,7 +73,7 @@ export class Simulation {
     this.state = {
       id: id,
       name: name,
-      description: '游戏模拟',
+      description: "游戏模拟",
       isActive: false,
       isPaused: false,
       currentTime: this.currentTime,
@@ -401,7 +402,7 @@ export class Simulation {
   }
 
   // 获取模拟的完整状态
-  public getFullState(): any {
+  public getFullState(): SimulationFullState {
     return {
       id: this.id,
       name: this.name,

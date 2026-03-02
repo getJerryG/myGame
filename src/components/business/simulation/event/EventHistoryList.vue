@@ -32,36 +32,37 @@
 </template>
 
 <script setup lang="ts">
-// 接收父组件传递的属�?defineProps({
+// 接收父组件传递的属性
+defineProps({
   historicalEvents: {
     type: Array,
     default: () => [
       {
         id: 1,
-        name: '春节限时活动',
-        type: 'holiday',
-        icon: '🎄',
-        date: '2026-01-20 ~ 2026-02-05',
+        name: "春节限时活动",
+        type: "holiday",
+        icon: "🎄",
+        date: "2026-01-20 ~ 2026-02-05",
         participationRate: 85,
         rating: 92,
         revenueIncrease: 35,
       },
       {
         id: 2,
-        name: '周末双倍经验',
-        type: 'limited',
-        icon: '⏱️',
-        date: '2026-01-15 ~ 2026-01-17',
+        name: "周末双倍经验",
+        type: "limited",
+        icon: "⏱️",
+        date: "2026-01-15 ~ 2026-01-17",
         participationRate: 78,
         rating: 85,
         revenueIncrease: 15,
       },
       {
         id: 3,
-        name: '社区挑战赛',
-        type: 'community',
-        icon: '👥',
-        date: '2026-01-10 ~ 2026-01-20',
+        name: "社区挑战赛",
+        type: "community",
+        icon: "👥",
+        date: "2026-01-10 ~ 2026-01-20",
         participationRate: 65,
         rating: 88,
         revenueIncrease: 20,

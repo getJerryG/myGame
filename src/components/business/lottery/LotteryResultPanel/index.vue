@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from 'vue';
+import { watch } from "vue";
 
 // 接收父组件传递的结果和动画状态
 const props = defineProps({

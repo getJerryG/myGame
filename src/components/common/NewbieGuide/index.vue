@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
   isVisible: {
@@ -51,34 +51,34 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['close', 'stepChange']);
+const emit = defineEmits(["close", "stepChange"]);
 
 const currentStep = ref(0);
 
 // 引导步骤
 const guideSteps = [
   {
-    text: '欢迎来到《策划大师：王者经营》！在这里你可以模拟游戏开发，创建属于你的游戏王国',
+    text: "欢迎来到《策划大师：王者经营》！在这里你可以模拟游戏开发，创建属于你的游戏王国",
     position: { x: 75, y: 20 },
   },
   {
-    text: '移动到怪物所在的格子，触发战斗！击败怪物可以获得经验和金币',
+    text: "移动到怪物所在的格子，触发战斗！击败怪物可以获得经验和金币",
     position: { x: 50, y: 50 },
   },
   {
-    text: '战斗时，点击右侧技能面板中的技能或按对应数字键释放技能',
+    text: "战斗时，点击右侧技能面板中的技能或按对应数字键释放技能",
     position: { x: 90, y: 50 },
   },
   {
-    text: '打开宝箱可以获得珍贵道具和装备，提升角色实力',
+    text: "打开宝箱可以获得珍贵道具和装备，提升角色实力",
     position: { x: 50, y: 50 },
   },
   {
-    text: '点击左上角的小地图可以快速切换场景，探索不同区域',
+    text: "点击左上角的小地图可以快速切换场景，探索不同区域",
     position: { x: 10, y: 20 },
   },
   {
-    text: '完成战斗后，可以在角色信息面板中使用道具或进入抽奖界面',
+    text: "完成战斗后，可以在角色信息面板中使用道具或进入抽奖界面",
     position: { x: 15, y: 50 },
   },
 ];
@@ -86,7 +86,7 @@ const guideSteps = [
 function nextStep(): void {
   if (currentStep.value < guideSteps.length - 1) {
     currentStep.value++;
-    emit('stepChange', currentStep.value);
+    emit("stepChange", currentStep.value);
   } else {
     finishGuide();
   }
@@ -95,7 +95,7 @@ function nextStep(): void {
 function prevStep(): void {
   if (currentStep.value > 0) {
     currentStep.value--;
-    emit('stepChange', currentStep.value);
+    emit("stepChange", currentStep.value);
   }
 }
 
@@ -104,13 +104,13 @@ function skipGuide(): void {
 }
 
 function finishGuide(): void {
-  emit('close');
+  emit("close");
 }
 
 onMounted(() => {
   // 初始化引导
   if (props.isVisible) {
-    emit('stepChange', currentStep.value);
+    emit("stepChange", currentStep.value);
   }
 });
 </script>

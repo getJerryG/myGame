@@ -1,6 +1,11 @@
 // 模拟阶段类型定义
 
-export type SimulationStageType = "setup" | "running" | "paused" | "completed" | "failed";
+export type SimulationStageType =
+  | "setup"
+  | "running"
+  | "paused"
+  | "completed"
+  | "failed";
 
 export interface SimulationStage {
   id: string;

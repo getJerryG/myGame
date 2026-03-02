@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 // 定义职业系统状态类型
 interface CareerSystemState {
@@ -26,7 +26,7 @@ interface CareerPromotionResult {
 
 // 创建并导出职业系统store
 export const useSimulationCareerSystemStore = defineStore(
-  'simulationCareerSystem',
+  "simulationCareerSystem",
   {
     state: (): CareerSystemState => ({
       // 初始为第0个等级（初级策划）
@@ -40,43 +40,43 @@ export const useSimulationCareerSystemStore = defineStore(
       // 职业等级数据
       careerLevels: [
         {
-          name: '初级策划',
+          name: "初级策划",
           subLevels: [
-            { name: 'I', expRequired: 100 },
-            { name: 'II', expRequired: 200 },
-            { name: 'III', expRequired: 300 },
+            { name: "I", expRequired: 100 },
+            { name: "II", expRequired: 200 },
+            { name: "III", expRequired: 300 },
           ],
         },
         {
-          name: '中级策划',
+          name: "中级策划",
           subLevels: [
-            { name: 'I', expRequired: 400 },
-            { name: 'II', expRequired: 500 },
-            { name: 'III', expRequired: 600 },
+            { name: "I", expRequired: 400 },
+            { name: "II", expRequired: 500 },
+            { name: "III", expRequired: 600 },
           ],
         },
         {
-          name: '高级策划',
+          name: "高级策划",
           subLevels: [
-            { name: 'I', expRequired: 800 },
-            { name: 'II', expRequired: 1000 },
-            { name: 'III', expRequired: 1200 },
+            { name: "I", expRequired: 800 },
+            { name: "II", expRequired: 1000 },
+            { name: "III", expRequired: 1200 },
           ],
         },
         {
-          name: '资深策划',
+          name: "资深策划",
           subLevels: [
-            { name: 'I', expRequired: 1500 },
-            { name: 'II', expRequired: 1800 },
-            { name: 'III', expRequired: 2100 },
+            { name: "I", expRequired: 1500 },
+            { name: "II", expRequired: 1800 },
+            { name: "III", expRequired: 2100 },
           ],
         },
         {
-          name: '首席策划',
+          name: "首席策划",
           subLevels: [
-            { name: 'I', expRequired: 2500 },
-            { name: 'II', expRequired: 3000 },
-            { name: 'III', expRequired: 3500 },
+            { name: "I", expRequired: 2500 },
+            { name: "II", expRequired: 3000 },
+            { name: "III", expRequired: 3500 },
           ],
         },
       ],
@@ -114,7 +114,7 @@ export const useSimulationCareerSystemStore = defineStore(
       addExp(amount: number): CareerPromotionResult {
         let promoted = false;
         let fundsEarned = 0;
-        let message = '';
+        let message = "";
 
         // 增加经验值
         this.exp += amount;
@@ -182,7 +182,7 @@ export const useSimulationCareerSystemStore = defineStore(
 
     // 持久化存储
     persist: {
-      key: 'simulation-career-system',
+      key: "simulation-career-system",
       storage: localStorage,
     },
   },

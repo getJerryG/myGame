@@ -13,9 +13,10 @@
 </template>
 
 <script setup lang="ts">
-import TopCoreData from './TopCoreData.vue';
+import TopCoreData from "./TopCoreData.vue";
 
-// 接收父组件传递的属�?defineProps({
+// 接收父组件传递的属性
+defineProps({
   gameState: {
     type: Object,
     required: true,
@@ -38,7 +39,8 @@ import TopCoreData from './TopCoreData.vue';
   },
 });
 
-// 向父组件传递事�?defineEmits(['next-day']);
+// 向父组件传递事件
+defineEmits(["next-day"]);
 </script>
 
 <style lang="scss" scoped>

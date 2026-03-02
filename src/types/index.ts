@@ -39,6 +39,12 @@ export interface EventEffect {
   duration: number;
 }
 
+export interface EventCondition {
+  type: string;
+  value: unknown;
+  operator: string;
+}
+
 export interface GameEvent {
   id: string;
   type: string;
@@ -48,7 +54,7 @@ export interface GameEvent {
   probability: number;
   timestamp: number;
   triggeredBy?: string;
-  conditions?: any[];
+  conditions?: EventCondition[];
 }
 
 export interface BusinessData {

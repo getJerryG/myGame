@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, nextTick } from 'vue';
+import { computed, ref, watch, nextTick } from "vue";
 
 // 定义组件 props
 const props = defineProps<{
@@ -123,7 +123,7 @@ const animateValue = (
       return;
     }
 
-    const animate = (currentTime: number) => {
+    const animate = (currentTime: number): void => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
 
@@ -146,24 +146,24 @@ const animateValue = (
 };
 
 // Transition 钩子函数
-const handleBeforeEnter = (el: Element) => {
+const handleBeforeEnter = (el: Element): void => {
   // 初始状态：完全可见，在数字上方
-  (el as HTMLElement).style.opacity = '1';
-  (el as HTMLElement).style.transform = 'translateY(0) scale(1)';
+  (el as HTMLElement).style.opacity = "1";
+  (el as HTMLElement).style.transform = "translateY(0) scale(1)";
 };
 
-const handleEnter = (el: Element, done: () => void) => {
+const handleEnter = (el: Element, done: () => void): void => {
   // 提示元素保持可见一段时间
   setTimeout(() => {
     // 数字滚动完成后，开始淡出并向上移动
-    (el as HTMLElement).style.opacity = '0';
-    (el as HTMLElement).style.transform = 'translateY(-20px) scale(0.8)';
+    (el as HTMLElement).style.opacity = "0";
+    (el as HTMLElement).style.transform = "translateY(-20px) scale(0.8)";
   }, 1200); // 等待数字滚动（500ms）+ 显示一段时间（700ms）后淡出
 
   setTimeout(done, 2000); // 总时长：淡出动画 800ms
 };
 
-const handleAfterEnter = (el: Element) => {
+const handleAfterEnter = (_el: Element): void => {
   // 动画完成后清理
 };
 </script>

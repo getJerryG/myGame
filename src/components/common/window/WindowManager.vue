@@ -31,7 +31,7 @@
     <button
       class="create-window-btn"
       @click="createNewWindow"
-      title="创建新窗�?
+      title="创建新窗口"
     >
       + 新建窗口
     </button>
@@ -49,7 +49,7 @@
 
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue';
-import { useWindowManagerStore } from '../../stores/windowManagerStore';
+import { useWindowManagerStore } from '@/stores/windowManagerStore';
 import SystemWindow from './SystemWindow.vue';
 // 导入实际应用组件
 import HeroDevelopmentApp from '../../modules/game/views/HeroDevelopmentApp.vue';
@@ -87,21 +87,25 @@ const windowContentComponents: Record<
   string,
   WindowComponent | typeof HeroDevelopmentApp | typeof GameReleaseApp | typeof AppStore
 > = {
-  // 这里注册不同类型的窗口内容组�?  default: {
+  // 这里注册不同类型的窗口内容组件
+  default: {
     template: '<div class="default-window-content">{{ props.title || "窗口内容" }}</div>',
     props: ['title'],
   },
-  // 英雄开发应�?  heroDevelopment: HeroDevelopmentApp,
+  // 英雄开发应用
+  heroDevelopment: HeroDevelopmentApp,
   // 游戏发布应用
   gameRelease: GameReleaseApp,
   // 应用中心
   appStore: AppStore,
-  // 示例：文本编辑窗�?  textEditor: {
+  // 示例：文本编辑窗口
+  textEditor: {
     template:
-      '<div class="text-editor-window"><h3>{{ props.title }}</h3><textarea class="text-editor" placeholder="在这里输入文�?.."></textarea></div>',
+      '<div class="text-editor-window"><h3>{{ props.title }}</h3><textarea class="text-editor" placeholder="在这里输入文字..."></textarea></div>',
     props: ['title'],
   },
-  // 示例：图片查看窗�?  imageViewer: {
+  // 示例：图片查看窗口
+  imageViewer: {
     template:
       '<div class="image-viewer-window"><h3>{{ props.title }}</h3><img :src="props.imageUrl" alt="Image" class="viewer-image"></div>',
     props: ['title', 'imageUrl'],
@@ -109,15 +113,17 @@ const windowContentComponents: Record<
 };
 
 // 获取窗口内容组件
-const getWindowContentComponent = (content: string | WindowContent): any => {
+const getWindowContentComponent = (content: string | WindowContent): typeof windowContentComponents[keyof typeof windowContentComponents] => {
   if (typeof content === 'string') {
     return windowContentComponents[content] || windowContentComponents.default;
   }
   if (content?.type) {
-    // 处理 app 类型的窗口内�?    if (content.type === 'app') {
+    // 处理 app 类型的窗口内容
+    if (content.type === 'app') {
       const appId = content.props?.app?.id;
       if (appId) {
-        // 根据应用ID返回对应的组�?        switch (appId) {
+        // 根据应用ID返回对应的组件
+        switch (appId) {
           case 'app-store':
             return windowContentComponents.appStore;
           case 'hero-development':
@@ -145,19 +151,19 @@ const getWindowContentComponent = (content: string | WindowContent): any => {
   // 根据类型配置窗口
   switch (randomType) {
     case 'heroDevelopment':
-      title = '英雄开�?;
+      title = '英雄开发';
       break;
     case 'gameRelease':
       title = '游戏发布';
       break;
     case 'textEditor':
-      title = '文本编辑�?;
-      windowConfig.props = { title: '文本编辑�? };
+      title = '文本编辑器';
+      windowConfig.props = { title: '文本编辑器' };
       break;
     case 'imageViewer':
-      title = '图片查看�?;
+      title = '图片查看器';
       windowConfig.props = {
-        title: '图片查看�?,
+        title: '图片查看器',
         imageUrl: `https://picsum.photos/seed/${Math.random()}/600/400`,
       };
       break;
@@ -181,17 +187,20 @@ const handleBackgroundClick = (): void => {
 
 // 全局键盘事件处理
 const handleGlobalKeyDown = (event: KeyboardEvent): void => {
-  // Ctrl+Tab 切换到下一个窗�?  if (event.ctrlKey && event.key === 'Tab') {
+  // Ctrl+Tab 切换到下一个窗口
+  if (event.ctrlKey && event.key === 'Tab') {
     event.preventDefault();
     windowManagerStore.nextWindow();
   }
 
-  // Ctrl+Shift+Tab 切换到上一个窗�?  if (event.ctrlKey && event.shiftKey && event.key === 'Tab') {
+  // Ctrl+Shift+Tab 切换到上一个窗口
+  if (event.ctrlKey && event.shiftKey && event.key === 'Tab') {
     event.preventDefault();
     windowManagerStore.prevWindow();
   }
 
-  // Ctrl+N 创建新窗�?  if (event.ctrlKey && event.key === 'n') {
+  // Ctrl+N 创建新窗口
+  if (event.ctrlKey && event.key === 'n') {
     event.preventDefault();
     createNewWindow();
   }

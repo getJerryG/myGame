@@ -31,18 +31,18 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits } from 'vue';
+import { defineEmits } from "vue";
 
-const emit = defineEmits(['toggle-inventory', 'show-achievements']);
+const emit = defineEmits(["toggle-inventory", "show-achievements"]);
 
 // 切换背包弹窗
 const toggleFullInventory = (): void => {
-  emit('toggle-inventory');
+  emit("toggle-inventory");
 };
 
 // 显示成就
 const showAchievements = (): void => {
-  emit('show-achievements');
+  emit("show-achievements");
 };
 </script>
 

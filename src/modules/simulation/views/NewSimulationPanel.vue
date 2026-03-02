@@ -95,12 +95,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed } from "vue";
 
 // 模拟参数
 const simulationSpeed = ref(5);
 const initialFunds = ref(100000);
-const marketDifficulty = ref('normal');
+const marketDifficulty = ref("normal");
 const simulationDays = ref(30);
 
 // 模拟状态
@@ -117,7 +117,7 @@ const progressPercent = computed(() => {
 const resetConfig = () => {
   simulationSpeed.value = 5;
   initialFunds.value = 100000;
-  marketDifficulty.value = 'normal';
+  marketDifficulty.value = "normal";
   simulationDays.value = 30;
 };
 

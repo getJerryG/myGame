@@ -1,14 +1,14 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 // 定义合作项目类型
 interface Collaboration {
   id: string;
   name: string;
   partner: string;
-  type: 'game' | 'character' | 'content' | 'event';
+  type: "game" | "character" | "content" | "event";
   startTime: number;
   endTime: number;
-  status: 'negotiating' | 'active' | 'completed' | 'canceled';
+  status: "negotiating" | "active" | "completed" | "canceled";
   objectives: string[];
   requirements: {
     funding: number;
@@ -34,9 +34,9 @@ interface SimulationCollaborationState {
   collaborationRequests: Array<{
     id: string;
     partner: string;
-    type: 'game' | 'character' | 'content' | 'event';
+    type: "game" | "character" | "content" | "event";
     timestamp: number;
-    status: 'pending' | 'accepted' | 'rejected';
+    status: "pending" | "accepted" | "rejected";
   }>;
   // 合作配置
   collaborationConfig: {
@@ -48,7 +48,7 @@ interface SimulationCollaborationState {
 
 // 创建并导出合作store
 export const useSimulationCollaborationStore = defineStore(
-  'simulationCollaboration',
+  "simulationCollaboration",
   {
     state: (): SimulationCollaborationState => ({
       // 初始当前合作项目为空数组
@@ -69,21 +69,21 @@ export const useSimulationCollaborationStore = defineStore(
       // 获取活跃合作项目
       activeCollaborations: (state) => {
         return state.currentCollaborations.filter(
-          (collab) => collab.status === 'active',
+          (collab) => collab.status === "active",
         );
       },
 
       // 获取谈判中的合作项目
       negotiatingCollaborations: (state) => {
         return state.currentCollaborations.filter(
-          (collab) => collab.status === 'negotiating',
+          (collab) => collab.status === "negotiating",
         );
       },
 
       // 获取待处理的合作请求
       pendingRequests: (state) => {
         return state.collaborationRequests.filter(
-          (request) => request.status === 'pending',
+          (request) => request.status === "pending",
         );
       },
 
@@ -99,20 +99,20 @@ export const useSimulationCollaborationStore = defineStore(
     actions: {
       // 创建合作项目
       createCollaboration(
-        collabData: Omit<Collaboration, 'id' | 'progress' | 'currentPhase'>,
+        collabData: Omit<Collaboration, "id" | "progress" | "currentPhase">,
       ) {
         if (
           this.activeCollaborations.length >=
           this.collaborationConfig.maxActiveCollaborations
         ) {
-          throw new Error('已达到最大活跃合作项目数量限制');
+          throw new Error("已达到最大活跃合作项目数量限制");
         }
 
         const newCollaboration: Collaboration = {
           ...collabData,
           id: `collab_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
           progress: 0,
-          currentPhase: 'planning',
+          currentPhase: "planning",
         };
 
         this.currentCollaborations.push(newCollaboration);
@@ -122,14 +122,14 @@ export const useSimulationCollaborationStore = defineStore(
       // 更新合作状态
       updateCollaborationStatus(
         collabId: string,
-        status: 'negotiating' | 'active' | 'completed' | 'canceled',
+        status: "negotiating" | "active" | "completed" | "canceled",
       ) {
         const collaboration = this.getCollaborationById(collabId);
         if (collaboration) {
           collaboration.status = status;
 
           // 如果合作已完成或取消，将其移至历史记录
-          if (status === 'completed' || status === 'canceled') {
+          if (status === "completed" || status === "canceled") {
             const currentIndex = this.currentCollaborations.findIndex(
               (c) => c.id === collabId,
             );
@@ -161,9 +161,9 @@ export const useSimulationCollaborationStore = defineStore(
           // 如果进度达到100%，自动标记为完成
           if (
             collaboration.progress >= 100 &&
-            collaboration.status === 'active'
+            collaboration.status === "active"
           ) {
-            this.updateCollaborationStatus(collabId, 'completed');
+            this.updateCollaborationStatus(collabId, "completed");
           }
         }
       },
@@ -174,19 +174,19 @@ export const useSimulationCollaborationStore = defineStore(
           (r) => r.id === requestId,
         );
         if (request) {
-          request.status = accepted ? 'accepted' : 'rejected';
+          request.status = accepted ? "accepted" : "rejected";
         }
       },
 
       // 生成新的合作请求
       generateCollaborationRequest() {
-        const types = ['game', 'character', 'content', 'event'] as const;
+        const types = ["game", "character", "content", "event"] as const;
         const newRequest = {
           id: `request_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
           partner: `Partner_${Math.floor(Math.random() * 1000)}`,
           type: types[Math.floor(Math.random() * types.length)],
           timestamp: Date.now(),
-          status: 'pending' as const,
+          status: "pending" as const,
         };
 
         this.collaborationRequests.push(newRequest);
@@ -196,7 +196,7 @@ export const useSimulationCollaborationStore = defineStore(
 
     // 持久化存储
     persist: {
-      key: 'simulation-collaboration',
+      key: "simulation-collaboration",
       storage: localStorage,
     },
   },

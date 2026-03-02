@@ -1,17 +1,17 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 // 定义核心目标类型
 interface CoreGoal {
   id: string;
   name: string;
-  category: 'business' | 'user' | 'product' | 'team';
+  category: "business" | "user" | "product" | "team";
   description: string;
   targetValue: number;
   currentValue: number;
   progress: number;
-  status: 'active' | 'completed' | 'archived';
+  status: "active" | "completed" | "archived";
   deadline: number;
-  priority: 'high' | 'medium' | 'low';
+  priority: "high" | "medium" | "low";
   milestones: Array<{
     id: string;
     name: string;
@@ -31,12 +31,12 @@ interface SimulationCoreGoalsState {
   goalsConfig: {
     maxActiveGoals: number;
     goalReviewPeriodDays: number;
-    defaultPriority: 'high' | 'medium' | 'low';
+    defaultPriority: "high" | "medium" | "low";
   };
 }
 
 // 创建并导出核心目标store
-export const useSimulationCoreGoalsStore = defineStore('simulationCoreGoals', {
+export const useSimulationCoreGoalsStore = defineStore("simulationCoreGoals", {
   state: (): SimulationCoreGoalsState => ({
     // 初始核心目标为空数组
     coreGoals: [],
@@ -46,7 +46,7 @@ export const useSimulationCoreGoalsStore = defineStore('simulationCoreGoals', {
     goalsConfig: {
       maxActiveGoals: 5,
       goalReviewPeriodDays: 30,
-      defaultPriority: 'medium',
+      defaultPriority: "medium",
     },
   }),
 
@@ -54,7 +54,7 @@ export const useSimulationCoreGoalsStore = defineStore('simulationCoreGoals', {
     // 获取活跃核心目标
     activeCoreGoals: (state) => {
       return state.coreGoals
-        .filter((goal) => goal.status === 'active')
+        .filter((goal) => goal.status === "active")
         .sort((a, b) => {
           const priorityOrder = { high: 0, medium: 1, low: 2 };
           return priorityOrder[a.priority] - priorityOrder[b.priority];
@@ -64,7 +64,7 @@ export const useSimulationCoreGoalsStore = defineStore('simulationCoreGoals', {
     // 获取高优先级目标
     highPriorityGoals: (state) => {
       return state.coreGoals.filter(
-        (goal) => goal.status === 'active' && goal.priority === 'high',
+        (goal) => goal.status === "active" && goal.priority === "high",
       );
     },
 
@@ -88,11 +88,11 @@ export const useSimulationCoreGoalsStore = defineStore('simulationCoreGoals', {
     createCoreGoal(
       goalData: Omit<
         CoreGoal,
-        'id' | 'currentValue' | 'progress' | 'status' | 'milestones'
+        "id" | "currentValue" | "progress" | "status" | "milestones"
       >,
     ) {
       if (this.activeCoreGoals.length >= this.goalsConfig.maxActiveGoals) {
-        throw new Error('已达到最大活跃目标数量限制');
+        throw new Error("已达到最大活跃目标数量限制");
       }
 
       const newGoal: CoreGoal = {
@@ -100,7 +100,7 @@ export const useSimulationCoreGoalsStore = defineStore('simulationCoreGoals', {
         id: `goal_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         currentValue: 0,
         progress: 0,
-        status: 'active',
+        status: "active",
         milestones: [],
       };
 
@@ -119,8 +119,8 @@ export const useSimulationCoreGoalsStore = defineStore('simulationCoreGoals', {
         );
 
         // 检查是否完成
-        if (goal.progress >= 100 && goal.status === 'active') {
-          goal.status = 'completed';
+        if (goal.progress >= 100 && goal.status === "active") {
+          goal.status = "completed";
           goal.deadline = Date.now();
 
           // 将完成的目标移至已完成列表
@@ -145,8 +145,8 @@ export const useSimulationCoreGoalsStore = defineStore('simulationCoreGoals', {
     addMilestone(
       goalId: string,
       milestone: Omit<
-        CoreGoal['milestones'][0],
-        'id' | 'achieved' | 'achievedAt'
+        CoreGoal["milestones"][0],
+        "id" | "achieved" | "achievedAt"
       >,
     ) {
       const goal = this.getGoalById(goalId);
@@ -165,7 +165,7 @@ export const useSimulationCoreGoalsStore = defineStore('simulationCoreGoals', {
     archiveGoal(goalId: string) {
       const goal = this.getGoalById(goalId);
       if (goal) {
-        goal.status = 'archived';
+        goal.status = "archived";
 
         // 如果在活跃列表中，移至已完成列表
         const index = this.coreGoals.findIndex((g) => g.id === goalId);
@@ -182,7 +182,7 @@ export const useSimulationCoreGoalsStore = defineStore('simulationCoreGoals', {
       if (goal) {
         goal.currentValue = 0;
         goal.progress = 0;
-        goal.status = 'active';
+        goal.status = "active";
         goal.milestones.forEach((milestone) => {
           milestone.achieved = false;
           delete milestone.achievedAt;
@@ -202,7 +202,7 @@ export const useSimulationCoreGoalsStore = defineStore('simulationCoreGoals', {
 
   // 持久化存储
   persist: {
-    key: 'simulation-core-goals',
+    key: "simulation-core-goals",
     storage: localStorage,
   },
 });

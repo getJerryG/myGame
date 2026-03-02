@@ -114,19 +114,19 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { reactive } from "vue";
 
 // 设置数据
 const settings = reactive({
   masterVolume: 80,
   bgmVolume: 60,
   sfxVolume: 70,
-  resolution: '1920x1080',
+  resolution: "1920x1080",
   fullscreen: false,
   vsync: true,
   autoSave: true,
   showFps: false,
-  language: 'zh-CN',
+  language: "zh-CN",
 });
 
 // 恢复默认设置
@@ -134,18 +134,18 @@ const resetSettings = () => {
   settings.masterVolume = 80;
   settings.bgmVolume = 60;
   settings.sfxVolume = 70;
-  settings.resolution = '1920x1080';
+  settings.resolution = "1920x1080";
   settings.fullscreen = false;
   settings.vsync = true;
   settings.autoSave = true;
   settings.showFps = false;
-  settings.language = 'zh-CN';
+  settings.language = "zh-CN";
 };
 
 // 保存设置
 const saveSettings = () => {
   // TODO: 实现保存设置逻辑
-  alert('设置已保存！');
+  alert("设置已保存！");
 };
 
 // 关闭应用

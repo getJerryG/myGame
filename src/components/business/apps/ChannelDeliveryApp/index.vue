@@ -39,7 +39,9 @@
       >
         <div class="channel-header">
           <h3>{{ channel.name }}</h3>
-          <span class="channel-type">{{ getChannelTypeName(channel.type) }}</span>
+          <span class="channel-type">{{
+            getChannelTypeName(channel.type)
+          }}</span>
         </div>
 
         <div class="channel-stats">
@@ -53,11 +55,9 @@
           </div>
           <div class="stat-item">
             <span class="stat-label">状�?</span>
-            <span
-              class="stat-value"
-              :class="channel.status"
-              >{{ channel.status === 'active' ? '投放�? : '未投�? }}</span
-            >
+            <span class="stat-value" :class="channel.status">{{
+              channel.status === "active" ? "投放中" : "未投放"
+            }}</span>
           </div>
         </div>
 
@@ -67,7 +67,8 @@
             class="action-btn primary"
             @click="openIntensityModal(channel)"
           >
-            开启投�?          </button>
+            开启投�?
+          </button>
           <button
             v-else
             class="action-btn secondary"
@@ -80,12 +81,7 @@
     </div>
 
     <div class="app-footer">
-      <button
-        class="report-btn"
-        @click="viewReport"
-      >
-        查看投放报告
-      </button>
+      <button class="report-btn" @click="viewReport">查看投放报告</button>
     </div>
 
     <div
@@ -93,75 +89,114 @@
       class="modal-overlay"
       @click="closeIntensityModal"
     >
-      <div
-        class="modal-content"
-        @click.stop
-      >
+      <div class="modal-content" @click.stop>
         <h3>选择投放力度</h3>
         <div class="intensity-options">
-          <button
-            class="intensity-btn"
-            @click="confirmIntensity('light')"
-          >
+          <button class="intensity-btn" @click="confirmIntensity('light')">
             轻度投放
             <span class="intensity-desc">成本低，效果稳定</span>
           </button>
-          <button
-            class="intensity-btn"
-            @click="confirmIntensity('medium')"
-          >
+          <button class="intensity-btn" @click="confirmIntensity('medium')">
             中度投放
-            <span class="intensity-desc">成本适中，效果显�?/span>
+            <span class="intensity-desc">成本适中，效果显著</span>
           </button>
-          <button
-            class="intensity-btn"
-            @click="confirmIntensity('heavy')"
-          >
+          <button class="intensity-btn" @click="confirmIntensity('heavy')">
             重磅投放
             <span class="intensity-desc">成本高，效果爆发</span>
           </button>
         </div>
-        <button
-          class="cancel-btn"
-          @click="closeIntensityModal"
-        >
-          取消
-        </button>
+        <button class="cancel-btn" @click="closeIntensityModal">取消</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { getChannelTypeName } from '@/utils/appUtils';
+import { ref, computed } from "vue";
+import { getChannelTypeName } from "@/utils/appUtils";
 
 interface Channel {
   id: string;
   name: string;
-  type: 'online' | 'offline' | 'cooperation';
+  type: "online" | "offline" | "cooperation";
   effect: string;
   cost: number;
-  status: 'active' | 'inactive';
+  status: "active" | "inactive";
 }
 
-const activeTab = ref<'all' | 'online' | 'offline' | 'cooperation'>('all');
+const activeTab = ref<"all" | "online" | "offline" | "cooperation">("all");
 const showIntensityModal = ref(false);
 const selectedChannel = ref<Channel | null>(null);
 
 const channels = ref<Channel[]>([
-  { id: '1', name: '应用商店推广', type: 'online', effect: '�?, cost: 1000, status: 'inactive' },
-  { id: '2', name: '社交媒体广告', type: 'online', effect: '�?, cost: 800, status: 'active' },
-  { id: '3', name: 'KOL 合作', type: 'online', effect: '�?, cost: 1500, status: 'inactive' },
-  { id: '4', name: '线下展会', type: 'offline', effect: '�?, cost: 2000, status: 'inactive' },
-  { id: '5', name: '网吧推广', type: 'offline', effect: '�?, cost: 600, status: 'inactive' },
-  { id: '6', name: '游戏平台联动', type: 'cooperation', effect: '�?, cost: 2500, status: 'inactive' },
-  { id: '7', name: '直播平台合作', type: 'online', effect: '�?, cost: 1800, status: 'inactive' },
-  { id: '8', name: '校园推广', type: 'offline', effect: '�?, cost: 700, status: 'inactive' },
+  {
+    id: "1",
+    name: "应用商店推广",
+    type: "online",
+    effect: "medium",
+    cost: 1000,
+    status: "inactive",
+  },
+  {
+    id: "2",
+    name: "社交媒体广告",
+    type: "online",
+    effect: "medium",
+    cost: 800,
+    status: "active",
+  },
+  {
+    id: "3",
+    name: "KOL 合作",
+    type: "online",
+    effect: "high",
+    cost: 1500,
+    status: "inactive",
+  },
+  {
+    id: "4",
+    name: "线下展会",
+    type: "offline",
+    effect: "high",
+    cost: 2000,
+    status: "inactive",
+  },
+  {
+    id: "5",
+    name: "网吧推广",
+    type: "offline",
+    effect: "low",
+    cost: 600,
+    status: "inactive",
+  },
+  {
+    id: "6",
+    name: "游戏平台联动",
+    type: "cooperation",
+    effect: "very-high",
+    cost: 2500,
+    status: "inactive",
+  },
+  {
+    id: "7",
+    name: "直播平台合作",
+    type: "online",
+    effect: "very-high",
+    cost: 1800,
+    status: "inactive",
+  },
+  {
+    id: "8",
+    name: "校园推广",
+    type: "offline",
+    effect: "low",
+    cost: 700,
+    status: "inactive",
+  },
 ]);
 
 const filteredChannels = computed(() => {
-  if (activeTab.value === 'all') {
+  if (activeTab.value === "all") {
     return channels.value;
   }
   return channels.value.filter((channel) => channel.type === activeTab.value);
@@ -177,11 +212,13 @@ const closeIntensityModal = (): void => {
   selectedChannel.value = null;
 };
 
-const confirmIntensity = (_intensity: 'light' | 'medium' | 'heavy'): void => {
+const confirmIntensity = (_intensity: "light" | "medium" | "heavy"): void => {
   if (selectedChannel.value) {
-    const index = channels.value.findIndex((c) => c.id === selectedChannel.value!.id);
+    const index = channels.value.findIndex(
+      (c) => c.id === selectedChannel.value!.id,
+    );
     if (index !== -1) {
-      channels.value[index].status = 'active';
+      channels.value[index].status = "active";
     }
     closeIntensityModal();
   }
@@ -190,17 +227,16 @@ const confirmIntensity = (_intensity: 'light' | 'medium' | 'heavy'): void => {
 const stopDelivery = (channel: Channel): void => {
   const index = channels.value.findIndex((c) => c.id === channel.id);
   if (index !== -1) {
-    channels.value[index].status = 'inactive';
+    channels.value[index].status = "inactive";
   }
 };
 
 const viewReport = (): void => {
-  alert('投放报告已生成，可在数据中心查看详细数据');
+  alert("投放报告已生成，可在数据中心查看详细数据");
 };
 </script>
 
 <style lang="scss" scoped>
-
 .channel-delivery-app {
   @include utils.flex-col(0, stretch, flex-start);
 
@@ -424,5 +460,3 @@ const viewReport = (): void => {
   }
 }
 </style>
-
-

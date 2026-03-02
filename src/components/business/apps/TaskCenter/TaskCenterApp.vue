@@ -109,18 +109,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed } from "vue";
 
 // 导入类型
-import type { App } from '../../../types/app';
-import type { GameData } from '../../../types/game';
-import type { Modal } from '../../../types/modal';
+import type { App } from "../../../types/app";
+import type { GameData } from "../../../types/game";
+import type { Modal } from "../../../types/modal";
 
 // 导入store
-import { useSimulationTaskSystemStore } from '@/stores/simulation/simulationTaskSystemStore';
+import { useSimulationTaskSystemStore } from "@/stores/simulation/simulationTaskSystemStore";
 
 // Props定义
-const props = defineProps<{
+const _props = defineProps<{
   app: App;
   gameData?: GameData;
   modal?: Modal;
@@ -130,27 +130,37 @@ const props = defineProps<{
 const taskSystemStore = useSimulationTaskSystemStore();
 
 // 活跃标签页
-const activeTab = ref('daily');
+const activeTab = ref("daily");
+
+// 定义组件内部使用的任务类型
+interface TaskCenterTask {
+  id: string;
+  name: string;
+  description: string;
+  status: string;
+  conditions?: Array<{ current: number; target: number }>;
+  reward?: { money?: number; reputation?: number; exp?: number };
+}
 
 // 任务状态标签映射
-const getStatusLabel = (status: string) => {
+const getStatusLabel = (status: string): string => {
   const statusMap = {
-    pending: '未完成',
-    in_progress: '进行中',
-    completed: '已完成',
-    rewarded: '已领取',
+    pending: "未完成",
+    inProgress: "进行中",
+    completed: "已完成",
+    rewarded: "已领取",
   };
-  return statusMap[status as keyof typeof statusMap] || '未知状态';
+  return statusMap[status as keyof typeof statusMap] || "未知状态";
 };
 
 // 当前显示的任务
 const currentTasks = computed(() => {
   switch (activeTab.value) {
-    case 'daily':
+    case "daily":
       return taskSystemStore.getDailyTasks;
-    case 'main':
+    case "main":
       return taskSystemStore.getMainTasks;
-    case 'achievement':
+    case "achievement":
       return taskSystemStore.getAchievementTasks;
     default:
       return [];
@@ -163,14 +173,17 @@ const hasCompletedTasks = computed(() => {
 });
 
 // 获取任务进度百分比
-const getTaskProgress = (task: any) => {
+const getTaskProgress = (task: TaskCenterTask): number => {
   if (!task.conditions || task.conditions.length === 0) {
     return 0;
   }
 
-  const totalProgress = task.conditions.reduce((sum: number, cond: any) => {
-    return sum + cond.current / cond.target;
-  }, 0);
+  const totalProgress = task.conditions.reduce(
+    (sum: number, cond: { current: number; target: number }) => {
+      return sum + cond.current / cond.target;
+    },
+    0,
+  );
 
   return Math.min(
     100,
@@ -179,38 +192,43 @@ const getTaskProgress = (task: any) => {
 };
 
 // 获取任务进度文本
-const getTaskProgressText = (task: any) => {
+const getTaskProgressText = (task: TaskCenterTask): string => {
   if (!task.conditions || task.conditions.length === 0) {
-    return '';
+    return "";
   }
 
   return task.conditions
-    .map((cond: any) => `${cond.current}/${cond.target}`)
-    .join(', ');
+    .map(
+      (cond: { current: number; target: number }) =>
+        `${cond.current}/${cond.target}`,
+    )
+    .join(", ");
 };
 
 // 获取奖励显示
-const getRewardDisplay = (task: any) => {
+const getRewardDisplay = (
+  task: TaskCenterTask,
+): Array<{ icon: string; amount: number }> => {
   const rewards = [];
-  if (task.reward.money) {
-    rewards.push({ icon: '💰', amount: task.reward.money });
+  if (task.reward?.money) {
+    rewards.push({ icon: "💰", amount: task.reward.money });
   }
-  if (task.reward.reputation) {
-    rewards.push({ icon: '🏆', amount: task.reward.reputation });
+  if (task.reward?.reputation) {
+    rewards.push({ icon: "🏆", amount: task.reward.reputation });
   }
-  if (task.reward.exp) {
-    rewards.push({ icon: '📊', amount: task.reward.exp });
+  if (task.reward?.exp) {
+    rewards.push({ icon: "📊", amount: task.reward.exp });
   }
   return rewards;
 };
 
 // 领取单个任务奖励
-const claimTask = (taskId: string) => {
+const claimTask = (taskId: string): void => {
   taskSystemStore.claimTaskReward(taskId);
 };
 
 // 一键领取所有奖励
-const claimAllTasks = () => {
+const claimAllTasks = (): void => {
   const completedTasks = taskSystemStore.getCompletedTasks;
   completedTasks.forEach((task) => {
     taskSystemStore.claimTaskReward(task.id);

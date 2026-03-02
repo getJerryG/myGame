@@ -1,4 +1,4 @@
-import type { GameTime } from '../types';
+import type { GameTime } from "../types";
 
 // 定义时间管理器接口
 export interface ITimeManager {

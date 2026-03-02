@@ -1,4 +1,4 @@
-import type { GameEvent, EventEffect } from '../types';
+import type { GameEvent, EventEffect } from "../types";
 
 // 定义事件系统接口
 export interface IEventSystem {
@@ -24,16 +24,16 @@ export interface IEventSystem {
   applyEventEffect(event: GameEvent, effect: EventEffect): void;
 
   // 获取系统事件的处理结果
-  getSystemEventResult(event: GameEvent): any;
+  getSystemEventResult(event: GameEvent): unknown;
 
   // 应用用户操作效果
-  applyUserActionResult(event: GameEvent, result: any): void;
+  applyUserActionResult(event: GameEvent, result: unknown): void;
 
   // 更新事件持续时间记录
   updateEventDuration(): void;
 
   // 记录用户操作
-  recordUserAction(action: string, result: any): void;
+  recordUserAction(action: string, result: unknown): void;
 
   // 重置事件系统
   resetEventSystem(): void;

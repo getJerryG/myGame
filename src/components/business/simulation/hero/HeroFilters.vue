@@ -83,13 +83,13 @@
       <!-- 重置按钮 -->
       <button class="reset-btn" @click="resetFilters">
         <span class="reset-icon">🔄</span>
-        重置筛�?      </button>
+        重置筛选      </button>
     </div>
   </div>
 </template>
 
-<script setup lang=ts>
-import { ref, watch } from 'vue';
+<script setup lang="ts">
+import { ref, watch } from "vue";
 
 const props = defineProps({
   filters: {
@@ -98,12 +98,13 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['update:filters', 'reset-filters']);
+const emit = defineEmits(["update:filters", "reset-filters"]);
 
 // 创建本地副本以避免直接修改props
 const localFilters = ref({ ...props.filters });
 
-// 监听props变化，更新本地副�?watch(
+// 监听props变化，更新本地副本
+watch(
   () => props.filters,
   (newFilters) => {
     localFilters.value = { ...newFilters };
@@ -111,13 +112,15 @@ const localFilters = ref({ ...props.filters });
   { deep: true }
 );
 
-// 更新筛选条�?function updateFilters(): void {
-  emit('update:filters', { ...localFilters.value });
-}
+// 更新筛选条件
+const updateFilters = (): void => {
+  emit("update:filters", { ...localFilters.value });
+};
 
-// 重置筛�?function resetFilters(): void {
-  emit('reset-filters');
-}
+// 重置筛选
+const resetFilters = (): void => {
+  emit("reset-filters");
+};
 </script>
 
 <style lang="scss" scoped>
@@ -195,7 +198,3 @@ const localFilters = ref({ ...props.filters });
   font-size: tokens.$font-size-base;
 }
 </style>
-
-
-
-

@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 // 定义核心价值观类型
 interface CoreValue {
@@ -6,16 +6,16 @@ interface CoreValue {
   name: string;
   description: string;
   category:
-    | 'innovation'
-    | 'quality'
-    | 'user-centric'
-    | 'teamwork'
-    | 'integrity';
+    | "innovation"
+    | "quality"
+    | "user-centric"
+    | "teamwork"
+    | "integrity";
   influenceScore: number; // 0-100，价值观影响力评分
   implementationLevel: number; // 0-100，价值观实施程度
   relatedPolicies: string[];
   examples: string[];
-  status: 'active' | 'reviewed' | 'updated';
+  status: "active" | "reviewed" | "updated";
   lastReviewed: number;
 }
 
@@ -38,70 +38,70 @@ interface SimulationCoreValuesState {
 
 // 创建并导出核心价值观store
 export const useSimulationCoreValuesStore = defineStore(
-  'simulationCoreValues',
+  "simulationCoreValues",
   {
     state: (): SimulationCoreValuesState => ({
       // 初始核心价值观
       coreValues: [
         {
-          id: 'value_innovation',
-          name: '创新',
+          id: "value_innovation",
+          name: "创新",
           description:
-            '不断探索新的游戏机制和设计理念，保持产品的竞争力和吸引力',
-          category: 'innovation',
+            "不断探索新的游戏机制和设计理念，保持产品的竞争力和吸引力",
+          category: "innovation",
           influenceScore: 85,
           implementationLevel: 75,
-          relatedPolicies: ['每周创新 brainstorm', '鼓励实验性项目'],
-          examples: ['引入动态事件系统', '开发独特的游戏玩法'],
-          status: 'active',
+          relatedPolicies: ["每周创新 brainstorm", "鼓励实验性项目"],
+          examples: ["引入动态事件系统", "开发独特的游戏玩法"],
+          status: "active",
           lastReviewed: Date.now(),
         },
         {
-          id: 'value_quality',
-          name: '品质',
-          description: '追求卓越的游戏品质，确保每个细节都经过精心设计和测试',
-          category: 'quality',
+          id: "value_quality",
+          name: "品质",
+          description: "追求卓越的游戏品质，确保每个细节都经过精心设计和测试",
+          category: "quality",
           influenceScore: 90,
           implementationLevel: 85,
-          relatedPolicies: ['严格的质量控制流程', '用户反馈优先处理'],
-          examples: ['优化游戏性能', '修复所有关键bug'],
-          status: 'active',
+          relatedPolicies: ["严格的质量控制流程", "用户反馈优先处理"],
+          examples: ["优化游戏性能", "修复所有关键bug"],
+          status: "active",
           lastReviewed: Date.now(),
         },
         {
-          id: 'value_user_centric',
-          name: '用户中心',
-          description: '以用户需求为导向，不断优化游戏体验',
-          category: 'user-centric',
+          id: "value_user_centric",
+          name: "用户中心",
+          description: "以用户需求为导向，不断优化游戏体验",
+          category: "user-centric",
           influenceScore: 80,
           implementationLevel: 80,
-          relatedPolicies: ['定期用户调研', '用户反馈响应机制'],
-          examples: ['根据用户反馈调整游戏平衡', '优化界面易用性'],
-          status: 'active',
+          relatedPolicies: ["定期用户调研", "用户反馈响应机制"],
+          examples: ["根据用户反馈调整游戏平衡", "优化界面易用性"],
+          status: "active",
           lastReviewed: Date.now(),
         },
         {
-          id: 'value_teamwork',
-          name: '团队合作',
-          description: '鼓励跨团队协作，共同实现游戏的成功',
-          category: 'teamwork',
+          id: "value_teamwork",
+          name: "团队合作",
+          description: "鼓励跨团队协作，共同实现游戏的成功",
+          category: "teamwork",
           influenceScore: 75,
           implementationLevel: 70,
-          relatedPolicies: ['跨团队项目机制', '定期团队建设活动'],
-          examples: ['设计和开发团队紧密合作', '定期跨团队沟通会议'],
-          status: 'active',
+          relatedPolicies: ["跨团队项目机制", "定期团队建设活动"],
+          examples: ["设计和开发团队紧密合作", "定期跨团队沟通会议"],
+          status: "active",
           lastReviewed: Date.now(),
         },
         {
-          id: 'value_integrity',
-          name: '诚信',
-          description: '在游戏开发和运营中保持诚实和透明',
-          category: 'integrity',
+          id: "value_integrity",
+          name: "诚信",
+          description: "在游戏开发和运营中保持诚实和透明",
+          category: "integrity",
           influenceScore: 95,
           implementationLevel: 90,
-          relatedPolicies: ['透明的运营政策', '公平的游戏机制'],
-          examples: ['公开游戏更新日志', '确保抽奖机制公平'],
-          status: 'active',
+          relatedPolicies: ["透明的运营政策", "公平的游戏机制"],
+          examples: ["公开游戏更新日志", "确保抽奖机制公平"],
+          status: "active",
           lastReviewed: Date.now(),
         },
       ],
@@ -147,7 +147,7 @@ export const useSimulationCoreValuesStore = defineStore(
       },
 
       // 根据类别获取价值观
-      getValuesByCategory: (state) => (category: CoreValue['category']) => {
+      getValuesByCategory: (state) => (category: CoreValue["category"]) => {
         return state.coreValues.filter((value) => value.category === category);
       },
     },
@@ -180,7 +180,7 @@ export const useSimulationCoreValuesStore = defineStore(
       // 审查价值观
       reviewValue(
         valueId: string,
-        updates?: Partial<Omit<CoreValue, 'id' | 'lastReviewed' | 'status'>>,
+        updates?: Partial<Omit<CoreValue, "id" | "lastReviewed" | "status">>,
       ) {
         const value = this.coreValues.find((v) => v.id === valueId);
         if (value) {
@@ -188,17 +188,17 @@ export const useSimulationCoreValuesStore = defineStore(
             Object.assign(value, updates);
           }
           value.lastReviewed = Date.now();
-          value.status = 'reviewed';
+          value.status = "reviewed";
         }
       },
 
       // 添加新的核心价值观
-      addCoreValue(value: Omit<CoreValue, 'id' | 'lastReviewed' | 'status'>) {
+      addCoreValue(value: Omit<CoreValue, "id" | "lastReviewed" | "status">) {
         const newValue: CoreValue = {
           ...value,
           id: `value_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
           lastReviewed: Date.now(),
-          status: 'active',
+          status: "active",
         };
 
         this.coreValues.push(newValue);
@@ -206,7 +206,7 @@ export const useSimulationCoreValuesStore = defineStore(
       },
 
       // 更新价值观状态
-      updateValueStatus(valueId: string, status: CoreValue['status']) {
+      updateValueStatus(valueId: string, status: CoreValue["status"]) {
         const value = this.coreValues.find((v) => v.id === valueId);
         if (value) {
           value.status = status;
@@ -216,7 +216,7 @@ export const useSimulationCoreValuesStore = defineStore(
 
     // 持久化存储
     persist: {
-      key: 'simulation-core-values',
+      key: "simulation-core-values",
       storage: localStorage,
     },
   },

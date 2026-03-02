@@ -141,15 +141,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from "vue";
 
 const activityTypes = [
-  { id: 'login', name: '登录活动', icon: '📅' },
-  { id: 'recharge', name: '充值活动', icon: '💰' },
-  { id: 'consumption', name: '消费活动', icon: '🛒' },
-  { id: 'pvp', name: '竞技活动', icon: '⚔️' },
-  { id: 'cooperation', name: '合作活动', icon: '🤝' },
-  { id: 'festival', name: '节日活动', icon: '🎉' },
+  { id: "login", name: "登录活动", icon: "📅" },
+  { id: "recharge", name: "充值活动", icon: "💰" },
+  { id: "consumption", name: "消费活动", icon: "🛒" },
+  { id: "pvp", name: "竞技活动", icon: "⚔️" },
+  { id: "cooperation", name: "合作活动", icon: "🤝" },
+  { id: "festival", name: "节日活动", icon: "🎉" },
 ];
 
 const props = defineProps<{
@@ -162,22 +162,22 @@ const props = defineProps<{
   expReward: number;
 }>();
 
-const emit = defineEmits<{
-  'update:selectedType': [id: string];
-  'update:activityName': [name: string];
-  'update:activityDescription': [desc: string];
-  'update:startTime': [time: string];
-  'update:endTime': [time: string];
-  'update:goldReward': [value: number];
-  'update:expReward': [value: number];
+const _emit = defineEmits<{
+  "update:selectedType": [id: string];
+  "update:activityName": [name: string];
+  "update:activityDescription": [desc: string];
+  "update:startTime": [time: string];
+  "update:endTime": [time: string];
+  "update:goldReward": [value: number];
+  "update:expReward": [value: number];
   create: [];
 }>();
 
 const canCreate = computed(() => {
   return (
-    props.activityName.trim() !== '' &&
-    props.startTime !== '' &&
-    props.endTime !== ''
+    props.activityName.trim() !== "" &&
+    props.startTime !== "" &&
+    props.endTime !== ""
   );
 });
 </script>

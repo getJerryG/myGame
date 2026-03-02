@@ -7,10 +7,7 @@
     />
 
     <!-- 面板内容 -->
-    <div
-      class="panel-content"
-      :class="{ collapsed: isCollapsed }"
-    >
+    <div class="panel-content" :class="{ collapsed: isCollapsed }">
       <!-- 筛选器 -->
       <HeroFilters
         :filters="filters"
@@ -30,10 +27,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import HeroManagementHeader from './HeroManagementHeader.vue';
-import HeroFilters from './HeroFilters.vue';
-import HeroList from './HeroList.vue';
+import { computed, ref } from "vue";
+import HeroManagementHeader from "./HeroManagementHeader.vue";
+import HeroFilters from "./HeroFilters.vue";
+import HeroList from "./HeroList.vue";
 
 // 英雄相关类型定义
 interface AdjustableStat {
@@ -65,9 +62,9 @@ interface Hero {
 
 // 筛选器
 const filters = ref({
-  category: 'all',
-  strength: 'all',
-  search: '',
+  category: "all",
+  strength: "all",
+  search: "",
 });
 
 // 选中的英�?const selectedHero = ref<Hero | null>(null);
@@ -76,10 +73,10 @@ const filters = ref({
 const heroes = ref<Hero[]>([
   {
     id: 1,
-    name: '李白',
-    avatar: '🏮',
-    category: 'assassin',
-    strength: 'T1',
+    name: "李白",
+    avatar: "🏮",
+    category: "assassin",
+    strength: "T1",
     stats: {
       winRate: 48.5,
       pickRate: 15.2,
@@ -107,10 +104,10 @@ const heroes = ref<Hero[]>([
   },
   {
     id: 2,
-    name: '貂蝉',
-    avatar: '🌸',
-    category: 'mage',
-    strength: 'T0',
+    name: "貂蝉",
+    avatar: "🌸",
+    category: "mage",
+    strength: "T0",
     stats: {
       winRate: 53.2,
       pickRate: 22.5,
@@ -138,10 +135,10 @@ const heroes = ref<Hero[]>([
   },
   {
     id: 3,
-    name: '韩信',
-    avatar: '⚔️',
-    category: 'assassin',
-    strength: 'T2',
+    name: "韩信",
+    avatar: "⚔️",
+    category: "assassin",
+    strength: "T2",
     stats: {
       winRate: 46.8,
       pickRate: 12.3,
@@ -169,10 +166,10 @@ const heroes = ref<Hero[]>([
   },
   {
     id: 4,
-    name: '程咬�?,
-    avatar: '🛡�?,
-    category: 'tank',
-    strength: 'T1',
+    name: "程咬金",
+    avatar: "🛡️",
+    category: "tank",
+    strength: "T1",
     stats: {
       winRate: 50.2,
       pickRate: 8.7,
@@ -206,10 +203,10 @@ const heroes = ref<Hero[]>([
   },
   {
     id: 5,
-    name: '后羿',
-    avatar: '🏹',
-    category: 'marksman',
-    strength: 'T1',
+    name: "后羿",
+    avatar: "🏹",
+    category: "marksman",
+    strength: "T1",
     stats: {
       winRate: 49.5,
       pickRate: 28.6,
@@ -237,22 +234,24 @@ const heroes = ref<Hero[]>([
   },
 ]);
 
-// 筛选后的英雄列�?const filteredHeroes = computed(() => {
+// 筛选后的英雄列表
+const filteredHeroes = computed(() => {
   return heroes.value.filter((hero) => {
     const matchesCategory =
-      filters.value.category === 'all' ||
+      filters.value.category === "all" ||
       hero.category === filters.value.category;
     const matchesStrength =
-      filters.value.strength === 'all' ||
+      filters.value.strength === "all" ||
       hero.strength === filters.value.strength;
     const matchesSearch =
-      filters.value.search === '' ||
+      filters.value.search === "" ||
       hero.name.toLowerCase().includes(filters.value.search.toLowerCase());
     return matchesCategory && matchesStrength && matchesSearch;
   });
 });
 
-// 切换折叠状�?const toggleCollapse = (): void => {
+// 切换折叠状态
+const toggleCollapse = (): void => {
   isCollapsed.value = !isCollapsed.value;
 };
 
@@ -261,11 +260,12 @@ const selectHero = (hero: Hero): void => {
   selectedHero.value = hero;
 };
 
-// 重置筛�?const resetFilters = (): void => {
+// 重置筛选
+const resetFilters = (): void => {
   filters.value = {
-    category: 'all',
-    strength: 'all',
-    search: '',
+    category: "all",
+    strength: "all",
+    search: "",
   };
 };
 </script>

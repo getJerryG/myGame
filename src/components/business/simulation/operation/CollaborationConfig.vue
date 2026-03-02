@@ -70,7 +70,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
 
 // 合作选项类型定义
 interface CollaborationOption {
@@ -93,9 +93,9 @@ defineProps({
 });
 
 const emit = defineEmits([
-  'select-option',
-  'confirm-collaboration',
-  'reset-selection',
+  "select-option",
+  "confirm-collaboration",
+  "reset-selection",
 ]);
 
 // 选中的合作选项
@@ -106,7 +106,7 @@ const selectedOption = ref<CollaborationOption | null>(null);
 function selectCollaboration(option: CollaborationOption): void {
   selectedOptionId.value = option.id;
   selectedOption.value = option;
-  emit('select-option', option);
+  emit("select-option", option);
 }
 
 // 切换合作选择
@@ -117,14 +117,14 @@ function toggleCollaboration(option: CollaborationOption): void {
   } else {
     selectedOptionId.value = option.id;
     selectedOption.value = option;
-    emit('select-option', option);
+    emit("select-option", option);
   }
 }
 
 // 确认合作
 function confirmCollaboration(): void {
   if (selectedOption.value) {
-    emit('confirm-collaboration', selectedOption.value);
+    emit("confirm-collaboration", selectedOption.value);
     selectedOptionId.value = null;
     selectedOption.value = null;
   }
@@ -134,7 +134,7 @@ function confirmCollaboration(): void {
 function resetSelection(): void {
   selectedOptionId.value = null;
   selectedOption.value = null;
-  emit('reset-selection');
+  emit("reset-selection");
 }
 </script>
 

@@ -115,17 +115,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import ApplicationWindow from '@/components/common/window/ApplicationWindow.vue';
-import type { SidebarItem } from '@/components/common/window/ApplicationWindow.vue';
+import { ref, computed } from "vue";
+import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
 
-// 侧边栏配�?const sidebarItems: SidebarItem[] = [{ id: 'level-info', name: '等级信息', icon: '📊' }];
+// 侧边栏配�?const sidebarItems = [{ id: 'level-info', name: '等级信息', icon: '📊' }];
 
-const activeModule = ref('level-info');
+const activeModule = ref("level-info");
 
 // 职级数据
-const currentRank = ref('见习策划');
-const currentSubLevel = ref('III');
+const currentRank = ref("见习策划");
+const currentSubLevel = ref("III");
 const progress = ref(75);
 
 // 计算当前职级显示
@@ -136,37 +135,37 @@ const currentRankDisplay = computed(() => {
 // 升级条件
 const upgradeConditions = ref([
   {
-    id: 'wordOfMouth',
-    title: '口碑要求',
-    description: '游戏口碑达到要求',
-    icon: '👍',
+    id: "wordOfMouth",
+    title: "口碑要求",
+    description: "游戏口碑达到要求",
+    icon: "👍",
     current: 115,
     required: 120,
     completed: false,
   },
   {
-    id: 'totalMoney',
-    title: '流水要求',
-    description: '累计总流水达到要求',
-    icon: '💸',
+    id: "totalMoney",
+    title: "流水要求",
+    description: "累计总流水达到要求",
+    icon: "💸",
     current: 0,
     required: 0,
     completed: true,
   },
   {
-    id: 'heroCount',
-    title: '英雄要求',
-    description: '已上线英雄数量达到要求',
-    icon: '🦸',
+    id: "heroCount",
+    title: "英雄要求",
+    description: "已上线英雄数量达到要求",
+    icon: "🦸",
     current: 2,
     required: 0,
     completed: true,
   },
   {
-    id: 'skinCount',
-    title: '皮肤要求',
-    description: '已上线皮肤数量达到要求',
-    icon: '👗',
+    id: "skinCount",
+    title: "皮肤要求",
+    description: "已上线皮肤数量达到要求",
+    icon: "👗",
     current: 3,
     required: 0,
     completed: true,
@@ -176,28 +175,28 @@ const upgradeConditions = ref([
 // 已解锁权限
 const unlockedPermissions = ref([
   {
-    id: 'createHeroes',
-    title: '英雄立项',
-    description: '可立项射手类英雄',
-    icon: '🏹',
+    id: "createHeroes",
+    title: "英雄立项",
+    description: "可立项射手类英雄",
+    icon: "🏹",
   },
   {
-    id: 'createSkins',
-    title: '皮肤制作',
-    description: '可制作伴生皮肤',
-    icon: '👗',
+    id: "createSkins",
+    title: "皮肤制作",
+    description: "可制作伴生皮肤",
+    icon: "👗",
   },
   {
-    id: 'launchEvents',
-    title: '活动开启',
-    description: '可开启英雄折扣活动',
-    icon: '🎉',
+    id: "launchEvents",
+    title: "活动开启",
+    description: "可开启英雄折扣活动",
+    icon: "🎉",
   },
   {
-    id: 'viewData',
-    title: '数据查看',
-    description: '可查看游戏核心数据',
-    icon: '📊',
+    id: "viewData",
+    title: "数据查看",
+    description: "可查看游戏核心数据",
+    icon: "📊",
   },
 ]);
 
@@ -205,10 +204,10 @@ const unlockedPermissions = ref([
 const showRewards = ref(false);
 const rewardsHistory = ref([
   {
-    id: '1',
-    date: '2026-02-14',
-    title: '见习策划 III 晋升奖励',
-    description: '成功晋升为见习策�?III',
+    id: "1",
+    date: "2026-02-14",
+    title: "见习策划 III 晋升奖励",
+    description: "成功晋升为见习策�?III",
     money: 1000,
     reputation: 0,
   },

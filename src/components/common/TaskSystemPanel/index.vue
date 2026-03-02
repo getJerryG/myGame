@@ -145,49 +145,49 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, inject } from 'vue';
-import { useSimulationStore } from '@/stores/simulationStore';
-import { useSimulationTaskSystemStore } from '@/stores/simulation/simulationTaskSystemStore';
+import { ref, computed, inject } from "vue";
+import { useSimulationStore } from "@/stores/simulationStore";
+import { useSimulationTaskSystemStore } from "@/stores/simulation/simulationTaskSystemStore";
 
 // 注入父组件提供的经验管理方法
-const addExp = inject('addExp', (_amount: number) => {});
+const addExp = inject("addExp", (_amount: number) => {});
 // 获取模拟系统 store
 const simulationStore = useSimulationStore();
 // 获取任务系统 store
 const taskSystemStore = useSimulationTaskSystemStore();
 // 注入父组件提供的策划资金
-const plannerFunds = inject('plannerFunds', ref(0));
+const plannerFunds = inject("plannerFunds", ref(0));
 // 注入父组件提供的更新应用数据方法
-const updateAppData = inject('updateAppData', () => {});
+const updateAppData = inject("updateAppData", () => {});
 
 // 面板展开状态
 const isPanelOpen = ref(true);
 
 // 切换面板展开/收起
-const toggleTaskPanel = () => {
+const toggleTaskPanel = (): void => {
   isPanelOpen.value = !isPanelOpen.value;
 };
 
 // 计算属性：成长任务
 const growthTasks = computed(() => {
   return taskSystemStore.getGrowthTasks.filter(
-    (task) => task.status === 'pending' || task.status === 'completed',
+    (task) => task.status === "pending" || task.status === "completed",
   );
 });
 
 // 计算属性：日常任务
 const dailyTasks = computed(() => {
   return taskSystemStore.getDailyTasks.filter(
-    (task) => task.status === 'pending' || task.status === 'completed',
+    (task) => task.status === "pending" || task.status === "completed",
   );
 });
 
 // 开始任务
-const startTask = (taskId: string) => {
+const startTask = (taskId: string): void => {
   // 在真实的任务系统中，任务进度应该由用户活动触发
   // 这里我们模拟进度增长
   const task = taskSystemStore.getTaskById(taskId);
-  if (task?.status === 'pending') {
+  if (task?.status === "pending") {
     // 模拟进度增长
     const interval = setInterval(() => {
       if (task.progress < task.targetProgress) {
@@ -200,19 +200,19 @@ const startTask = (taskId: string) => {
 };
 
 // 领取奖励
-const claimReward = (taskId: string) => {
+const claimReward = (taskId: string): void => {
   const task = taskSystemStore.getTaskById(taskId);
-  if (task?.status === 'completed') {
+  if (task?.status === "completed") {
     // 获取奖励列表
     const rewards = taskSystemStore.claimTaskReward(taskId);
 
     if (rewards) {
       // 发放奖励
       rewards.forEach((reward) => {
-        if (reward.type === 'exp') {
+        if (reward.type === "exp") {
           // 发放经验奖励
           addExp(reward.amount);
-        } else if (reward.type === 'funds') {
+        } else if (reward.type === "funds") {
           // 发放资金奖励
           if (simulationStore.simulation) {
             // 如果Simulation实例存在，调用updatePlannerFunds方法
@@ -226,7 +226,7 @@ const claimReward = (taskId: string) => {
       });
 
       // 打印领取奖励信息
-      console.log('领取奖励:', rewards);
+      console.log("领取奖励:", rewards);
     }
   }
 };

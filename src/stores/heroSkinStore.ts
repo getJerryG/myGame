@@ -1,11 +1,12 @@
-import { defineStore } from 'pinia';
-import type { Hero, Skin } from '../utils/HeroSkinManager';
+import { defineStore } from "pinia";
+import type { Hero, Skin } from "../utils/HeroSkinManager";
+import type { SimulateResult } from "../utils/SkinSimulation";
 import {
   getHeroesFromStorage,
   getSkinsFromStorage,
   saveHeroesToStorage,
   saveSkinsToStorage,
-} from '../utils/HeroSkinManager';
+} from "../utils/HeroSkinManager";
 
 // 定义英雄皮肤状态类型
 interface HeroSkinState {
@@ -20,7 +21,7 @@ interface HeroSkinState {
 }
 
 // 创建并导出英雄皮肤store
-export const useHeroSkinStore = defineStore('heroSkin', {
+export const useHeroSkinStore = defineStore("heroSkin", {
   state: (): HeroSkinState => ({
     // 英雄列表
     heroes: [],
@@ -90,8 +91,8 @@ export const useHeroSkinStore = defineStore('heroSkin', {
         // 从本地存储加载数据
         await this.loadDataFromStorage();
       } catch (error) {
-        this.error = error instanceof Error ? error.message : '加载数据失败';
-        console.error('加载英雄皮肤数据失败:', error);
+        this.error = error instanceof Error ? error.message : "加载数据失败";
+        console.error("加载英雄皮肤数据失败:", error);
       } finally {
         this.loading = false;
       }
@@ -107,8 +108,8 @@ export const useHeroSkinStore = defineStore('heroSkin', {
         // 更新状态
         this.heroes = heroes;
         this.skins = skins;
-      } catch (error) {
-        throw new Error('从本地存储加载数据失败');
+      } catch {
+        throw new Error("从本地存储加载数据失败");
       }
     },
 
@@ -118,8 +119,8 @@ export const useHeroSkinStore = defineStore('heroSkin', {
         // 保存到本地存储
         saveHeroesToStorage(this.heroes);
         saveSkinsToStorage(this.skins);
-      } catch (error) {
-        throw new Error('保存数据到本地存储失败');
+      } catch {
+        throw new Error("保存数据到本地存储失败");
       }
     },
 
@@ -132,7 +133,7 @@ export const useHeroSkinStore = defineStore('heroSkin', {
         // 保存到本地存储
         await this.saveDataToStorage();
       } catch (error) {
-        this.error = error instanceof Error ? error.message : '添加英雄失败';
+        this.error = error instanceof Error ? error.message : "添加英雄失败";
         // 回滚操作
         this.heroes.pop();
         throw error;
@@ -147,7 +148,7 @@ export const useHeroSkinStore = defineStore('heroSkin', {
           (hero) => hero.id === updatedHero.id,
         );
         if (index === -1) {
-          throw new Error('英雄不存在');
+          throw new Error("英雄不存在");
         }
 
         // 更新英雄
@@ -156,7 +157,7 @@ export const useHeroSkinStore = defineStore('heroSkin', {
         // 保存到本地存储
         await this.saveDataToStorage();
       } catch (error) {
-        this.error = error instanceof Error ? error.message : '更新英雄失败';
+        this.error = error instanceof Error ? error.message : "更新英雄失败";
         throw error;
       }
     },
@@ -167,7 +168,7 @@ export const useHeroSkinStore = defineStore('heroSkin', {
         // 查找英雄
         const hero = this.getHeroById(heroId);
         if (!hero) {
-          throw new Error('英雄不存在');
+          throw new Error("英雄不存在");
         }
 
         // 删除英雄
@@ -179,7 +180,7 @@ export const useHeroSkinStore = defineStore('heroSkin', {
         // 保存到本地存储
         await this.saveDataToStorage();
       } catch (error) {
-        this.error = error instanceof Error ? error.message : '删除英雄失败';
+        this.error = error instanceof Error ? error.message : "删除英雄失败";
         throw error;
       }
     },
@@ -193,7 +194,7 @@ export const useHeroSkinStore = defineStore('heroSkin', {
         // 保存到本地存储
         await this.saveDataToStorage();
       } catch (error) {
-        this.error = error instanceof Error ? error.message : '添加皮肤失败';
+        this.error = error instanceof Error ? error.message : "添加皮肤失败";
         // 回滚操作
         this.skins.pop();
         throw error;
@@ -208,7 +209,7 @@ export const useHeroSkinStore = defineStore('heroSkin', {
           (skin) => skin.id === updatedSkin.id,
         );
         if (index === -1) {
-          throw new Error('皮肤不存在');
+          throw new Error("皮肤不存在");
         }
 
         // 更新皮肤
@@ -217,18 +218,18 @@ export const useHeroSkinStore = defineStore('heroSkin', {
         // 保存到本地存储
         await this.saveDataToStorage();
       } catch (error) {
-        this.error = error instanceof Error ? error.message : '更新皮肤失败';
+        this.error = error instanceof Error ? error.message : "更新皮肤失败";
         throw error;
       }
     },
 
     // 更新皮肤的市场表现模拟数据
-    async updateSkinMarketData(skinId: string, marketData: any) {
+    async updateSkinMarketData(skinId: string, marketData: SimulateResult) {
       try {
         // 查找皮肤
         const skin = this.getSkinById(skinId);
         if (!skin) {
-          throw new Error('皮肤不存在');
+          throw new Error("皮肤不存在");
         }
 
         // 更新皮肤的市场表现模拟数据
@@ -238,7 +239,7 @@ export const useHeroSkinStore = defineStore('heroSkin', {
         await this.saveDataToStorage();
       } catch (error) {
         this.error =
-          error instanceof Error ? error.message : '更新皮肤市场数据失败';
+          error instanceof Error ? error.message : "更新皮肤市场数据失败";
         throw error;
       }
     },
@@ -252,7 +253,7 @@ export const useHeroSkinStore = defineStore('heroSkin', {
         // 保存到本地存储
         await this.saveDataToStorage();
       } catch (error) {
-        this.error = error instanceof Error ? error.message : '删除皮肤失败';
+        this.error = error instanceof Error ? error.message : "删除皮肤失败";
         throw error;
       }
     },
@@ -267,7 +268,7 @@ export const useHeroSkinStore = defineStore('heroSkin', {
         await this.saveDataToStorage();
       } catch (error) {
         this.error =
-          error instanceof Error ? error.message : '批量删除皮肤失败';
+          error instanceof Error ? error.message : "批量删除皮肤失败";
         throw error;
       }
     },
@@ -282,7 +283,7 @@ export const useHeroSkinStore = defineStore('heroSkin', {
         // 保存到本地存储
         await this.saveDataToStorage();
       } catch (error) {
-        this.error = error instanceof Error ? error.message : '清除数据失败';
+        this.error = error instanceof Error ? error.message : "清除数据失败";
         throw error;
       }
     },
@@ -300,7 +301,7 @@ export const useHeroSkinStore = defineStore('heroSkin', {
 
   // 持久化存储
   persist: {
-    key: 'hero-skin-data',
+    key: "hero-skin-data",
     storage: localStorage,
   },
 });

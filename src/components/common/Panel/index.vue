@@ -56,25 +56,25 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, watch } from 'vue';
+import { defineProps, defineEmits, ref, watch } from "vue";
 
 interface PanelProps {
   /**
    * 面板样式变体
    */
   variant?:
-    | 'default'
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'warning'
-    | 'danger'
-    | 'info';
+    | "default"
+    | "primary"
+    | "secondary"
+    | "success"
+    | "warning"
+    | "danger"
+    | "info";
 
   /**
    * 面板尺寸
    */
-  size?: 'small' | 'medium' | 'large';
+  size?: "small" | "medium" | "large";
 
   /**
    * 是否可折叠
@@ -108,21 +108,21 @@ interface PanelProps {
 }
 
 const props = withDefaults(defineProps<PanelProps>(), {
-  variant: 'default',
-  size: 'medium',
+  variant: "default",
+  size: "medium",
   collapsible: false,
   defaultCollapsed: false,
   collapsed: undefined,
   disabled: false,
-  title: '',
-  customClass: '',
+  title: "",
+  customClass: "",
 });
 
 const emit = defineEmits<{
   /**
    * 折叠状态变化事件
    */
-  'collapse-change': [collapsed: boolean];
+  "collapse-change": [collapsed: boolean];
 }>();
 
 // 折叠状态（支持受控和非受控模式）
@@ -140,12 +140,12 @@ watch(
 );
 
 // 切换折叠状态
-const toggleCollapse = () => {
+const toggleCollapse = (): void => {
   if (props.disabled) return;
 
   const newState = !isCollapsed.value;
   isCollapsed.value = newState;
-  emit('collapse-change', newState);
+  emit("collapse-change", newState);
 };
 </script>
 

@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from "vue";
 
 const props = defineProps<{
   currentDate?: {
@@ -46,8 +46,8 @@ const props = defineProps<{
   isGameOver?: boolean;
 }>();
 
-const emit = defineEmits<{
-  'next-day': [];
+const _emit = defineEmits<{
+  "next-day": [];
 }>();
 
 const formatDate = (date?: {
@@ -55,28 +55,28 @@ const formatDate = (date?: {
   month: number;
   day: number;
 }): string => {
-  if (!date) return '加载中...';
+  if (!date) return "加载中...";
   return `${date.year}年${date.month}月${date.day}日`;
 };
 
 const formatTime = (hour: number, minute: number): string => {
-  return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+  return `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
 };
 
 const getPhaseName = (phase?: string): string => {
   const phaseNames: Record<string, string> = {
-    early: '早?',
-    morning: '上午',
-    afternoon: '下午',
-    evening: '傍晚',
-    night: '夜晚',
+    early: "早?",
+    morning: "上午",
+    afternoon: "下午",
+    evening: "傍晚",
+    night: "夜晚",
   };
-  return phaseNames[phase || ''] || '未知';
+  return phaseNames[phase || ""] || "未知";
 };
 
 const formattedDate = computed(() => formatDate(props.currentDate));
 const formattedTime = computed(() => {
-  if (!props.currentDate) return '--:--';
+  if (!props.currentDate) return "--:--";
   return formatTime(
     Math.floor(props.currentDate.hour),
     Math.floor(props.currentDate.minute),

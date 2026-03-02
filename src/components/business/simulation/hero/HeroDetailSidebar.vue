@@ -91,7 +91,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Hero } from './HeroCard.vue';
+import type { Hero } from "./HeroCard.vue";
 
 export interface Skill {
   id: string;
@@ -108,9 +108,9 @@ defineProps<{
   hero: HeroWithSkills;
 }>();
 
-const emit = defineEmits<{
+const _emit = defineEmits<{
   close: [];
-  'add-to-team': [hero: HeroWithSkills];
+  "add-to-team": [hero: HeroWithSkills];
 }>();
 </script>
 

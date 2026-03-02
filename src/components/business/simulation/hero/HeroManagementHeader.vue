@@ -6,7 +6,7 @@
       aria-expanded="!isCollapsed"
       @click="toggleCollapse"
     >
-      <span class="collapse-icon">{{ isCollapsed ? '▶️' : '◀�? }}</span>
+      <span class="collapse-icon">{{ isCollapsed ? "▶️" : "◀️" }}</span>
     </button>
   </div>
 </template>
@@ -16,10 +16,10 @@ defineProps({
   isCollapsed: Boolean,
 });
 
-const emit = defineEmits(['toggle-collapse']);
+const emit = defineEmits(["toggle-collapse"]);
 
 function toggleCollapse(): void {
-  emit('toggle-collapse');
+  emit("toggle-collapse");
 }
 </script>
 

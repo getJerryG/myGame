@@ -14,8 +14,8 @@
 </template>
 
 <script setup lang="ts">
-import DesktopAppIcon from '../DesktopAppIcon/index.vue';
-import type { DesktopApp } from './types';
+import DesktopAppIcon from "../DesktopAppIcon/index.vue";
+import type { DesktopApp } from "./types";
 
 // Props
 defineProps<{

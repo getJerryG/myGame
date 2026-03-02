@@ -90,23 +90,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed } from "vue";
 
 // 奖品数据
 interface Prize {
   id: number;
   name: string;
   icon: string;
-  rarity: 'common' | 'rare' | 'epic' | 'legendary';
+  rarity: "common" | "rare" | "epic" | "legendary";
   probability: number;
 }
 
 const prizes: Prize[] = [
-  { id: 1, name: '金币', icon: '💰', rarity: 'common', probability: 40 },
-  { id: 2, name: '经验药水', icon: '🧪', rarity: 'common', probability: 30 },
-  { id: 3, name: '强化石', icon: '💎', rarity: 'rare', probability: 15 },
-  { id: 4, name: '高级装备', icon: '⚔️', rarity: 'epic', probability: 10 },
-  { id: 5, name: '传说武器', icon: '👑', rarity: 'legendary', probability: 5 },
+  { id: 1, name: "金币", icon: "💰", rarity: "common", probability: 40 },
+  { id: 2, name: "经验药水", icon: "🧪", rarity: "common", probability: 30 },
+  { id: 3, name: "强化石", icon: "💎", rarity: "rare", probability: 15 },
+  { id: 4, name: "高级装备", icon: "⚔️", rarity: "epic", probability: 10 },
+  { id: 5, name: "传说武器", icon: "👑", rarity: "legendary", probability: 5 },
 ];
 
 // 抽奖券数量
@@ -138,10 +138,10 @@ const lotteryHistory = ref<LotteryRecord[]>([]);
 // 获取稀有度文本
 const getRarityText = (rarity: string): string => {
   const rarityMap: Record<string, string> = {
-    common: '普通',
-    rare: '稀有',
-    epic: '史诗',
-    legendary: '传说',
+    common: "普通",
+    rare: "稀有",
+    epic: "史诗",
+    legendary: "传说",
   };
   return rarityMap[rarity] || rarity;
 };
@@ -189,7 +189,7 @@ const finishLottery = () => {
   // 添加到历史记录
   const now = new Date();
   lotteryHistory.value.unshift({
-    time: `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`,
+    time: `${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`,
     prizeName: selectedPrize.name,
     rarity: selectedPrize.rarity,
   });

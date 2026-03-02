@@ -8,31 +8,31 @@
 <script setup lang="ts">
 const emit = defineEmits<{
   resize: [direction: string, dx: number, dy: number];
-  'resize-end': [];
+  "resize-end": [];
 }>();
 
-const startResize = (event: MouseEvent) => {
+const startResize = (event: MouseEvent): void => {
   const startPos = { x: event.clientX, y: event.clientY };
   let isResizing = true;
 
-  const handleResize = (e: MouseEvent) => {
+  const handleResize = (e: MouseEvent): void => {
     if (!isResizing) return;
     const dx = e.clientX - startPos.x;
     const dy = e.clientY - startPos.y;
-    emit('resize', 'se', dx, dy);
+    emit("resize", "se", dx, dy);
   };
 
-  const stopResize = () => {
+  const stopResize = (): void => {
     isResizing = false;
-    document.removeEventListener('mousemove', handleResize);
-    document.removeEventListener('mouseup', stopResize);
-    document.body.style.userSelect = '';
-    emit('resize-end');
+    document.removeEventListener("mousemove", handleResize);
+    document.removeEventListener("mouseup", stopResize);
+    document.body.style.userSelect = "";
+    emit("resize-end");
   };
 
-  document.addEventListener('mousemove', handleResize);
-  document.addEventListener('mouseup', stopResize);
-  document.body.style.userSelect = 'none';
+  document.addEventListener("mousemove", handleResize);
+  document.addEventListener("mouseup", stopResize);
+  document.body.style.userSelect = "none";
 };
 </script>
 

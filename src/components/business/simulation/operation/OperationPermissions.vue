@@ -103,8 +103,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { useSimulationStore } from '../../stores/simulationStore';
+import { computed, ref } from "vue";
+import { useSimulationStore } from "../../stores/simulationStore";
 
 // 定义类型接口
 interface OperationPermission {
@@ -125,10 +125,10 @@ const simulationStore = useSimulationStore();
 
 // 操作分类
 const categories = ref<OperationCategory[]>([
-  { value: 'content', label: '内容更新' },
-  { value: 'operation', label: '运营策略' },
-  { value: 'marketing', label: '市场推广' },
-  { value: 'optimization', label: '游戏优化' },
+  { value: "content", label: "内容更新" },
+  { value: "operation", label: "运营策略" },
+  { value: "marketing", label: "市场推广" },
+  { value: "optimization", label: "游戏优化" },
 ]);
 
 // 已解锁操作

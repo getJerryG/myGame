@@ -60,7 +60,7 @@ defineProps({
   },
 });
 
-defineEmits(['show-tooltip', 'hide-tooltip']);
+defineEmits(["show-tooltip", "hide-tooltip"]);
 </script>
 
 <style lang="scss" scoped>

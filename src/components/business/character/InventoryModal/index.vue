@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import GameModal from '../../../common/GameModal/index.vue';
+import GameModal from "../../../common/GameModal/index.vue";
 
 defineProps({
   isVisible: {
@@ -47,7 +47,7 @@ defineProps({
   },
 });
 
-defineEmits(['close', 'show-item-detail', 'use-item']);
+defineEmits(["close", "show-item-detail", "use-item"]);
 </script>
 
 <style lang="scss" scoped>

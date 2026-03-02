@@ -112,13 +112,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import ApplicationWindow from '@/components/common/window/ApplicationWindow.vue';
+import { ref } from "vue";
+import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
 
 // 导入类型
-import type { App } from '../../../types/app';
-import type { GameData } from '../../../types/game';
-import type { Modal } from '../../../types/modal';
+import type { App } from "../../../types/app";
+import type { GameData } from "../../../types/game";
+import type { Modal } from "../../../types/modal";
 
 // Props定义
 defineProps<{
@@ -128,58 +128,58 @@ defineProps<{
 }>();
 
 // 活跃标签
-const activeTab = ref('new');
+const activeTab = ref("new");
 
 // 活动类型选项
 const eventTypes = [
-  { label: '新英雄折扣', value: 'hero_discount' },
-  { label: '英雄+皮肤礼包', value: 'hero_skin_bundle' },
-  { label: '排位加成', value: 'rank_boost' },
-  { label: '充值返还', value: 'recharge_bonus' },
-  { label: '限定返场', value: 'limited_return' },
-  { label: '联动主题活动', value: 'collab_theme' },
-  { label: '炸服补偿', value: 'server_crash_compensation' },
+  { label: "新英雄折扣", value: "hero_discount" },
+  { label: "英雄+皮肤礼包", value: "hero_skin_bundle" },
+  { label: "排位加成", value: "rank_boost" },
+  { label: "充值返还", value: "recharge_bonus" },
+  { label: "限定返场", value: "limited_return" },
+  { label: "联动主题活动", value: "collab_theme" },
+  { label: "炸服补偿", value: "server_crash_compensation" },
 ];
 
 // 活动力度选项
 const eventIntensities = [
-  { label: '轻度', value: 'light' },
-  { label: '中度', value: 'moderate' },
-  { label: '重磅', value: 'heavy' },
+  { label: "轻度", value: "light" },
+  { label: "中度", value: "moderate" },
+  { label: "重磅", value: "heavy" },
 ];
 
 // 选中的活动配置
 const selectedEvent = ref({
-  type: 'hero_discount',
-  intensity: 'light',
+  type: "hero_discount",
+  intensity: "light",
 });
 
 // 模拟活动数据
 const events = ref([
   {
     id: 1,
-    name: '新英雄李白折扣活动',
-    type: '新英雄折扣',
-    status: '进行中',
-    startDate: '2024/1/1',
-    endDate: '2024/1/7',
+    name: "新英雄李白折扣活动",
+    type: "新英雄折扣",
+    status: "进行中",
+    startDate: "2024/1/1",
+    endDate: "2024/1/7",
     heatBoost: 10,
     revenueBoost: 5,
   },
   {
     id: 2,
-    name: '春节限定皮肤返场',
-    type: '限定返场',
-    status: '已结束',
-    startDate: '2024/2/1',
-    endDate: '2024/2/15',
+    name: "春节限定皮肤返场",
+    type: "限定返场",
+    status: "已结束",
+    startDate: "2024/2/1",
+    endDate: "2024/2/15",
     heatBoost: 30,
     revenueBoost: 15,
   },
 ]);
 
 // 根据活动力度获取活动持续天数
-const getEventDuration = () => {
+const getEventDuration = (): number => {
   const durationMap = {
     light: 3,
     moderate: 5,
@@ -189,10 +189,10 @@ const getEventDuration = () => {
 };
 
 // 创建活动
-const createEvent = () => {
+const createEvent = (): void => {
   // 这里应该调用store来创建活动  console.log('创建活动:', selectedEvent.value);
   // 模拟创建成功
-  alert('活动创建成功');
+  alert("活动创建成功");
 };
 </script>
 

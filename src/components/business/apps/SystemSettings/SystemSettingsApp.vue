@@ -72,48 +72,48 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import ApplicationWindow from '@/components/common/window/ApplicationWindow.vue';
-import SaveManagementTab from './SaveManagementTab.vue';
-import GraphicsSettingsTab from './GraphicsSettingsTab.vue';
-import AudioSettingsTab from './AudioSettingsTab.vue';
+import { ref } from "vue";
+import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
+import SaveManagementTab from "./SaveManagementTab.vue";
+import GraphicsSettingsTab from "./GraphicsSettingsTab.vue";
+import AudioSettingsTab from "./AudioSettingsTab.vue";
 
-import type { GameData } from '@/types/game';
+import type { GameData } from "@/types/game";
 
-const props = defineProps<{
+const _props = defineProps<{
   gameData?: GameData;
 }>();
 
 const tabs = [
-  { id: 'save', name: '存档管理', icon: '💾' },
-  { id: 'graphics', name: '画面设置', icon: '🖥️' },
-  { id: 'audio', name: '音效设置', icon: '🔊' },
-  { id: 'info', name: '系统信息', icon: 'ℹ️' },
+  { id: "save", name: "存档管理", icon: "💾" },
+  { id: "graphics", name: "画面设置", icon: "🖥️" },
+  { id: "audio", name: "音效设置", icon: "🔊" },
+  { id: "info", name: "系统信息", icon: "ℹ️" },
 ];
 
-const activeTab = ref<string>('save');
+const activeTab = ref<string>("save");
 
 const saveFiles = ref([
   {
-    id: '1',
-    name: '存档 1',
-    date: '2026-02-28 10:30',
-    progress: '策划等级：Lv.10',
+    id: "1",
+    name: "存档 1",
+    date: "2026-02-28 10:30",
+    progress: "策划等级：Lv.10",
     isCurrent: true,
   },
   {
-    id: '2',
-    name: '存档 2',
-    date: '2026-02-27 15:20',
-    progress: '策划等级：Lv.8',
+    id: "2",
+    name: "存档 2",
+    date: "2026-02-27 15:20",
+    progress: "策划等级：Lv.8",
     isCurrent: false,
   },
 ]);
 
 const graphicsSettings = ref({
-  quality: 'high',
+  quality: "high",
   fullscreen: false,
-  fpsLimit: '60',
+  fpsLimit: "60",
 });
 
 const audioSettings = ref({
@@ -122,7 +122,7 @@ const audioSettings = ref({
   voice: 100,
 });
 
-const handleLoadSave = (id: string) => {
+const handleLoadSave = (id: string): void => {
   const save = saveFiles.value.find((s) => s.id === id);
   if (save) {
     alert(`已加载存档：${save.name}`);
@@ -132,23 +132,23 @@ const handleLoadSave = (id: string) => {
   }
 };
 
-const handleDeleteSave = (id: string) => {
-  if (confirm('确定要删除此存档吗？')) {
+const handleDeleteSave = (id: string): void => {
+  if (confirm("确定要删除此存档吗？")) {
     saveFiles.value = saveFiles.value.filter((s) => s.id !== id);
-    alert('存档已删除');
+    alert("存档已删除");
   }
 };
 
-const handleCreateSave = () => {
+const handleCreateSave = (): void => {
   const newSave = {
     id: Date.now().toString(),
     name: `存档${saveFiles.value.length + 1}`,
-    date: new Date().toLocaleString('zh-CN'),
-    progress: '策划等级：Lv.10',
+    date: new Date().toLocaleString("zh-CN"),
+    progress: "策划等级：Lv.10",
     isCurrent: false,
   };
   saveFiles.value.push(newSave);
-  alert('存档已创建');
+  alert("存档已创建");
 };
 </script>
 

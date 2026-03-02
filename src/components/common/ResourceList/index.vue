@@ -13,9 +13,9 @@
       </button>
     </div>
 
-    <!-- 内容展示�?-->
+    <!-- 内容展示区 -->
     <div class="tabs-content">
-      <!-- 任务列表选项�?-->
+      <!-- 任务列表选项卡 -->
       <div v-show="activeTab === 'tasks'" class="tab-panel">
         <h2 class="section-title">任务列表</h2>
         <div class="task-list">
@@ -32,7 +32,7 @@
               </div>
               <div class="task-status-badge" :class="task.status">
                 <span class="status-text">{{
-                  task.status === 'completed' ? '已完�? : '进行�?
+                  task.status === "completed" ? "已完成" : "进行中"
                 }}</span>
               </div>
             </div>
@@ -61,7 +61,7 @@
           >
             <div class="quick-action-icon">🎒</div>
             <div class="quick-action-name">背包</div>
-            <div class="quick-action-desc">查看和使用物�?/div>
+            <div class="quick-action-desc">查看和使用物品</div>
           </div>
           <div
             class="quick-action-item"
@@ -88,66 +88,69 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
 
-import { useGameStore } from '../stores/gameStore';
-import { useRouter } from 'vue-router';
+import { useGameStore } from "@/stores/gameStore";
+import { useRouter } from "vue-router";
 
 const gameStore = useGameStore();
 const _router = useRouter();
 
-// 选项卡配�?const tabs = ref([
-  { id: 'tasks', label: '任务', icon: '📋' },
-  { id: 'quick-actions', label: '功能', icon: '�? },
+// 选项卡配置
+const tabs = ref([
+  { id: "tasks", label: "任务", icon: "📋" },
+  { id: "quick-actions", label: "功能", icon: "⚡" },
 ]);
 
-// 当前激活的选项�?const activeTab = ref('tasks');
+// 当前激活的选项卡
+const activeTab = ref("tasks");
 
 // 模拟任务数据
 const tasks = ref([
   {
     id: 1,
-    title: '击败10只哥布林',
-    description: '在平原地图击�?0只哥布林',
-    status: 'in_progress',
+    title: "击败10只哥布林",
+    description: "在平原地图击败10只哥布林",
+    status: "in_progress",
     progress: 70,
-    icon: '👾',
+    icon: "👾",
   },
   {
     id: 2,
-    title: '收集5个宝�?,
-    description: '在任意地图收�?个宝�?,
-    status: 'in_progress',
+    title: "收集5个宝箱",
+    description: "在任意地图收集5个宝箱",
+    status: "in_progress",
     progress: 40,
-    icon: '📦',
+    icon: "📦",
   },
   {
     id: 3,
-    title: '到达10�?,
-    description: '将角色升级到10�?,
-    status: 'completed',
+    title: "到达10级",
+    description: "将角色升级到10级",
+    status: "completed",
     progress: 100,
-    icon: '🏆',
+    icon: "🏆",
   },
 ]);
 
 // 处理快捷功能点击
 function handleQuickAction(action: string): void {
   switch (action) {
-    case 'inventory':
+    case "inventory":
       // 这里可以打开背包
-      gameStore.setGameMessage('打开背包功能');
+      gameStore.setGameMessage("打开背包功能");
       break;
-    case 'achievements':
+    case "achievements":
       // 这里可以打开成就
-      gameStore.setGameMessage('查看成就');
+      gameStore.setGameMessage("查看成就");
       break;
-    case 'lottery':
-      // 这里可以跳转到抽奖页�?      router.push('/lottery');
+    case "lottery":
+      // 这里可以跳转到抽奖页面
+      _router.push("/lottery");
       break;
-    case 'settings':
+    case "settings":
       // 这里可以打开设置
-      gameStore.setGameMessage('打开设置');
+      gameStore.setGameMessage("打开设置");
       break;
     default:
       break;
@@ -155,11 +158,11 @@ function handleQuickAction(action: string): void {
 }
 </script>
 
-<style lang=scss scoped>
+<style lang="scss" scoped>
 /* 核心容器样式 */
 .resource-list-container {
   padding: 20px;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: "Comic Sans MS", cursive, sans-serif;
   height: 100%;
   overflow: hidden;
   display: flex;
@@ -201,7 +204,7 @@ function handleQuickAction(action: string): void {
   overflow: hidden;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -100%;
@@ -344,7 +347,7 @@ function handleQuickAction(action: string): void {
 
 .task-item {
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -534,7 +537,7 @@ function handleQuickAction(action: string): void {
 
 .quick-action-item {
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -545,7 +548,7 @@ function handleQuickAction(action: string): void {
   }
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -100%;
@@ -624,5 +627,3 @@ function handleQuickAction(action: string): void {
   }
 }
 </style>
-
-

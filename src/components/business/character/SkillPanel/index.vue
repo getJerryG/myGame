@@ -52,14 +52,14 @@
 </template>
 
 <script setup lang="ts">
-import { usePlayerStore } from '../stores/playerStore';
+import { usePlayerStore } from "../stores/playerStore";
 
 const playerStore = usePlayerStore();
 
 // 获取技能快捷键
 function getSkillKey(index: number): string {
-  const keys = ['1', '2', '3', '4', '5', '6'];
-  return keys[index - 1] || '';
+  const keys = ["1", "2", "3", "4", "5", "6"];
+  return keys[index - 1] || "";
 }
 </script>
 

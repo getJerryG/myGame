@@ -34,14 +34,14 @@ defineProps<{
 }>();
 
 const emit = defineEmits<{
-  'update:activeItemId': [id: string];
-  'item-click': [item: SidebarItem];
+  "update:activeItemId": [id: string];
+  "item-click": [item: SidebarItem];
 }>();
 
 const handleItemClick = (item: SidebarItem): void => {
   if (!item.disabled) {
-    emit('update:activeItemId', item.id);
-    emit('item-click', item);
+    emit("update:activeItemId", item.id);
+    emit("item-click", item);
   }
 };
 </script>

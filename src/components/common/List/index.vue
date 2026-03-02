@@ -171,9 +171,9 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, computed } from 'vue';
+import { defineProps, defineEmits, ref, computed } from "vue";
 
-type ListItem = Record<string, any>;
+type ListItem = Record<string, unknown>;
 
 interface ListProps {
   /**
@@ -184,7 +184,7 @@ interface ListProps {
   /**
    * 列表布局
    */
-  layout?: 'vertical' | 'grid' | 'flow';
+  layout?: "vertical" | "grid" | "flow";
 
   /**
    * 是否可选择
@@ -224,7 +224,7 @@ interface ListProps {
   /**
    * 已选择的键值列表
    */
-  selectedKeys?: any[];
+  selectedKeys?: string[];
 
   /**
    * 加载状态文本
@@ -263,49 +263,49 @@ interface ListProps {
 }
 
 const props = withDefaults(defineProps<ListProps>(), {
-  layout: 'vertical',
+  layout: "vertical",
   selectable: false,
   draggable: false,
   loading: false,
   pagination: false,
-  keyField: 'id',
-  titleField: 'title',
-  subtitleField: 'subtitle',
+  keyField: "id",
+  titleField: "title",
+  subtitleField: "subtitle",
   selectedKeys: () => [],
-  loadingText: '加载中...',
-  emptyText: '暂无数据',
-  emptyIcon: '📭',
-  dragHandleIcon: '☰',
+  loadingText: "加载中...",
+  emptyText: "暂无数据",
+  emptyIcon: "📭",
+  dragHandleIcon: "☰",
   gridColumns: 3,
-  gridGap: '16px',
-  customClass: '',
+  gridGap: "16px",
+  customClass: "",
 });
 
 const emit = defineEmits<{
   /**
    * 列表项点击事件
    */
-  'item-click': [item: ListItem, index: number];
+  "item-click": [item: ListItem, index: number];
 
   /**
-   * 列表项选择事件
+   * 选择项变化事件
    */
-  'item-select': [selectedKeys: any[], item: ListItem, index: number];
+  "item-select": [selectedKeys: string[], item: ListItem, index: number];
 
   /**
    * 列表项拖拽开始事件
    */
-  'drag-start': [item: ListItem, index: number];
+  "drag-start": [item: ListItem, index: number];
 
   /**
    * 列表项拖拽结束事件
    */
-  'drag-end': [item: ListItem | null, index: number | null];
+  "drag-end": [item: ListItem | null, index: number | null];
 
   /**
    * 列表项拖拽放置事件
    */
-  'drag-drop': [fromIndex: number, toIndex: number];
+  "drag-drop": [fromIndex: number, toIndex: number];
 
   /**
    * 列表拖拽放置事件
@@ -314,25 +314,25 @@ const emit = defineEmits<{
 }>();
 
 // 拖拽状态
-const draggingItem = ref<any>(null);
+const draggingItem = ref<ListItem | null>(null);
 const draggingIndex = ref<number | null>(null);
 
 // 计算网格样式
 const gridStyle = computed(() => {
   return {
-    '--grid-columns': props.gridColumns,
-    '--grid-gap': props.gridGap,
+    "--grid-columns": props.gridColumns,
+    "--grid-gap": props.gridGap,
   };
 });
 
 // 处理列表项点击
-const handleItemClick = (item: ListItem, index: number) => {
-  emit('item-click', item, index);
+const handleItemClick = (item: ListItem, index: number): void => {
+  emit("item-click", item, index);
 };
 
 // 处理列表项选择
-const handleItemSelect = (item: ListItem, index: number) => {
-  let newSelectedKeys: any[];
+const handleItemSelect = (item: ListItem, index: number): void => {
+  let newSelectedKeys: string[];
   const itemKey = item[props.keyField];
 
   if (props.selectedKeys.includes(itemKey)) {
@@ -341,35 +341,35 @@ const handleItemSelect = (item: ListItem, index: number) => {
     newSelectedKeys = [...props.selectedKeys, itemKey];
   }
 
-  emit('item-select', newSelectedKeys, item, index);
+  emit("item-select", newSelectedKeys, item, index);
 };
 
 // 处理拖拽开始
-const handleDragStart = (item: ListItem, index: number) => {
+const handleDragStart = (item: ListItem, index: number): void => {
   draggingItem.value = item[props.keyField];
   draggingIndex.value = index;
-  emit('drag-start', item, index);
+  emit("drag-start", item, index);
 };
 
 // 处理拖拽结束
-const handleDragEnd = () => {
+const handleDragEnd = (): void => {
   draggingItem.value = null;
   draggingIndex.value = null;
-  emit('drag-end', null, null);
+  emit("drag-end", null, null);
 };
 
 // 处理列表项拖拽放置
-const handleItemDrop = (targetItem: ListItem, targetIndex: number) => {
+const handleItemDrop = (targetItem: ListItem, targetIndex: number): void => {
   if (draggingIndex.value !== null) {
-    emit('drag-drop', draggingIndex.value, targetIndex);
+    emit("drag-drop", draggingIndex.value, targetIndex);
     handleDragEnd();
   }
 };
 
 // 处理列表拖拽放置
-const handleDrop = () => {
+const handleDrop = (): void => {
   if (draggingIndex.value !== null) {
-    emit('drop', draggingIndex.value, 0);
+    emit("drop", draggingIndex.value, 0);
     handleDragEnd();
   }
 };

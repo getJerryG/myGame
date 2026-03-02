@@ -49,7 +49,7 @@
 export interface WindowTab {
   id: string;
   title: string;
-  content: any;
+  content: unknown;
 }
 
 defineProps<{
@@ -60,10 +60,10 @@ defineProps<{
 
 defineEmits<{
   close: [];
-  'tab-click': [tabId: string];
-  'tab-close': [tabId: string];
-  'tab-drag-start': [tabId: string];
-  'tab-drag-end': [];
+  "tab-click": [tabId: string];
+  "tab-close": [tabId: string];
+  "tab-drag-start": [tabId: string];
+  "tab-drag-end": [];
 }>();
 </script>
 

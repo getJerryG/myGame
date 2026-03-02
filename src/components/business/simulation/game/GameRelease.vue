@@ -142,8 +142,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useSimulationStore } from '../../stores/simulationStore';
+import { ref } from "vue";
+import { useSimulationStore } from "../../stores/simulationStore";
 
 const simulationStore = useSimulationStore();
 const isReleasing = ref(false);
@@ -151,13 +151,13 @@ const releaseResult = ref(null);
 
 // 游戏类型标签
 const gameTypeLabels = {
-  moba: 'MOBA',
-  card: '卡牌',
-  casual: '休闲竞技',
+  moba: "MOBA",
+  card: "卡牌",
+  casual: "休闲竞技",
 };
 
 // 初始下载渠道
-const initialChannels = ['官方网站', '应用商店', '游戏平台', '社交媒体'];
+const initialChannels = ["官方网站", "应用商店", "游戏平台", "社交媒体"];
 
 // 发布游戏
 const releaseGame = async (): Promise<void> => {
@@ -167,7 +167,7 @@ const releaseGame = async (): Promise<void> => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
   // 记录发布操作
-  simulationStore.recordAction('releaseGame', {
+  simulationStore.recordAction("releaseGame", {
     channels: initialChannels,
     date: simulationStore.gameState.currentDate,
   });
@@ -185,7 +185,7 @@ const releaseGame = async (): Promise<void> => {
   };
 
   // 更新游戏状态
-  simulationStore.gameState.currentPhase = 'growth';
+  simulationStore.gameState.currentPhase = "growth";
 
   // 发布新版本后更新游戏日期
   simulationStore.nextDay();

@@ -162,13 +162,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import ApplicationWindow from '@/components/common/window/ApplicationWindow.vue';
-import type { SidebarItem } from '@/components/common/window/ApplicationWindow.vue';
-import { getModuleIcon } from '@/utils/appUtils';
-import { useSimulationCoreValuesStore } from '@/stores/simulation/simulationCoreValuesStore';
-import { useSimulationBusinessDataStore } from '@/stores/simulation/simulationBusinessDataStore';
-import { useSimulationGameStateStore } from '@/stores/simulation/simulationGameStateStore';
+import { computed } from "vue";
+import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
+import type { SidebarItem } from "@/components/common/window/ApplicationWindow.vue";
+import { getModuleIcon } from "@/utils/appUtils";
+import { useSimulationCoreValuesStore } from "@/stores/simulation/simulationCoreValuesStore";
+import { useSimulationBusinessDataStore } from "@/stores/simulation/simulationBusinessDataStore";
+import { useSimulationGameStateStore } from "@/stores/simulation/simulationGameStateStore";
 
 const props = defineProps({
   app: {
@@ -181,7 +181,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['update:activeModule']);
+const emit = defineEmits(["update:activeModule"]);
 
 // 活跃模块状�?const activeModule = ref(props.app.modules[0].id);
 
@@ -197,14 +197,6 @@ const sidebarItems = computed((): SidebarItem[] => {
     name: module.name,
     icon: getModuleIcon(module.id),
   }));
-});
-
-// 当前激活的模块
-const currentModule = computed(() => {
-  return (
-    props.app.modules.find((m) => utils.id === activeModule.value) ||
-    props.app.modules[0]
-  );
 });
 
 // 核心数据概览
@@ -247,12 +239,12 @@ const recentRevenueData = computed(() => {
 // 处理侧边栏项点击
 const handleItemChange = (itemId: string): void => {
   activeModule.value = itemId;
-  emit('update:activeModule', itemId);
+  emit("update:activeModule", itemId);
 };
 
 const handleItemClick = (item: SidebarItem): void => {
   activeModule.value = item.id;
-  emit('update:activeModule', item.id);
+  emit("update:activeModule", item.id);
 };
 </script>
 

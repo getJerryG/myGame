@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from "vue";
 
 const props = defineProps({
   app: {
@@ -72,14 +72,14 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['update:activeModule']);
+const emit = defineEmits(["update:activeModule"]);
 
 // 活跃模块状�?const activeModule = ref(props.app.modules[0].id);
 
 // 当前激活的模块
 const currentModule = computed(() => {
   return (
-    props.app.modules.find((m) => utils.id === activeModule.value) ||
+    props.app.modules.find((_m) => _m.id === activeModule.value) ||
     props.app.modules[0]
   );
 });
@@ -87,24 +87,24 @@ const currentModule = computed(() => {
 // 切换模块
 const switchModule = (moduleId: string): void => {
   activeModule.value = moduleId;
-  emit('update:activeModule', moduleId);
+  emit("update:activeModule", moduleId);
 };
 
 // 获取模块图标
 const getModuleIcon = (moduleId: string): string => {
   const icons = {
-    'hero-management': '🦸',
-    'skin-release': '🎨',
-    'game-optimization': '⚙️',
+    "hero-management": "🦸",
+    "skin-release": "🎨",
+    "game-optimization": "⚙️",
   };
-  return icons[moduleId] || '📦';
+  return icons[moduleId] || "📦";
 };
 
 // 获取核心数据标签
 const getCoreDataLabel = (key: string): string => {
   const labels = {
-    heroes: '英雄',
-    skins: '皮肤',
+    heroes: "英雄",
+    skins: "皮肤",
   };
   return labels[key] || key;
 };

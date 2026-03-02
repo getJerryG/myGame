@@ -86,7 +86,7 @@ export interface Activity {
   type: string;
   description: string;
   icon: string;
-  status: 'upcoming' | 'ongoing' | 'completed';
+  status: "upcoming" | "ongoing" | "completed";
   startTime: string;
   endTime: string;
   goldReward: number;
@@ -94,25 +94,25 @@ export interface Activity {
 }
 
 const activityTypeNames: Record<string, string> = {
-  login: '登录活动',
-  recharge: '充值活动',
-  consumption: '消费活动',
-  pvp: '竞技活动',
-  cooperation: '合作活动',
-  festival: '节日活动',
+  login: "登录活动",
+  recharge: "充值活动",
+  consumption: "消费活动",
+  pvp: "竞技活动",
+  cooperation: "合作活动",
+  festival: "节日活动",
 };
 
 const statusLabels: Record<string, string> = {
-  upcoming: '未开始',
-  ongoing: '进行中',
-  completed: '已完成',
+  upcoming: "未开始",
+  ongoing: "进行中",
+  completed: "已完成",
 };
 
-const props = defineProps<{
+const _props = defineProps<{
   activities: Activity[];
 }>();
 
-const emit = defineEmits<{
+const _emit = defineEmits<{
   start: [id: string];
   end: [id: string];
   delete: [id: string];
@@ -127,9 +127,9 @@ const getStatusLabel = (status: string): string => {
 };
 
 const formatTime = (timeStr: string): string => {
-  if (!timeStr) return '';
+  if (!timeStr) return "";
   const date = new Date(timeStr);
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")} ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
 };
 </script>
 

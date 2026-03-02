@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 export interface PlayerState {
   id: string;
@@ -14,10 +14,10 @@ export interface PlayerState {
   createTime: number;
 }
 
-export const usePlayerStore = defineStore('player', {
+export const usePlayerStore = defineStore("player", {
   state: (): PlayerState => ({
-    id: 'player_001',
-    name: '默认玩家',
+    id: "player_001",
+    name: "默认玩家",
     level: 1,
     experience: 0,
     gold: 1000,

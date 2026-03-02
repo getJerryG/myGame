@@ -100,7 +100,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch } from "vue";
 
 const props = defineProps({
   channels: {
@@ -117,7 +117,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['update:settings', 'update:selectedChannelIds']);
+const emit = defineEmits(["update:settings", "update:selectedChannelIds"]);
 
 // 本地设置副本
 const localSettings = ref({ ...props.settings });
@@ -144,7 +144,7 @@ watch(
 watch(
   localSettings,
   (newSettings) => {
-    emit('update:settings', { ...newSettings });
+    emit("update:settings", { ...newSettings });
   },
   { deep: true },
 );
@@ -152,7 +152,7 @@ watch(
 watch(
   localSelectedChannelIds,
   (newIds) => {
-    emit('update:selectedChannelIds', [...newIds]);
+    emit("update:selectedChannelIds", [...newIds]);
   },
   { deep: true },
 );
@@ -182,7 +182,7 @@ function getPredictedUsers(): number {
 
 // 计算预计转化率
 function getPredictedConversionRate(): string {
-  if (localSelectedChannelIds.value.length === 0) return '0';
+  if (localSelectedChannelIds.value.length === 0) return "0";
   const totalRate = localSelectedChannelIds.value.reduce((sum, channelId) => {
     const channel = props.channels.find((c) => c.id === channelId);
     return sum + channel.stats.conversionRate;
@@ -193,7 +193,7 @@ function getPredictedConversionRate(): string {
 // 计算预计ROI
 function getPredictedROI(): string {
   // 简单估算
-  return '185';
+  return "185";
 }
 </script>
 

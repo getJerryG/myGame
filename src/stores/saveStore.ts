@@ -1,24 +1,49 @@
-import { defineStore } from 'pinia';
-import { useGameStore } from './gameStore';
+import { defineStore } from "pinia";
+import { useGameStore } from "./gameStore";
+import type { Hero, Skin } from "../utils/HeroSkinManager";
+import type { Project, GameEvent } from "./gameStore";
+
+// 定义存档数据类型
+export interface SaveData {
+  currentDate: { year: number; month: number; day: number };
+  isPlayerTurn: boolean;
+  money: number;
+  reputation: number;
+  popularity: number;
+  wordOfMouth: number;
+  totalMoney: number;
+  heroCount: number;
+  skinCount: number;
+  plannerLevel: string;
+  plannerSubLevel: string;
+  plannerExp: number;
+  ongoingProjects: Project[];
+  onlineHeroes: Hero[];
+  onlineSkins: Skin[];
+  activeEvents: GameEvent[];
+}
+
+// 定义存档类型
+export interface Save {
+  id: string;
+  date: Date;
+  preview: {
+    currentDate: { year: number; month: number; day: number };
+    money: number;
+    plannerLevel: string;
+    plannerSubLevel: string;
+  };
+}
 
 // 定义存档状态类型
 interface SaveState {
-  saves: Array<{
-    id: string;
-    date: Date;
-    preview: {
-      currentDate: { year: number; month: number; day: number };
-      money: number;
-      plannerLevel: string;
-      plannerSubLevel: string;
-    };
-  }>;
+  saves: Save[];
   currentSaveId: string | null;
   autoSaveInterval: number | null;
 }
 
 // 创建并导出存档store
-export const useSaveStore = defineStore('save', {
+export const useSaveStore = defineStore("save", {
   state: (): SaveState => ({
     saves: [],
     currentSaveId: null,
@@ -46,17 +71,19 @@ export const useSaveStore = defineStore('save', {
 
     // 从本地存储加载存档
     loadSavesFromStorage() {
-      const savedSaves = localStorage.getItem('game_saves');
+      const savedSaves = localStorage.getItem("game_saves");
       if (savedSaves) {
         try {
           const parsedSaves = JSON.parse(savedSaves);
           // 将字符串日期转换为Date对象
-          this.saves = parsedSaves.map((save: any) => ({
-            ...save,
-            date: new Date(save.date),
-          }));
-        } catch (error) {
-          console.error('Failed to load saves:', error);
+          this.saves = parsedSaves.map(
+            (save: Omit<Save, "date"> & { date: string }) => ({
+              ...save,
+              date: new Date(save.date),
+            }),
+          );
+        } catch {
+          // console.error("Failed to load saves:", error);
           this.saves = [];
         }
       }
@@ -64,7 +91,7 @@ export const useSaveStore = defineStore('save', {
 
     // 将存档保存到本地存储
     saveSavesToStorage() {
-      localStorage.setItem('game_saves', JSON.stringify(this.saves));
+      localStorage.setItem("game_saves", JSON.stringify(this.saves));
     },
 
     // 创建存档
@@ -132,7 +159,7 @@ export const useSaveStore = defineStore('save', {
     },
 
     // 序列化游戏数据
-    serializeGameData(gameStore: ReturnType<typeof useGameStore>) {
+    serializeGameData(gameStore: ReturnType<typeof useGameStore>): SaveData {
       return {
         currentDate: { ...gameStore.currentDate },
         isPlayerTurn: gameStore.isPlayerTurn,
@@ -156,7 +183,7 @@ export const useSaveStore = defineStore('save', {
     // 反序列化游戏数据
     deserializeGameData(
       gameStore: ReturnType<typeof useGameStore>,
-      saveData: any,
+      saveData: SaveData,
     ) {
       gameStore.currentDate = { ...saveData.currentDate };
       gameStore.isPlayerTurn = saveData.isPlayerTurn;

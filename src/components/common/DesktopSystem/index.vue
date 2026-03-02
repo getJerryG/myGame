@@ -75,35 +75,35 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed, watch, provide } from 'vue';
-import { useRouter } from 'vue-router';
-import DesktopAppContainer from '../DesktopAppContainer/index.vue';
-import TaskSystemPanel from '../TaskSystemPanel/index.vue';
-import ExitConfirmDialog from '../dialogs/ExitConfirmDialog.vue';
-import NotchBar from '../NotchBar/index.vue';
-import DesktopLevelUpEffect from './DesktopLevelUpEffect.vue';
-import DesktopBackground from './DesktopBackground.vue';
-import DesktopTaskbar from './DesktopTaskbar.vue';
-import { useGameStore } from '@/stores/gameStore';
-import { useSimulationGameStateStore } from '@/stores/simulation/simulationGameStateStore';
-import { usePlayerStore } from '@/stores/playerStore';
-import { useSimulationStore } from '@/stores/simulationStore';
-import { useSimulationCareerSystemStore } from '@/stores/simulation/simulationCareerSystemStore';
-import { useWindowManagerStore } from '@/stores/windowManagerStore';
-import { useSimulationTaskSystemStore } from '@/stores/simulation/simulationTaskSystemStore';
-import { useSimulationNewbieGoalsStore } from '@/stores/simulation/simulationNewbieGoalsStore';
-import { useSimulationSkinDevelopmentStore } from '@/stores/simulation/simulationSkinDevelopmentStore';
-import { useSimulationHeroDevelopmentStore } from '@/stores/simulation/simulationHeroDevelopmentStore';
-import { useSimulationBusinessDataStore } from '@/stores/simulation/simulationBusinessDataStore';
-import { useSimulationCoreGoalsStore } from '@/stores/simulation/simulationCoreGoalsStore';
-import { useLotteryStorageStore } from '@/stores/lottery/LotteryStorage';
-import { useHeroSkinStore } from '@/stores/heroSkinStore';
-import { useModalStore } from '@/stores/modalStore';
+import { ref, onMounted, computed, watch, provide } from "vue";
+import { useRouter } from "vue-router";
+import DesktopAppContainer from "../DesktopAppContainer/index.vue";
+import TaskSystemPanel from "../TaskSystemPanel/index.vue";
+import ExitConfirmDialog from "../dialogs/ExitConfirmDialog.vue";
+import NotchBar from "../NotchBar/index.vue";
+import DesktopLevelUpEffect from "./DesktopLevelUpEffect.vue";
+import DesktopBackground from "./DesktopBackground.vue";
+import DesktopTaskbar from "./DesktopTaskbar.vue";
+import { useGameStore } from "@/stores/gameStore";
+import { useSimulationGameStateStore } from "@/stores/simulation/simulationGameStateStore";
+import { usePlayerStore } from "@/stores/playerStore";
+import { useSimulationStore } from "@/stores/simulationStore";
+import { useSimulationCareerSystemStore } from "@/stores/simulation/simulationCareerSystemStore";
+import { useWindowManagerStore } from "@/stores/windowManagerStore";
+import { useSimulationTaskSystemStore } from "@/stores/simulation/simulationTaskSystemStore";
+import { useSimulationNewbieGoalsStore } from "@/stores/simulation/simulationNewbieGoalsStore";
+import { useSimulationSkinDevelopmentStore } from "@/stores/simulation/simulationSkinDevelopmentStore";
+import { useSimulationHeroDevelopmentStore } from "@/stores/simulation/simulationHeroDevelopmentStore";
+import { useSimulationBusinessDataStore } from "@/stores/simulation/simulationBusinessDataStore";
+import { useSimulationCoreGoalsStore } from "@/stores/simulation/simulationCoreGoalsStore";
+import { useLotteryStorageStore } from "@/stores/lottery/LotteryStorage";
+import { useHeroSkinStore } from "@/stores/heroSkinStore";
+import { useModalStore } from "@/stores/modalStore";
 
 // 导入类型
-import type { GameData } from '@/types/game';
-import type { Modal } from '@/types/modal';
-import type { DesktopApp, AvailableApp } from './types';
+import type { GameData } from "@/types/game";
+import type { Modal } from "@/types/modal";
+import type { DesktopApp, AvailableApp } from "./types";
 
 // Props 定义
 const props = defineProps<{
@@ -143,10 +143,10 @@ const plannerLevel = ref(1);
 const plannerExp = ref(0);
 const plannerLevelUpExp = ref(100);
 const plannerFunds = ref(10000);
-const plannerRankName = ref('初级策划');
-const plannerTier = ref('I');
+const plannerRankName = ref("初级策划");
+const plannerTier = ref("I");
 const expProgress = ref(0);
-const plannerName = ref('我是策划');
+const _plannerName = ref("我是策划");
 // 退出确认对话框状态
 const showExitDialog = ref(false);
 
@@ -175,10 +175,10 @@ const previousLevel = ref(1);
 
 // 升级特效状态
 const showLevelUpEffect = ref(false);
-const levelUpMessage = ref('');
+const levelUpMessage = ref("");
 
 // 计算属性：经验进度百分比
-const expProgressPercent = computed(() => {
+const _expProgressPercent = computed(() => {
   if (plannerLevelUpExp.value === 0) return 100;
   return Math.min(
     100,
@@ -215,12 +215,12 @@ const updateCareerData = (): void => {
 };
 
 // 提供策划数据给子组件
-provide('plannerLevel', plannerLevel);
-provide('plannerRankName', plannerRankName);
-provide('plannerExp', plannerExp);
-provide('plannerLevelUpExp', plannerLevelUpExp);
-provide('plannerFunds', plannerFunds);
-provide('expProgress', expProgress);
+provide("plannerLevel", plannerLevel);
+provide("plannerRankName", plannerRankName);
+provide("plannerExp", plannerExp);
+provide("plannerLevelUpExp", plannerLevelUpExp);
+provide("plannerFunds", plannerFunds);
+provide("expProgress", expProgress);
 
 // 提供更新策划经验的方法
 const addExp = (amount: number): void => {
@@ -242,7 +242,7 @@ const addExp = (amount: number): void => {
   // 更新所有策划数据
   updateCareerData();
 };
-provide('addExp', addExp);
+provide("addExp", addExp);
 
 // 监听职业系统状态变化，更新UI
 watch(
@@ -270,150 +270,150 @@ watch(
 updateCareerData();
 
 // 本地存储键
-const DESKTOP_APPS_KEY = 'desktop-apps';
+const DESKTOP_APPS_KEY = "desktop-apps";
 
 // 初始桌面应用列表
 const initialDesktopApps: DesktopApp[] = [
   {
-    id: 'wallet',
-    name: '钱包',
-    icon: '💰',
+    id: "wallet",
+    name: "钱包",
+    icon: "💰",
     position: { x: 50, y: 50 },
     coreData: {
       balance: 0,
     },
     modules: [
-      { id: 'balance-info', name: '余额信息' },
-      { id: 'transaction-history', name: '交易记录' },
+      { id: "balance-info", name: "余额信息" },
+      { id: "transaction-history", name: "交易记录" },
     ],
   },
   {
-    id: 'app-store',
-    name: '应用中心',
-    icon: '📱',
+    id: "app-store",
+    name: "应用中心",
+    icon: "📱",
     position: { x: 250, y: 50 },
     coreData: {},
-    modules: [{ id: 'app-store', name: '应用中心' }],
+    modules: [{ id: "app-store", name: "应用中心" }],
   },
   {
-    id: 'game-release',
-    name: '游戏发布',
-    icon: '📦',
+    id: "game-release",
+    name: "游戏发布",
+    icon: "📦",
     position: { x: 450, y: 50 },
     coreData: {},
-    modules: [{ id: 'game-release', name: '游戏发布' }],
+    modules: [{ id: "game-release", name: "游戏发布" }],
   },
 ];
 
 // 可下载的应用列表 - 用于下载时创建临时应用图标
 const availableAppsForDownload: AvailableApp[] = [
   {
-    id: 'data-center',
-    name: '数据中心',
-    icon: '📊',
-    description: '',
-    memory: '',
-    category: 'system',
-    requiredLevelId: 'trainee-planner',
+    id: "data-center",
+    name: "数据中心",
+    icon: "📊",
+    description: "",
+    memory: "",
+    category: "system",
+    requiredLevelId: "trainee-planner",
   },
   {
-    id: 'career-growth',
-    name: '策划成长',
-    icon: '📈',
-    description: '',
-    memory: '',
-    category: 'system',
-    requiredLevelId: 'trainee-planner',
+    id: "career-growth",
+    name: "策划成长",
+    icon: "📈",
+    description: "",
+    memory: "",
+    category: "system",
+    requiredLevelId: "trainee-planner",
   },
   {
-    id: 'system-settings',
-    name: '系统设置',
-    icon: '⚙️',
-    description: '',
-    memory: '',
-    category: 'system',
-    requiredLevelId: 'trainee-planner',
+    id: "system-settings",
+    name: "系统设置",
+    icon: "⚙️",
+    description: "",
+    memory: "",
+    category: "system",
+    requiredLevelId: "trainee-planner",
   },
   {
-    id: 'chat',
-    name: '聊天',
-    icon: '💬',
-    description: '',
-    memory: '',
-    category: 'core',
-    requiredLevelId: 'trainee-planner',
+    id: "chat",
+    name: "聊天",
+    icon: "💬",
+    description: "",
+    memory: "",
+    category: "core",
+    requiredLevelId: "trainee-planner",
   },
   {
-    id: 'hero-development',
-    name: '英雄',
-    icon: '🦸',
-    description: '',
-    memory: '',
-    category: 'core',
-    requiredLevelId: 'trainee-planner',
+    id: "hero-development",
+    name: "英雄",
+    icon: "🦸",
+    description: "",
+    memory: "",
+    category: "core",
+    requiredLevelId: "trainee-planner",
   },
   {
-    id: 'skin-development',
-    name: '皮肤',
-    icon: '🧵',
-    description: '',
-    memory: '',
-    category: 'core',
-    requiredLevelId: 'trainee-planner',
+    id: "skin-development",
+    name: "皮肤",
+    icon: "🧵",
+    description: "",
+    memory: "",
+    category: "core",
+    requiredLevelId: "trainee-planner",
   },
   {
-    id: 'event-development',
-    name: '活动',
-    icon: '🎪',
-    description: '',
-    memory: '',
-    category: 'core',
-    requiredLevelId: 'trainee-planner',
+    id: "event-development",
+    name: "活动",
+    icon: "🎪",
+    description: "",
+    memory: "",
+    category: "core",
+    requiredLevelId: "trainee-planner",
   },
   {
-    id: 'task-center',
-    name: '任务中心',
-    icon: '📋',
-    description: '',
-    memory: '',
-    category: 'advanced',
-    requiredLevelId: 'junior-planner',
+    id: "task-center",
+    name: "任务中心",
+    icon: "📋",
+    description: "",
+    memory: "",
+    category: "advanced",
+    requiredLevelId: "junior-planner",
   },
   {
-    id: 'collaboration-center',
-    name: '联动中心',
-    icon: '🤝',
-    description: '',
-    memory: '',
-    category: 'advanced',
-    requiredLevelId: 'intermediate-planner',
+    id: "collaboration-center",
+    name: "联动中心",
+    icon: "🤝",
+    description: "",
+    memory: "",
+    category: "advanced",
+    requiredLevelId: "intermediate-planner",
   },
   {
-    id: 'public-opinion-center',
-    name: '舆情中心',
-    icon: '📢',
-    description: '',
-    memory: '',
-    category: 'advanced',
-    requiredLevelId: 'senior-planner',
+    id: "public-opinion-center",
+    name: "舆情中心",
+    icon: "📢",
+    description: "",
+    memory: "",
+    category: "advanced",
+    requiredLevelId: "senior-planner",
   },
   {
-    id: 'event-log',
-    name: '事件日志',
-    icon: '📝',
-    description: '',
-    memory: '',
-    category: 'advanced',
-    requiredLevelId: 'intermediate-planner',
+    id: "event-log",
+    name: "事件日志",
+    icon: "📝",
+    description: "",
+    memory: "",
+    category: "advanced",
+    requiredLevelId: "intermediate-planner",
   },
   {
-    id: 'channel-delivery',
-    name: '渠道投放',
-    icon: '📣',
-    description: '',
-    memory: '',
-    category: 'advanced',
-    requiredLevelId: 'expert-planner',
+    id: "channel-delivery",
+    name: "渠道投放",
+    icon: "📣",
+    description: "",
+    memory: "",
+    category: "advanced",
+    requiredLevelId: "expert-planner",
   },
 ];
 
@@ -507,17 +507,17 @@ const handleAppInstalled = (app: App): void => {
   // 根据应用类型配置不同的modules
   let modules;
   switch (app.id) {
-    case 'lottery':
+    case "lottery":
       modules = [
-        { id: 'lottery-main', name: '抽奖主界面' },
-        { id: 'lottery-history', name: '抽奖历史' },
-        { id: 'lottery-rewards', name: '累抽奖励' },
+        { id: "lottery-main", name: "抽奖主界面" },
+        { id: "lottery-history", name: "抽奖历史" },
+        { id: "lottery-rewards", name: "累抽奖励" },
       ];
       break;
-    case 'hero-development':
+    case "hero-development":
       modules = [
-        { id: 'hero-new', name: '新建英雄' },
-        { id: 'hero-manage', name: '英雄管理' },
+        { id: "hero-new", name: "新建英雄" },
+        { id: "hero-manage", name: "英雄管理" },
       ];
       break;
     default:
@@ -557,14 +557,14 @@ const saveGame = (): void => {
     desktopApps: desktopApps.value,
   };
 
-  const savedGames = JSON.parse(localStorage.getItem('game-snapshots') || '[]');
+  const savedGames = JSON.parse(localStorage.getItem("game-snapshots") || "[]");
   savedGames.push(gameSnapshot);
-  localStorage.setItem('game-snapshots', JSON.stringify(savedGames));
+  localStorage.setItem("game-snapshots", JSON.stringify(savedGames));
 };
 
 // 重新开始游戏（由 DesktopTaskbar 调用）
 const restartGame = (): void => {
-  if (confirm('确定要重新开始游戏吗？所有进度将丢失！')) {
+  if (confirm("确定要重新开始游戏吗？所有进度将丢失！")) {
     const gameStore = useGameStore();
     const simulationGameStateStore = useSimulationGameStateStore();
     const playerStore = usePlayerStore();
@@ -597,24 +597,24 @@ const restartGame = (): void => {
     modalStore.$reset();
 
     const localStorageKeys = [
-      'game-snapshots',
-      'pinia-game',
-      'pinia-simulationGameState',
-      'pinia-player',
-      'pinia-simulation',
-      'simulation-task-system',
-      'simulation-career-system',
-      'simulation-newbie-goals',
-      'simulation-skin-development',
-      'simulation-hero-development',
-      'simulation-business-data',
-      'simulation-core-goals',
-      'lottery-storage',
-      'hero-skin-data',
-      'desktop-apps',
-      'app-store-installed-apps',
-      'heroes-storage',
-      'skins-storage',
+      "game-snapshots",
+      "pinia-game",
+      "pinia-simulationGameState",
+      "pinia-player",
+      "pinia-simulation",
+      "simulation-task-system",
+      "simulation-career-system",
+      "simulation-newbie-goals",
+      "simulation-skin-development",
+      "simulation-hero-development",
+      "simulation-business-data",
+      "simulation-core-goals",
+      "lottery-storage",
+      "hero-skin-data",
+      "desktop-apps",
+      "app-store-installed-apps",
+      "heroes-storage",
+      "skins-storage",
     ];
 
     localStorageKeys.forEach((key) => {
@@ -635,19 +635,19 @@ const restartGame = (): void => {
 
 // 打开游戏设置（由 DesktopTaskbar 调用）
 const openGameSettings = (): void => {
-  let settingsApp = desktopApps.value.find((app) => app.id === 'game-settings');
+  let settingsApp = desktopApps.value.find((app) => app.id === "game-settings");
 
   if (!settingsApp) {
     settingsApp = {
-      id: 'game-settings',
-      name: '游戏设置',
-      icon: '⚙️',
+      id: "game-settings",
+      name: "游戏设置",
+      icon: "⚙️",
       position: { x: 0, y: 0 },
       coreData: {},
       modules: [
-        { id: 'basic-settings', name: '基本设置' },
-        { id: 'advanced-settings', name: '高级设置' },
-        { id: 'about', name: '关于' },
+        { id: "basic-settings", name: "基本设置" },
+        { id: "advanced-settings", name: "高级设置" },
+        { id: "about", name: "关于" },
       ],
     };
 
@@ -662,14 +662,14 @@ const openGameSettings = (): void => {
 // 处理直接退出
 const handleExit = () => {
   showExitDialog.value = false;
-  router.push('/');
+  router.push("/");
 };
 
 // 处理保存后退出
 const handleSaveAndExit = () => {
   showExitDialog.value = false;
   saveGame();
-  router.push('/');
+  router.push("/");
 };
 
 // 初始化
@@ -677,16 +677,16 @@ onMounted(() => {
   updateAppData();
 
   const gameReleaseApp = desktopApps.value.find(
-    (app) => app.id === 'game-release',
+    (app) => app.id === "game-release",
   );
   if (!gameReleaseApp) {
     desktopApps.value.push({
-      id: 'game-release',
-      name: '游戏发布',
-      icon: '📦',
+      id: "game-release",
+      name: "游戏发布",
+      icon: "📦",
       position: { x: 450, y: 50 },
       coreData: {},
-      modules: [{ id: 'game-release', name: '游戏发布' }],
+      modules: [{ id: "game-release", name: "游戏发布" }],
     });
     resetAppPositions(desktopApps.value);
     saveDesktopApps();
@@ -696,7 +696,7 @@ onMounted(() => {
 // 更新桌面应用数据
 const updateAppData = (): void => {
   // 更新钱包应用，将余额与策划资金挂钩
-  const walletApp = desktopApps.value.find((app) => app.id === 'wallet');
+  const walletApp = desktopApps.value.find((app) => app.id === "wallet");
   if (walletApp) {
     walletApp.coreData = {
       balance: plannerFunds.value, // 余额与策划资金保持一致
@@ -747,7 +747,7 @@ const openApp = (app: DesktopApp): void => {
     });
 
     // 在windowManagerStore 中创建窗口
-    windowManagerStore.createWindow(app.name, { type: 'app', props: { app } });
+    windowManagerStore.createWindow(app.name, { type: "app", props: { app } });
   }
 };
 

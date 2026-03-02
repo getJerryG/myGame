@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 // 定义抽奖记录类型
 interface DrawRecord {
@@ -30,7 +30,7 @@ interface LotteryDrawState {
 }
 
 // 创建并导出抽奖store
-export const useLotteryDrawStore = defineStore('lotteryDraw', {
+export const useLotteryDrawStore = defineStore("lotteryDraw", {
   state: (): LotteryDrawState => ({
     // 初始抽奖次数为0
     drawCount: {
@@ -61,7 +61,7 @@ export const useLotteryDrawStore = defineStore('lotteryDraw', {
 
   actions: {
     // 单次抽奖
-    singleDraw(drawType = 'normal') {
+    singleDraw(drawType = "normal") {
       // 实现单次抽奖逻辑
       this.drawCount.single++;
       this.lastDrawTime = Date.now();
@@ -73,7 +73,7 @@ export const useLotteryDrawStore = defineStore('lotteryDraw', {
         timestamp: Date.now(),
         rewards: [
           {
-            type: 'gold',
+            type: "gold",
             amount: 100,
           },
         ],
@@ -86,7 +86,7 @@ export const useLotteryDrawStore = defineStore('lotteryDraw', {
     },
 
     // 十连抽
-    tenDraw(drawType = 'normal') {
+    tenDraw(drawType = "normal") {
       // 实现十连抽逻辑
       this.drawCount.ten++;
       this.lastDrawTime = Date.now();
@@ -97,7 +97,7 @@ export const useLotteryDrawStore = defineStore('lotteryDraw', {
         drawType,
         timestamp: Date.now(),
         rewards: Array.from({ length: 10 }, () => ({
-          type: Math.random() > 0.3 ? 'gold' : 'coupon',
+          type: Math.random() > 0.3 ? "gold" : "coupon",
           amount: Math.random() > 0.5 ? 100 : 10,
         })),
       };
@@ -130,7 +130,7 @@ export const useLotteryDrawStore = defineStore('lotteryDraw', {
 
   // 持久化存储
   persist: {
-    key: 'lottery-draw',
+    key: "lottery-draw",
     storage: localStorage,
   },
 });

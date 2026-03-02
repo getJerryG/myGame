@@ -73,7 +73,7 @@
 
 <script lang="ts">
 export default {
-  name: 'AssessmentPanel',
+  name: "AssessmentPanel",
   props: {
     showAssessment: {
       type: Boolean,
@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     closeAssessment(): void {
-      this.$emit('close');
+      this.$emit("close");
     },
   },
 };

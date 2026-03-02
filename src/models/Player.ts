@@ -3,10 +3,11 @@ import type {
   PlayerAttributes,
   PlayerStats,
   PlayerCareer,
-} from '../types/player';
+  PlayerFullState,
+} from "../types/player";
 // 移除未使用的导入
 
-import { Character } from './Character';
+import { Character } from "./Character";
 
 // 玩家类
 export class Player extends Character {
@@ -182,7 +183,7 @@ export class Player extends Character {
   }
 
   // 获取玩家完整状态
-  public getFullState(): any {
+  public getFullState(): PlayerFullState {
     return {
       ...super.getCurrentState(),
       playerState: this.getPlayerState(),

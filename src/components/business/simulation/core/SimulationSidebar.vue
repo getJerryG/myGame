@@ -262,19 +262,20 @@
   </nav>
 </template>
 
-<script setup lang=ts>
-// 接收父组件传递的属�?defineProps({
+<script setup lang="ts">
+// 接收父组件传递的属性
+defineProps({
   openSubMenus: {
     type: Array,
-    default: () => ['data'],
+    default: () => ["data"],
   },
   activeMainMenu: {
     type: String,
-    default: 'data',
+    default: "data",
   },
   activeSubMenu: {
     type: String,
-    default: 'coreData',
+    default: "coreData",
   },
   pageTitles: {
     type: Object,
@@ -286,15 +287,17 @@
   },
 });
 
-// 向父组件传递事�?const emit = defineEmits(['toggle-submenu', 'navigate']);
+// 向父组件传递事件
+const emit = defineEmits(["toggle-submenu", "navigate"]);
 
 // 切换子菜单展开/收起
-const toggleSubMenu = (menuName) => {
-  emit('toggle-submenu', menuName);
+const toggleSubMenu = (menuName: string): void => {
+  emit("toggle-submenu", menuName);
 };
 
-// 导航到指定菜�?const navigateTo = (mainMenu, subMenu) => {
-  emit('navigate', mainMenu, subMenu);
+// 导航到指定菜单
+const navigateTo = (mainMenu: string, subMenu: string): void => {
+  emit("navigate", mainMenu, subMenu);
 };
 </script>
 
@@ -415,7 +418,3 @@ const toggleSubMenu = (menuName) => {
   flex: 1;
 }
 </style>
-
-
-
-

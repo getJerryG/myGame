@@ -34,28 +34,28 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits } from "vue";
 
 interface ButtonProps {
   /**
    * 按钮类型
    */
-  type?: 'button' | 'submit' | 'reset';
+  type?: "button" | "submit" | "reset";
 
   /**
    * 按钮样式变体
    */
-  variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info';
+  variant?: "primary" | "secondary" | "success" | "warning" | "danger" | "info";
 
   /**
    * 按钮尺寸
    */
-  size?: 'small' | 'medium' | 'large';
+  size?: "small" | "medium" | "large";
 
   /**
    * 按钮形状
    */
-  shape?: 'square' | 'round' | 'circle';
+  shape?: "square" | "round" | "circle";
 
   /**
    * 是否禁用
@@ -80,7 +80,7 @@ interface ButtonProps {
   /**
    * 图标位置
    */
-  iconPosition?: 'left' | 'right';
+  iconPosition?: "left" | "right";
 
   /**
    * 自定义类名
@@ -88,17 +88,17 @@ interface ButtonProps {
   customClass?: string;
 }
 
-const props = withDefaults(defineProps<ButtonProps>(), {
-  type: 'button',
-  variant: 'primary',
-  size: 'medium',
-  shape: 'square',
+const _props = withDefaults(defineProps<ButtonProps>(), {
+  type: "button",
+  variant: "primary",
+  size: "medium",
+  shape: "square",
   disabled: false,
   loading: false,
   block: false,
-  icon: '',
-  iconPosition: 'left',
-  customClass: '',
+  icon: "",
+  iconPosition: "left",
+  customClass: "",
 });
 
 const emit = defineEmits<{
@@ -109,7 +109,7 @@ const emit = defineEmits<{
 }>();
 
 const handleClick = (event: MouseEvent) => {
-  emit('click', event);
+  emit("click", event);
 };
 </script>
 

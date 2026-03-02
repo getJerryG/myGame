@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
+import { defineProps } from "vue";
 
 interface CardTag {
   /**
@@ -62,7 +62,7 @@ interface CardTag {
   /**
    * 标签样式变体
    */
-  variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  variant?: "default" | "primary" | "success" | "warning" | "danger" | "info";
 }
 
 interface CardProps {
@@ -70,23 +70,23 @@ interface CardProps {
    * 卡片样式变体
    */
   variant?:
-    | 'default'
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'warning'
-    | 'danger'
-    | 'info';
+    | "default"
+    | "primary"
+    | "secondary"
+    | "success"
+    | "warning"
+    | "danger"
+    | "info";
 
   /**
    * 卡片尺寸
    */
-  size?: 'small' | 'medium' | 'large';
+  size?: "small" | "medium" | "large";
 
   /**
    * 卡片形状
    */
-  shape?: 'square' | 'round';
+  shape?: "square" | "round";
 
   /**
    * 是否显示阴影
@@ -119,16 +119,17 @@ interface CardProps {
   customClass?: string;
 }
 
-const props = withDefaults(defineProps<CardProps>(), {
-  variant: 'default',
-  size: 'medium',
-  shape: 'square',
+const _props = withDefaults(defineProps<CardProps>(), {
+  variant: "default",
+  size: "medium",
+  shape: "square",
   elevated: true,
   hoverable: true,
-  title: '',
-  subtitle: '',
+  title: "",
+  subtitle: "",
   tags: () => [],
-  customClass: '',
+  customClass: "",
+  showFooter: false,
 });
 </script>
 

@@ -207,8 +207,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useSimulationStore } from '../../stores/simulationStore';
+import { computed } from "vue";
+import { useSimulationStore } from "../../stores/simulationStore";
 
 const simulationStore = useSimulationStore();
 
@@ -259,16 +259,16 @@ const formatValue = (value: number): string => {
 // 获取操作名称
 const getOperationName = (operationKey: string): string => {
   const operationNames: Record<string, string> = {
-    releaseCommonSkin: '发布普通皮肤',
-    improveDailyReward: '设置日常登录奖励',
-    fixBug: '修复基础BUG',
-    releaseLimitedSkin: '发布限定皮肤',
-    heroAdjustment: '英雄调整',
-    channelPromotion: '渠道投放',
-    eventPlanning: '活动策划',
-    heroRedesign: '英雄重做',
-    crossBrandCooperation: '跨界合作',
-    tournamentHolding: '赛事举办',
+    releaseCommonSkin: "发布普通皮肤",
+    improveDailyReward: "设置日常登录奖励",
+    fixBug: "修复基础BUG",
+    releaseLimitedSkin: "发布限定皮肤",
+    heroAdjustment: "英雄调整",
+    channelPromotion: "渠道投放",
+    eventPlanning: "活动策划",
+    heroRedesign: "英雄重做",
+    crossBrandCooperation: "跨界合作",
+    tournamentHolding: "赛事举办",
   };
   return operationNames[operationKey] || operationKey;
 };

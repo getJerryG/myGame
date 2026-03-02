@@ -228,8 +228,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useSimulationStore } from '../../stores/simulationStore';
+import { computed } from "vue";
+import { useSimulationStore } from "../../stores/simulationStore";
 
 const simulationStore = useSimulationStore();
 
@@ -243,18 +243,18 @@ const sortedHistory = computed(() => {
 // 获取效果标签
 const getEffectLabel = (type: string): string => {
   const labels = {
-    downloads: '下载量',
-    revenue: '收入',
-    marketSentiment: '市场情绪',
-    dau: '日活用户',
-    sevenDayRetention: '7日留存率',
+    downloads: "下载量",
+    revenue: "收入",
+    marketSentiment: "市场情绪",
+    dau: "日活用户",
+    sevenDayRetention: "7日留存率",
   };
   return labels[type as keyof typeof labels] || type;
 };
 
 // 格式化效果值
 const formatEffectValue = (type: string, value: number): string => {
-  if (type === 'sevenDayRetention') {
+  if (type === "sevenDayRetention") {
     return `${(value * 100).toFixed(1)}%`;
   }
   if (value >= 10000) {

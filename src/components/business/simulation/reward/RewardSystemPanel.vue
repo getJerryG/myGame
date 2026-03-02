@@ -101,24 +101,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import LoginRewardConfig from './LoginRewardConfig.vue';
-import TaskRewardConfig from './TaskRewardConfig.vue';
-import SeasonRewardConfig from './SeasonRewardConfig.vue';
+import { ref } from "vue";
+import LoginRewardConfig from "./LoginRewardConfig.vue";
+import TaskRewardConfig from "./TaskRewardConfig.vue";
+import SeasonRewardConfig from "./SeasonRewardConfig.vue";
 
 // 定义事件
-const emit = defineEmits(['rewards-updated']);
+const emit = defineEmits(["rewards-updated"]);
 
 // 响应式数据
 const isCollapsed = ref(false);
-const activeTab = ref('login');
+const activeTab = ref("login");
 const draggedIndex = ref(null);
 
 // 奖励类型标签
 const rewardTabs = [
-  { value: 'login', label: '登录奖励', icon: '📅' },
-  { value: 'task', label: '任务奖励', icon: '📋' },
-  { value: 'season', label: '赛季奖励', icon: '🏆' },
+  { value: "login", label: "登录奖励", icon: "📅" },
+  { value: "task", label: "任务奖励", icon: "📋" },
+  { value: "season", label: "赛季奖励", icon: "🏆" },
 ];
 
 // 登录奖励数据
@@ -127,8 +127,8 @@ const loginRewards = ref([
     day: 1,
     reward: {
       id: 1,
-      name: '钻石',
-      icon: '💎',
+      name: "钻石",
+      icon: "💎",
       amount: 100,
       value: 100,
     },
@@ -137,8 +137,8 @@ const loginRewards = ref([
     day: 2,
     reward: {
       id: 2,
-      name: '金币',
-      icon: '💰',
+      name: "金币",
+      icon: "💰",
       amount: 2000,
       value: 50,
     },
@@ -147,8 +147,8 @@ const loginRewards = ref([
     day: 3,
     reward: {
       id: 3,
-      name: '皮肤体验卡',
-      icon: '🎨',
+      name: "皮肤体验卡",
+      icon: "🎨",
       amount: 1,
       value: 200,
     },
@@ -157,8 +157,8 @@ const loginRewards = ref([
     day: 4,
     reward: {
       id: 4,
-      name: '英雄碎片',
-      icon: '🧩',
+      name: "英雄碎片",
+      icon: "🧩",
       amount: 5,
       value: 150,
     },
@@ -167,8 +167,8 @@ const loginRewards = ref([
     day: 5,
     reward: {
       id: 5,
-      name: '钻石',
-      icon: '💎',
+      name: "钻石",
+      icon: "💎",
       amount: 200,
       value: 200,
     },
@@ -177,8 +177,8 @@ const loginRewards = ref([
     day: 6,
     reward: {
       id: 6,
-      name: '金币',
-      icon: '💰',
+      name: "金币",
+      icon: "💰",
       amount: 5000,
       value: 125,
     },
@@ -187,8 +187,8 @@ const loginRewards = ref([
     day: 7,
     reward: {
       id: 7,
-      name: '限定头像框',
-      icon: '🖼️',
+      name: "限定头像框",
+      icon: "🖼️",
       amount: 1,
       value: 300,
     },
@@ -199,32 +199,32 @@ const loginRewards = ref([
 const tasks = ref([
   {
     id: 1,
-    name: '每日签到',
-    description: '每天登录游戏并签到',
-    icon: '📝',
+    name: "每日签到",
+    description: "每天登录游戏并签到",
+    icon: "📝",
     rewards: [
-      { id: 1, name: '金币', icon: '💰', amount: 500, value: 12.5 },
-      { id: 2, name: '钻石', icon: '💎', amount: 10, value: 10 },
+      { id: 1, name: "金币", icon: "💰", amount: 500, value: 12.5 },
+      { id: 2, name: "钻石", icon: "💎", amount: 10, value: 10 },
     ],
   },
   {
     id: 2,
-    name: '排位胜利',
-    description: '在排位赛中获得3场胜利',
-    icon: '🏆',
+    name: "排位胜利",
+    description: "在排位赛中获得3场胜利",
+    icon: "🏆",
     rewards: [
-      { id: 3, name: '排位币', icon: '🏅', amount: 100, value: 50 },
-      { id: 4, name: '英雄碎片', icon: '🧩', amount: 2, value: 60 },
+      { id: 3, name: "排位币", icon: "🏅", amount: 100, value: 50 },
+      { id: 4, name: "英雄碎片", icon: "🧩", amount: 2, value: 60 },
     ],
   },
   {
     id: 3,
-    name: '活跃度满',
-    description: '每日活跃度达到100',
-    icon: '🔥',
+    name: "活跃度满",
+    description: "每日活跃度达到100",
+    icon: "🔥",
     rewards: [
-      { id: 5, name: '钻石', icon: '💎', amount: 50, value: 50 },
-      { id: 6, name: '皮肤碎片', icon: '🎨', amount: 1, value: 80 },
+      { id: 5, name: "钻石", icon: "💎", amount: 50, value: 50 },
+      { id: 6, name: "皮肤碎片", icon: "🎨", amount: 1, value: 80 },
     ],
   },
 ]);
@@ -233,63 +233,63 @@ const tasks = ref([
 const ranks = ref([
   {
     id: 1,
-    name: '荣耀王者',
-    icon: '👑',
+    name: "荣耀王者",
+    icon: "👑",
     rewards: [
       {
         id: 1,
-        name: '荣耀王者头像框',
-        icon: '🖼️',
+        name: "荣耀王者头像框",
+        icon: "🖼️",
         amount: 1,
         value: 500,
       },
-      { id: 2, name: '钻石', icon: '💎', amount: 1000, value: 1000 },
-      { id: 3, name: '专属皮肤', icon: '🎨', amount: 1, value: 888 },
+      { id: 2, name: "钻石", icon: "💎", amount: 1000, value: 1000 },
+      { id: 3, name: "专属皮肤", icon: "🎨", amount: 1, value: 888 },
     ],
   },
   {
     id: 2,
-    name: '王者',
-    icon: '👑',
+    name: "王者",
+    icon: "👑",
     rewards: [
-      { id: 4, name: '王者头像框', icon: '🖼️', amount: 1, value: 300 },
-      { id: 5, name: '钻石', icon: '💎', amount: 800, value: 800 },
+      { id: 4, name: "王者头像框", icon: "🖼️", amount: 1, value: 300 },
+      { id: 5, name: "钻石", icon: "💎", amount: 800, value: 800 },
     ],
   },
   {
     id: 3,
-    name: '星耀',
-    icon: '🌟',
+    name: "星耀",
+    icon: "🌟",
     rewards: [
-      { id: 6, name: '星耀头像框', icon: '🖼️', amount: 1, value: 200 },
-      { id: 7, name: '钻石', icon: '💎', amount: 600, value: 600 },
+      { id: 6, name: "星耀头像框", icon: "🖼️", amount: 1, value: 200 },
+      { id: 7, name: "钻石", icon: "💎", amount: 600, value: 600 },
     ],
   },
   {
     id: 4,
-    name: '钻石',
-    icon: '💎',
+    name: "钻石",
+    icon: "💎",
     rewards: [
-      { id: 8, name: '钻石头像框', icon: '🖼️', amount: 1, value: 150 },
-      { id: 9, name: '钻石', icon: '💎', amount: 400, value: 400 },
+      { id: 8, name: "钻石头像框", icon: "🖼️", amount: 1, value: 150 },
+      { id: 9, name: "钻石", icon: "💎", amount: 400, value: 400 },
     ],
   },
   {
     id: 5,
-    name: '铂金',
-    icon: '🥉',
+    name: "铂金",
+    icon: "🥉",
     rewards: [
-      { id: 10, name: '铂金头像框', icon: '🖼️', amount: 1, value: 100 },
-      { id: 11, name: '钻石', icon: '💎', amount: 200, value: 200 },
+      { id: 10, name: "铂金头像框", icon: "🖼️", amount: 1, value: 100 },
+      { id: 11, name: "钻石", icon: "💎", amount: 200, value: 200 },
     ],
   },
   {
     id: 6,
-    name: '黄金及以下',
-    icon: '🥇',
+    name: "黄金及以下",
+    icon: "🥇",
     rewards: [
-      { id: 12, name: '黄金头像框', icon: '🖼️', amount: 1, value: 50 },
-      { id: 13, name: '钻石', icon: '💎', amount: 100, value: 100 },
+      { id: 12, name: "黄金头像框", icon: "🖼️", amount: 1, value: 50 },
+      { id: 13, name: "钻石", icon: "💎", amount: 100, value: 100 },
     ],
   },
 ]);
@@ -324,13 +324,13 @@ const onDrop = (targetIndex: number): void => {
 };
 
 // 添加登录奖励
-const addLoginReward = () => {
+const addLoginReward = (): void => {
   loginRewards.value.push({
     day: loginRewards.value.length + 1,
     reward: {
       id: Date.now(),
-      name: '钻石',
-      icon: '💎',
+      name: "钻石",
+      icon: "💎",
       amount: 50,
       value: 50,
     },
@@ -338,7 +338,7 @@ const addLoginReward = () => {
 };
 
 // 移除登录奖励
-const removeLoginReward = (index) => {
+const removeLoginReward = (index: number): void => {
   loginRewards.value.splice(index, 1);
   // 更新天数
   loginRewards.value.forEach((item, idx) => {
@@ -347,22 +347,22 @@ const removeLoginReward = (index) => {
 };
 
 // 打开奖励编辑器
-const openRewardEditor = () => {
+const openRewardEditor = (): void => {
   // 这里可以实现奖励编辑逻辑
 };
 
 // 编辑任务
-const editTask = () => {
+const editTask = (): void => {
   // 这里可以实现任务编辑逻辑
 };
 
 // 编辑段位奖励
-const editRankReward = () => {
+const editRankReward = (): void => {
   // 这里可以实现段位奖励编辑逻辑
 };
 
 // 计算总成本
-const calculateTotalCost = () => {
+const calculateTotalCost = (): number => {
   let total = 0;
 
   // 计算登录奖励成本
@@ -388,45 +388,45 @@ const calculateTotalCost = () => {
 };
 
 // 计算预计留存提升
-const calculateRetentionIncrease = () => {
+const calculateRetentionIncrease = (): string => {
   // 简单估算，实际应该基于历史数据
   const loginRewardDays = loginRewards.value.length;
   return Math.min(loginRewardDays * 2.5, 30).toFixed(1);
 };
 
 // 计算预期参与率
-const calculateParticipationRate = () => {
+const calculateParticipationRate = (): string => {
   // 简单估算
-  return '75.5';
+  return "75.5";
 };
 
 // 计算ROI
-const calculateROI = () => {
+const calculateROI = (): string => {
   // 简单估算
-  return '245';
+  return "245";
 };
 
 // 获取ROI样式
-const getROIClass = () => {
+const getROIClass = (): string => {
   const roi = calculateROI();
-  if (parseFloat(roi) > 200) return 'positive';
-  if (parseFloat(roi) < 100) return 'negative';
-  return '';
+  if (parseFloat(roi) > 200) return "positive";
+  if (parseFloat(roi) < 100) return "negative";
+  return "";
 };
 
 // 重置配置
-const resetConfig = () => {
+const resetConfig = (): void => {
   // 重置逻辑
 };
 
 // 保存配置
-const saveConfig = () => {
-  emit('rewards-updated', {
+const saveConfig = (): void => {
+  emit("rewards-updated", {
     loginRewards: loginRewards.value,
     tasks: tasks.value,
     ranks: ranks.value,
   });
-  alert('奖励配置已保存！');
+  alert("奖励配置已保存！");
 };
 </script>
 

@@ -70,13 +70,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
-import { useWindowManagerStore } from '@/stores/windowManagerStore';
-import ApplicationWindow from '@/components/common/window/ApplicationWindow.vue';
-import type { SidebarItem } from '@/components/common/window/ApplicationWindow.vue';
+import { ref, onMounted, computed } from "vue";
+import { useWindowManagerStore } from "@/stores/windowManagerStore";
+import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
+import type { SidebarItem } from "@/components/common/window/ApplicationWindow.vue";
 
-import { useSimulationCareerSystemStore } from '@/stores/simulation/simulationCareerSystemStore';
-import { careerLevelsConfig } from '@/config/careerLevelsConfig';
+import { useSimulationCareerSystemStore } from "@/stores/simulation/simulationCareerSystemStore";
 
 interface AvailableApp {
   id: string;
@@ -84,7 +83,7 @@ interface AvailableApp {
   icon: string;
   description: string;
   memory: string;
-  category: 'system' | 'core' | 'advanced';
+  category: "system" | "core" | "advanced";
   requiredLevelId: string;
   requiredSubLevel?: number;
 }
@@ -92,177 +91,177 @@ interface AvailableApp {
 const careerSystemStore = useSimulationCareerSystemStore();
 
 const sidebarItems: SidebarItem[] = [
-  { id: 'all', name: '全部应用', icon: '📱' },
-  { id: 'system', name: '系统必备', icon: '⚙️' },
-  { id: 'unlocked', name: '已解锁', icon: '🔓' },
-  { id: 'locked', name: '未解锁', icon: '🔒' },
-  { id: 'mini', name: '小游戏', icon: '🎮' },
+  { id: "all", name: "全部应用", icon: "📱" },
+  { id: "system", name: "系统必备", icon: "⚙️" },
+  { id: "unlocked", name: "已解锁", icon: "🔓" },
+  { id: "locked", name: "未解锁", icon: "🔒" },
+  { id: "mini", name: "小游戏", icon: "🎮" },
 ];
 
-const activeCategory = ref('all');
+const activeCategory = ref("all");
 
 const availableApps: AvailableApp[] = [
   {
-    id: 'app-store',
-    name: '应用商店',
-    icon: '🏪',
-    description: '所有高级应用的唯一获取入口',
-    memory: '128MB',
-    category: 'system',
-    requiredLevelId: 'trainee-planner',
+    id: "app-store",
+    name: "应用商店",
+    icon: "🏪",
+    description: "所有高级应用的唯一获取入口",
+    memory: "128MB",
+    category: "system",
+    requiredLevelId: "trainee-planner",
   },
   {
-    id: 'data-center',
-    name: '数据中心',
-    icon: '📊',
-    description: '每日结算报表、游戏数据可视化',
-    memory: '256MB',
-    category: 'system',
-    requiredLevelId: 'trainee-planner',
+    id: "data-center",
+    name: "数据中心",
+    icon: "📊",
+    description: "每日结算报表、游戏数据可视化",
+    memory: "256MB",
+    category: "system",
+    requiredLevelId: "trainee-planner",
   },
   {
-    id: 'career-growth',
-    name: '策划成长',
-    icon: '📈',
-    description: '职级体系、升级规则、权限管理',
-    memory: '128MB',
-    category: 'system',
-    requiredLevelId: 'trainee-planner',
+    id: "career-growth",
+    name: "策划成长",
+    icon: "📈",
+    description: "职级体系、升级规则、权限管理",
+    memory: "128MB",
+    category: "system",
+    requiredLevelId: "trainee-planner",
   },
   {
-    id: 'system-settings',
-    name: '系统设置',
-    icon: '⚙️',
-    description: '游戏存档、音量、画面设置',
-    memory: '128MB',
-    category: 'system',
-    requiredLevelId: 'trainee-planner',
+    id: "system-settings",
+    name: "系统设置",
+    icon: "⚙️",
+    description: "游戏存档、音量、画面设置",
+    memory: "128MB",
+    category: "system",
+    requiredLevelId: "trainee-planner",
   },
   {
-    id: 'wallet',
-    name: '钱包',
-    icon: '💰',
-    description: '唯一财务入口：资金余额、收支流水',
-    memory: '128MB',
-    category: 'core',
-    requiredLevelId: 'trainee-planner',
+    id: "wallet",
+    name: "钱包",
+    icon: "💰",
+    description: "唯一财务入口：资金余额、收支流水",
+    memory: "128MB",
+    category: "core",
+    requiredLevelId: "trainee-planner",
   },
   {
-    id: 'chat',
-    name: '聊天',
-    icon: '💬',
-    description: '与团队沟通、玩家舆情反馈',
-    memory: '128MB',
-    category: 'core',
-    requiredLevelId: 'trainee-planner',
+    id: "chat",
+    name: "聊天",
+    icon: "💬",
+    description: "与团队沟通、玩家舆情反馈",
+    memory: "128MB",
+    category: "core",
+    requiredLevelId: "trainee-planner",
   },
   {
-    id: 'hero-development',
-    name: '英雄',
-    icon: '🦸',
-    description: '唯一英雄全生命周期管理',
-    memory: '256MB',
-    category: 'core',
-    requiredLevelId: 'trainee-planner',
+    id: "hero-development",
+    name: "英雄",
+    icon: "🦸",
+    description: "唯一英雄全生命周期管理",
+    memory: "256MB",
+    category: "core",
+    requiredLevelId: "trainee-planner",
   },
   {
-    id: 'skin-development',
-    name: '皮肤',
-    icon: '🧵',
-    description: '唯一皮肤全生命周期管理',
-    memory: '128MB',
-    category: 'core',
-    requiredLevelId: 'trainee-planner',
+    id: "skin-development",
+    name: "皮肤",
+    icon: "🧵",
+    description: "唯一皮肤全生命周期管理",
+    memory: "128MB",
+    category: "core",
+    requiredLevelId: "trainee-planner",
   },
   {
-    id: 'event-development',
-    name: '活动',
-    icon: '🎪',
-    description: '唯一运营活动管理',
-    memory: '192MB',
-    category: 'core',
-    requiredLevelId: 'trainee-planner',
+    id: "event-development",
+    name: "活动",
+    icon: "🎪",
+    description: "唯一运营活动管理",
+    memory: "192MB",
+    category: "core",
+    requiredLevelId: "trainee-planner",
   },
   {
-    id: 'game-release',
-    name: '游戏发布',
-    icon: '📦',
-    description: '唯一版本上线入口',
-    memory: '320MB',
-    category: 'core',
-    requiredLevelId: 'trainee-planner',
+    id: "game-release",
+    name: "游戏发布",
+    icon: "📦",
+    description: "唯一版本上线入口",
+    memory: "320MB",
+    category: "core",
+    requiredLevelId: "trainee-planner",
   },
   {
-    id: 'task-center',
-    name: '任务中心',
-    icon: '📋',
-    description: '日常任务、主线任务、成就任务',
-    memory: '128MB',
-    category: 'advanced',
-    requiredLevelId: 'junior-planner',
+    id: "task-center",
+    name: "任务中心",
+    icon: "📋",
+    description: "日常任务、主线任务、成就任务",
+    memory: "128MB",
+    category: "advanced",
+    requiredLevelId: "junior-planner",
     requiredSubLevel: 3,
   },
   {
-    id: 'collaboration-center',
-    name: '联动中心',
-    icon: '🤝',
-    description: '全量可联动IP/工作室展示、联动项目管理',
-    memory: '192MB',
-    category: 'advanced',
-    requiredLevelId: 'intermediate-planner',
+    id: "collaboration-center",
+    name: "联动中心",
+    icon: "🤝",
+    description: "全量可联动IP/工作室展示、联动项目管理",
+    memory: "192MB",
+    category: "advanced",
+    requiredLevelId: "intermediate-planner",
     requiredSubLevel: 5,
   },
   {
-    id: 'public-opinion-center',
-    name: '舆情中心',
-    icon: '📢',
-    description: '玩家社区评论、口碑变化明细',
-    memory: '192MB',
-    category: 'advanced',
-    requiredLevelId: 'senior-planner',
+    id: "public-opinion-center",
+    name: "舆情中心",
+    icon: "📢",
+    description: "玩家社区评论、口碑变化明细",
+    memory: "192MB",
+    category: "advanced",
+    requiredLevelId: "senior-planner",
     requiredSubLevel: 5,
   },
   {
-    id: 'event-log',
-    name: '事件日志',
-    icon: '📝',
-    description: '历史随机事件全记录',
-    memory: '128MB',
-    category: 'advanced',
-    requiredLevelId: 'intermediate-planner',
+    id: "event-log",
+    name: "事件日志",
+    icon: "📝",
+    description: "历史随机事件全记录",
+    memory: "128MB",
+    category: "advanced",
+    requiredLevelId: "intermediate-planner",
     requiredSubLevel: 3,
   },
   {
-    id: 'channel-delivery',
-    name: '渠道投放',
-    icon: '📣',
-    description: '市场推广渠道选择、投放力度设置',
-    memory: '192MB',
-    category: 'advanced',
-    requiredLevelId: 'expert-planner',
+    id: "channel-delivery",
+    name: "渠道投放",
+    icon: "📣",
+    description: "市场推广渠道选择、投放力度设置",
+    memory: "192MB",
+    category: "advanced",
+    requiredLevelId: "expert-planner",
     requiredSubLevel: 5,
   },
 ];
 
-const INSTALLED_APPS_KEY = 'app-store-installed-apps';
+const InstalledAppsKey = "app-store-installed-apps";
 
 const windowManagerStore = useWindowManagerStore();
 
 const installedApps = ref<string[]>([]);
 
-const _emit = defineEmits<{
-  'app-installed': [app: AvailableApp];
+const emit = defineEmits<{
+  "app-installed": [app: AvailableApp];
 }>();
 
 const loadInstalledApps = (): void => {
-  const saved = localStorage.getItem(INSTALLED_APPS_KEY);
+  const saved = localStorage.getItem(InstalledAppsKey);
   if (saved) {
     installedApps.value = JSON.parse(saved);
   }
 };
 
-const _saveInstalledApps = (): void => {
-  localStorage.setItem(INSTALLED_APPS_KEY, JSON.stringify(installedApps.value));
+const saveInstalledApps = (): void => {
+  localStorage.setItem(InstalledAppsKey, JSON.stringify(installedApps.value));
 };
 
 const isDownloading = (appId: string): boolean => {
@@ -274,9 +273,6 @@ const isInstalled = (appId: string): boolean => {
 };
 
 const canUnlockApp = (app: AvailableApp): boolean => {
-  // 由于careerLevelsConfig没有id属性，我们简化逻辑，只检查subLevel
-  const currentSubLevel = careerSystemStore.getCurrentSubLevel;
-
   // 假设所有应用都可以解锁，除了需要特定subLevel的
   if (app.requiredSubLevel) {
     // 使用当前小等级的索引作为order值
@@ -288,14 +284,14 @@ const canUnlockApp = (app: AvailableApp): boolean => {
 
 const getLevelNameById = (levelId: string): string => {
   const levelMap: Record<string, string> = {
-    'trainee-planner': '见习策划',
-    'junior-planner': '初级策划',
-    'intermediate-planner': '中级策划',
-    'senior-planner': '高级策划',
-    'expert-planner': '资深策划',
-    'master-planner': '专家策划',
-    'manager-planner': '策划经理',
-    'director-planner': '策划总监',
+    "trainee-planner": "见习策划",
+    "junior-planner": "初级策划",
+    "intermediate-planner": "中级策划",
+    "senior-planner": "高级策划",
+    "expert-planner": "资深策划",
+    "master-planner": "专家策划",
+    "manager-planner": "策划经理",
+    "director-planner": "策划总监",
   };
   return levelMap[levelId] || levelId;
 };
@@ -309,24 +305,24 @@ const getUnlockConditionText = (app: AvailableApp): string => {
   const levelName = getLevelNameById(app.requiredLevelId);
   const subLevelName = app.requiredSubLevel
     ? getSubLevelName(app.requiredLevelId, app.requiredSubLevel)
-    : '';
+    : "";
   return `${levelName}${subLevelName}`;
 };
 
 const getAppStatusText = (app: AvailableApp): string => {
   if (isInstalled(app.id)) {
-    return '已安装';
+    return "已安装";
   }
 
   if (isDownloading(app.id)) {
-    return '下载中';
+    return "下载中";
   }
 
   if (!canUnlockApp(app)) {
-    return '未解锁';
+    return "未解锁";
   }
 
-  return '可下载';
+  return "可下载";
 };
 
 const getDownloadProgress = (appId: string): number => {
@@ -353,8 +349,8 @@ const simulateDownload = (app: AvailableApp): void => {
         clearInterval(interval);
         setTimeout(() => {
           installedApps.value.push(app.id);
-          _saveInstalledApps();
-          _emit('app-installed', app);
+          saveInstalledApps();
+          emit("app-installed", app);
           windowManagerStore.removeCompletedDownload(app.id);
         }, 500);
       }
@@ -366,13 +362,13 @@ const simulateDownload = (app: AvailableApp): void => {
 
 const filteredApps = computed(() => {
   switch (activeCategory.value) {
-    case 'system':
-      return availableApps.filter((app) => app.category === 'system');
-    case 'unlocked':
+    case "system":
+      return availableApps.filter((app) => app.category === "system");
+    case "unlocked":
       return availableApps.filter((app) => canUnlockApp(app));
-    case 'locked':
+    case "locked":
       return availableApps.filter((app) => !canUnlockApp(app));
-    case 'mini':
+    case "mini":
       return [];
     default:
       return availableApps;

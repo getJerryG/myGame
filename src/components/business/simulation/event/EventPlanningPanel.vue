@@ -93,11 +93,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import EventTypeSelector from './EventTypeSelector.vue';
-import EventConfigForm from './EventConfigForm.vue';
-import EventHistoryList from './EventHistoryList.vue';
-import EventPreviewModal from './EventPreviewModal.vue';
+import { ref } from "vue";
+import EventTypeSelector from "./EventTypeSelector.vue";
+import EventConfigForm from "./EventConfigForm.vue";
+import EventHistoryList from "./EventHistoryList.vue";
+import EventPreviewModal from "./EventPreviewModal.vue";
 
 // 定义类型接口
 interface EventReward {
@@ -156,152 +156,152 @@ interface ImpactPreview {
 }
 
 // 向父组件传递事件
-const emit = defineEmits(['event-saved']);
+const emit = defineEmits(["event-saved"]);
 
 // 数据
 const isCollapsed = ref(false);
 
 // 活动类型
 const eventTypes = ref<EventType[]>([
-  { label: '限时活动', value: 'limited', icon: '⏱️' },
-  { label: '节日活动', value: 'holiday', icon: '🎄' },
-  { label: '社区活动', value: 'community', icon: '👥' },
+  { label: "限时活动", value: "limited", icon: "⏱️" },
+  { label: "节日活动", value: "holiday", icon: "🎄" },
+  { label: "社区活动", value: "community", icon: "👥" },
 ]);
 
 // 活动模板
 const eventTemplates = ref<EventTemplate[]>([
   {
-    id: 'template1',
-    name: '周末狂欢',
-    icon: '🎉',
-    description: '适合周末的简单活动，提升用户活跃度',
+    id: "template1",
+    name: "周末狂欢",
+    icon: "🎉",
+    description: "适合周末的简单活动，提升用户活跃度",
     config: {
-      name: '周末狂欢活动',
-      type: 'limited',
-      rewards: [{ type: 'experience', name: '双倍经验', quantity: 2 }],
+      name: "周末狂欢活动",
+      type: "limited",
+      rewards: [{ type: "experience", name: "双倍经验", quantity: 2 }],
       duration: 2,
-      target: 'all',
+      target: "all",
       conditions: {
         level: false,
         rank: false,
       },
       levelRequirement: 10,
-      rankRequirement: '钻石',
-      startDate: '',
-      endDate: '',
+      rankRequirement: "钻石",
+      startDate: "",
+      endDate: "",
     },
   },
   {
-    id: 'template2',
-    name: '节日特惠',
-    icon: '🎁',
-    description: '节日期间的促销活动，提升收入',
+    id: "template2",
+    name: "节日特惠",
+    icon: "🎁",
+    description: "节日期间的促销活动，提升收入",
     config: {
-      name: '节日特惠活动',
-      type: 'holiday',
-      rewards: [{ type: 'discount', name: '皮肤折扣', quantity: 0.8 }],
+      name: "节日特惠活动",
+      type: "holiday",
+      rewards: [{ type: "discount", name: "皮肤折扣", quantity: 0.8 }],
       duration: 7,
-      target: 'all',
+      target: "all",
       conditions: {
         level: false,
         rank: false,
       },
       levelRequirement: 10,
-      rankRequirement: '钻石',
-      startDate: '',
-      endDate: '',
+      rankRequirement: "钻石",
+      startDate: "",
+      endDate: "",
     },
   },
   {
-    id: 'template3',
-    name: '新手福利',
-    icon: '🌟',
-    description: '针对新用户的福利活动，提升留存',
+    id: "template3",
+    name: "新手福利",
+    icon: "🌟",
+    description: "针对新用户的福利活动，提升留存",
     config: {
-      name: '新手福利活动',
-      type: 'limited',
-      rewards: [{ type: 'currency', name: '金币奖励', quantity: 1000 }],
+      name: "新手福利活动",
+      type: "limited",
+      rewards: [{ type: "currency", name: "金币奖励", quantity: 1000 }],
       duration: 14,
-      target: 'new',
+      target: "new",
       conditions: {
         level: false,
         rank: false,
       },
       levelRequirement: 10,
-      rankRequirement: '钻石',
-      startDate: '',
-      endDate: '',
+      rankRequirement: "钻石",
+      startDate: "",
+      endDate: "",
     },
   },
   {
-    id: 'template4',
-    name: '社区争霸',
-    icon: '🏆',
-    description: '社区竞赛活动，提升用户粘性',
+    id: "template4",
+    name: "社区争霸",
+    icon: "🏆",
+    description: "社区竞赛活动，提升用户粘性",
     config: {
-      name: '社区争霸赛',
-      type: 'community',
-      rewards: [{ type: 'title', name: '社区王者', quantity: 1 }],
+      name: "社区争霸赛",
+      type: "community",
+      rewards: [{ type: "title", name: "社区王者", quantity: 1 }],
       duration: 10,
-      target: 'active',
+      target: "active",
       conditions: {
         level: false,
         rank: false,
       },
       levelRequirement: 10,
-      rankRequirement: '钻石',
-      startDate: '',
-      endDate: '',
+      rankRequirement: "钻石",
+      startDate: "",
+      endDate: "",
     },
   },
 ]);
 
 // 选中的活动类型
-const selectedEventType = ref('limited');
+const selectedEventType = ref("limited");
 
 // 活动配置
 const eventConfig = ref<EventConfig>({
-  name: '',
-  startDate: '',
-  endDate: '',
-  type: 'limited',
-  rewards: [{ type: 'skin', name: '', quantity: 1 }],
+  name: "",
+  startDate: "",
+  endDate: "",
+  type: "limited",
+  rewards: [{ type: "skin", name: "", quantity: 1 }],
   conditions: {
     level: false,
     rank: false,
   },
   levelRequirement: 10,
-  rankRequirement: '钻石',
+  rankRequirement: "钻石",
 });
 
 // 历史活动数据
 const historicalEvents = ref<HistoricalEvent[]>([
   {
     id: 1,
-    name: '春节限时活动',
-    type: 'holiday',
-    icon: '🎄',
-    date: '2026-01-20 ~ 2026-02-05',
+    name: "春节限时活动",
+    type: "holiday",
+    icon: "🎄",
+    date: "2026-01-20 ~ 2026-02-05",
     participationRate: 85,
     rating: 92,
     revenueIncrease: 35,
   },
   {
     id: 2,
-    name: '周末双倍经验',
-    type: 'limited',
-    icon: '⏱️',
-    date: '2026-01-15 ~ 2026-01-17',
+    name: "周末双倍经验",
+    type: "limited",
+    icon: "⏱️",
+    date: "2026-01-15 ~ 2026-01-17",
     participationRate: 78,
     rating: 85,
     revenueIncrease: 15,
   },
   {
     id: 3,
-    name: '社区挑战赛',
-    type: 'community',
-    icon: '👥',
-    date: '2026-01-10 ~ 2026-01-20',
+    name: "社区挑战赛",
+    type: "community",
+    icon: "👥",
+    date: "2026-01-10 ~ 2026-01-20",
     participationRate: 65,
     rating: 88,
     revenueIncrease: 20,
@@ -315,10 +315,10 @@ const previewConfig = ref<EventConfig>({ ...eventConfig.value });
 // 影响预览
 const showImpactPreview = ref(false);
 const impactPreview = ref<ImpactPreview[]>([
-  { metric: '用户活跃度', change: 15, description: '预计提升15%的日活跃用户' },
-  { metric: '玩家满意度', change: 8, description: '预计提升8%的玩家满意度' },
-  { metric: '收入', change: 20, description: '预计提升20%的活动期间收入' },
-  { metric: '留存率', change: 5, description: '预计提升5%的7日留存率' },
+  { metric: "用户活跃度", change: 15, description: "预计提升15%的日活跃用户" },
+  { metric: "玩家满意度", change: 8, description: "预计提升8%的玩家满意度" },
+  { metric: "收入", change: 20, description: "预计提升20%的活动期间收入" },
+  { metric: "留存率", change: 5, description: "预计提升5%的7日留存率" },
 ]);
 
 // 方法
@@ -356,50 +356,50 @@ const quickPlan = (): void => {
 // 生成影响预览
 const generateImpactPreview = (eventType: string): void => {
   // 根据活动类型生成不同的影响预览
-  if (eventType === 'limited') {
+  if (eventType === "limited") {
     impactPreview.value = [
       {
-        metric: '用户活跃度',
+        metric: "用户活跃度",
         change: 15,
-        description: '预计提升15%的日活跃用户',
+        description: "预计提升15%的日活跃用户",
       },
       {
-        metric: '玩家满意度',
+        metric: "玩家满意度",
         change: 8,
-        description: '预计提升8%的玩家满意度',
+        description: "预计提升8%的玩家满意度",
       },
-      { metric: '收入', change: 10, description: '预计提升10%的活动期间收入' },
-      { metric: '留存率', change: 5, description: '预计提升5%的7日留存率' },
+      { metric: "收入", change: 10, description: "预计提升10%的活动期间收入" },
+      { metric: "留存率", change: 5, description: "预计提升5%的7日留存率" },
     ];
-  } else if (eventType === 'holiday') {
+  } else if (eventType === "holiday") {
     impactPreview.value = [
       {
-        metric: '用户活跃度',
+        metric: "用户活跃度",
         change: 25,
-        description: '预计提升25%的日活跃用户',
+        description: "预计提升25%的日活跃用户",
       },
       {
-        metric: '玩家满意度',
+        metric: "玩家满意度",
         change: 15,
-        description: '预计提升15%的玩家满意度',
+        description: "预计提升15%的玩家满意度",
       },
-      { metric: '收入', change: 30, description: '预计提升30%的活动期间收入' },
-      { metric: '留存率', change: 8, description: '预计提升8%的7日留存率' },
+      { metric: "收入", change: 30, description: "预计提升30%的活动期间收入" },
+      { metric: "留存率", change: 8, description: "预计提升8%的7日留存率" },
     ];
-  } else if (eventType === 'community') {
+  } else if (eventType === "community") {
     impactPreview.value = [
       {
-        metric: '用户活跃度',
+        metric: "用户活跃度",
         change: 20,
-        description: '预计提升20%的日活跃用户',
+        description: "预计提升20%的日活跃用户",
       },
       {
-        metric: '玩家满意度',
+        metric: "玩家满意度",
         change: 12,
-        description: '预计提升12%的玩家满意度',
+        description: "预计提升12%的玩家满意度",
       },
-      { metric: '收入', change: 15, description: '预计提升15%的活动期间收入' },
-      { metric: '留存率', change: 10, description: '预计提升10%的7日留存率' },
+      { metric: "收入", change: 15, description: "预计提升15%的活动期间收入" },
+      { metric: "留存率", change: 10, description: "预计提升10%的7日留存率" },
     ];
   }
 };
@@ -418,10 +418,10 @@ const closePreview = (): void => {
 // 保存活动
 const saveEvent = (config: EventConfig): void => {
   // 这里可以添加保存逻辑
-  emit('event-saved', config);
+  emit("event-saved", config);
 
   // 显示成功提示
-  alert('活动保存成功！');
+  alert("活动保存成功！");
 };
 </script>
 

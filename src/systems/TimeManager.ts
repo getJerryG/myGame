@@ -6,7 +6,11 @@ export interface GameDate {
 }
 
 // 时间阶段类型
-export type TimePhase = "new_day" | "auto_settlement" | "player_operation" | "waiting_next_day";
+export type TimePhase =
+  | "new_day"
+  | "auto_settlement"
+  | "player_operation"
+  | "waiting_next_day";
 
 // 时间管理系统类
 export class TimeManager {
@@ -14,7 +18,9 @@ export class TimeManager {
   private startTime: GameDate;
   private isPlayerTurn: boolean;
   private currentPhase: TimePhase;
-  private timeUpdateCallback: ((date: GameDate, phase: TimePhase) => void) | null = null;
+  private timeUpdateCallback:
+    | ((date: GameDate, phase: TimePhase) => void)
+    | null = null;
 
   // 构造函数
   constructor() {
@@ -31,7 +37,7 @@ export class TimeManager {
   }
 
   // 初始化时间管理器
-  public init() {
+  public init(): void {
     this.currentDate = { ...this.startTime };
     this.isPlayerTurn = true;
     this.currentPhase = "player_operation";
@@ -39,7 +45,9 @@ export class TimeManager {
   }
 
   // 设置时间更新回调
-  public setTimeUpdateCallback(callback: (date: GameDate, phase: TimePhase) => void): void {
+  public setTimeUpdateCallback(
+    callback: (date: GameDate, phase: TimePhase) => void,
+  ): void {
     this.timeUpdateCallback = callback;
   }
 

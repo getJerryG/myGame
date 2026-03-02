@@ -1,19 +1,19 @@
 // 定义事件类型
 export type EventType =
-  | 'timeUpdate'
-  | 'levelUp'
-  | 'taskComplete'
-  | 'gameReleased'
-  | 'careerPromoted'
-  | 'simulationStateChange'
-  | 'businessDataUpdate'
-  | 'eventTriggered'
-  | 'userAction'
-  | 'collaborationRequest'
-  | 'collaborationResponse';
+  | "timeUpdate"
+  | "levelUp"
+  | "taskComplete"
+  | "gameReleased"
+  | "careerPromoted"
+  | "simulationStateChange"
+  | "businessDataUpdate"
+  | "eventTriggered"
+  | "userAction"
+  | "collaborationRequest"
+  | "collaborationResponse";
 
 // 定义事件监听器类型
-export type EventListener<T = any> = (data: T) => void;
+export type EventListener<T = unknown> = (data: T) => void;
 
 // 定义监听器配置类型
 export interface ListenerConfig {
@@ -28,7 +28,7 @@ export class EventBus {
   private listeners: Map<EventType, ListenerConfig[]> = new Map();
 
   // 订阅事件
-  on<T = any>(
+  public on<T = unknown>(
     event: EventType,
     callback: EventListener<T>,
     priority = 0,
@@ -59,7 +59,7 @@ export class EventBus {
   }
 
   // 订阅一次性事件
-  once<T = any>(
+  public once<T = unknown>(
     event: EventType,
     callback: EventListener<T>,
     priority = 0,
@@ -73,7 +73,7 @@ export class EventBus {
   }
 
   // 取消订阅事件
-  off(event: EventType, callback?: EventListener): void {
+  public off(event: EventType, callback?: EventListener): void {
     const listeners = this.listeners.get(event);
     if (!listeners) return;
 
@@ -91,7 +91,7 @@ export class EventBus {
   }
 
   // 发布事件
-  emit<T = any>(event: EventType, data?: T): void {
+  public emit<T = unknown>(event: EventType, data?: T): void {
     const listeners = this.listeners.get(event);
     if (!listeners || listeners.length === 0) return;
 
@@ -114,7 +114,7 @@ export class EventBus {
   }
 
   // 获取事件的监听器数量
-  listenerCount(event?: EventType): number {
+  public listenerCount(event?: EventType): number {
     if (!event) {
       // 返回所有事件的监听器总数
       return Array.from(this.listeners.values()).reduce(
@@ -128,12 +128,12 @@ export class EventBus {
   }
 
   // 移除所有事件的监听器
-  removeAllListeners(): void {
+  public removeAllListeners(): void {
     this.listeners.clear();
   }
 
   // 获取所有已注册的事件类型
-  getEventTypes(): EventType[] {
+  public getEventTypes(): EventType[] {
     return Array.from(this.listeners.keys());
   }
 }

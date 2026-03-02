@@ -22,21 +22,21 @@
 </template>
 
 <script setup lang="ts">
-import { useLotteryStore } from '@/stores/lotteryStore';
+import { useLotteryStore } from "@/stores/lotteryStore";
 
 // 暴露事件给父组件
-const emit = defineEmits(['single-draw', 'ten-draws']);
+const emit = defineEmits(["single-draw", "ten-draws"]);
 
 const lotteryStore = useLotteryStore();
 
 // 处理单抽
 const handleSingleDraw = (): void => {
-  emit('single-draw');
+  emit("single-draw");
 };
 
 // 处理10连抽
 const handleTenDraws = (): void => {
-  emit('ten-draws');
+  emit("ten-draws");
 };
 </script>
 

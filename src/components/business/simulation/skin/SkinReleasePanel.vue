@@ -56,127 +56,169 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import SkinLibrary from './SkinLibrary.vue';
-import SkinDetail from './SkinDetail.vue';
+import { ref } from "vue";
+import SkinLibrary from "./SkinLibrary.vue";
+import SkinDetail from "./SkinDetail.vue";
+
+// 定义皮肤效果接口
+interface SkinEffect {
+  icon: string;
+  description: string;
+}
+
+// 定义皮肤接口
+interface Skin {
+  id: number;
+  name: string;
+  avatar: string;
+  heroName: string;
+  quality: string;
+  price: number;
+  expected: {
+    sales: number;
+    satisfaction: number;
+  };
+  effects: SkinEffect[];
+}
+
+// 定义品质选项接口
+interface QualityOption {
+  value: string;
+  label: string;
+  icon: string;
+}
+
+// 定义发布配置接口
+interface ReleaseConfig {
+  discount: number;
+  isLimited: boolean;
+}
+
+// 定义发布数据接口
+interface ReleaseData {
+  skin: Skin;
+  config: ReleaseConfig;
+}
 
 // 定义事件
-const emit = defineEmits(['skin-released']);
+const emit = defineEmits<{
+  "skin-released": [data: ReleaseData];
+}>();
 
 // 响应式数据
 const isCollapsed = ref(false);
-const selectedSkin = ref(null);
-const selectedQuality = ref('all');
+const selectedSkin = ref<Skin | null>(null);
+const selectedQuality = ref("all");
 
 // 品质选项
-const qualities = [
-  { value: 'all', label: '全部', icon: '🎯' },
-  { value: 'brave', label: '勇者', icon: '⚔️' },
-  { value: 'epic', label: '史诗', icon: '🔮' },
-  { value: 'legend', label: '传说', icon: '👑' },
-  { value: 'limited', label: '限定', icon: '🔒' },
+const qualities: QualityOption[] = [
+  { value: "all", label: "全部", icon: "🎯" },
+  { value: "brave", label: "勇者", icon: "⚔️" },
+  { value: "epic", label: "史诗", icon: "🔮" },
+  { value: "legend", label: "传说", icon: "👑" },
+  { value: "limited", label: "限定", icon: "🔒" },
 ];
 
 // 皮肤数据
-const skins = ref([
+const skins = ref<Skin[]>([
   {
     id: 1,
-    name: '凤求凰',
-    avatar: '🔥',
-    heroName: '李白',
-    quality: 'legend',
+    name: "凤求凰",
+    avatar: "🔥",
+    heroName: "李白",
+    quality: "legend",
     price: 1688,
     expected: {
       sales: 120,
       satisfaction: 95,
     },
     effects: [
-      { icon: '🔥', description: '技能特效：凤凰环绕' },
-      { icon: '🎵', description: '专属音效' },
-      { icon: '💫', description: '回城特效' },
-      { icon: '🌟', description: '头像框' },
+      { icon: "🔥", description: "技能特效：凤凰环绕" },
+      { icon: "🎵", description: "专属音效" },
+      { icon: "💫", description: "回城特效" },
+      { icon: "🌟", description: "头像框" },
     ],
   },
   {
     id: 2,
-    name: '圣诞恋歌',
-    avatar: '🎄',
-    heroName: '貂蝉',
-    quality: 'epic',
+    name: "圣诞恋歌",
+    avatar: "🎄",
+    heroName: "貂蝉",
+    quality: "epic",
     price: 888,
     expected: {
       sales: 85,
       satisfaction: 90,
     },
     effects: [
-      { icon: '❄️', description: '技能特效：雪花飞舞' },
-      { icon: '🎵', description: '专属音效' },
-      { icon: '🎁', description: '回城特效' },
+      { icon: "❄️", description: "技能特效：雪花飞舞" },
+      { icon: "🎵", description: "专属音效" },
+      { icon: "🎁", description: "回城特效" },
     ],
   },
   {
     id: 3,
-    name: '街头霸王',
-    avatar: '🥊',
-    heroName: '韩信',
-    quality: 'epic',
+    name: "街头霸王",
+    avatar: "🥊",
+    heroName: "韩信",
+    quality: "epic",
     price: 888,
     expected: {
       sales: 75,
       satisfaction: 88,
     },
     effects: [
-      { icon: '🔥', description: '技能特效：街头风格' },
-      { icon: '🎵', description: '专属音效' },
+      { icon: "🔥", description: "技能特效：街头风格" },
+      { icon: "🎵", description: "专属音效" },
     ],
   },
   {
     id: 4,
-    name: '爱与和平',
-    avatar: '🕊️',
-    heroName: '程咬金',
-    quality: 'brave',
+    name: "爱与和平",
+    avatar: "🕊️",
+    heroName: "程咬金",
+    quality: "brave",
     price: 488,
     expected: {
       sales: 35,
       satisfaction: 82,
     },
-    effects: [{ icon: '💚', description: '技能特效：绿色主题' }],
+    effects: [{ icon: "💚", description: "技能特效：绿色主题" }],
   },
   {
     id: 5,
-    name: '黄金射手座',
-    avatar: '🏹',
-    heroName: '后羿',
-    quality: 'legend',
+    name: "黄金射手座",
+    avatar: "🏹",
+    heroName: "后羿",
+    quality: "legend",
     price: 1688,
     expected: {
       sales: 105,
       satisfaction: 92,
     },
     effects: [
-      { icon: '✨', description: '技能特效：金色光芒' },
-      { icon: '🎵', description: '专属音效' },
-      { icon: '💫', description: '回城特效' },
-      { icon: '🌟', description: '头像框' },
-      { icon: '🦅', description: '击败特效' },
+      { icon: "✨", description: "技能特效：金色光芒" },
+      { icon: "🎵", description: "专属音效" },
+      { icon: "💫", description: "回城特效" },
+      { icon: "🌟", description: "头像框" },
+      { icon: "🦅", description: "击败特效" },
     ],
   },
   {
     id: 6,
-    name: 'KPL限定',
-    avatar: '🏆',
-    heroName: '貂蝉',
-    quality: 'limited',
+    name: "KPL限定",
+    avatar: "🏆",
+    heroName: "貂蝉",
+    quality: "limited",
     price: 888,
     expected: {
       sales: 95,
       satisfaction: 94,
     },
     effects: [
-      { icon: '⚡', description: '技能特效：电光特效' },
-      { icon: '🎵', description: '专属音效' },
-      { icon: '🏆', description: '回城特效' },
+      { icon: "⚡", description: "技能特效：电光特效" },
+      { icon: "🎵", description: "专属音效" },
+      { icon: "🏆", description: "回城特效" },
     ],
   },
 ]);
@@ -185,23 +227,23 @@ const skins = ref([
 const predictedTrend = ref([10, 30, 60, 85, 95, 80, 60, 40, 25, 15]);
 
 // 切换折叠状态
-const toggleCollapse = () => {
+const toggleCollapse = (): void => {
   isCollapsed.value = !isCollapsed.value;
 };
 
 // 选择皮肤
-const selectSkin = (skin) => {
+const selectSkin = (skin: Skin): void => {
   selectedSkin.value = skin;
 };
 
 // 处理品质变化
-const handleQualityChange = (quality) => {
+const handleQualityChange = (quality: string): void => {
   selectedQuality.value = quality;
 };
 
 // 处理皮肤发布
-const handleSkinReleased = (data) => {
-  emit('skin-released', data);
+const handleSkinReleased = (data: ReleaseData): void => {
+  emit("skin-released", data);
 };
 </script>
 

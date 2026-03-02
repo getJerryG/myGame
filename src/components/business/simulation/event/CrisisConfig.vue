@@ -58,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref } from "vue";
 
 const props = defineProps({
   crisisTypes: {
@@ -71,7 +71,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['select-crisis', 'select-solution']);
+const emit = defineEmits(["select-crisis", "select-solution"]);
 
 // 选中的危机
 const selectedCrisis = ref(null);
@@ -89,13 +89,13 @@ const currentCrisisSolutions = computed(() => {
 function selectCrisis(crisisId: string | number): void {
   selectedCrisis.value = crisisId;
   selectedSolution.value = null;
-  emit('select-crisis', crisisId);
+  emit("select-crisis", crisisId);
 }
 
 // 选择解决方案
 function selectSolution(index: number): void {
   selectedSolution.value = index;
-  emit('select-solution', index);
+  emit("select-solution", index);
 }
 </script>
 

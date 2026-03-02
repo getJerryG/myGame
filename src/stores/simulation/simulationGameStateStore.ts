@@ -1,11 +1,11 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 // 定义游戏状态类型
 interface GameState {
   id: string;
   name: string;
   version: string;
-  status: 'development' | 'beta' | 'released' | 'maintenance' | 'sunset';
+  status: "development" | "beta" | "released" | "maintenance" | "sunset";
   releaseDate?: number;
   lastUpdate: number;
   playerCount: {
@@ -54,14 +54,14 @@ interface SimulationGameStateState {
 }
 
 // 创建并导出游戏状态store
-export const useSimulationGameStateStore = defineStore('simulationGameState', {
+export const useSimulationGameStateStore = defineStore("simulationGameState", {
   state: (): SimulationGameStateState => ({
     // 初始当前游戏状态
     currentState: {
-      id: 'game_main',
-      name: '模拟游戏',
-      version: '1.0.0',
-      status: 'development',
+      id: "game_main",
+      name: "模拟游戏",
+      version: "1.0.0",
+      status: "development",
       lastUpdate: Date.now(),
       playerCount: {
         dailyActive: 0,
@@ -82,8 +82,8 @@ export const useSimulationGameStateStore = defineStore('simulationGameState', {
         featureRequests: 20,
         technicalDebt: 1000,
       },
-      currentPhase: '前期开发',
-      nextMilestone: 'Alpha测试',
+      currentPhase: "前期开发",
+      nextMilestone: "Alpha测试",
     },
     // 初始游戏状态历史为空数组
     stateHistory: [],
@@ -106,10 +106,10 @@ export const useSimulationGameStateStore = defineStore('simulationGameState', {
       const metrics = state.currentState.performanceMetrics;
 
       return {
-        fps: metrics.averageFPS >= thresholds.minFPS ? 'good' : 'poor',
-        loadTime: metrics.loadTime <= thresholds.maxLoadTime ? 'good' : 'poor',
+        fps: metrics.averageFPS >= thresholds.minFPS ? "good" : "poor",
+        loadTime: metrics.loadTime <= thresholds.maxLoadTime ? "good" : "poor",
         crashRate:
-          metrics.crashRate <= thresholds.maxCrashRate ? 'good' : 'poor',
+          metrics.crashRate <= thresholds.maxCrashRate ? "good" : "poor",
       };
     },
 
@@ -150,7 +150,7 @@ export const useSimulationGameStateStore = defineStore('simulationGameState', {
     },
 
     // 更新玩家数量
-    updatePlayerCount(updates: Partial<GameState['playerCount']>) {
+    updatePlayerCount(updates: Partial<GameState["playerCount"]>) {
       this.updateGameState({
         playerCount: { ...this.currentState.playerCount, ...updates },
       });
@@ -158,7 +158,7 @@ export const useSimulationGameStateStore = defineStore('simulationGameState', {
 
     // 更新性能指标
     updatePerformanceMetrics(
-      updates: Partial<GameState['performanceMetrics']>,
+      updates: Partial<GameState["performanceMetrics"]>,
     ) {
       this.updateGameState({
         performanceMetrics: {
@@ -169,7 +169,7 @@ export const useSimulationGameStateStore = defineStore('simulationGameState', {
     },
 
     // 更新技术统计
-    updateTechnicalStats(updates: Partial<GameState['technicalStats']>) {
+    updateTechnicalStats(updates: Partial<GameState["technicalStats"]>) {
       this.updateGameState({
         technicalStats: { ...this.currentState.technicalStats, ...updates },
       });
@@ -189,10 +189,10 @@ export const useSimulationGameStateStore = defineStore('simulationGameState', {
     // 发布游戏
     releaseGame() {
       this.updateGameState({
-        status: 'released',
+        status: "released",
         releaseDate: Date.now(),
-        currentPhase: '正式运营',
-        nextMilestone: '第一个内容更新',
+        currentPhase: "正式运营",
+        nextMilestone: "第一个内容更新",
       });
     },
 
@@ -206,7 +206,7 @@ export const useSimulationGameStateStore = defineStore('simulationGameState', {
 
   // 持久化存储
   persist: {
-    key: 'simulation-game-state',
+    key: "simulation-game-state",
     storage: localStorage,
   },
 });

@@ -32,7 +32,7 @@ defineProps({
   },
   title: {
     type: String,
-    default: '提示',
+    default: "提示",
   },
   showFooter: {
     type: Boolean,
@@ -40,14 +40,14 @@ defineProps({
   },
   buttons: {
     type: Array,
-    default: () => [{ text: '确定', type: 'primary' }],
+    default: () => [{ text: "确定", type: "primary" }],
   },
 });
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(["close"]);
 
 const closeModal = (): void => {
-  emit('close');
+  emit("close");
 };
 </script>
 

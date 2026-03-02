@@ -104,26 +104,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
 
 // 发布状态
-const releaseStatus = ref<'idle' | 'releasing' | 'success' | 'failed'>('idle');
+const releaseStatus = ref<"idle" | "releasing" | "success" | "failed">("idle");
 const isReleasing = ref(false);
 
 // 发布配置
 const releaseConfig = ref({
-  version: '1.0.0',
-  changelog: '',
+  version: "1.0.0",
+  changelog: "",
   selectedChannels: [] as string[],
 });
 
 // 发布渠道
 const channels = ref([
-  { id: 'appstore', name: 'App Store' },
-  { id: 'googleplay', name: 'Google Play' },
-  { id: 'steam', name: 'Steam' },
-  { id: 'epic', name: 'Epic Games' },
-  { id: 'tap', name: 'TapTap' },
+  { id: "appstore", name: "App Store" },
+  { id: "googleplay", name: "Google Play" },
+  { id: "steam", name: "Steam" },
+  { id: "epic", name: "Epic Games" },
+  { id: "tap", name: "TapTap" },
 ]);
 
 // 发布历史
@@ -138,56 +138,56 @@ interface Release {
 const releaseHistory = ref<Release[]>([
   {
     id: 1,
-    version: '0.9.0',
-    date: '2024-01-15',
-    channels: ['App Store', 'Google Play'],
-    changelog: 'Beta版本发布，包含基础游戏功能',
+    version: "0.9.0",
+    date: "2024-01-15",
+    channels: ["App Store", "Google Play"],
+    changelog: "Beta版本发布，包含基础游戏功能",
   },
   {
     id: 2,
-    version: '0.8.0',
-    date: '2024-01-01',
-    channels: ['TestFlight'],
-    changelog: 'Alpha测试版本',
+    version: "0.8.0",
+    date: "2024-01-01",
+    channels: ["TestFlight"],
+    changelog: "Alpha测试版本",
   },
 ]);
 
 // 获取状态图标
 const getStatusIcon = (): string => {
   const icons: Record<string, string> = {
-    idle: '📦',
-    releasing: '🚀',
-    success: '✅',
-    failed: '❌',
+    idle: "📦",
+    releasing: "🚀",
+    success: "✅",
+    failed: "❌",
   };
-  return icons[releaseStatus.value] || '📦';
+  return icons[releaseStatus.value] || "📦";
 };
 
 // 获取状态文本
 const getStatusText = (): string => {
   const texts: Record<string, string> = {
-    idle: '准备发布',
-    releasing: '正在发布...',
-    success: '发布成功',
-    failed: '发布失败',
+    idle: "准备发布",
+    releasing: "正在发布...",
+    success: "发布成功",
+    failed: "发布失败",
   };
-  return texts[releaseStatus.value] || '准备发布';
+  return texts[releaseStatus.value] || "准备发布";
 };
 
 // 开始发布
 const startRelease = () => {
   if (releaseConfig.value.selectedChannels.length === 0) {
-    alert('请至少选择一个发布渠道');
+    alert("请至少选择一个发布渠道");
     return;
   }
 
   isReleasing.value = true;
-  releaseStatus.value = 'releasing';
+  releaseStatus.value = "releasing";
 
   // 模拟发布过程
   setTimeout(() => {
     isReleasing.value = false;
-    releaseStatus.value = 'success';
+    releaseStatus.value = "success";
 
     // 添加到历史记录
     const selectedChannelNames = channels.value
@@ -197,14 +197,14 @@ const startRelease = () => {
     releaseHistory.value.unshift({
       id: Date.now(),
       version: releaseConfig.value.version,
-      date: new Date().toISOString().split('T')[0],
+      date: new Date().toISOString().split("T")[0],
       channels: selectedChannelNames,
-      changelog: releaseConfig.value.changelog || '无更新说明',
+      changelog: releaseConfig.value.changelog || "无更新说明",
     });
 
     // 重置状态
     setTimeout(() => {
-      releaseStatus.value = 'idle';
+      releaseStatus.value = "idle";
     }, 3000);
   }, 3000);
 };

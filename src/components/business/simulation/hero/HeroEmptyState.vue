@@ -2,17 +2,12 @@
   <div class="empty-state">
     <div class="empty-icon">👥</div>
     <p>没有符合条件的英雄</p>
-    <button
-      class="reset-btn"
-      @click="$emit('reset')"
-    >
-      重置筛选条件
-    </button>
+    <button class="reset-btn" @click="$emit('reset')">重置筛选条件</button>
   </div>
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits<{
+const _emit = defineEmits<{
   reset: [];
 }>();
 </script>

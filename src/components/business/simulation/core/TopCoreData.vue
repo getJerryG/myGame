@@ -109,23 +109,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
-import PlannerInfo from './PlannerInfo.vue';
-import TimeSystem from './TimeSystem.vue';
-import MetricCard from './MetricCard.vue';
+import { ref, computed, onMounted, onUnmounted } from "vue";
+import PlannerInfo from "./PlannerInfo.vue";
+import TimeSystem from "./TimeSystem.vue";
+import MetricCard from "./MetricCard.vue";
 
-import type { GameState } from '@/types/game';
+import type { GameState } from "@/types/game";
+import type { BusinessData } from "@/types";
 
 // 定义 props
 const props = defineProps<{
   gameState: GameState;
-  businessData: any;
+  businessData: BusinessData;
   showTrends?: boolean;
 }>();
 
 // 定义 emits
 const emit = defineEmits<{
-  'next-day': [];
+  "next-day": [];
 }>();
 
 // 模拟动画数据
@@ -184,52 +185,54 @@ const progressChange = computed(() => {
 
 // 趋势数据
 const activeUsersTrend = computed(() => {
-  return '0,25 10,20 20,22 30,18 40,20 50,15 60,18 70,22 80,20 90,25 100,20';
+  return "0,25 10,20 20,22 30,18 40,20 50,15 60,18 70,22 80,20 90,25 100,20";
 });
 
 const marketShareTrend = computed(() => {
-  return '0,30 10,35 20,32 30,38 40,35 50,40 60,38 70,42 80,40 90,45 100,42';
+  return "0,30 10,35 20,32 30,38 40,35 50,40 60,38 70,42 80,40 90,45 100,42";
 });
 
 const satisfactionTrend = computed(() => {
-  return '0,70 10,72 20,68 30,75 40,72 50,78 60,75 70,80 80,78 90,82 100,80';
+  return "0,70 10,72 20,68 30,75 40,72 50,78 60,75 70,80 80,78 90,82 100,80";
 });
 
 const ratingTrend = computed(() => {
-  return '0,7.5 10,7.8 20,7.6 30,8.0 40,7.8 50,8.2 60,8.0 70,8.4 80,8.2 90,8.6 100,8.4';
+  return "0,7.5 10,7.8 20,7.6 30,8.0 40,7.8 50,8.2 60,8.0 70,8.4 80,8.2 90,8.6 100,8.4";
 });
 
 const competitionTrend = computed(() => {
-  return '0,40 10,45 20,42 30,50 40,48 50,55 60,52 70,60 80,58 90,65 100,62';
+  return "0,40 10,45 20,42 30,50 40,48 50,55 60,52 70,60 80,58 90,65 100,62";
 });
 
 const progressTrend = computed(() => {
-  return '0,20 10,22 20,25 30,28 40,30 50,35 60,38 70,42 80,45 90,48 100,50';
+  return "0,20 10,22 20,25 30,28 40,30 50,35 60,38 70,42 80,45 90,48 100,50";
 });
 
 // 方法
-const nextDay = () => {
-  emit('next-day');
+const nextDay = (): void => {
+  emit("next-day");
 };
 
-const formatDate = (date: any) => {
-  if (!date) return '加载中...';
+const _formatDate = (
+  date: { year: number; month: number; day: number } | null,
+): string => {
+  if (!date) return "加载中...";
   return `${date.year}年${date.month}月${date.day}日`;
 };
 
-const formatTime = (hour: number, minute: number) => {
-  return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+const _formatTime = (hour: number, minute: number): string => {
+  return `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
 };
 
-const getPhaseName = (phase: string) => {
+const _getPhaseName = (phase: string): string => {
   const phaseNames: Record<string, string> = {
-    early: '早期',
-    morning: '上午',
-    afternoon: '下午',
-    evening: '傍晚',
-    night: '夜晚',
+    early: "早期",
+    morning: "上午",
+    afternoon: "下午",
+    evening: "傍晚",
+    night: "夜晚",
   };
-  return phaseNames[phase] || '未知';
+  return phaseNames[phase] || "未知";
 };
 
 // 动画效果
@@ -237,11 +240,11 @@ const animateValue = (
   target: number,
   setter: (val: number) => void,
   duration = 1000,
-) => {
+): void => {
   const start = performance.now();
   const initialValue = 0;
 
-  const update = (timestamp: number) => {
+  const update = (timestamp: number): void => {
     const elapsed = timestamp - start;
     const progress = Math.min(elapsed / duration, 1);
 

@@ -164,8 +164,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import * as v from '@/styles/variables';
+import { ref, watch } from "vue";
 
 const props = defineProps({
   skin: {
@@ -178,15 +177,15 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['skin-released']);
+const emit = defineEmits(["skin-released"]);
 
 // 快速配置选项
-const quickConfig = ref('');
+const quickConfig = ref("");
 
 // 发布配置
 const releaseConfig = ref({
-  date: new Date().toISOString().split('T')[0],
-  duration: '14',
+  date: new Date().toISOString().split("T")[0],
+  duration: "14",
   isLimited: false,
   discount: 80,
 });
@@ -194,17 +193,17 @@ const releaseConfig = ref({
 // 快速配置方案
 const configPresets = {
   standard: {
-    duration: 'permanent',
+    duration: "permanent",
     isLimited: false,
     discount: 80,
   },
   limited: {
-    duration: '30',
+    duration: "30",
     isLimited: true,
     discount: 70,
   },
   premium: {
-    duration: '14',
+    duration: "14",
     isLimited: true,
     discount: 60,
   },
@@ -219,18 +218,18 @@ watch(
 );
 
 // 重置发布配置
-const resetReleaseConfig = () => {
-  quickConfig.value = '';
+const resetReleaseConfig = (): void => {
+  quickConfig.value = "";
   releaseConfig.value = {
-    date: new Date().toISOString().split('T')[0],
-    duration: '14',
-    isLimited: props.skin?.quality === 'limited',
+    date: new Date().toISOString().split("T")[0],
+    duration: "14",
+    isLimited: props.skin?.quality === "limited",
     discount: 80,
   };
 };
 
 // 应用快速配置
-const applyQuickConfig = () => {
+const applyQuickConfig = (): void => {
   if (quickConfig.value && configPresets[quickConfig.value]) {
     releaseConfig.value = {
       ...releaseConfig.value,
@@ -240,24 +239,24 @@ const applyQuickConfig = () => {
 };
 
 // 获取品质标签
-const getQualityLabel = (quality) => {
-  const labels = {
-    brave: '勇者',
-    epic: '史诗',
-    legend: '传说',
-    limited: '限定',
+const getQualityLabel = (quality: string): string => {
+  const labels: Record<string, string> = {
+    brave: "勇者",
+    epic: "史诗",
+    legend: "传说",
+    limited: "限定",
   };
   return labels[quality] || quality;
 };
 
 // 获取折扣后的价格
-const getDiscountedPrice = () => {
+const getDiscountedPrice = (): number => {
   if (!props.skin) return 0;
   return Math.round((props.skin.price * releaseConfig.value.discount) / 100);
 };
 
 // 获取预测销量
-const getPredictedSales = () => {
+const getPredictedSales = (): number => {
   if (!props.skin) return 0;
   const baseSales = props.skin.expected.sales;
   const discountFactor = 1 + (100 - releaseConfig.value.discount) * 0.01;
@@ -266,7 +265,7 @@ const getPredictedSales = () => {
 };
 
 // 获取预测收入
-const getPredictedRevenue = () => {
+const getPredictedRevenue = (): number => {
   if (!props.skin) return 0;
   const sales = getPredictedSales();
   const price = getDiscountedPrice();
@@ -274,14 +273,14 @@ const getPredictedRevenue = () => {
 };
 
 // 获取预测满意度
-const getPredictedSatisfaction = () => {
+const getPredictedSatisfaction = (): number => {
   if (!props.skin) return 0;
   return props.skin.expected.satisfaction;
 };
 
 // 获取销量变化
-const getSalesChange = () => {
-  if (!props.skin) return '';
+const getSalesChange = (): string => {
+  if (!props.skin) return "";
   const baseSales = props.skin.expected.sales;
   const predictedSales = getPredictedSales();
   const change = (((predictedSales - baseSales) / baseSales) * 100).toFixed(0);
@@ -289,20 +288,20 @@ const getSalesChange = () => {
 };
 
 // 获取销量变化样式
-const getSalesChangeClass = () => {
-  if (!props.skin) return '';
+const getSalesChangeClass = (): string => {
+  if (!props.skin) return "";
   const baseSales = props.skin.expected.sales;
   const predictedSales = getPredictedSales();
   return predictedSales > baseSales
-    ? 'positive'
+    ? "positive"
     : predictedSales < baseSales
-      ? 'negative'
-      : '';
+      ? "negative"
+      : "";
 };
 
 // 获取收入变化
-const getRevenueChange = () => {
-  if (!props.skin) return '';
+const getRevenueChange = (): string => {
+  if (!props.skin) return "";
   const baseRevenue = (props.skin.expected.sales * props.skin.price) / 10000;
   const predictedRevenue = getPredictedRevenue();
   const change = (
@@ -313,46 +312,46 @@ const getRevenueChange = () => {
 };
 
 // 获取收入变化样式
-const getRevenueChangeClass = () => {
-  if (!props.skin) return '';
+const getRevenueChangeClass = (): string => {
+  if (!props.skin) return "";
   const baseRevenue = (props.skin.expected.sales * props.skin.price) / 10000;
   const predictedRevenue = getPredictedRevenue();
   return predictedRevenue > baseRevenue
-    ? 'positive'
+    ? "positive"
     : predictedRevenue < baseRevenue
-      ? 'negative'
-      : '';
+      ? "negative"
+      : "";
 };
 
 // 获取满意度变化
-const getSatisfactionChange = () => {
-  return '0%';
+const getSatisfactionChange = (): string => {
+  return "0%";
 };
 
 // 获取满意度变化样式
-const getSatisfactionChangeClass = () => {
-  return '';
+const getSatisfactionChangeClass = (): string => {
+  return "";
 };
 
 // 获取趋势图数据点
-const getTrendPoints = (trend) => {
+const getTrendPoints = (trend: number[]): string => {
   return trend
     .map((value, index) => {
       const x = (index / (trend.length - 1)) * 400;
       const y = 100 - (value / 100) * 80;
       return `${x},${y}`;
     })
-    .join(' ');
+    .join(" ");
 };
 
 // 确认发布
-const confirmRelease = () => {
+const confirmRelease = (): void => {
   if (!props.skin) return;
-  emit('skin-released', {
+  emit("skin-released", {
     skin: props.skin,
     config: releaseConfig.value,
   });
-  alert('皮肤发布计划已确认！');
+  alert("皮肤发布计划已确认！");
 };
 </script>
 

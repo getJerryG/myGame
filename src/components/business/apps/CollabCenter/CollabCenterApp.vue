@@ -152,7 +152,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed } from "vue";
 
 // 定义联动项目类型
 interface Collab {
@@ -161,32 +161,32 @@ interface Collab {
   description: string;
   startTime: string;
   endTime: string;
-  status: '进行中' | '已结束';
+  status: "进行中" | "已结束";
   expectedRevenue: number;
   actualRevenue?: number;
 }
 
 // 活跃标签页
-const activeTab = ref('all');
+const activeTab = ref("all");
 
 // 模拟联动数据
 const collabs = ref<Collab[]>([
   {
-    id: 'collab-1',
-    name: '与知名IP联动活动',
-    description: '与某知名动漫IP进行联动，推出限定皮肤和活动',
-    startTime: '2024-01-01',
-    endTime: '2024-01-31',
-    status: '进行中',
+    id: "collab-1",
+    name: "与知名IP联动活动",
+    description: "与某知名动漫IP进行联动，推出限定皮肤和活动",
+    startTime: "2024-01-01",
+    endTime: "2024-01-31",
+    status: "进行中",
     expectedRevenue: 500000,
   },
   {
-    id: 'collab-2',
-    name: '节日主题联动',
-    description: '春节主题联动活动，推出限定英雄和皮肤',
-    startTime: '2023-12-01',
-    endTime: '2024-01-15',
-    status: '已结束',
+    id: "collab-2",
+    name: "节日主题联动",
+    description: "春节主题联动活动，推出限定英雄和皮肤",
+    startTime: "2023-12-01",
+    endTime: "2024-01-15",
+    status: "已结束",
     expectedRevenue: 300000,
     actualRevenue: 350000,
   },
@@ -194,10 +194,10 @@ const collabs = ref<Collab[]>([
 
 // 计算当前显示的联动项目
 const currentCollabs = computed(() => {
-  if (activeTab.value === 'ongoing') {
-    return collabs.value.filter((collab) => collab.status === '进行中');
-  } else if (activeTab.value === 'completed') {
-    return collabs.value.filter((collab) => collab.status === '已结束');
+  if (activeTab.value === "ongoing") {
+    return collabs.value.filter((collab) => collab.status === "进行中");
+  } else if (activeTab.value === "completed") {
+    return collabs.value.filter((collab) => collab.status === "已结束");
   } else {
     return collabs.value;
   }
@@ -205,47 +205,51 @@ const currentCollabs = computed(() => {
 
 // 创建联动模态框
 const showCreateModal = ref(false);
-const newCollab = ref<Omit<Collab, 'id' | 'startTime' | 'endTime' | 'status'>>({
-  name: '',
-  description: '',
+const newCollab = ref<Omit<Collab, "id" | "startTime" | "endTime" | "status">>({
+  name: "",
+  description: "",
   expectedRevenue: 0,
 });
 
 // 创建联动
-const createCollab = () => {
+const createCollab = (): void => {
   const now = new Date();
   const collab: Collab = {
     id: `collab-${Date.now()}`,
     name: newCollab.value.name,
     description: newCollab.value.description,
-    startTime: now.toISOString().split('T')[0],
+    startTime: now.toISOString().split("T")[0],
     endTime: new Date(now.setMonth(now.getMonth() + 1))
       .toISOString()
-      .split('T')[0],
-    status: '进行中',
+      .split("T")[0],
+    status: "进行中",
     expectedRevenue: newCollab.value.expectedRevenue,
   };
   collabs.value.push(collab);
   showCreateModal.value = false;
   // 重置表单
   newCollab.value = {
-    name: '',
-    description: '',
+    name: "",
+    description: "",
     expectedRevenue: 0,
   };
 };
 
 // 查看联动详情
-const viewCollabDetail = (collabId: string) => {
-  console.log('查看联动详情:', collabId);
-  // 这里可以跳转到详情页或显示详情模态框
+const viewCollabDetail = (_collab: Collab): void => {
+  // 查看联动详情的逻辑
+};
+
+// 查看联动报告
+const _viewCollabReport = (_collabId: string): string => {
+  return "已结束";
 };
 
 // 结束联动
-const endCollab = (collabId: string) => {
+const endCollab = (collabId: string): void => {
   const collab = collabs.value.find((c) => c.id === collabId);
   if (collab) {
-    collab.status = '已结束';
+    collab.status = "已结束";
     // 模拟实际收益
     collab.actualRevenue = Math.floor(
       collab.expectedRevenue * (0.8 + Math.random() * 0.4),

@@ -20,11 +20,7 @@
 
       <!-- 活动名称 -->
       <div class="form-group">
-        <label
-          for="event-name"
-          class="form-label"
-          >活动名称</label
-        >
+        <label for="event-name" class="form-label">活动名称</label>
         <input
           id="event-name"
           v-model="localConfig.name"
@@ -37,11 +33,7 @@
       <!-- 时间范围设置 -->
       <div class="form-row">
         <div class="form-group">
-          <label
-            for="start-date"
-            class="form-label"
-            >开始日期</label
-          >
+          <label for="start-date" class="form-label">开始日期</label>
           <input
             id="start-date"
             v-model="localConfig.startDate"
@@ -50,11 +42,7 @@
           />
         </div>
         <div class="form-group">
-          <label
-            for="end-date"
-            class="form-label"
-            >结束日期</label
-          >
+          <label for="end-date" class="form-label">结束日期</label>
           <input
             id="end-date"
             v-model="localConfig.endDate"
@@ -73,10 +61,7 @@
             :key="index"
             class="reward-item"
           >
-            <select
-              v-model="reward.type"
-              class="form-select"
-            >
+            <select v-model="reward.type" class="form-select">
               <option value="skin">皮肤</option>
               <option value="hero">英雄</option>
               <option value="currency">游戏币</option>
@@ -113,11 +98,7 @@
               ✕
             </button>
           </div>
-          <button
-            type="button"
-            class="add-reward-btn"
-            @click="addReward"
-          >
+          <button type="button" class="add-reward-btn" @click="addReward">
             <span class="btn-icon">+</span>
             <span class="btn-text">添加奖励</span>
           </button>
@@ -130,10 +111,7 @@
         <div class="conditions-container">
           <div class="condition-item">
             <label class="checkbox-label">
-              <input
-                v-model="localConfig.conditions.level"
-                type="checkbox"
-              />
+              <input v-model="localConfig.conditions.level" type="checkbox" />
               <span class="label-text">等级限制</span>
             </label>
             <input
@@ -150,19 +128,11 @@
 
       <!-- 预览按钮 -->
       <div class="form-actions">
-        <button
-          type="button"
-          class="btn btn-secondary"
-          @click="previewEvent"
-        >
+        <button type="button" class="btn btn-secondary" @click="previewEvent">
           <span class="btn-icon">👁️</span>
           <span class="btn-text">预览活动</span>
         </button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          @click="saveEvent"
-        >
+        <button type="button" class="btn btn-primary" @click="saveEvent">
           <span class="btn-icon">💾</span>
           <span class="btn-text">保存活动</span>
         </button>
@@ -172,16 +142,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch } from "vue";
 
-// 接收父组件传递的属�?const props = defineProps({
+// 接收父组件传递的属性
+const props = defineProps({
   eventConfig: {
     type: Object,
     default: () => ({
-      name: '',
-      startDate: '',
-      endDate: '',
-      rewards: [{ type: 'skin', name: '', quantity: 1 }],
+      name: "",
+      startDate: "",
+      endDate: "",
+      rewards: [{ type: "skin", name: "", quantity: 1 }],
       conditions: {
         level: false,
       },
@@ -200,14 +171,14 @@ const localConfig = ref({ ...props.eventConfig });
 // 预设事件模板
 const eventTemplates = {
   dailyCheckIn: {
-    name: '每日签到活动',
-    startDate: new Date().toISOString().split('T')[0],
+    name: "每日签到活动",
+    startDate: new Date().toISOString().split("T")[0],
     endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
       .toISOString()
-      .split('T')[0],
+      .split("T")[0],
     rewards: [
-      { type: 'currency', name: '金币', quantity: 100 },
-      { type: 'currency', name: '钻石', quantity: 10 },
+      { type: "currency", name: "金币", quantity: 100 },
+      { type: "currency", name: "钻石", quantity: 10 },
     ],
     conditions: {
       level: false,
@@ -215,14 +186,14 @@ const eventTemplates = {
     levelRequirement: 10,
   },
   weekendEvent: {
-    name: '周末狂欢活动',
-    startDate: new Date().toISOString().split('T')[0],
+    name: "周末狂欢活动",
+    startDate: new Date().toISOString().split("T")[0],
     endDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000)
       .toISOString()
-      .split('T')[0],
+      .split("T")[0],
     rewards: [
-      { type: 'currency', name: '钻石', quantity: 50 },
-      { type: 'item', name: '经验卡', quantity: 5 },
+      { type: "currency", name: "钻石", quantity: 50 },
+      { type: "item", name: "经验卡", quantity: 5 },
     ],
     conditions: {
       level: false,
@@ -230,14 +201,14 @@ const eventTemplates = {
     levelRequirement: 15,
   },
   holidayCelebration: {
-    name: '节日庆典活动',
-    startDate: new Date().toISOString().split('T')[0],
+    name: "节日庆典活动",
+    startDate: new Date().toISOString().split("T")[0],
     endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
       .toISOString()
-      .split('T')[0],
+      .split("T")[0],
     rewards: [
-      { type: 'skin', name: '节日限定', quantity: 1 },
-      { type: 'currency', name: '钻石', quantity: 100 },
+      { type: "skin", name: "节日限定", quantity: 1 },
+      { type: "currency", name: "钻石", quantity: 100 },
     ],
     conditions: {
       level: true,
@@ -245,14 +216,14 @@ const eventTemplates = {
     levelRequirement: 20,
   },
   newHeroLaunch: {
-    name: '新英雄上线活动',
-    startDate: new Date().toISOString().split('T')[0],
+    name: "新英雄上线活动",
+    startDate: new Date().toISOString().split("T")[0],
     endDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
       .toISOString()
-      .split('T')[0],
+      .split("T")[0],
     rewards: [
-      { type: 'hero', name: '新英雄', quantity: 1 },
-      { type: 'item', name: '英雄体验卡', quantity: 7 },
+      { type: "hero", name: "新英雄", quantity: 1 },
+      { type: "item", name: "英雄体验卡", quantity: 7 },
     ],
     conditions: {
       level: true,
@@ -267,7 +238,7 @@ watch(
   (newConfig) => {
     localConfig.value = { ...newConfig };
   },
-  { deep: true }
+  { deep: true },
 );
 
 // 应用模板
@@ -279,7 +250,7 @@ const applyTemplate = (): void => {
 
 // 添加奖励
 const addReward = (): void => {
-  localConfig.value.rewards.push({ type: 'skin', name: '', quantity: 1 });
+  localConfig.value.rewards.push({ type: "skin", name: "", quantity: 1 });
 };
 
 // 删除奖励
@@ -291,12 +262,12 @@ const removeReward = (index: number): void => {
 
 // 预览活动
 const previewEvent = (): void => {
-  emit('preview-requested', { ...localConfig.value });
+  emit("preview-requested", { ...localConfig.value });
 };
 
 // 保存活动
 const saveEvent = (): void => {
-  emit('event-saved', { ...localConfig.value });
+  emit("event-saved", { ...localConfig.value });
 };
 </script>
 

@@ -21,25 +21,25 @@ const WEIGHTS = {
 
 // 皮肤品质权限配置
 const RARITY_PERMISSIONS = {
-  伴生: {
+  companion: {
     requiredHeroCount: 0,
   },
-  勇气: {
+  courage: {
     requiredHeroCount: 1,
   },
-  史诗: {
+  epic: {
     requiredHeroCount: 3,
   },
-  传说: {
+  legendary: {
     requiredHeroCount: 5,
   },
-  珍品限定: {
+  rareLimited: {
     requiredHeroCount: 8,
   },
-  无双限定: {
+  peerlessLimited: {
     requiredHeroCount: 12,
   },
-  珍品无双限定: {
+  rarePeerlessLimited: {
     requiredHeroCount: 15,
   },
 };
@@ -86,7 +86,7 @@ const RANDOM_FACTORS = {
 };
 
 // 职业列表
-const PROFESSIONS = ['战士', '法师', '刺客', '射手', '辅助', '坦克'];
+const PROFESSIONS = ["战士", "法师", "刺客", "射手", "辅助", "坦克"];
 
 // 市场表现模拟配置
 const skinSimulationConfig = {

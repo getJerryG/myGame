@@ -69,15 +69,15 @@ export interface Hero {
   banRate: number;
 }
 
-const props = defineProps<{
+const _props = defineProps<{
   hero: Hero;
   isSelected?: boolean;
 }>();
 
-const emit = defineEmits<{
+const _emit = defineEmits<{
   select: [hero: Hero];
-  'view-details': [hero: Hero];
-  'add-to-team': [hero: Hero];
+  "view-details": [hero: Hero];
+  "add-to-team": [hero: Hero];
 }>();
 </script>
 

@@ -41,8 +41,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import type { GameData } from '@/types/game';
+import { ref, computed } from "vue";
+import type { GameData } from "@/types/game";
 
 // Props
 const props = defineProps<{
@@ -72,13 +72,13 @@ const closeStartMenu = (): void => {
 // 计算游戏日期对应的星期几
 const getDayOfWeek = (year: number, month: number, day: number): string => {
   const daysOfWeek = [
-    '星期日',
-    '星期一',
-    '星期二',
-    '星期三',
-    '星期四',
-    '星期五',
-    '星期六',
+    "星期日",
+    "星期一",
+    "星期二",
+    "星期三",
+    "星期四",
+    "星期五",
+    "星期六",
   ];
   const totalDays = (year - 1) * 365 + (month - 1) * 30 + day;
   return daysOfWeek[totalDays % 7];
@@ -87,27 +87,27 @@ const getDayOfWeek = (year: number, month: number, day: number): string => {
 // 游戏日期显示，包含星期几
 const gameDateDisplay = computed(() => {
   if (!props.gameData?.gameState?.currentDate) {
-    return '加载中...';
+    return "加载中...";
   }
 
   const date = props.gameData.gameState.currentDate;
   const dayOfWeek = getDayOfWeek(date.year, date.month, date.day);
-  return `${date.year}年${date.month}月${date.day}日 ${dayOfWeek} ${date.hour}:${String(date.minute).padStart(2, '0')}`;
+  return `${date.year}年${date.month}月${date.day}日 ${dayOfWeek} ${date.hour}:${String(date.minute).padStart(2, "0")}`;
 });
 
 // 事件处理函数
 const handleSaveGame = () => {
-  emit('saveGame');
+  emit("saveGame");
   closeStartMenu();
 };
 
 const handleRestartGame = () => {
-  emit('restartGame');
+  emit("restartGame");
   closeStartMenu();
 };
 
 const handleOpenSettings = () => {
-  emit('openSettings');
+  emit("openSettings");
   closeStartMenu();
 };
 </script>

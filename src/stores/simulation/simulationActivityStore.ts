@@ -1,13 +1,13 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 // 定义活动类型
 interface Activity {
   id: string;
   name: string;
-  type: 'event' | 'campaign' | 'collaboration';
+  type: "event" | "campaign" | "collaboration";
   startTime: number;
   endTime: number;
-  status: 'upcoming' | 'active' | 'completed';
+  status: "upcoming" | "active" | "completed";
   description: string;
   rewards: Array<{
     type: string;
@@ -36,7 +36,7 @@ interface SimulationActivityState {
 }
 
 // 创建并导出活动store
-export const useSimulationActivityStore = defineStore('simulationActivity', {
+export const useSimulationActivityStore = defineStore("simulationActivity", {
   state: (): SimulationActivityState => ({
     // 初始当前活动为空数组
     currentActivities: [],
@@ -55,14 +55,14 @@ export const useSimulationActivityStore = defineStore('simulationActivity', {
     // 获取活跃活动
     activeActivities: (state) => {
       return state.currentActivities.filter(
-        (activity) => activity.status === 'active',
+        (activity) => activity.status === "active",
       );
     },
 
     // 获取即将开始的活动
     upcomingActivities: (state) => {
       return state.currentActivities.filter(
-        (activity) => activity.status === 'upcoming',
+        (activity) => activity.status === "upcoming",
       );
     },
 
@@ -70,7 +70,7 @@ export const useSimulationActivityStore = defineStore('simulationActivity', {
     completedActivities: (state) => {
       return [
         ...state.currentActivities.filter(
-          (activity) => activity.status === 'completed',
+          (activity) => activity.status === "completed",
         ),
         ...state.historicalActivities,
       ];
@@ -86,12 +86,12 @@ export const useSimulationActivityStore = defineStore('simulationActivity', {
 
   actions: {
     // 创建新活动
-    createActivity(activityData: Omit<Activity, 'id' | 'participationCount'>) {
+    createActivity(activityData: Omit<Activity, "id" | "participationCount">) {
       if (
         this.currentActivities.length >=
         this.activityConfig.maxConcurrentActivities
       ) {
-        throw new Error('已达到最大活动数量限制');
+        throw new Error("已达到最大活动数量限制");
       }
 
       const newActivity: Activity = {
@@ -107,14 +107,14 @@ export const useSimulationActivityStore = defineStore('simulationActivity', {
     // 更新活动状态
     updateActivityStatus(
       activityId: string,
-      status: 'upcoming' | 'active' | 'completed',
+      status: "upcoming" | "active" | "completed",
     ) {
       const activity = this.getActivityById(activityId);
       if (activity) {
         activity.status = status;
 
         // 如果活动已完成，将其移至历史活动
-        if (status === 'completed') {
+        if (status === "completed") {
           const currentIndex = this.currentActivities.findIndex(
             (a) => a.id === activityId,
           );
@@ -132,7 +132,7 @@ export const useSimulationActivityStore = defineStore('simulationActivity', {
     // 参与活动
     participateInActivity(activityId: string) {
       const activity = this.getActivityById(activityId);
-      if (activity?.status === 'active') {
+      if (activity?.status === "active") {
         activity.participationCount++;
 
         // 记录参与
@@ -172,7 +172,7 @@ export const useSimulationActivityStore = defineStore('simulationActivity', {
 
   // 持久化存储
   persist: {
-    key: 'simulation-activity',
+    key: "simulation-activity",
     storage: localStorage,
   },
 });

@@ -130,11 +130,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import ApplicationWindow from '@/components/common/window/ApplicationWindow.vue';
+import { ref } from "vue";
+import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
 
 // 状态管理
-const activeTab = ref<string>('draw');
+const activeTab = ref<string>("draw");
 const tickets = ref<number>(10);
 const isSpinning = ref<boolean>(false);
 const currentIndex = ref<number>(0);
@@ -142,12 +142,12 @@ const lastPrize = ref<{ icon: string; name: string } | null>(null);
 
 // 奖品列表
 const prizes = ref([
-  { icon: '💎', name: '钻石x1000', rarity: 'legendary', probability: 1 },
-  { icon: '👑', name: '皇冠', rarity: 'epic', probability: 5 },
-  { icon: '💰', name: '金币x500', rarity: 'rare', probability: 15 },
-  { icon: '🎁', name: '神秘礼包', rarity: 'rare', probability: 20 },
-  { icon: '⭐', name: '星星x50', rarity: 'common', probability: 25 },
-  { icon: '💎', name: '钻石x100', rarity: 'common', probability: 34 },
+  { icon: "💎", name: "钻石x1000", rarity: "legendary", probability: 1 },
+  { icon: "👑", name: "皇冠", rarity: "epic", probability: 5 },
+  { icon: "💰", name: "金币x500", rarity: "rare", probability: 15 },
+  { icon: "🎁", name: "神秘礼包", rarity: "rare", probability: 20 },
+  { icon: "⭐", name: "星星x50", rarity: "common", probability: 25 },
+  { icon: "💎", name: "钻石x100", rarity: "common", probability: 34 },
 ]);
 
 // 抽奖记录
@@ -157,13 +157,13 @@ const drawHistory = ref<
     time: string;
   }>
 >([
-  { prize: { icon: '💰', name: '金币x500' }, time: '2026-02-14 15:30' },
-  { prize: { icon: '⭐', name: '星星x50' }, time: '2026-02-14 15:25' },
-  { prize: { icon: '💎', name: '钻石x100' }, time: '2026-02-14 15:20' },
+  { prize: { icon: "💰", name: "金币x500" }, time: "2026-02-14 15:30" },
+  { prize: { icon: "⭐", name: "星星x50" }, time: "2026-02-14 15:25" },
+  { prize: { icon: "💎", name: "钻石x100" }, time: "2026-02-14 15:20" },
 ]);
 
 // 获取转盘项目样式
-const getWheelItemStyle = (index: number) => {
+const getWheelItemStyle = (index: number): Record<string, string> => {
   const angle = (360 / prizes.value.length) * index;
   return {
     transform: `rotate(${angle}deg) translateY(-120px)`,
@@ -173,12 +173,12 @@ const getWheelItemStyle = (index: number) => {
 // 获取稀有度标签
 const getRarityLabel = (rarity: string): string => {
   const rarityMap: Record<string, string> = {
-    common: '普通',
-    rare: '稀有',
-    epic: '史诗',
-    legendary: '传说',
+    common: "普通",
+    rare: "稀有",
+    epic: "史诗",
+    legendary: "传说",
   };
-  return rarityMap[rarity] || '未知';
+  return rarityMap[rarity] || "未知";
 };
 
 // 开始抽奖
@@ -222,7 +222,7 @@ const startDraw = (): void => {
       // 添加到历史记录
       drawHistory.value.unshift({
         prize: selectedPrize,
-        time: new Date().toLocaleString('zh-CN'),
+        time: new Date().toLocaleString("zh-CN"),
       });
 
       alert(`恭喜获得: ${selectedPrize.name}!`);
@@ -232,7 +232,7 @@ const startDraw = (): void => {
 
 // 购买抽奖券
 const buyTickets = (): void => {
-  const amount = prompt('请输入要购买的抽奖券数量:', '10');
+  const amount = prompt("请输入要购买的抽奖券数量:", "10");
   if (amount && !isNaN(Number(amount))) {
     tickets.value += Number(amount);
     alert(`成功购买 ${amount} 张抽奖券!`);

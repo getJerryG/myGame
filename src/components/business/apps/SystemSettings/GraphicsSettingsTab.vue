@@ -60,27 +60,27 @@ export interface GraphicsSettings {
 }
 
 const graphicsQualities = [
-  { id: 'low', name: '低' },
-  { id: 'medium', name: '中' },
-  { id: 'high', name: '高' },
-  { id: 'ultra', name: '极致' },
+  { id: "low", name: "低" },
+  { id: "medium", name: "中" },
+  { id: "high", name: "高" },
+  { id: "ultra", name: "极致" },
 ];
 
 const fpsLimits = [
-  { id: '30', name: '30 FPS' },
-  { id: '60', name: '60 FPS' },
-  { id: '120', name: '120 FPS' },
-  { id: 'unlimited', name: '不限制' },
+  { id: "30", name: "30 FPS" },
+  { id: "60", name: "60 FPS" },
+  { id: "120", name: "120 FPS" },
+  { id: "unlimited", name: "不限制" },
 ];
 
-const props = defineProps<{
+const _props = defineProps<{
   modelValue: GraphicsSettings;
 }>();
 
-const emit = defineEmits<{
-  'update:quality': [id: string];
-  'update:fullscreen': [value: boolean];
-  'update:fpsLimit': [id: string];
+const _emit = defineEmits<{
+  "update:quality": [id: string];
+  "update:fullscreen": [value: boolean];
+  "update:fpsLimit": [id: string];
 }>();
 </script>
 

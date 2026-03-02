@@ -55,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from "vue";
 
 export interface SidebarItem {
   id: string;
@@ -77,19 +77,19 @@ const _props = withDefaults(
     className?: string;
   }>(),
   {
-    windowTitle: '',
-    titleIcon: '',
+    windowTitle: "",
+    titleIcon: "",
     sidebarItems: () => [],
-    activeItemId: '',
+    activeItemId: "",
     showWindowControls: false,
     isMaximized: false,
-    className: '',
+    className: "",
   },
 );
 
 const emit = defineEmits<{
-  'update:activeItemId': [id: string];
-  'item-click': [item: SidebarItem];
+  "update:activeItemId": [id: string];
+  "item-click": [item: SidebarItem];
   close: [];
 }>();
 
@@ -100,13 +100,13 @@ const displayTitle = computed(() => {
 
 const handleSidebarItemClick = (item: SidebarItem): void => {
   if (!item.disabled) {
-    emit('update:activeItemId', item.id);
-    emit('item-click', item);
+    emit("update:activeItemId", item.id);
+    emit("item-click", item);
   }
 };
 
 const handleClose = (): void => {
-  emit('close');
+  emit("close");
 };
 </script>
 

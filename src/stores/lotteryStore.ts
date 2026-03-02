@@ -1,10 +1,10 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 export interface LotteryItem {
   id: string;
   name: string;
-  type: 'hero' | 'skin' | 'item' | 'gold' | 'diamond';
-  rarity: 'common' | 'rare' | 'epic' | 'legendary';
+  type: "hero" | "skin" | "item" | "gold" | "diamond";
+  rarity: "common" | "rare" | "epic" | "legendary";
   probability: number;
   quantity?: number;
   image: string;
@@ -19,58 +19,58 @@ export interface LotteryState {
   freeDrawCooldown: number;
 }
 
-export const useLotteryStore = defineStore('lottery', {
+export const useLotteryStore = defineStore("lottery", {
   state: (): LotteryState => ({
     lotteryItems: [
       {
-        id: 'gold_100',
-        name: '金币',
-        type: 'gold',
-        rarity: 'common',
+        id: "gold_100",
+        name: "金币",
+        type: "gold",
+        rarity: "common",
         probability: 0.4,
         quantity: 100,
-        image: '/assets/icons/gold.png',
+        image: "/assets/icons/gold.png",
       },
       {
-        id: 'diamond_10',
-        name: '钻石',
-        type: 'diamond',
-        rarity: 'common',
+        id: "diamond_10",
+        name: "钻石",
+        type: "diamond",
+        rarity: "common",
         probability: 0.3,
         quantity: 10,
-        image: '/assets/icons/diamond.png',
+        image: "/assets/icons/diamond.png",
       },
       {
-        id: 'hero_common_1',
-        name: '普通英雄',
-        type: 'hero',
-        rarity: 'common',
+        id: "hero_common_1",
+        name: "普通英雄",
+        type: "hero",
+        rarity: "common",
         probability: 0.2,
-        image: '/assets/heroes/common_1.png',
+        image: "/assets/heroes/common_1.png",
       },
       {
-        id: 'skin_rare_1',
-        name: '稀有皮肤',
-        type: 'skin',
-        rarity: 'rare',
+        id: "skin_rare_1",
+        name: "稀有皮肤",
+        type: "skin",
+        rarity: "rare",
         probability: 0.08,
-        image: '/assets/skins/rare_1.png',
+        image: "/assets/skins/rare_1.png",
       },
       {
-        id: 'hero_epic_1',
-        name: '史诗英雄',
-        type: 'hero',
-        rarity: 'epic',
+        id: "hero_epic_1",
+        name: "史诗英雄",
+        type: "hero",
+        rarity: "epic",
         probability: 0.015,
-        image: '/assets/heroes/epic_1.png',
+        image: "/assets/heroes/epic_1.png",
       },
       {
-        id: 'skin_legendary_1',
-        name: '传说皮肤',
-        type: 'skin',
-        rarity: 'legendary',
+        id: "skin_legendary_1",
+        name: "传说皮肤",
+        type: "skin",
+        rarity: "legendary",
         probability: 0.005,
-        image: '/assets/skins/legendary_1.png',
+        image: "/assets/skins/legendary_1.png",
       },
     ],
     drawCount: 0,
@@ -130,7 +130,7 @@ export const useLotteryStore = defineStore('lottery', {
     drawSingle(isFreeDraw = false): LotteryItem {
       if (isFreeDraw) {
         if (!this.isFreeDrawAvailable) {
-          throw new Error('免费抽奖不可用');
+          throw new Error("免费抽奖不可用");
         }
         this.freeDrawAvailable = false;
         this.lastDrawTime = Date.now();
@@ -228,7 +228,7 @@ export const useLotteryStore = defineStore('lottery', {
       // 每100抽获得一个传说奖励
       if (this.cumulativeDraws % 100 === 0 && this.cumulativeDraws > 0) {
         const legendaryItems = this.lotteryItems.filter(
-          (item) => item.rarity === 'legendary',
+          (item) => item.rarity === "legendary",
         );
         if (legendaryItems.length > 0) {
           return {

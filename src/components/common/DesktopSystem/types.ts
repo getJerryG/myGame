@@ -6,7 +6,7 @@ export interface DesktopApp {
   name: string;
   icon: string;
   position: { x: number; y: number };
-  coreData: Record<string, any>;
+  coreData: Record<string, unknown>;
   modules: Array<{ id: string; name: string }>;
 }
 
@@ -19,6 +19,6 @@ export interface AvailableApp {
   icon: string;
   description: string;
   memory: string;
-  category: 'system' | 'core' | 'advanced';
+  category: "system" | "core" | "advanced";
   requiredLevelId: string;
 }

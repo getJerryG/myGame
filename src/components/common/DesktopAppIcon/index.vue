@@ -74,8 +74,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useWindowManagerStore } from '@/stores/windowManagerStore';
+import { ref, computed } from "vue";
+import { useWindowManagerStore } from "@/stores/windowManagerStore";
 
 // 定义应用类型
 interface App {
@@ -83,7 +83,7 @@ interface App {
   name: string;
   icon: string;
   position: { x: number; y: number };
-  coreData: Record<string, any>;
+  coreData: Record<string, unknown>;
   modules: Array<{
     id: string;
     name: string;
@@ -115,10 +115,10 @@ const hasCoreData = computed(() => {
 
 // 计算属性：核心数据显示
 const coreDataDisplay = computed(() => {
-  if (props.app.id === 'wallet') {
+  if (props.app.id === "wallet") {
     return `￥${props.app.coreData.balance || 0}`;
   }
-  return '';
+  return "";
 });
 
 // 计算属性：是否正在下载
@@ -139,13 +139,7 @@ const isDownloadCompleted = computed(() => {
 
 // 处理点击事件
 const handleClick = () => {
-  emit('click', props.app);
-};
-
-// 处理打开应用
-const handleOpen = () => {
-  emit('click', props.app);
-  isHovered.value = false;
+  emit("click", props.app);
 };
 
 // 处理删除应用

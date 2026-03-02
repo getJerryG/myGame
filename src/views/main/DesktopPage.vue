@@ -4,10 +4,7 @@
     <DesktopSystem :gameData="gameData" />
 
     <!-- 首次进入欢迎模态框 -->
-    <div
-      v-if="showHelloModal"
-      class="hello-modal-overlay"
-    >
+    <div v-if="showHelloModal" class="hello-modal-overlay">
       <div class="hello-modal-content">
         <HelloPage @close="handleHelloModalClose" />
       </div>
@@ -56,7 +53,7 @@ watch(
       gameData.value.gameState.currentDate.day = dayNumber;
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 // 首次进入欢迎模态框控制
@@ -71,7 +68,7 @@ onMounted(() => {
 });
 
 // 处理欢迎模态框关闭
-const handleHelloModalClose = () => {
+const handleHelloModalClose = (): void => {
   showHelloModal.value = false;
   localStorage.setItem("hasVisited", "true");
 };
@@ -114,7 +111,12 @@ const handleHelloModalClose = () => {
 
   @include utils.flex-center;
 
-  background: linear-gradient(135deg, tokens.$bg-dark 0%, tokens.$bg-secondary 50%, tokens.$bg-tertiary 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$bg-dark 0%,
+    tokens.$bg-secondary 50%,
+    tokens.$bg-tertiary 100%
+  );
   color: tokens.$text-primary;
   font-size: tokens.$font-size-2xl;
   animation: pulse 1.5s ease-in-out infinite;
@@ -171,7 +173,11 @@ const handleHelloModalClose = () => {
   background-color: tokens.$primary;
   border-radius: 3px;
   transition: width tokens.$transition-normal;
-  background-image: linear-gradient(90deg, tokens.$primary, tokens.$primary-dark);
+  background-image: linear-gradient(
+    90deg,
+    tokens.$primary,
+    tokens.$primary-dark
+  );
 }
 
 /* 欢迎模态框样式 */

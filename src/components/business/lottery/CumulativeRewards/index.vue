@@ -2,14 +2,14 @@
   <div class="cumulative-rewards-panel-vertical">
     <div class="panel-header">
       <h3>累抽奖励</h3>
-      <span class="draw-count-info"> 当前累计：{{ drawCount }}�?/span>
+      <span class="draw-count-info"> 当前累计：{{ drawCount }}次</span>
     </div>
 
-    <!-- 累抽进度�?-->
+    <!-- 累抽进度条 -->
     <div class="progress-bar-container">
       <div class="progress-info">
         <span>当前进度</span>
-        <span>{{ drawCount }}�?/span>
+        <span>{{ drawCount }}次</span>
       </div>
       <div class="progress-bar">
         <div
@@ -26,14 +26,14 @@
         v-if="availableCumulativeRewards.length > 0"
         class="rewards-section available"
       >
-        <h4>可领�?/h4>
+        <h4>可领取</h4>
         <div
           v-for="reward in availableCumulativeRewards"
           :key="reward.threshold"
           class="vertical-reward-item available"
         >
           <div class="reward-info">
-            <span class="threshold">{{ reward.threshold }}�?/span>
+            <span class="threshold">{{ reward.threshold }}次</span>
             <span class="reward-name">{{ reward.reward.name }}</span>
           </div>
           <button
@@ -47,14 +47,14 @@
 
       <!-- 未达到奖�?-->
       <div class="rewards-section unreached">
-        <h4>未达�?/h4>
+        <h4>未达到</h4>
         <div
           v-for="item in unreachedCumulativeRewards"
           :key="item.threshold"
           class="vertical-reward-item unreached"
         >
           <div class="reward-info">
-            <span class="threshold">{{ item.threshold }}�?/span>
+            <span class="threshold">{{ item.threshold }}次</span>
             <span class="reward-name">{{ item.reward.name }}</span>
           </div>
           <span class="status-badge">未达</span>
@@ -65,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from "vue";
 
 // 接收props
 const props = defineProps({
@@ -92,7 +92,7 @@ const props = defineProps({
 });
 
 // 定义emit事件
-const emit = defineEmits(['claim-reward']);
+const emit = defineEmits(["claim-reward"]);
 
 /**
  * 获取未达到的累抽奖励
@@ -100,18 +100,22 @@ const emit = defineEmits(['claim-reward']);
  */
 const unreachedCumulativeRewards = computed(() => {
   const unreached = [];
-  Object.entries(props.cumulativeRewardConfig).forEach(([threshold, reward]) => {
-    const thresholdNum = parseInt(threshold);
-    if (
-      !props.claimedRewards[thresholdNum] &&
-      !props.availableCumulativeRewards.some((r) => r.threshold === thresholdNum)
-    ) {
-      unreached.push({
-        threshold: thresholdNum,
-        reward,
-      });
-    }
-  });
+  Object.entries(props.cumulativeRewardConfig).forEach(
+    ([threshold, reward]) => {
+      const thresholdNum = parseInt(threshold);
+      if (
+        !props.claimedRewards[thresholdNum] &&
+        !props.availableCumulativeRewards.some(
+          (r) => r.threshold === thresholdNum,
+        )
+      ) {
+        unreached.push({
+          threshold: thresholdNum,
+          reward,
+        });
+      }
+    },
+  );
   return unreached;
 });
 
@@ -119,12 +123,11 @@ const unreachedCumulativeRewards = computed(() => {
  * 领取累抽奖励
  * @param {number} threshold - 抽奖阈�? */
 function claimCumulativeReward(threshold: number): void {
-  emit('claim-reward', threshold);
+  emit("claim-reward", threshold);
 }
 </script>
 
 <style lang="scss" scoped>
-
 /* 右侧栏竖向累抽奖励样式 */
 .cumulative-rewards-panel-vertical {
   background-color: tokens.$bg-secondary;

@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 // 定义模态框状态类型
 interface ModalState {
@@ -23,7 +23,7 @@ interface ModalState {
 }
 
 // 创建并导出模态框store
-export const useModalStore = defineStore('modal', {
+export const useModalStore = defineStore("modal", {
   state: (): ModalState => ({
     // 模态框列表
     modals: [],
@@ -80,7 +80,7 @@ export const useModalStore = defineStore('modal', {
         },
         isMaximized: false,
         isMinimized: false,
-        activeModule: options?.activeModule || 'main',
+        activeModule: options?.activeModule || "main",
       };
 
       // 添加到模态框列表
@@ -171,7 +171,7 @@ export const useModalStore = defineStore('modal', {
 
   // 持久化存储
   persist: {
-    key: 'modal-system',
+    key: "modal-system",
     storage: localStorage,
   },
 });

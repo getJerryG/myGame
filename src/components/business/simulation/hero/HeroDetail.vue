@@ -145,8 +145,9 @@
   </div>
 </template>
 
-<script setup lang=ts>
-// 接收父组件传递的属�?const props = defineProps({
+<script setup lang="ts">
+// 接收父组件传递的属性
+const props = defineProps({
   hero: {
     type: Object,
     default: null,
@@ -156,54 +157,56 @@
     default: () => [
       {
         id: 1,
-        icon: '📊',
-        title: '胜率过高',
-        description: '该英雄当前胜率高于平均值，建议适当削弱核心技能伤害�?,
+        icon: "📊",
+        title: "胜率过高",
+        description: "该英雄当前胜率高于平均值，建议适当削弱核心技能伤害",
       },
       {
         id: 2,
-        icon: '⚖️',
-        title: '出场率分�?,
-        description: '出场率适中，但Ban率较高，说明英雄强度被认可�?,
+        icon: "⚖️",
+        title: "出场率分析",
+        description: "出场率适中，但Ban率较高，说明英雄强度被认可",
       },
       {
         id: 3,
-        icon: '💡',
-        title: '调整建议',
-        description: '建议微调技能冷却时间，保持英雄竞争力的同时避免过于强势�?,
+        icon: "💡",
+        title: "调整建议",
+        description: "建议微调技能冷却时间，保持英雄竞争力的同时避免过于强势",
       },
     ],
   },
 });
 
-// 向父组件传递事�?const emit = defineEmits([
-  'stats-updated',
-  'adjustments-reset',
-  'adjustments-saved',
+// 向父组件传递事件
+const emit = defineEmits([
+  "stats-updated",
+  "adjustments-reset",
+  "adjustments-saved",
 ]);
 
 // 获取分类标签
 const getCategoryLabel = (category: string): string => {
   const labels = {
-    tank: '坦克',
-    warrior: '战士',
-    assassin: '刺客',
-    mage: '法师',
-    marksman: '射手',
-    support: '辅助',
+    tank: "坦克",
+    warrior: "战士",
+    assassin: "刺客",
+    mage: "法师",
+    marksman: "射手",
+    support: "辅助",
   };
   return labels[category] || category;
 };
 
-// 获取属性标�?const getStatLabel = (stat: string): string => {
+// 获取属性标签
+const getStatLabel = (stat: string): string => {
   const labels = {
-    attack: '攻击�?,
-    health: '生命�?,
-    defense: '防御�?,
-    attackSpeed: '攻击速度',
-    skill1: '技�?伤害',
-    skill2: '技�?伤害',
-    skill3: '技�?伤害',
+    attack: "攻击力",
+    health: "生命值",
+    defense: "防御力",
+    attackSpeed: "攻击速度",
+    skill1: "技能1伤害",
+    skill2: "技能2伤害",
+    skill3: "技能3伤害",
   };
   return labels[stat] || stat;
 };
@@ -216,24 +219,25 @@ const getTrendPoints = (trend: number[]): string => {
       const y = 100 - (value / 100) * 80;
       return `${x},${y}`;
     })
-    .join(' ');
+    .join(" ");
 };
 
-// 更新英雄属�?const updateHeroStats = (): void => {
-  emit('stats-updated', props.hero);
+// 更新英雄属性
+const updateHeroStats = (): void => {
+  emit("stats-updated", props.hero);
 };
 
 // 重置调整
 const resetAdjustments = (): void => {
   if (props.hero) {
-    emit('adjustments-reset');
+    emit("adjustments-reset");
   }
 };
 
 // 保存调整
 const saveAdjustments = (): void => {
   if (props.hero) {
-    emit('adjustments-saved', props.hero);
+    emit("adjustments-saved", props.hero);
   }
 };
 </script>
@@ -521,7 +525,3 @@ const saveAdjustments = (): void => {
   }
 }
 </style>
-
-
-
-

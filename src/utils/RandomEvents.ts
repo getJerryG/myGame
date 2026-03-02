@@ -40,16 +40,18 @@ export interface RandomEventConfig {
 // 默认事件配置
 const defaultEventConfig: RandomEventConfig = {
   intervalDays: skinSimulationConfig.randomEvents.intervalDays,
-  recommendProfessionCount: skinSimulationConfig.randomEvents.recommendProfessionCount,
+  recommendProfessionCount:
+    skinSimulationConfig.randomEvents.recommendProfessionCount,
   strengthRange: skinSimulationConfig.randomEvents.strengthRange,
   professions: skinSimulationConfig.professions,
   eventDurations: {
-    hero_strength_recommendation: skinSimulationConfig.randomEvents.intervalDays * 24 * 60 * 60 * 1000, // 事件持续时间与间隔相同
+    heroStrengthRecommendation:
+      skinSimulationConfig.randomEvents.intervalDays * 24 * 60 * 60 * 1000, // 事件持续时间与间隔相同
   },
 };
 
 // 推荐理由模板
-const RECOMMENDATION_REASONS = [
+const RecommendationReasons = [
   "版本强势英雄，出场率极高",
   "操作简单易上手，适合新手玩家",
   "团战能力出色，能改变战局走向",
@@ -78,15 +80,14 @@ const getRandomElement = <T>(array: T[]): T => {
 };
 
 // 本地存储键
-const RANDOM_EVENTS_STORAGE_KEY = "random-events";
+const RandomEventsStorageKey = "random-events";
 
 // 从本地存储获取随机事件
 const getRandomEventsFromStorage = (): RandomEventData[] => {
   try {
-    const eventsJson = localStorage.getItem(RANDOM_EVENTS_STORAGE_KEY);
+    const eventsJson = localStorage.getItem(RandomEventsStorageKey);
     return eventsJson ? JSON.parse(eventsJson) : [];
-  } catch (error) {
-    console.error("Failed to get random events from storage:", error);
+  } catch {
     return [];
   }
 };
@@ -94,9 +95,9 @@ const getRandomEventsFromStorage = (): RandomEventData[] => {
 // 保存随机事件到本地存储
 const saveRandomEventsToStorage = (events: RandomEventData[]): void => {
   try {
-    localStorage.setItem(RANDOM_EVENTS_STORAGE_KEY, JSON.stringify(events));
-  } catch (error) {
-    console.error("Failed to save random events to storage:", error);
+    localStorage.setItem(RandomEventsStorageKey, JSON.stringify(events));
+  } catch {
+    // console.error("Failed to save random events to storage:", error);
   }
 };
 
@@ -128,7 +129,10 @@ const getActiveEvents = (): RandomEventData[] => {
 };
 
 // 生成英雄强度推荐事件
-const generateHeroStrengthRecommendationEvent = (profession: string, eventDuration: number): RandomEventData => {
+const generateHeroStrengthRecommendationEvent = (
+  profession: string,
+  eventDuration: number,
+): RandomEventData => {
   const now = new Date();
   const startDate = now.toISOString();
   const endDate = new Date(now.getTime() + eventDuration).toISOString();
@@ -139,8 +143,11 @@ const generateHeroStrengthRecommendationEvent = (profession: string, eventDurati
     title: `${profession}英雄强度推荐`,
     description: `当前版本${profession}英雄强度推荐，请查看详情了解推荐理由`,
     profession,
-    strengthScore: generateRandomStrength(defaultEventConfig.strengthRange.min, defaultEventConfig.strengthRange.max),
-    reason: getRandomElement(RECOMMENDATION_REASONS),
+    strengthScore: generateRandomStrength(
+      defaultEventConfig.strengthRange.min,
+      defaultEventConfig.strengthRange.max,
+    ),
+    reason: getRandomElement(RecommendationReasons),
     createdAt: now.toISOString(),
     startDate,
     endDate,
@@ -156,17 +163,24 @@ const updateBiweeklyHeroStrengthRecommendations = (): void => {
 
   // 检查是否需要生成新事件
   const lastEvent = events
-    .filter((event) => event.type === RandomEventType.HERO_STRENGTH_RECOMMENDATION)
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0];
+    .filter(
+      (event) => event.type === RandomEventType.HERO_STRENGTH_RECOMMENDATION,
+    )
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    )[0];
 
   // 计算是否需要生成新事件
   let shouldGenerateNewEvents = !lastEvent;
   if (!shouldGenerateNewEvents) {
     // 计算距离上次事件的天数
     const daysSinceLastEvent = Math.ceil(
-      (now.getTime() - new Date(lastEvent.createdAt).getTime()) / (1000 * 3600 * 24)
+      (now.getTime() - new Date(lastEvent.createdAt).getTime()) /
+        (1000 * 3600 * 24),
     );
-    shouldGenerateNewEvents = daysSinceLastEvent >= defaultEventConfig.intervalDays;
+    shouldGenerateNewEvents =
+      daysSinceLastEvent >= defaultEventConfig.intervalDays;
   }
 
   if (!shouldGenerateNewEvents) {
@@ -178,7 +192,9 @@ const updateBiweeklyHeroStrengthRecommendations = (): void => {
   const selectedProfessions = new Set<string>();
 
   // 选择要推荐的职业
-  while (selectedProfessions.size < defaultEventConfig.recommendProfessionCount) {
+  while (
+    selectedProfessions.size < defaultEventConfig.recommendProfessionCount
+  ) {
     const randomProfession = getRandomElement(defaultEventConfig.professions);
     selectedProfessions.add(randomProfession);
   }
@@ -187,7 +203,9 @@ const updateBiweeklyHeroStrengthRecommendations = (): void => {
   for (const profession of selectedProfessions) {
     const event = generateHeroStrengthRecommendationEvent(
       profession,
-      defaultEventConfig.eventDurations[RandomEventType.HERO_STRENGTH_RECOMMENDATION]
+      defaultEventConfig.eventDurations[
+        RandomEventType.HERO_STRENGTH_RECOMMENDATION
+      ],
     );
     newEvents.push(event);
   }
@@ -196,7 +214,7 @@ const updateBiweeklyHeroStrengthRecommendations = (): void => {
   const updatedEvents = [...events, ...newEvents];
   saveRandomEventsToStorage(updatedEvents);
 
-  console.log("Generated new hero strength recommendation events:", newEvents);
+  // console.log("Generated new hero strength recommendation events:", newEvents);
 };
 
 /**
@@ -208,7 +226,9 @@ export const getLatestHeroStrengthRecommendations = (): RandomEventData[] => {
 
   // 获取所有活跃的英雄强度推荐事件
   const activeEvents = getActiveEvents();
-  return activeEvents.filter((event) => event.type === RandomEventType.HERO_STRENGTH_RECOMMENDATION);
+  return activeEvents.filter(
+    (event) => event.type === RandomEventType.HERO_STRENGTH_RECOMMENDATION,
+  );
 };
 
 /**
@@ -278,7 +298,9 @@ export const batchGenerateTestEvents = (count: number): void => {
     const profession = getRandomElement(defaultEventConfig.professions);
     const event = generateHeroStrengthRecommendationEvent(
       profession,
-      defaultEventConfig.eventDurations[RandomEventType.HERO_STRENGTH_RECOMMENDATION]
+      defaultEventConfig.eventDurations[
+        RandomEventType.HERO_STRENGTH_RECOMMENDATION
+      ],
     );
     newEvents.push(event);
   }
@@ -286,7 +308,7 @@ export const batchGenerateTestEvents = (count: number): void => {
   const updatedEvents = [...events, ...newEvents];
   saveRandomEventsToStorage(updatedEvents);
 
-  console.log(`Generated ${count} test events`);
+  // console.log(`Generated ${count} test events`);
 };
 
 /**
@@ -294,7 +316,7 @@ export const batchGenerateTestEvents = (count: number): void => {
  */
 export const clearAllEvents = (): void => {
   localStorage.removeItem(RANDOM_EVENTS_STORAGE_KEY);
-  console.log("Cleared all random events");
+  // console.log("Cleared all random events");
 };
 
 /**
@@ -309,8 +331,13 @@ export const simulatePastEvents = (count: number): void => {
     const profession = getRandomElement(defaultEventConfig.professions);
     const now = new Date();
     // 随机生成过去的日期
-    const pastDate = new Date(now.getTime() - Math.random() * 365 * 24 * 60 * 60 * 1000);
-    const eventDuration = defaultEventConfig.eventDurations[RandomEventType.HERO_STRENGTH_RECOMMENDATION];
+    const pastDate = new Date(
+      now.getTime() - Math.random() * 365 * 24 * 60 * 60 * 1000,
+    );
+    const eventDuration =
+      defaultEventConfig.eventDurations[
+        RandomEventType.HERO_STRENGTH_RECOMMENDATION
+      ];
 
     const event = {
       id: generateId(),
@@ -318,8 +345,11 @@ export const simulatePastEvents = (count: number): void => {
       title: `${profession}英雄强度推荐`,
       description: `当前版本${profession}英雄强度推荐，请查看详情了解推荐理由`,
       profession,
-      strengthScore: generateRandomStrength(defaultEventConfig.strengthRange.min, defaultEventConfig.strengthRange.max),
-      reason: getRandomElement(RECOMMENDATION_REASONS),
+      strengthScore: generateRandomStrength(
+        defaultEventConfig.strengthRange.min,
+        defaultEventConfig.strengthRange.max,
+      ),
+      reason: getRandomElement(RecommendationReasons),
       createdAt: pastDate.toISOString(),
       startDate: pastDate.toISOString(),
       endDate: new Date(pastDate.getTime() + eventDuration).toISOString(),
@@ -333,7 +363,7 @@ export const simulatePastEvents = (count: number): void => {
   const updatedEvents = [...events, ...newEvents];
   saveRandomEventsToStorage(updatedEvents);
 
-  console.log(`Generated ${count} past events`);
+  // console.log(`Generated ${count} past events`);
 };
 
 /**

@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 // 定义业务数据类型
 interface BusinessData {
@@ -68,7 +68,7 @@ interface SimulationBusinessDataState {
 
 // 创建并导出业务数据store
 export const useSimulationBusinessDataStore = defineStore(
-  'simulationBusinessData',
+  "simulationBusinessData",
   {
     state: (): SimulationBusinessDataState => ({
       // 初始当前业务数据
@@ -115,11 +115,11 @@ export const useSimulationBusinessDataStore = defineStore(
     getters: {
       // 获取今日业务数据
       todayData: (state) => {
-        const today = new Date().toISOString().split('T')[0];
+        const today = new Date().toISOString().split("T")[0];
         return (
           state.historicalData.find(
             (data) =>
-              new Date(data.timestamp).toISOString().split('T')[0] === today,
+              new Date(data.timestamp).toISOString().split("T")[0] === today,
           ) || state.currentData
         );
       },
@@ -128,11 +128,11 @@ export const useSimulationBusinessDataStore = defineStore(
       yesterdayData: (state) => {
         const yesterday = new Date();
         yesterday.setDate(yesterday.getDate() - 1);
-        const yesterdayStr = yesterday.toISOString().split('T')[0];
+        const yesterdayStr = yesterday.toISOString().split("T")[0];
 
         return state.historicalData.find(
           (data) =>
-            new Date(data.timestamp).toISOString().split('T')[0] ===
+            new Date(data.timestamp).toISOString().split("T")[0] ===
             yesterdayStr,
         );
       },
@@ -240,7 +240,7 @@ export const useSimulationBusinessDataStore = defineStore(
 
     // 持久化存储
     persist: {
-      key: 'simulation-business-data',
+      key: "simulation-business-data",
       storage: localStorage,
     },
   },

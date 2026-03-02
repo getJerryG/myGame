@@ -163,59 +163,59 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useHeroSkinStore } from '@/stores/heroSkinStore';
-import ApplicationWindow from '@/components/common/window/ApplicationWindow.vue';
+import { ref, onMounted } from "vue";
+import { useHeroSkinStore } from "@/stores/heroSkinStore";
+import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
 
 // 使用Pinia store
 const heroSkinStore = useHeroSkinStore();
 
 // 状态管理
-const activeTab = ref<string>('create');
-const selectedRole = ref<string>('warrior');
-const selectedType = ref<string>('physical');
-const selectedMethod = ref<string>('self');
+const activeTab = ref<string>("create");
+const selectedRole = ref<string>("warrior");
+const selectedType = ref<string>("physical");
+const selectedMethod = ref<string>("self");
 
 // 英雄定位列表
 const heroRoles = [
-  { id: 'warrior', name: '战士', icon: '⚔️' },
-  { id: 'mage', name: '法师', icon: '🔮' },
-  { id: 'archer', name: '射手', icon: '🏹' },
-  { id: 'assassin', name: '刺客', icon: '🗡️' },
-  { id: 'tank', name: '坦克', icon: '🛡️' },
-  { id: 'support', name: '辅助', icon: '💚' },
+  { id: "warrior", name: "战士", icon: "⚔️" },
+  { id: "mage", name: "法师", icon: "🔮" },
+  { id: "archer", name: "射手", icon: "🏹" },
+  { id: "assassin", name: "刺客", icon: "🗡️" },
+  { id: "tank", name: "坦克", icon: "🛡️" },
+  { id: "support", name: "辅助", icon: "💚" },
 ];
 
 // 英雄类型列表
 const heroTypes = [
-  { id: 'physical', name: '物理' },
-  { id: 'magic', name: '法术' },
-  { id: 'hybrid', name: '混合' },
+  { id: "physical", name: "物理" },
+  { id: "magic", name: "法术" },
+  { id: "hybrid", name: "混合" },
 ];
 
 // 研发方式列表
 const developmentMethods = [
-  { id: 'self', name: '自研' },
-  { id: 'cooperation', name: '联动' },
+  { id: "self", name: "自研" },
+  { id: "cooperation", name: "联动" },
 ];
 
 // 随机英雄名称列表
 const heroNames = [
-  '李白',
-  '韩信',
-  '赵云',
-  '孙悟空',
-  '后羿',
-  '鲁班七号',
-  '妲己',
-  '王昭君',
-  '貂蝉',
-  '吕布',
-  '关羽',
-  '张飞',
-  '刘备',
-  '曹操',
-  '孙权',
+  "李白",
+  "韩信",
+  "赵云",
+  "孙悟空",
+  "后羿",
+  "鲁班七号",
+  "妲己",
+  "王昭君",
+  "貂蝉",
+  "吕布",
+  "关羽",
+  "张飞",
+  "刘备",
+  "曹操",
+  "孙权",
 ];
 
 // 生成随机英雄名称
@@ -226,18 +226,18 @@ const generateRandomHeroName = (): string => {
 // 生成随机英雄图标
 const generateRandomIcon = (): string => {
   const icons = [
-    '⚔️',
-    '🛡️',
-    '🔮',
-    '🏹',
-    '🗡️',
-    '💚',
-    '🦸',
-    '🦹',
-    '🧙',
-    '🧝',
-    '🧛',
-    '🧟',
+    "⚔️",
+    "🛡️",
+    "🔮",
+    "🏹",
+    "🗡️",
+    "💚",
+    "🦸",
+    "🦹",
+    "🧙",
+    "🧝",
+    "🧛",
+    "🧟",
   ];
   return icons[Math.floor(Math.random() * icons.length)];
 };
@@ -245,29 +245,41 @@ const generateRandomIcon = (): string => {
 // 根据定位id获取定位名称
 const getRoleName = (roleId: string): string => {
   const role = heroRoles.find((r) => r.id === roleId);
-  return role ? role.name : '未知定位';
+  return role ? role.name : "未知定位";
 };
 
 // 根据类型id获取类型名称
 const getTypeName = (typeId: string): string => {
   const type = heroTypes.find((t) => t.id === typeId);
-  return type ? type.name : '未知类型';
+  return type ? type.name : "未知类型";
 };
 
 // 确认英雄立项
 const confirmHeroCreation = (): void => {
   // 创建英雄对象
-  const newHero: any = {
+  const newHero = {
     id: Date.now().toString(),
     name: generateRandomHeroName(),
     icon: generateRandomIcon(),
-    role: selectedRole.value,
-    type: selectedType.value,
-    developmentMethod: selectedMethod.value === 'self' ? '自研' : '联动',
-    isDeveloping: true,
-    progress: 0,
-    winRate: 0,
-    pickRate: 0,
+    class: selectedRole.value,
+    stats: {
+      health: 100,
+      attack: 10,
+      defense: 5,
+    },
+    description: `${generateRandomHeroName()}是一个强大的${getRoleName(selectedRole.value)}`,
+    createdAt: new Date().toISOString(),
+    creationType:
+      selectedMethod.value === "self" ? "selfCreation" : "collaboration",
+    style: "standard",
+    developmentTime: 30,
+    developmentCost: 10000,
+    developmentProgress: 0,
+    status: "in_development",
+    pickRate: 0.1,
+    userBase: 0.1,
+    usageRate: 0,
+    winRate: 50,
     banRate: 0,
   };
 
@@ -275,16 +287,16 @@ const confirmHeroCreation = (): void => {
   heroSkinStore.addHero(newHero);
 
   // 重置选择
-  selectedRole.value = 'warrior';
-  selectedType.value = 'physical';
-  selectedMethod.value = 'self';
+  selectedRole.value = "warrior";
+  selectedType.value = "physical";
+  selectedMethod.value = "self";
 
   alert(`英雄"${newHero.name}"立项成功！`);
 };
 
 // 初始化数据
 onMounted(() => {
-  heroSkinStore.initData();
+  heroSkinStore.initializeData();
 });
 </script>
 

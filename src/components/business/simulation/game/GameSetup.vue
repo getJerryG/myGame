@@ -53,29 +53,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useSimulationStore } from '../../stores/simulationStore';
+import { ref, computed } from "vue";
+import { useSimulationStore } from "../../stores/simulationStore";
 
 const simulationStore = useSimulationStore();
 
 // 游戏类型选项
 const gameTypes = [
-  { value: 'moba', label: 'MOBA', description: '多人在线战术竞技游戏' },
-  { value: 'card', label: '卡牌', description: '策略卡牌收集游戏' },
-  { value: 'casual', label: '休闲竞技', description: '轻松休闲的竞技游戏' },
+  { value: "moba", label: "MOBA", description: "多人在线战术竞技游戏" },
+  { value: "card", label: "卡牌", description: "策略卡牌收集游戏" },
+  { value: "casual", label: "休闲竞技", description: "轻松休闲的竞技游戏" },
 ];
 
 // 类型定义
-const GameTypeValues = ['moba', 'card', 'casual'] as const;
-type GameType = (typeof GameTypeValues)[number];
+const _GameTypeValues = ["moba", "card", "casual"] as const;
+type GameType = (typeof _GameTypeValues)[number];
 
 // 选中的游戏类型
-const selectedGameType = ref<GameType>('moba');
+const selectedGameType = ref<GameType>("moba");
 
 // 游戏名称
-const gameName = ref('我的游戏');
+const gameName = ref("我的游戏");
 // 游戏名称错误信息
-const gameNameError = ref<string>('');
+const gameNameError = ref<string>("");
 
 /**
  * 验证游戏名称
@@ -85,28 +85,28 @@ const validateGameName = (): void => {
   const name = gameName.value.trim();
 
   if (name.length === 0) {
-    gameNameError.value = '';
+    gameNameError.value = "";
     return;
   }
 
   if (name.length > 20) {
-    gameNameError.value = '游戏名称不能超过20个字符';
+    gameNameError.value = "游戏名称不能超过20个字符";
     return;
   }
 
   if (name.length < 1) {
-    gameNameError.value = '游戏名称不能为空';
+    gameNameError.value = "游戏名称不能为空";
     return;
   }
 
   // 检查是否包含特殊字符
   const specialCharRegex = /[^a-zA-Z0-9\u4e00-\u9fa5\s]/;
   if (specialCharRegex.test(name)) {
-    gameNameError.value = '游戏名称不能包含特殊字符';
+    gameNameError.value = "游戏名称不能包含特殊字符";
     return;
   }
 
-  gameNameError.value = '';
+  gameNameError.value = "";
 };
 
 /**
@@ -116,11 +116,11 @@ const validateGameName = (): void => {
  */
 const escapeHtml = (str: string): string => {
   return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 };
 
 // 计算是否可以发布
@@ -148,7 +148,7 @@ const publishGame = (): void => {
   simulationStore.createGame(selectedGameType.value, safeGameName);
 
   // 记录游戏设定
-  simulationStore.recordAction('gameSetup', {
+  simulationStore.recordAction("gameSetup", {
     gameType: selectedGameType.value,
     gameName: safeGameName,
   });

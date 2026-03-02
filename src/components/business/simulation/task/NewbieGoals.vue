@@ -107,8 +107,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useSimulationStore } from '../../stores/simulationStore';
+import { computed } from "vue";
+import { useSimulationStore } from "../../stores/simulationStore";
 
 // 定义类型接口
 interface NewbieGoalReward {
@@ -153,11 +153,11 @@ const calculateGoalProgress = (goal: NewbieGoal): number => {
 // 获取当前值
 const getCurrentValue = (goal: NewbieGoal): number => {
   switch (goal.id) {
-    case 'goal5': // 累计下载量
+    case "goal5": // 累计下载量
       return simulationStore.businessData.downloads;
-    case 'goal6': // 市场情绪
+    case "goal6": // 市场情绪
       return simulationStore.businessData.marketSentiment;
-    case 'goal7': // 连续7天运营
+    case "goal7": // 连续7天运营
       return simulationStore.gameState.dayCount;
     default:
       return 0;

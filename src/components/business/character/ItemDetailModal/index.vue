@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import GameModal from '../GameModal.vue';
+import GameModal from "../GameModal.vue";
 
 defineProps({
   isVisible: {
@@ -45,7 +45,7 @@ defineProps({
   },
 });
 
-defineEmits(['close']);
+defineEmits(["close"]);
 </script>
 
 <style lang="scss" scoped>

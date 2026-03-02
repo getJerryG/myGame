@@ -18,7 +18,7 @@
  */
 
 // 模块图标映射
-const MODULE_ICONS: Record<string, string> = {
+const ModuleIcons: Record<string, string> = {
   // 数据中心模块图标
   "core-data": "📊",
   "revenue-analysis": "💰",
@@ -34,7 +34,7 @@ const MODULE_ICONS: Record<string, string> = {
 };
 
 // 核心数据标签映射
-const CORE_DATA_LABELS: Record<string, string> = {
+const CoreDataLabels: Record<string, string> = {
   // 通用核心数据
   money: "当前资金",
   reputation: "声望",
@@ -60,7 +60,7 @@ const CORE_DATA_LABELS: Record<string, string> = {
 };
 
 // 渠道类型标签映射
-const CHANNEL_TYPE_LABELS: Record<string, string> = {
+const ChannelTypeLabels: Record<string, string> = {
   online: "线上",
   offline: "线下",
   cooperation: "合作",
@@ -80,7 +80,7 @@ const CHANNEL_TYPE_LABELS: Record<string, string> = {
  * ```
  */
 export const getModuleIcon = (moduleId: string): string => {
-  return MODULE_ICONS[moduleId] || MODULE_ICONS.default;
+  return ModuleIcons[moduleId] || ModuleIcons.default;
 };
 
 /**
@@ -96,8 +96,11 @@ export const getModuleIcon = (moduleId: string): string => {
  * const customLabel = getCoreDataLabel('customKey', { customKey: '自定义标签' }); // 返回 '自定义标签'
  * ```
  */
-export const getCoreDataLabel = (key: string, customLabels: Record<string, string> = {}): string => {
-  return customLabels[key] || CORE_DATA_LABELS[key] || key;
+export const getCoreDataLabel = (
+  key: string,
+  customLabels: Record<string, string> = {},
+): string => {
+  return customLabels[key] || CoreDataLabels[key] || key;
 };
 
 /**
@@ -113,7 +116,7 @@ export const getCoreDataLabel = (key: string, customLabels: Record<string, strin
  * ```
  */
 export const getChannelTypeName = (type: string): string => {
-  return CHANNEL_TYPE_LABELS[type] || CHANNEL_TYPE_LABELS.default;
+  return ChannelTypeLabels[type] || ChannelTypeLabels.default;
 };
 
 /**
@@ -262,9 +265,9 @@ export const generateRandomColor = (): string => {
  * }, 300);
  * ```
  */
-export const debounce = <T extends (...args: any[]) => any>(
+export const debounce = <T extends (...args: unknown[]) => unknown>(
   func: T,
-  delay: number
+  delay: number,
 ): ((...args: Parameters<T>) => void) => {
   let timeoutId: ReturnType<typeof setTimeout>;
   return (...args: Parameters<T>) => {
@@ -287,9 +290,9 @@ export const debounce = <T extends (...args: any[]) => any>(
  * }, 300);
  * ```
  */
-export const throttle = <T extends (...args: any[]) => any>(
+export const throttle = <T extends (...args: unknown[]) => unknown>(
   func: T,
-  delay: number
+  delay: number,
 ): ((...args: Parameters<T>) => void) => {
   let lastCall = 0;
   return (...args: Parameters<T>) => {
@@ -324,9 +327,9 @@ export const deepClone = <T>(obj: T): T => {
     return obj.map((item) => deepClone(item)) as unknown as T;
   }
   if (typeof obj === "object") {
-    const clonedObj = {} as T;
+    const clonedObj = Object.create(Object.getPrototypeOf(obj)) as T;
     for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
         clonedObj[key] = deepClone(obj[key]);
       }
     }
@@ -441,5 +444,7 @@ export const isProdEnv = (): boolean => {
  * ```
  */
 export const getEnvVar = (key: string, defaultValue = ""): string => {
-  return (import.meta.env as any)[key] || defaultValue;
+  return (
+    (import.meta.env as Record<string, string | undefined>)[key] || defaultValue
+  );
 };

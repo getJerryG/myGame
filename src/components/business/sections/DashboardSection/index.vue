@@ -2,15 +2,15 @@
   <div class="dashboard-section">
     <div class="section-header">
       <div>
-        <h3>游戏策划仪表�?/h3>
-          <p>监控游戏关键指标，制定战略决�?/p>
+        <h3>游戏策划仪表板</h3>
+          <p>监控游戏关键指标，制定战略决策</p>
       </div>
       <div class="time-range-selector">
         <select :value="timeRange" @change="handleTimeRangeChange($event)">
           <option value="day">今日</option>
           <option value="week">本周</option>
           <option value="month">本月</option>
-          <option value="quarter">本季�?/option>
+          <option value="quarter">本季度</option>
         </select>
       </div>
     </div>
@@ -119,7 +119,7 @@
         <h3>队伍配置</h3>
         <div class="teams-section">
           <div class="team-config">
-            <h4>蓝色�?/h4>
+            <h4>蓝色队</h4>
               <div v-for="(player, index) in blueTeam" :key="index" class="player-config">
                 <div class="player-slot">
                   <select v-model="player.heroId" @change="updatePlayerHero('blue', index, player.heroId)">
@@ -138,7 +138,7 @@
               </div>
           </div>
           <div class="team-config">
-            <h4>红色�?/h4>
+            <h4>红色队</h4>
               <div v-for="(player, index) in redTeam" :key="index" class="player-config">
                 <div class="player-slot">
                   <select v-model="player.heroId" @change="updatePlayerHero('red', index, player.heroId)">
@@ -165,28 +165,28 @@
       <h3>模拟结果</h3>
       <div class="winner-info">
         <h4>
-          获胜�?
-          {{ simulationResults.winner === 'blue' ? '蓝色�? : '红色�? }}
+          获胜方
+          {{ simulationResults.winner === 'blue' ? '蓝色方' : '红色方' }}
         </h4>
-        <p>游戏时间: {{ simulationResults.time }}�?/p>
+        <p>游戏时间: {{ simulationResults.time }}秒</p>
         <p>模拟步数: {{ simulationResults.steps }}</p>
       </div>
       <div class="teams-results">
         <div class="team-result">
-          <h5>蓝色�?/h5>
+          <h5>蓝色方</h5>
             <p>击杀: {{ simulationResults.teams.blue.kills }}</p>
             <p>助攻: {{ simulationResults.teams.blue.assists }}</p>
             <p>推塔: {{ 9 - simulationResults.teams.blue.towers }}</p>
             <p>经济: {{ Math.round(simulationResults.teams.blue.gold) }}</p>
-            <p>基地血�? {{ simulationResults.teams.blue.baseHealth }}</p>
+            <p>基地血量: {{ simulationResults.teams.blue.baseHealth }}</p>
         </div>
         <div class="team-result">
-          <h5>红色�?/h5>
+          <h5>红色方</h5>
             <p>击杀: {{ simulationResults.teams.red.kills }}</p>
             <p>助攻: {{ simulationResults.teams.red.assists }}</p>
             <p>推塔: {{ 9 - simulationResults.teams.red.towers }}</p>
             <p>经济: {{ Math.round(simulationResults.teams.red.gold) }}</p>
-            <p>基地血�? {{ simulationResults.teams.red.baseHealth }}</p>
+            <p>基地血量: {{ simulationResults.teams.red.baseHealth }}</p>
         </div>
       </div>
     </div>
@@ -201,27 +201,27 @@
   </div>
 </template>
 
-<script setup lang=ts>
+<script setup lang="ts">
 
 defineProps({
   timeRange: {
     type: String,
-    default: 'month',
+    default: "month",
   },
   gameConfig: {
     type: Object,
     default: () => ({
-      mode: 'classic',
+      mode: "classic",
       steps: 100,
     }),
   },
   blueTeam: {
     type: Array,
-    default: () => Array(5).fill({ heroId: '', lane: 'top' }),
+    default: () => Array(5).fill({ heroId: "", lane: "top" }),
   },
   redTeam: {
     type: Array,
-    default: () => Array(5).fill({ heroId: '', lane: 'top' }),
+    default: () => Array(5).fill({ heroId: "", lane: "top" }),
   },
   simulationResults: {
     type: Object,
@@ -234,11 +234,11 @@ defineProps({
 });
 
 const emit = defineEmits([
-  'update:timeRange',
-  'update:gameConfig',
-  'update:blueTeam',
-  'update:redTeam',
-  'updatePlayerHero',
+  "update:timeRange",
+  "update:gameConfig",
+  "update:blueTeam",
+  "update:redTeam",
+  "updatePlayerHero",
 ]);
 
 // 方法
@@ -247,37 +247,37 @@ function numberFormat(value: number | string): string {
 }
 
 function getKPITrendClass(): string {
-  return 'stable';
+  return "stable";
 }
 
 function getKPITrendIcon(): string {
-  return '�?;
+  return "📈";
 }
 
 function getKPITrendValue(): string {
-  return '0.0';
+  return "0.0";
 }
 
 function handleTimeRangeChange(event: Event): void {
-  emit('update:timeRange', (event.target as HTMLSelectElement).value);
+  emit("update:timeRange", (event.target as HTMLSelectElement).value);
 }
 
 function handleGameModeChange(event: Event): void {
-  emit('update:gameConfig', {
+  emit("update:gameConfig", {
     ...gameConfig,
     mode: (event.target as HTMLSelectElement).value,
   });
 }
 
 function handleStepsChange(event: Event): void {
-  emit('update:gameConfig', {
+  emit("update:gameConfig", {
     ...gameConfig,
     steps: parseInt((event.target as HTMLSelectElement).value, 10) || 100,
   });
 }
 
 function updatePlayerHero(team: string, index: number, heroId: string): void {
-  emit('updatePlayerHero', team, index, heroId);
+  emit("updatePlayerHero", team, index, heroId);
 }
 </script>
 
@@ -514,5 +514,3 @@ function updatePlayerHero(team: string, index: number, heroId: string): void {
   }
 }
 </style>
-
-

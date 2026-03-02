@@ -1,9 +1,12 @@
 import { defineStore } from "pinia";
 
+// 定义模拟数据类型
+type SimulationData = Record<string, unknown>;
+
 // 定义模拟系统状态类型
 interface SimulationState {
   // 模拟数据
-  simulationData: any;
+  simulationData: SimulationData | null;
   isSimulating: boolean;
   simulationSpeed: number;
 }
@@ -36,7 +39,7 @@ export const useSimulationStore = defineStore("simulation", {
     },
 
     // 更新模拟数据
-    updateSimulationData(data: any) {
+    updateSimulationData(data: SimulationData | null) {
       this.simulationData = data;
     },
 

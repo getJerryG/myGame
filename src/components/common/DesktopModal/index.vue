@@ -51,30 +51,30 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onUnmounted } from 'vue';
+import { ref, computed, onUnmounted } from "vue";
 
 // 导入所有应用组件
-import ChatApp from '@/components/business/apps/chat/ChatApp.vue';
-import DataCenterApp from '@/components/business/apps/DataCenter/DataCenterApp.vue';
-import OperationsApp from '@/components/business/apps/operations/OperationsApp.vue';
-import ContentApp from '@/components/business/apps/content/ContentApp.vue';
-import RewardsApp from '@/components/business/apps/rewards/RewardsApp.vue';
-import WalletApp from '@/components/business/apps/wallet/WalletApp.vue';
-import LotteryApp from '@/components/business/apps/lottery/LotteryApp.vue';
-import GameSettingsApp from '@/components/business/apps/game-settings/GameSettingsApp.vue';
-import AppStore from '@/components/business/apps/AppStore/AppStore.vue';
-import HeroApp from '@/components/business/apps/hero/HeroApp.vue';
-import SkinApp from '@/components/business/apps/skin/SkinApp.vue';
+import ChatApp from "@/components/business/apps/chat/ChatApp.vue";
+import DataCenterApp from "@/components/business/apps/DataCenter/DataCenterApp.vue";
+import OperationsApp from "@/components/business/apps/operations/OperationsApp.vue";
+import ContentApp from "@/components/business/apps/content/ContentApp.vue";
+import RewardsApp from "@/components/business/apps/rewards/RewardsApp.vue";
+import WalletApp from "@/components/business/apps/wallet/WalletApp.vue";
+import LotteryApp from "@/components/business/apps/lottery/LotteryApp.vue";
+import GameSettingsApp from "@/components/business/apps/game-settings/GameSettingsApp.vue";
+import AppStore from "@/components/business/apps/AppStore/AppStore.vue";
+import HeroApp from "@/components/business/apps/hero/HeroApp.vue";
+import SkinApp from "@/components/business/apps/skin/SkinApp.vue";
 // 确保游戏发布组件被正确导入并命名
-import GameReleaseApp from '@/modules/game/views/GameReleaseApp.vue';
+import GameReleaseApp from "@/modules/game/views/GameReleaseApp.vue";
 
 // 确保组件有正确的名称
-GameReleaseApp.name = 'GameReleaseApp';
+GameReleaseApp.name = "GameReleaseApp";
 
 // 导入类型
 
-import type { GameData } from '../types/game';
-import type { Modal } from '../types/modal';
+import type { GameData } from "../types/game";
+import type { Modal } from "../types/modal";
 
 // Props定义
 const props = defineProps<{
@@ -85,11 +85,11 @@ const props = defineProps<{
 
 // Emits定义
 const emit = defineEmits<{
-  (e: 'close'): void;
-  (e: 'minimize'): void;
-  (e: 'maximize'): void;
-  (e: 'update:modal', modal: Modal): void;
-  (e: 'app-installed', app: App): void;
+  (e: "close"): void;
+  (e: "minimize"): void;
+  (e: "maximize"): void;
+  (e: "update:modal", modal: Modal): void;
+  (e: "app-installed", app: App): void;
 }>();
 
 // 拖拽相关
@@ -102,18 +102,18 @@ let animationFrameId: number | null = null;
 // 应用组件映射
 const appComponents = {
   chat: ChatApp,
-  'data-center': DataCenterApp,
+  "data-center": DataCenterApp,
   operations: OperationsApp,
   content: ContentApp,
   rewards: RewardsApp,
   wallet: WalletApp,
   lottery: LotteryApp,
-  'game-settings': GameSettingsApp,
-  'app-store': AppStore,
-  'hero-development': HeroApp,
-  'skin-development': SkinApp,
-  'event-development': OperationsApp, // 事件开发使用运营管理组件
-  'game-release': GameReleaseApp, // 游戏发布使用专门的游戏发布组件
+  "game-settings": GameSettingsApp,
+  "app-store": AppStore,
+  "hero-development": HeroApp,
+  "skin-development": SkinApp,
+  "event-development": OperationsApp, // 事件开发使用运营管理组件
+  "game-release": GameReleaseApp, // 游戏发布使用专门的游戏发布组件
 };
 
 // 获取当前应用组件
@@ -125,17 +125,17 @@ const currentAppComponent = computed(() => {
 const modalStyle = computed(() => {
   if (props.modal.isMaximized) {
     return {
-      left: '0px',
-      top: '0px',
-      width: '100%',
-      height: 'calc(100% - 48px)', // 减去任务栏高度
+      left: "0px",
+      top: "0px",
+      width: "100%",
+      height: "calc(100% - 48px)", // 减去任务栏高度
       zIndex: 100,
     };
   }
 
   if (isMinimized.value) {
     return {
-      display: 'none',
+      display: "none",
     };
   }
 
@@ -150,7 +150,7 @@ const modalStyle = computed(() => {
     height: `${props.modal.size.height}px`,
     zIndex: 100,
     // 关闭过渡动画以提高拖拽流畅度
-    transition: isDragging.value ? 'none' : 'all 0.08s ease',
+    transition: isDragging.value ? "none" : "all 0.08s ease",
   };
 });
 
@@ -158,15 +158,15 @@ const modalStyle = computed(() => {
 const startDrag = (e: MouseEvent): void => {
   // 排除控制按钮区域，防止点击按钮时触发拖拽
   if (
-    (e.target as Element).closest('.control-button') ||
-    (e.target as Element).closest('.modal-controls')
+    (e.target as Element).closest(".control-button") ||
+    (e.target as Element).closest(".modal-controls")
   ) {
     return;
   }
 
   if (
-    e.target.classList.contains('modal-header') ||
-    (e.target as Element).closest('.modal-header')
+    e.target.classList.contains("modal-header") ||
+    (e.target as Element).closest(".modal-header")
   ) {
     startDragHeader(e);
   }
@@ -181,8 +181,8 @@ const startDragHeader = (e: MouseEvent): void => {
     y: e.clientY - props.modal.position.y,
   };
 
-  document.addEventListener('mousemove', drag);
-  document.addEventListener('mouseup', stopDrag);
+  document.addEventListener("mousemove", drag);
+  document.addEventListener("mouseup", stopDrag);
 };
 
 const drag = (e: MouseEvent): void => {
@@ -229,7 +229,7 @@ const stopDrag = (): void => {
       ...props.modal,
       position: { ...dragPosition.value },
     };
-    emit('update:modal', updatedModal);
+    emit("update:modal", updatedModal);
   }
 
   // 直接将isDragging设为false，不再等待nextTick
@@ -238,8 +238,8 @@ const stopDrag = (): void => {
   isDragging.value = false;
 
   // 清理事件监听器
-  document.removeEventListener('mousemove', drag);
-  document.removeEventListener('mouseup', stopDrag);
+  document.removeEventListener("mousemove", drag);
+  document.removeEventListener("mouseup", stopDrag);
 
   // 取消动画帧
   if (animationFrameId) {
@@ -250,8 +250,8 @@ const stopDrag = (): void => {
 
 // 组件卸载时清理事件监听器
 onUnmounted(() => {
-  document.removeEventListener('mousemove', drag);
-  document.removeEventListener('mouseup', stopDrag);
+  document.removeEventListener("mousemove", drag);
+  document.removeEventListener("mouseup", stopDrag);
 });
 </script>
 

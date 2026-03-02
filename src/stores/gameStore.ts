@@ -1,4 +1,40 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
+import type { Hero, Skin } from "../utils/HeroSkinManager";
+
+// 定义项目类型
+interface Project {
+  id: string;
+  name: string;
+  type: "hero" | "skin";
+  progress: number;
+  dailyProgress: number;
+  status: "in_progress" | "completed";
+  details: Partial<Hero> | Partial<Skin>;
+}
+
+// 定义事件选项类型
+interface EventOption {
+  id: string;
+  text: string;
+  effects: {
+    money?: number;
+    reputation?: number;
+    popularity?: number;
+    wordOfMouth?: number;
+  };
+}
+
+// 定义事件类型
+interface GameEvent {
+  id: string;
+  name: string;
+  type: string;
+  description: string;
+  startTime: number;
+  endTime: number;
+  active: boolean;
+  options: EventOption[];
+}
 
 // 定义游戏状态类型
 interface GameState {
@@ -28,22 +64,22 @@ interface GameState {
   plannerExp: number;
 
   // 进行中的项目
-  ongoingProjects: any[];
+  ongoingProjects: Project[];
 
   // 已上线内容
-  onlineHeroes: any[];
-  onlineSkins: any[];
-  activeEvents: any[];
+  onlineHeroes: Hero[];
+  onlineSkins: Skin[];
+  activeEvents: GameEvent[];
 }
 
 // 导入英雄皮肤管理工具
 import {
   getInDevelopmentProjects,
   advanceDevelopment,
-} from '../utils/HeroSkinManager';
+} from "../utils/HeroSkinManager";
 
 // 创建并导出游戏store
-export const useGameStore = defineStore('game', {
+export const useGameStore = defineStore("game", {
   state: (): GameState => ({
     // 时间系统
     currentDate: { year: 1, month: 1, day: 1 },
@@ -61,8 +97,8 @@ export const useGameStore = defineStore('game', {
     skinCount: 0,
 
     // 策划等级
-    plannerLevel: '见习',
-    plannerSubLevel: 'III',
+    plannerLevel: "见习",
+    plannerSubLevel: "III",
     levelInRank: 1,
     plannerExp: 0,
 
@@ -164,16 +200,16 @@ export const useGameStore = defineStore('game', {
       this.ongoingProjects.forEach((project) => {
         project.progress += project.dailyProgress;
         if (project.progress >= 100) {
-          project.status = 'completed';
+          project.status = "completed";
           // 项目完成后的处理逻辑
-          if (project.type === 'hero') {
+          if (project.type === "hero") {
             this.onlineHeroes.push({
               id: project.id,
               name: project.name,
               ...project.details,
             });
             this.heroCount++;
-          } else if (project.type === 'skin') {
+          } else if (project.type === "skin") {
             this.onlineSkins.push({
               id: project.id,
               name: project.name,
@@ -186,7 +222,7 @@ export const useGameStore = defineStore('game', {
       });
       // 移除已完成的项目
       this.ongoingProjects = this.ongoingProjects.filter(
-        (project) => project.status !== 'completed',
+        (project) => project.status !== "completed",
       );
     },
 
@@ -198,12 +234,12 @@ export const useGameStore = defineStore('game', {
         // 这里可以根据事件系统生成随机事件
         this.activeEvents.push({
           id: Date.now().toString(),
-          type: 'random',
-          title: '随机事件',
-          description: '发生了一个随机事件',
+          type: "random",
+          title: "随机事件",
+          description: "发生了一个随机事件",
           options: [
-            { id: '1', text: '选项1', effects: { popularity: 10 } },
-            { id: '2', text: '选项2', effects: { reputation: 5 } },
+            { id: "1", text: "选项1", effects: { popularity: 10 } },
+            { id: "2", text: "选项2", effects: { reputation: 5 } },
           ],
         });
       }
@@ -246,11 +282,11 @@ export const useGameStore = defineStore('game', {
     },
 
     // 添加进行中的项目
-    addProject(project: any) {
+    addProject(project: Omit<Project, "progress" | "status" | "startDate">) {
       this.ongoingProjects.push({
         ...project,
         progress: 0,
-        status: 'in_progress',
+        status: "in_progress",
         startDate: { ...this.currentDate },
       });
     },
@@ -263,7 +299,7 @@ export const useGameStore = defineStore('game', {
       if (eventIndex !== -1) {
         const event = this.activeEvents[eventIndex];
         const selectedOption = event.options.find(
-          (option: any) => option.id === optionId,
+          (option) => option.id === optionId,
         );
         if (selectedOption) {
           // 应用事件效果
@@ -302,35 +338,35 @@ export const useGameStore = defineStore('game', {
 
       // 根据职级设置奖励
       switch (this.plannerLevel) {
-        case '见习':
+        case "见习":
           moneyReward = 1000;
           reputationReward = 10;
           break;
-        case '初级':
+        case "初级":
           moneyReward = 2000;
           reputationReward = 20;
           break;
-        case '中级':
+        case "中级":
           moneyReward = 4000;
           reputationReward = 40;
           break;
-        case '高级':
+        case "高级":
           moneyReward = 8000;
           reputationReward = 80;
           break;
-        case '资深':
+        case "资深":
           moneyReward = 16000;
           reputationReward = 160;
           break;
-        case '专家':
+        case "专家":
           moneyReward = 32000;
           reputationReward = 320;
           break;
-        case '经理':
+        case "经理":
           moneyReward = 64000;
           reputationReward = 640;
           break;
-        case '总监':
+        case "总监":
           moneyReward = 128000;
           reputationReward = 1280;
           break;
@@ -367,14 +403,14 @@ export const useGameStore = defineStore('game', {
         `[解锁功能] 策划等级提升到 ${this.plannerLevel}${this.plannerSubLevel}-${this.levelInRank}`,
       );
 
-      if (this.plannerLevel === '高级') {
-        console.log('  - 解锁新功能：更多英雄类型');
-      } else if (this.plannerLevel === '专家') {
-        console.log('  - 解锁新功能：史诗皮肤');
-      } else if (this.plannerLevel === '经理') {
-        console.log('  - 解锁新功能：传说皮肤');
-      } else if (this.plannerLevel === '总监') {
-        console.log('  - 解锁新功能：更多活动类型');
+      if (this.plannerLevel === "高级") {
+        console.log("  - 解锁新功能：更多英雄类型");
+      } else if (this.plannerLevel === "专家") {
+        console.log("  - 解锁新功能：史诗皮肤");
+      } else if (this.plannerLevel === "经理") {
+        console.log("  - 解锁新功能：传说皮肤");
+      } else if (this.plannerLevel === "总监") {
+        console.log("  - 解锁新功能：更多活动类型");
       }
     },
 
@@ -420,7 +456,7 @@ export const useGameStore = defineStore('game', {
       const projects = getInDevelopmentProjects();
 
       projects.forEach((project) => {
-        advanceDevelopment(project.item.id, project.type === 'hero');
+        advanceDevelopment(project.item.id, project.type === "hero");
       });
     },
 
@@ -438,21 +474,21 @@ export const useGameStore = defineStore('game', {
 
         // 基础销量（根据皮肤品质设置不同的基础销量）
         const baseSales =
-          skin.quality === 'legendary'
+          skin.quality === "legendary"
             ? 1000
-            : skin.quality === 'epic'
+            : skin.quality === "epic"
               ? 500
-              : skin.quality === 'rare'
+              : skin.quality === "rare"
                 ? 200
                 : 50;
 
         // 品质系数（根据皮肤品质设置不同的系数）
         const qualityCoeff =
-          skin.quality === 'legendary'
+          skin.quality === "legendary"
             ? 2.0
-            : skin.quality === 'epic'
+            : skin.quality === "epic"
               ? 1.5
-              : skin.quality === 'rare'
+              : skin.quality === "rare"
                 ? 1.2
                 : 1.0;
 
@@ -461,13 +497,13 @@ export const useGameStore = defineStore('game', {
 
         // 职级加成（根据策划职级设置不同的加成）
         const levelCoeff =
-          this.plannerLevel === '总监'
+          this.plannerLevel === "总监"
             ? 1.5
-            : this.plannerLevel === '经理'
+            : this.plannerLevel === "经理"
               ? 1.3
-              : this.plannerLevel === '专家'
+              : this.plannerLevel === "专家"
                 ? 1.2
-                : this.plannerLevel === '资深'
+                : this.plannerLevel === "资深"
                   ? 1.1
                   : 1.0;
 
@@ -482,11 +518,11 @@ export const useGameStore = defineStore('game', {
 
         // 将皮肤销售收入计入总流水和当前资金
         const skinPrice =
-          skin.quality === 'legendary'
+          skin.quality === "legendary"
             ? 1688
-            : skin.quality === 'epic'
+            : skin.quality === "epic"
               ? 888
-              : skin.quality === 'rare'
+              : skin.quality === "rare"
                 ? 288
                 : 188;
 
@@ -549,25 +585,25 @@ export const useGameStore = defineStore('game', {
 
   // 持久化存储
   persist: {
-    key: 'game-data',
+    key: "game-data",
     storage: localStorage,
   },
 });
 
 // 职级列表（共8个职级）
 const plannerLevels = [
-  '见习',
-  '初级',
-  '中级',
-  '高级',
-  '资深',
-  '专家',
-  '经理',
-  '总监',
+  "见习",
+  "初级",
+  "中级",
+  "高级",
+  "资深",
+  "专家",
+  "经理",
+  "总监",
 ];
 
 // 子等级列表
-const subLevels = ['III', 'II', 'I'];
+const subLevels = ["III", "II", "I"];
 
 // 辅助函数：获取职级索引
 function getLevelIndex(level: string): number {
@@ -636,8 +672,8 @@ function getNextLevelInfo(
       subLevelIndex > 0 ? subLevels[subLevelIndex - 1] : subLevels[0];
 
     // 3. 如果子等级达到I且等级内等级达到3，重置为III并提升职级
-    if (subLevel === 'I' && levelInRank === 2) {
-      nextSubLevel = 'III';
+    if (subLevel === "I" && levelInRank === 2) {
+      nextSubLevel = "III";
       const levelIndex = getLevelIndex(nextLevel);
       nextLevel =
         levelIndex < plannerLevels.length - 1

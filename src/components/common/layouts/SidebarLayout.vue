@@ -1,6 +1,6 @@
 <template>
   <div :class="[baseClass, className, { 'dark-theme': darkTheme }]">
-    <!-- 左侧侧边�?-->
+    <!-- 左侧侧边栏 -->
     <div class="sidebar-layout-sidebar">
       <div
         class="sidebar-item"
@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <!-- 右侧主内容区�?-->
+    <!-- 右侧主内容区域 -->
     <div class="sidebar-layout-main">
       <!-- 内容头部 -->
       <div
@@ -75,7 +75,8 @@ import { computed } from 'vue';
  */
 export interface SidebarItem {
   /**
-   * 侧边栏项唯一标识�?   */
+   * 侧边栏项唯一标识符
+   */
   id: string;
   /**
    * 侧边栏项名称
@@ -98,7 +99,8 @@ export interface SidebarItem {
      */
     activeItemId: string;
     /**
-     * 自定义类�?     */
+     * 自定义类名
+     */
     className?: string;
     /**
      * 是否使用深色主题
@@ -113,7 +115,8 @@ export interface SidebarItem {
      */
     coreData?: Record<string, unknown>;
     /**
-     * 核心数据标签映射，用于将key转换为更友好的显示名�?     */
+     * 核心数据标签映射，用于将key转换为更友好的显示名称
+     */
     labelMap?: Record<string, string>;
   }>(),
   {
@@ -131,7 +134,8 @@ export interface SidebarItem {
  */
 const emit = defineEmits<{
   /**
-   * 侧边栏项激活状态变化事�?   */
+   * 侧边栏项激活状态变化事件
+   */
   'update:activeItemId': [id: string];
   /**
    * 侧边栏项点击事件
@@ -142,7 +146,8 @@ const emit = defineEmits<{
 // 基础类名
 const baseClass = computed((): string => 'sidebar-layout');
 
-// 当前选中的侧边栏�?const currentItem = computed((): SidebarItem | null => {
+// 当前选中的侧边栏项
+const currentItem = computed((): SidebarItem | null => {
   return props.sidebarItems.find((item) => item.id === props.activeItemId) || null;
 });
 

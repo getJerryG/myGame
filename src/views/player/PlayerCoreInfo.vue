@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="playerStore.player"
-    class="character-core-info"
-  >
+  <div v-if="playerStore.player" class="character-core-info">
     <!-- 角色名称和等级 -->
     <div class="core-info-header">
       <h2 class="character-name">{{ playerStore.player.name }}</h2>
@@ -110,20 +107,13 @@
     </div>
 
     <!-- 悬浮提示框 -->
-    <div
-      v-if="tooltipVisible"
-      class="tooltip"
-      :style="tooltipStyle"
-    >
+    <div v-if="tooltipVisible" class="tooltip" :style="tooltipStyle">
       {{ tooltipText }}
       <div class="tooltip-arrow"></div>
     </div>
   </div>
 
-  <div
-    v-else
-    class="no-player"
-  >
+  <div v-else class="no-player">
     <div class="no-player-icon">👤</div>
     <p>角色未初始化</p>
   </div>
@@ -164,7 +154,11 @@ function hideTooltip(): void {
 
   gap: tokens.$spacing-md;
   padding: tokens.$spacing-md;
-  background: linear-gradient(135deg, tokens.$skill-magic-border 0%, tokens.$skill-magic-dark 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$skill-magic-border 0%,
+    tokens.$skill-magic-dark 100%
+  );
   border-radius: tokens.$radius-xl;
   box-shadow: 0 10px 30px rgb(102 126 234 / 40%);
   animation: headerGlow 3s ease-in-out infinite alternate;
@@ -399,7 +393,11 @@ function hideTooltip(): void {
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 2px;
-  background: linear-gradient(135deg, tokens.$skill-magic-border 0%, tokens.$skill-magic-dark 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$skill-magic-border 0%,
+    tokens.$skill-magic-dark 100%
+  );
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
@@ -414,7 +412,11 @@ function hideTooltip(): void {
   @include utils.flex-col(tokens.$spacing-sm, center, center);
 
   padding: tokens.$spacing-md;
-  background: linear-gradient(135deg, tokens.$gray-50 0%, tokens.$gray-200 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$gray-50 0%,
+    tokens.$gray-200 100%
+  );
   border-radius: tokens.$radius-lg;
   border: 2px solid tokens.$gray-300;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -429,7 +431,12 @@ function hideTooltip(): void {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 40%), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(255 255 255 / 40%),
+      transparent
+    );
     transition: left 0.5s ease;
   }
 

@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { useLotteryStore } from '@/stores/lotteryStore';
+import { useLotteryStore } from "@/stores/lotteryStore";
 
 // 向父组件传递事�?defineEmits(['show-consumption-info']);
 

@@ -17,26 +17,28 @@
 </template>
 
 <script setup lang="ts">
-// 接收父组件传递的属�?defineProps({
+// 接收父组件传递的属性
+defineProps({
   eventTypes: {
     type: Array,
     default: () => [
-      { label: '限时活动', value: 'limited', icon: '⏱️' },
-      { label: '节日活动', value: 'holiday', icon: '🎄' },
-      { label: '社区活动', value: 'community', icon: '👥' },
+      { label: "限时活动", value: "limited", icon: "⏱️" },
+      { label: "节日活动", value: "holiday", icon: "🎄" },
+      { label: "社区活动", value: "community", icon: "👥" },
     ],
   },
   selectedEventType: {
     type: String,
-    default: 'limited',
+    default: "limited",
   },
 });
 
-// 向父组件传递事�?const emit = defineEmits(['type-selected']);
+// 向父组件传递事件
+const emit = defineEmits(["type-selected"]);
 
 // 选择活动类型
 const selectEventType = (type: string): void => {
-  emit('type-selected', type);
+  emit("type-selected", type);
 };
 </script>
 
@@ -73,7 +75,11 @@ const selectEventType = (type: string): void => {
     }
 
     &.active {
-      background: linear-gradient(135deg, tokens.$bg-dark 0%, tokens.$primary-blue 100%);
+      background: linear-gradient(
+        135deg,
+        tokens.$bg-dark 0%,
+        tokens.$primary-blue 100%
+      );
       color: white;
       box-shadow: tokens.$shadow-blue;
     }

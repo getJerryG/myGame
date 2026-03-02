@@ -1,12 +1,12 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 // 定义动态事件类型
 interface DynamicEvent {
   id: string;
   name: string;
-  type: 'market' | 'user' | 'technical' | 'competitor' | 'team';
+  type: "market" | "user" | "technical" | "competitor" | "team";
   description: string;
-  severity: 'low' | 'medium' | 'high' | 'critical';
+  severity: "low" | "medium" | "high" | "critical";
   probability: number; // 0-1，事件发生概率
   impact: {
     revenue: number;
@@ -26,7 +26,7 @@ interface DynamicEvent {
     effectiveness: number; // 0-1，响应效果
     implementationTime: number;
   }>;
-  status: 'potential' | 'active' | 'resolved';
+  status: "potential" | "active" | "resolved";
   resolvedBy?: string;
   resolvedAt?: number;
   resolutionEffectiveness?: number;
@@ -44,20 +44,25 @@ interface SimulationDynamicEventsState {
   eventHistory: Array<{
     eventId: string;
     timestamp: number;
-    type: 'triggered' | 'resolved';
-    details: any;
+    type: "triggered" | "resolved";
+    details: {
+      severity?: DynamicEvent["severity"];
+      impact?: DynamicEvent["impact"];
+      responseId?: string;
+      effectiveness?: number;
+    };
   }>;
   // 事件配置
   eventConfig: {
     maxActiveEvents: number;
     eventCheckFrequency: number;
-    minSeverityForNotification: 'low' | 'medium' | 'high' | 'critical';
+    minSeverityForNotification: "low" | "medium" | "high" | "critical";
   };
 }
 
 // 创建并导出动态事件store
 export const useSimulationDynamicEventsStore = defineStore(
-  'simulationDynamicEvents',
+  "simulationDynamicEvents",
   {
     state: (): SimulationDynamicEventsState => ({
       // 初始潜在事件为空数组
@@ -72,7 +77,7 @@ export const useSimulationDynamicEventsStore = defineStore(
       eventConfig: {
         maxActiveEvents: 5,
         eventCheckFrequency: 60, // 分钟
-        minSeverityForNotification: 'medium',
+        minSeverityForNotification: "medium",
       },
     }),
 
@@ -80,19 +85,19 @@ export const useSimulationDynamicEventsStore = defineStore(
       // 获取高严重性事件
       highSeverityEvents: (state) => {
         return state.activeEvents.filter(
-          (event) => event.severity === 'high' || event.severity === 'critical',
+          (event) => event.severity === "high" || event.severity === "critical",
         );
       },
 
       // 获取需要关注的潜在事件
       concerningPotentialEvents: (state) => {
         return state.potentialEvents.filter(
-          (event) => event.probability > 0.5 && event.severity !== 'low',
+          (event) => event.probability > 0.5 && event.severity !== "low",
         );
       },
 
       // 根据类型获取事件
-      getEventsByType: (state) => (type: DynamicEvent['type']) => {
+      getEventsByType: (state) => (type: DynamicEvent["type"]) => {
         return {
           potential: state.potentialEvents.filter(
             (event) => event.type === type,
@@ -114,11 +119,11 @@ export const useSimulationDynamicEventsStore = defineStore(
 
     actions: {
       // 添加潜在事件
-      addPotentialEvent(eventData: Omit<DynamicEvent, 'id' | 'status'>) {
+      addPotentialEvent(eventData: Omit<DynamicEvent, "id" | "status">) {
         const newEvent: DynamicEvent = {
           ...eventData,
           id: `event_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-          status: 'potential',
+          status: "potential",
         };
 
         this.potentialEvents.push(newEvent);
@@ -135,14 +140,14 @@ export const useSimulationDynamicEventsStore = defineStore(
           this.activeEvents.length < this.eventConfig.maxActiveEvents
         ) {
           const [event] = this.potentialEvents.splice(eventIndex, 1);
-          event.status = 'active';
+          event.status = "active";
           this.activeEvents.push(event);
 
           // 记录事件历史
           this.eventHistory.push({
             eventId,
             timestamp: Date.now(),
-            type: 'triggered',
+            type: "triggered",
             details: { severity: event.severity, impact: event.impact },
           });
         }
@@ -153,7 +158,7 @@ export const useSimulationDynamicEventsStore = defineStore(
         const eventIndex = this.activeEvents.findIndex((e) => e.id === eventId);
         if (eventIndex !== -1) {
           const [event] = this.activeEvents.splice(eventIndex, 1);
-          event.status = 'resolved';
+          event.status = "resolved";
           event.resolvedBy = responseId;
           event.resolvedAt = Date.now();
           event.resolutionEffectiveness = effectiveness;
@@ -163,7 +168,7 @@ export const useSimulationDynamicEventsStore = defineStore(
           this.eventHistory.push({
             eventId,
             timestamp: Date.now(),
-            type: 'resolved',
+            type: "resolved",
             details: { responseId, effectiveness },
           });
         }
@@ -188,7 +193,7 @@ export const useSimulationDynamicEventsStore = defineStore(
 
     // 持久化存储
     persist: {
-      key: 'simulation-dynamic-events',
+      key: "simulation-dynamic-events",
       storage: localStorage,
     },
   },

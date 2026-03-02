@@ -2,13 +2,13 @@
 
 // 定义服务类型
 export type ServiceType =
-  | 'EventSystem'
-  | 'TimeManager'
-  | 'CareerSystem'
-  | 'BusinessDataService';
+  | "EventSystem"
+  | "TimeManager"
+  | "CareerSystem"
+  | "BusinessDataService";
 
 // 定义服务构造函数类型
-type ServiceConstructor<T> = new (...args: any[]) => T;
+type ServiceConstructor<T> = new (...args: unknown[]) => T;
 
 // 定义服务注册选项
 export interface ServiceRegistrationOptions {
@@ -22,14 +22,14 @@ export class DIContainer {
   private serviceRegistry: Map<
     ServiceType,
     {
-      constructor: ServiceConstructor<any>;
+      constructor: ServiceConstructor<unknown>;
       options: ServiceRegistrationOptions;
-      instance?: any;
+      instance?: unknown;
     }
   > = new Map();
 
   // 注册服务
-  register<T>(
+  public register<T>(
     serviceType: ServiceType,
     constructor: ServiceConstructor<T>,
     options: ServiceRegistrationOptions = { isSingleton: true },
@@ -41,7 +41,7 @@ export class DIContainer {
   }
 
   // 获取服务实例
-  get<T>(serviceType: ServiceType): T {
+  public get<T>(serviceType: ServiceType): T {
     const registration = this.serviceRegistry.get(serviceType);
     if (!registration) {
       throw new Error(`Service ${serviceType} not registered`);
@@ -68,22 +68,22 @@ export class DIContainer {
   }
 
   // 检查服务是否已注册
-  isRegistered(serviceType: ServiceType): boolean {
+  public isRegistered(serviceType: ServiceType): boolean {
     return this.serviceRegistry.has(serviceType);
   }
 
   // 移除服务注册
-  remove(serviceType: ServiceType): void {
+  public remove(serviceType: ServiceType): void {
     this.serviceRegistry.delete(serviceType);
   }
 
   // 清除所有服务注册
-  clear(): void {
+  public clear(): void {
     this.serviceRegistry.clear();
   }
 
   // 获取所有已注册的服务类型
-  getRegisteredServices(): ServiceType[] {
+  public getRegisteredServices(): ServiceType[] {
     return Array.from(this.serviceRegistry.keys());
   }
 }

@@ -6,7 +6,9 @@
   >
     <div class="notification-content">
       <div class="notification-header">
-        <span class="notification-icon">{{ getEventIcon(notification.type) }}</span>
+        <span class="notification-icon">{{
+          getEventIcon(notification.type)
+        }}</span>
         <h3 class="notification-title">{{ notification.title }}</h3>
         <button
           class="notification-close"
@@ -18,7 +20,9 @@
       </div>
       <p class="notification-message">{{ notification.message }}</p>
       <div class="notification-footer">
-        <span class="notification-time">{{ formatDate(notification.date || currentDate) }}</span>
+        <span class="notification-time">{{
+          formatDate(notification.date || currentDate)
+        }}</span>
       </div>
     </div>
   </div>
@@ -41,11 +45,12 @@ interface GameDate {
 interface Notification {
   title: string;
   message: string;
-  type: 'positive' | 'negative' | 'neutral' | 'info';
+  type: "positive" | "negative" | "neutral" | "info";
   date?: GameDate;
 }
 
-// 定义组件属�?defineProps<{
+// 定义组件属性
+defineProps<{
   showNotification: boolean;
   notification: Notification;
   currentDate: GameDate;
@@ -53,34 +58,38 @@ interface Notification {
 
 // 定义事件
 const emit = defineEmits<{
-  (e: 'close'): void;
+  (e: "close"): void;
 }>();
 
 // 关闭通知
 const closeNotification = (): void => {
-  emit('close');
+  emit("close");
 };
 
-// 格式化日�?const formatDate = (date: GameDate): string => {
-  // 添加空值检查，确保date是一个对�?  if (!date || typeof date !== 'object') {
-    return '加载�?.';
+// 格式化日期
+const formatDate = (date: GameDate): string => {
+  // 添加空值检查，确保date是一个对象
+  if (!date || typeof date !== "object") {
+    return "加载中.";
   }
 
   if (date.hour !== undefined) {
-    return `${String(date.year || 0).padStart(2, '0')}�?{String(date.month || 0).padStart(2, '0')}�?{String(date.day || 0).padStart(2, '0')}�?${String(date.hour || 0).padStart(2, '0')}:${String(date.minute || 0).padStart(2, '0')}:${String(date.second || 0).padStart(2, '0')}`;
+    return `${String(date.year || 0).padStart(2, "0")}-${String(date.month || 0).padStart(2, "0")}-${String(date.day || 0).padStart(2, "0")} ${String(date.hour || 0).padStart(2, "0")}:${String(date.minute || 0).padStart(2, "0")}:${String(date.second || 0).padStart(2, "0")}`;
   }
-  return `${String(date.year || 0).padStart(2, '0')}�?{String(date.month || 0).padStart(2, '0')}�?{String(date.day || 0).padStart(2, '0')}日`;
+  return `${String(date.year || 0).padStart(2, "0")}-${String(date.month || 0).padStart(2, "0")}-${String(date.day || 0).padStart(2, "0")}日`;
 };
 
 // 获取事件图标
-const getEventIcon = (type: 'positive' | 'negative' | 'neutral' | 'info'): string => {
+const getEventIcon = (
+  type: "positive" | "negative" | "neutral" | "info",
+): string => {
   const icons = {
-    positive: '😊',
-    negative: '😞',
-    neutral: '😐',
-    info: 'ℹ️',
+    positive: "😊",
+    negative: "😞",
+    neutral: "😐",
+    info: "ℹ️",
   };
-  return icons[type] || '📢';
+  return icons[type] || "📢";
 };
 </script>
 

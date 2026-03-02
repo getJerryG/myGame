@@ -65,48 +65,48 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import ApplicationWindow from '@/components/common/window/ApplicationWindow.vue';
-import CreateActivityTab from './CreateActivityTab.vue';
-import ActivityManagementTab from './ActivityManagementTab.vue';
-import ActivityStatisticsTab from './ActivityStatisticsTab.vue';
+import { ref, computed } from "vue";
+import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
+import CreateActivityTab from "./CreateActivityTab.vue";
+import ActivityManagementTab from "./ActivityManagementTab.vue";
+import ActivityStatisticsTab from "./ActivityStatisticsTab.vue";
 
-import type { Activity } from './ActivityManagementTab.vue';
-import type { ActivityStats } from './ActivityStatisticsTab.vue';
+import type { Activity } from "./ActivityManagementTab.vue";
+import type { ActivityStats } from "./ActivityStatisticsTab.vue";
 
 // 状态管理
-const activeTab = ref<string>('create');
-const selectedType = ref<string>('login');
-const activityName = ref<string>('');
-const activityDescription = ref<string>('');
-const startTime = ref<string>('');
-const endTime = ref<string>('');
+const activeTab = ref<string>("create");
+const selectedType = ref<string>("login");
+const activityName = ref<string>("");
+const activityDescription = ref<string>("");
+const startTime = ref<string>("");
+const endTime = ref<string>("");
 const goldReward = ref<number>(0);
 const expReward = ref<number>(0);
 
 // 活动列表
 const activities = ref<Activity[]>([
   {
-    id: '1',
-    name: '新春登录送好礼',
-    type: 'login',
-    description: '新春期间每天登录即可领取丰厚奖励',
-    icon: '🧧',
-    status: 'ongoing',
-    startTime: '2026-02-01T00:00',
-    endTime: '2026-02-15T23:59',
+    id: "1",
+    name: "新春登录送好礼",
+    type: "login",
+    description: "新春期间每天登录即可领取丰厚奖励",
+    icon: "🧧",
+    status: "ongoing",
+    startTime: "2026-02-01T00:00",
+    endTime: "2026-02-15T23:59",
     goldReward: 1000,
     expReward: 500,
   },
   {
-    id: '2',
-    name: '充值返利活动',
-    type: 'recharge',
-    description: '充值任意金额即可获得 100% 返利',
-    icon: '💎',
-    status: 'upcoming',
-    startTime: '2026-02-20T00:00',
-    endTime: '2026-02-28T23:59',
+    id: "2",
+    name: "充值返利活动",
+    type: "recharge",
+    description: "充值任意金额即可获得 100% 返利",
+    icon: "💎",
+    status: "upcoming",
+    startTime: "2026-02-20T00:00",
+    endTime: "2026-02-28T23:59",
     goldReward: 0,
     expReward: 0,
   },
@@ -127,9 +127,9 @@ const participationTrend = ref<number[]>([
 
 // 计算属性
 const computedStats = computed<ActivityStats>(() => {
-  const ongoing = activities.value.filter((a) => a.status === 'ongoing').length;
+  const ongoing = activities.value.filter((a) => a.status === "ongoing").length;
   const completed = activities.value.filter(
-    (a) => a.status === 'completed',
+    (a) => a.status === "completed",
   ).length;
   const total = activities.value.length;
 
@@ -142,9 +142,9 @@ const computedStats = computed<ActivityStats>(() => {
 });
 
 // 事件处理函数
-const handleCreateActivity = () => {
+const handleCreateActivity = (): void => {
   if (!activityName.value || !startTime.value || !endTime.value) {
-    alert('请填写完整的活动信息');
+    alert("请填写完整的活动信息");
     return;
   }
 
@@ -154,7 +154,7 @@ const handleCreateActivity = () => {
     type: selectedType.value,
     description: activityDescription.value,
     icon: getIconForType(selectedType.value),
-    status: 'upcoming',
+    status: "upcoming",
     startTime: startTime.value,
     endTime: endTime.value,
     goldReward: goldReward.value,
@@ -162,53 +162,53 @@ const handleCreateActivity = () => {
   };
 
   activities.value.push(newActivity);
-  alert('活动创建成功！');
+  alert("活动创建成功！");
   resetForm();
-  activeTab.value = 'manage';
+  activeTab.value = "manage";
 };
 
-const handleStartActivity = (id: string) => {
+const handleStartActivity = (id: string): void => {
   const activity = activities.value.find((a) => a.id === id);
   if (activity) {
-    activity.status = 'ongoing';
+    activity.status = "ongoing";
     alert(`活动"${activity.name}"已开始`);
   }
 };
 
-const handleEndActivity = (id: string) => {
+const handleEndActivity = (id: string): void => {
   const activity = activities.value.find((a) => a.id === id);
   if (activity) {
-    activity.status = 'completed';
+    activity.status = "completed";
     alert(`活动"${activity.name}"已结束`);
   }
 };
 
-const handleDeleteActivity = (id: string) => {
-  if (confirm('确定要删除此活动吗？')) {
+const handleDeleteActivity = (id: string): void => {
+  if (confirm("确定要删除此活动吗？")) {
     activities.value = activities.value.filter((a) => a.id !== id);
-    alert('活动已删除');
+    alert("活动已删除");
   }
 };
 
-const resetForm = () => {
-  activityName.value = '';
-  activityDescription.value = '';
-  startTime.value = '';
-  endTime.value = '';
+const resetForm = (): void => {
+  activityName.value = "";
+  activityDescription.value = "";
+  startTime.value = "";
+  endTime.value = "";
   goldReward.value = 0;
   expReward.value = 0;
 };
 
 const getIconForType = (type: string): string => {
   const icons: Record<string, string> = {
-    login: '📅',
-    recharge: '💎',
-    consumption: '🛒',
-    pvp: '⚔️',
-    cooperation: '🤝',
-    festival: '🎉',
+    login: "📅",
+    recharge: "💎",
+    consumption: "🛒",
+    pvp: "⚔️",
+    cooperation: "🤝",
+    festival: "🎉",
   };
-  return icons[type] || '🎯';
+  return icons[type] || "🎯";
 };
 </script>
 

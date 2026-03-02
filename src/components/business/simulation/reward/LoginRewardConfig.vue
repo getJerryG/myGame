@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch } from "vue";
 
 const props = defineProps({
   loginRewards: {
@@ -61,7 +61,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['update:loginRewards']);
+const emit = defineEmits(["update:loginRewards"]);
 
 // 本地副本
 const localLoginRewards = ref([...props.loginRewards]);
@@ -82,7 +82,7 @@ watch(
 watch(
   localLoginRewards,
   (newRewards) => {
-    emit('update:loginRewards', [...newRewards]);
+    emit("update:loginRewards", [...newRewards]);
   },
   { deep: true },
 );
@@ -91,7 +91,7 @@ watch(
 function onDragStart(event: DragEvent, index: number): void {
   draggedIndex.value = index;
   if (event.dataTransfer) {
-    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.effectAllowed = "move";
   }
 }
 
@@ -115,8 +115,8 @@ function addLoginReward(): void {
     day: localLoginRewards.value.length + 1,
     reward: {
       id: Date.now(),
-      name: '钻石',
-      icon: '💎',
+      name: "钻石",
+      icon: "💎",
       amount: 50,
       value: 50,
     },

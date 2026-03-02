@@ -1,4 +1,4 @@
-import type { BusinessData } from '../types';
+import type { BusinessData } from "../types";
 
 // 定义业务数据服务接口
 export interface IBusinessDataService {

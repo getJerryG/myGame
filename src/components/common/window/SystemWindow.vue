@@ -81,11 +81,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { useWindowManagerStore } from '../../stores/windowManagerStore';
-import WindowTitleBar from './WindowTitleBar.vue';
-import WindowSidebar from './WindowSidebar.vue';
-import WindowResizeHandle from './WindowResizeHandle.vue';
+import { ref, computed, onMounted, onUnmounted } from "vue";
+import { useWindowManagerStore } from "../../stores/windowManagerStore";
+import WindowTitleBar from "./WindowTitleBar.vue";
+import WindowSidebar from "./WindowSidebar.vue";
+import WindowResizeHandle from "./WindowResizeHandle.vue";
 
 export interface SidebarItem {
   id: string;
@@ -102,15 +102,15 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  'update:activeItemId': [id: string];
-  'item-click': [item: SidebarItem];
+  "update:activeItemId": [id: string];
+  "item-click": [item: SidebarItem];
 }>();
 
 // 侧边栏相关逻辑
 const handleSidebarItemClick = (item: SidebarItem): void => {
   if (!item.disabled) {
-    emit('update:activeItemId', item.id);
-    emit('item-click', item);
+    emit("update:activeItemId", item.id);
+    emit("item-click", item);
   }
 };
 
@@ -120,7 +120,7 @@ const windowRef = ref<HTMLElement | null>(null);
 // 拖拽状态
 const dragStartPos = ref({ x: 0, y: 0 });
 const windowStartPos = ref({ x: 0, y: 0 });
-const resizeStartPos = ref({ x: 0, y: 0 });
+const _resizeStartPos = ref({ x: 0, y: 0 });
 const windowStartSize = ref({ width: 0, height: 0 });
 const tabDragData = ref<{ tabId: string; windowId: string } | null>(null);
 
@@ -142,7 +142,7 @@ const activateWindow = () => {
 const startDrag = (event: MouseEvent) => {
   if (
     event.target &&
-    (event.target as HTMLElement).closest('.window-tab-close')
+    (event.target as HTMLElement).closest(".window-tab-close")
   ) {
     return;
   }
@@ -152,9 +152,9 @@ const startDrag = (event: MouseEvent) => {
 
   windowManagerStore.startDrag(props.windowId);
 
-  document.addEventListener('mousemove', handleDragMove);
-  document.addEventListener('mouseup', stopDrag);
-  document.body.style.userSelect = 'none';
+  document.addEventListener("mousemove", handleDragMove);
+  document.addEventListener("mouseup", stopDrag);
+  document.body.style.userSelect = "none";
 };
 
 // 拖拽移动
@@ -175,9 +175,9 @@ const handleDragMove = (event: MouseEvent) => {
 const stopDrag = () => {
   windowManagerStore.endDrag();
 
-  document.removeEventListener('mousemove', handleDragMove);
-  document.removeEventListener('mouseup', stopDrag);
-  document.body.style.userSelect = '';
+  document.removeEventListener("mousemove", handleDragMove);
+  document.removeEventListener("mouseup", stopDrag);
+  document.body.style.userSelect = "";
 };
 
 // 处理调整大小
@@ -221,7 +221,7 @@ const handleTabDragEnd = () => {
 // 处理拖放事件
 const handleDragOver = (event: DragEvent) => {
   if (tabDragData.value && tabDragData.value.windowId !== props.windowId) {
-    event.dataTransfer!.dropEffect = 'move';
+    event.dataTransfer!.dropEffect = "move";
   }
 };
 
@@ -244,27 +244,27 @@ const handleDrop = () => {
 
 // 组件挂载时添加键盘事件监听
 onMounted(() => {
-  document.addEventListener('keydown', handleKeyDown);
+  document.addEventListener("keydown", handleKeyDown);
 });
 
 // 组件卸载时移除键盘事件监听
 onUnmounted(() => {
-  document.removeEventListener('keydown', handleKeyDown);
+  document.removeEventListener("keydown", handleKeyDown);
   // 确保移除所有事件监听器
-  document.removeEventListener('mousemove', handleDragMove);
-  document.removeEventListener('mouseup', stopDrag);
+  document.removeEventListener("mousemove", handleDragMove);
+  document.removeEventListener("mouseup", stopDrag);
 });
 
 // 键盘事件处理
 const handleKeyDown = (event: KeyboardEvent) => {
   // Ctrl+Tab 切换到下一个选项卡
-  if (event.ctrlKey && event.key === 'Tab') {
+  if (event.ctrlKey && event.key === "Tab") {
     event.preventDefault();
     windowManagerStore.nextTab(props.windowId);
   }
 
   // Ctrl+Shift+Tab 切换到上一个选项卡
-  if (event.ctrlKey && event.shiftKey && event.key === 'Tab') {
+  if (event.ctrlKey && event.shiftKey && event.key === "Tab") {
     event.preventDefault();
     windowManagerStore.prevTab(props.windowId);
   }

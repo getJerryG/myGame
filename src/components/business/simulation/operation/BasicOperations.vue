@@ -120,49 +120,49 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useSimulationStore } from '../../stores/simulationStore';
+import { ref } from "vue";
+import { useSimulationStore } from "../../stores/simulationStore";
 
 const simulationStore = useSimulationStore();
 
 // 登录奖励数据
 const loginRewards = ref([
-  { type: 'coins', amount: 100 },
-  { type: 'coins', amount: 200 },
-  { type: 'diamonds', amount: 10 },
-  { type: 'items', amount: 1 },
-  { type: 'coins', amount: 300 },
-  { type: 'diamonds', amount: 15 },
-  { type: 'items', amount: 2 },
+  { type: "coins", amount: 100 },
+  { type: "coins", amount: 200 },
+  { type: "diamonds", amount: 10 },
+  { type: "items", amount: 1 },
+  { type: "coins", amount: 300 },
+  { type: "diamonds", amount: 15 },
+  { type: "items", amount: 2 },
 ]);
 
 // BUG列表
 const bugs = ref([
-  { id: 1, title: '登录失败问题', description: '部分用户登录时出现网络错误' },
-  { id: 2, title: '界面显示异常', description: '某些设备上界面元素重叠' },
-  { id: 3, title: '音效缺失', description: '游戏音效偶尔无法播放' },
-  { id: 4, title: '数据同步问题', description: '部分数据无法及时同步' },
+  { id: 1, title: "登录失败问题", description: "部分用户登录时出现网络错误" },
+  { id: 2, title: "界面显示异常", description: "某些设备上界面元素重叠" },
+  { id: 3, title: "音效缺失", description: "游戏音效偶尔无法播放" },
+  { id: 4, title: "数据同步问题", description: "部分数据无法及时同步" },
 ]);
 
 // 发布普通皮肤
 const releaseCommonSkin = (): void => {
-  simulationStore.recordAction('releaseCommonSkin', {
-    heroId: 'hero1',
-    skinName: '新皮肤',
-    quality: 'common',
+  simulationStore.recordAction("releaseCommonSkin", {
+    heroId: "hero1",
+    skinName: "新皮肤",
+    quality: "common",
   });
 };
 
 // 设置日常登录奖励
 const setDailyLoginRewards = (): void => {
-  simulationStore.recordAction('improveDailyReward', {
+  simulationStore.recordAction("improveDailyReward", {
     rewards: loginRewards.value,
   });
 };
 
 // 修复基础BUG
 const fixBasicBugs = (): void => {
-  simulationStore.recordAction('fixBug', {
+  simulationStore.recordAction("fixBug", {
     bugIds: bugs.value.map((_, index) => index + 1),
   });
 };

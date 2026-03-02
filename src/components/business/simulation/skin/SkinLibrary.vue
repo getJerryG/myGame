@@ -52,62 +52,76 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from "vue";
 
-const props = defineProps({
-  skins: {
-    type: Array,
-    default: () => [],
-  },
-  qualities: {
-    type: Array,
-    default: () => [],
-  },
-  selectedSkinId: {
-    type: Number,
-    default: null,
-  },
-});
+// 定义皮肤接口
+interface Skin {
+  id: number;
+  name: string;
+  heroName: string;
+  avatar: string;
+  quality: string;
+  expected: {
+    sales: number;
+    satisfaction: number;
+  };
+}
 
-const emit = defineEmits(['select-skin', 'quality-change']);
+// 定义品质选项接口
+interface QualityOption {
+  value: string;
+  label: string;
+  icon: string;
+}
+
+const props = defineProps<{
+  skins: Skin[];
+  qualities: QualityOption[];
+  selectedSkinId: number | null;
+}>();
+
+const emit = defineEmits<{
+  "select-skin": [skin: Skin];
+  "quality-change": [quality: string];
+}>();
 
 const selectedQuality = computed({
-  get: () => props.qualities.find((q) => q.value === 'all')?.value || 'all',
-  set: (value) => emit('quality-change', value),
+  get: () => props.qualities.find((q) => q.value === "all")?.value || "all",
+  set: (value) => emit("quality-change", value),
 });
 
 // 筛选后的皮肤列表
 const filteredSkins = computed(() => {
-  if (selectedQuality.value === 'all') {
+  if (selectedQuality.value === "all") {
     return props.skins;
   }
   return props.skins.filter((skin) => skin.quality === selectedQuality.value);
 });
 
 // 选择品质
-const selectQuality = (quality) => {
-  emit('quality-change', quality);
+const selectQuality = (quality: string): void => {
+  emit("quality-change", quality);
 };
 
 // 选择皮肤
-const selectSkin = (skin) => {
-  emit('select-skin', skin);
+const selectSkin = (skin: Skin): void => {
+  emit("select-skin", skin);
 };
 
 // 获取品质标签
-const getQualityLabel = (quality) => {
+const getQualityLabel = (quality: string): string => {
   const labels = {
-    brave: '勇者',
-    epic: '史诗',
-    legend: '传说',
-    limited: '限定',
+    brave: "勇者",
+    epic: "史诗",
+    legend: "传说",
+    limited: "限定",
   };
-  return labels[quality] || quality;
+  return labels[quality as keyof typeof labels] || quality;
 };
 
 // 根据品质获取皮肤数量
-const getSkinCountByQuality = (quality) => {
-  if (quality === 'all') {
+const getSkinCountByQuality = (quality: string): number => {
+  if (quality === "all") {
     return props.skins.length;
   }
   return props.skins.filter((skin) => skin.quality === quality).length;

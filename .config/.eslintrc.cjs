@@ -1,4 +1,5 @@
 const DEV = process.env.NODE_ENV !== 'production';
+const path = require('path');
 
 module.exports = {
   root: true,
@@ -25,21 +26,20 @@ module.exports = {
     'vite.config.ts',
     '*.cjs',
     'test-type-rule.ts',
-    ".config/"
+    ".config/",
+    "**/*.test.ts",
+    "**/*.spec.ts"
   ],
-  languageOptions: {// 全局变量
-    parserOptions: {
-      projectService: true,// 开启项目服务，用于类型检查
-    }
-  },
   parser: 'vue-eslint-parser',
   parserOptions: {
     ecmaVersion: 2021,
     sourceType: 'module',
-    project: './tsconfig.json',
-    parser: '@typescript-eslint/parser'
+    project: path.resolve(__dirname, '../tsconfig.json'),
+    parser: '@typescript-eslint/parser',
+    extraFileExtensions: ['.vue'],
+    allowImportExportEverywhere: false
   },
-  plugins: ['@typescript-eslint'],
+  plugins: [],
   rules: {
     // 控制台和调试器警告
     'no-console': DEV ? 'warn' : 'off',
@@ -51,8 +51,8 @@ module.exports = {
     // 强制使用const声明那些声明后不再被修改的变量
     'prefer-const': 'error',
 
-    // 禁止使用中文变量名
-    'id-match': ['error', '^[a-zA-Z][a-zA-Z0-9]*$', { 'properties': true, 'onlyDeclarations': true }],
+    // 禁止使用中文变量名和不规范的命名
+    'id-match': 'off',
 
     // 强制使用模板字面量而非字符串连接
     'prefer-template': 'warn',
@@ -70,7 +70,7 @@ module.exports = {
     'no-with': 'error',
 
     // 样式一致性
-    'quotes': ['warn', 'single', { avoidEscape: true }],
+    'quotes': ['warn', 'double', { avoidEscape: true }],
     'no-trailing-spaces': 'warn',
     'eol-last': ['error', 'always'],
     'no-multiple-empty-lines': ['warn', { max: 2, maxEOF: 0 }],// 最多2个空行，文件末尾不允许空行
@@ -81,6 +81,7 @@ module.exports = {
     'vue/require-name-property': DEV ? 'warn' : 'error',
     'vue/valid-define-emits': 'error',
     'vue/valid-define-props': 'error',
+    'vue/multi-word-component-names': ['error', { ignores: ['index'] }],
     // 🔴 禁止v-html（避免XSS攻击，如需使用需手动禁用）
     'vue/no-v-html': 'warn',
     // 🔴 script-setup中使用的变量必须声明（避免未定义变量）

@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
 
 // 英雄数据
 interface Hero {
@@ -89,7 +89,7 @@ interface Hero {
   name: string;
   avatar: string;
   level: number;
-  rarity: 'common' | 'rare' | 'epic' | 'legendary';
+  rarity: "common" | "rare" | "epic" | "legendary";
   attack: number;
   defense: number;
   hp: number;
@@ -98,50 +98,50 @@ interface Hero {
 const heroes = ref<Hero[]>([
   {
     id: 1,
-    name: '战士',
-    avatar: '⚔️',
+    name: "战士",
+    avatar: "⚔️",
     level: 10,
-    rarity: 'common',
+    rarity: "common",
     attack: 100,
     defense: 80,
     hp: 1000,
   },
   {
     id: 2,
-    name: '法师',
-    avatar: '🔮',
+    name: "法师",
+    avatar: "🔮",
     level: 15,
-    rarity: 'rare',
+    rarity: "rare",
     attack: 150,
     defense: 50,
     hp: 800,
   },
   {
     id: 3,
-    name: '刺客',
-    avatar: '🗡️',
+    name: "刺客",
+    avatar: "🗡️",
     level: 12,
-    rarity: 'epic',
+    rarity: "epic",
     attack: 180,
     defense: 60,
     hp: 900,
   },
   {
     id: 4,
-    name: '坦克',
-    avatar: '🛡️',
+    name: "坦克",
+    avatar: "🛡️",
     level: 20,
-    rarity: 'legendary',
+    rarity: "legendary",
     attack: 80,
     defense: 200,
     hp: 2000,
   },
   {
     id: 5,
-    name: '射手',
-    avatar: '🏹',
+    name: "射手",
+    avatar: "🏹",
     level: 8,
-    rarity: 'common',
+    rarity: "common",
     attack: 120,
     defense: 40,
     hp: 700,
@@ -154,10 +154,10 @@ const selectedHero = ref<Hero | null>(null);
 // 获取稀有度文本
 const getRarityText = (rarity: string): string => {
   const rarityMap: Record<string, string> = {
-    common: '普通',
-    rare: '稀有',
-    epic: '史诗',
-    legendary: '传说',
+    common: "普通",
+    rare: "稀有",
+    epic: "史诗",
+    legendary: "传说",
   };
   return rarityMap[rarity] || rarity;
 };
@@ -180,7 +180,7 @@ const upgradeHero = () => {
 // 打开技能面板
 const openSkillPanel = () => {
   // TODO: 实现技能面板
-  alert('技能面板功能开发中...');
+  alert("技能面板功能开发中...");
 };
 
 // 关闭应用

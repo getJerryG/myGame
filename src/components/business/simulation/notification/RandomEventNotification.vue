@@ -58,14 +58,14 @@
             {{
               currentEvent.isActive
                 ? `有效期至: ${formatEventTime(currentEvent.expirationTime)}`
-                : '已过�?
+                : '已过期'
             }}
           </span>
         </div>
       </div>
 
       <div class="notification-footer">
-        <button class="action-btn" @click="dismissEvent">知道�?/button>
+        <button class="action-btn" @click="dismissEvent">知道了</button>
         <button
           v-if="currentEvent.isActive"
           class="action-btn primary"
@@ -104,8 +104,8 @@
             <div class="event-item-header">
               <h4>{{ event.title }}</h4>
               <span class="event-status" :class="{ active: event.isActive }">
-                {{ event.isActive ? '进行�? : '已过�? }}
-              </span>
+              {{ event.isActive ? '进行中' : '已过期' }}
+            </span>
             </div>
             <p class="event-item-description">{{ event.description }}</p>
             <span class="event-item-time">{{
@@ -123,10 +123,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
-import type { RandomEvent } from '@/utils/RandomEvents';
-import { randomEventManager } from '@/utils/RandomEvents';
-import { getHeroesFromStorage } from '@/utils/HeroSkinManager';
+import { ref, onMounted, onUnmounted } from "vue";
+import type { RandomEvent } from "@/utils/RandomEvents";
+import { randomEventManager } from "@/utils/RandomEvents";
+import { getHeroesFromStorage } from "@/utils/HeroSkinManager";
 
 // Props
 const props = defineProps<{
@@ -135,11 +135,12 @@ const props = defineProps<{
 
 // Emits
 const emit = defineEmits<{
-  (e: 'eventClicked', event: RandomEvent): void;
-  (e: 'closed'): void;
+  (e: "eventClicked", event: RandomEvent): void;
+  (e: "closed"): void;
 }>();
 
-// 状态管�?const showNotification = ref(false);
+// 状态管理
+const showNotification = ref(false);
 const showEventList = ref(false);
 const currentEvent = ref<RandomEvent | null>(null);
 const activeEvents = ref<RandomEvent[]>([]);
@@ -160,7 +161,7 @@ const openNotification = (event: RandomEvent): void => {
 const closeNotification = (): void => {
   showNotification.value = false;
   currentEvent.value = null;
-  emit('closed');
+  emit("closed");
 };
 
 // 切换事件列表
@@ -186,50 +187,55 @@ const dismissEvent = (): void => {
 // 查看详情
 const viewDetails = (): void => {
   if (currentEvent.value) {
-    emit('eventClicked', currentEvent.value);
+    emit("eventClicked", currentEvent.value);
     closeNotification();
   }
 };
 
-// 格式化事件时�?const formatEventTime = (timestamp: number): string => {
+// 格式化事件时间
+const formatEventTime = (timestamp: number): string => {
   const date = new Date(timestamp);
-  return date.toLocaleString('zh-CN', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
+  return date.toLocaleString("zh-CN", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
   });
 };
 
 // 获取职业颜色
 const getProfessionColor = (profession: string): string => {
   const professionColors: Record<string, string> = {
-    战士: '#FF9800',
-    法师: '#9C27B0',
-    射手: '#2196F3',
-    刺客: '#F44336',
-    辅助: '#8BC34A',
-    坦克: '#4CAF50',
+    warrior: "#FF9800",
+    mage: "#9C27B0",
+    shooter: "#2196F3",
+    assassin: "#F44336",
+    support: "#8BC34A",
+    tank: "#4CAF50",
   };
-  return professionColors[profession] || '#4a9eff';
+  return professionColors[profession] || "#4a9eff";
 };
 
-// 初始化事件检�?const initEventCheck = (): void => {
+// 初始化事件检查
+const initEventCheck = (): void => {
   // 获取活跃事件
   activeEvents.value = calculateActiveEvents();
 
-  // 如果有活跃事件且设置了自动显示，则显示第一个事�?  if (props.autoShow && activeEvents.value.length > 0) {
+  // 如果有活跃事件且设置了自动显示，则显示第一个事件
+  if (props.autoShow && activeEvents.value.length > 0) {
     openNotification(activeEvents.value[0]);
   }
 };
 
-// 定期检查事件更�?let eventCheckInterval: number | null = null;
+// 定期检查事件更新
+let eventCheckInterval: number | null = null;
 
 // 组件挂载时初始化
 onMounted(() => {
   initEventCheck();
-  // 每小时检查一次事件更�?  eventCheckInterval = window.setInterval(() => {
+  // 每小时检查一次事件更新
+  eventCheckInterval = window.setInterval(() => {
     const updatedEvents = calculateActiveEvents();
     if (updatedEvents.length > activeEvents.value.length) {
       // 有新事件，显示通知
@@ -245,7 +251,8 @@ onMounted(() => {
   }, 3600000); // 1小时
 });
 
-// 组件卸载时清�?onUnmounted(() => {
+// 组件卸载时清理
+onUnmounted(() => {
   if (eventCheckInterval) {
     clearInterval(eventCheckInterval);
   }
@@ -637,7 +644,3 @@ onMounted(() => {
   }
 }
 </style>
-
-
-
-

@@ -104,12 +104,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed } from "vue";
 
 // 导入类型
-import type { App } from '../../../types/app';
-import type { GameData } from '../../../types/game';
-import type { Modal } from '../../../types/modal';
+import type { App } from "../../../types/app";
+import type { GameData } from "../../../types/game";
+import type { Modal } from "../../../types/modal";
 
 // Props定义
 defineProps<{
@@ -119,7 +119,7 @@ defineProps<{
 }>();
 
 // 活跃标签页
-const activeTab = ref('all');
+const activeTab = ref("all");
 
 // 显示筛选弹窗
 const showFilterModal = ref(false);
@@ -127,106 +127,106 @@ const showFilterModal = ref(false);
 // 获取事件类型标签
 const getEventTypeLabel = (type: string): string => {
   const typeMap = {
-    technical: '技术事件',
-    operation: '运营事件',
-    market: '市场事件',
+    technical: "技术事件",
+    operation: "运营事件",
+    market: "市场事件",
   };
-  return typeMap[type as keyof typeof typeMap] || '未知事件';
+  return typeMap[type as keyof typeof typeMap] || "未知事件";
 };
 
 // 事件数据
 const events = ref([
   {
     id: 1,
-    name: '服务器卡顿问题',
-    description: '部分玩家反映游戏服务器卡顿，影响游戏体验',
-    type: 'technical',
-    date: '2024/3/10',
-    solution: '紧急扩容服务器，优化网络连接',
+    name: "服务器卡顿问题",
+    description: "部分玩家反映游戏服务器卡顿，影响游戏体验",
+    type: "technical",
+    date: "2024/3/10",
+    solution: "紧急扩容服务器，优化网络连接",
     impact: {
-      status: 'resolved',
-      description: '服务器恢复正常，玩家满意度提升',
+      status: "resolved",
+      description: "服务器恢复正常，玩家满意度提升",
     },
   },
   {
     id: 2,
-    name: '新英雄上线热度爆发',
-    description: '新英雄李白上线后，游戏热度大幅提升，超出预期',
-    type: 'operation',
-    date: '2024/3/15',
-    solution: '增加服务器资源，确保游戏稳定运行',
+    name: "新英雄上线热度爆发",
+    description: "新英雄李白上线后，游戏热度大幅提升，超出预期",
+    type: "operation",
+    date: "2024/3/15",
+    solution: "增加服务器资源，确保游戏稳定运行",
     impact: {
-      status: 'positive',
-      description: '游戏热度+30，新增用户5000',
+      status: "positive",
+      description: "游戏热度+30，新增用户5000",
     },
   },
   {
     id: 3,
-    name: '竞争对手发布新游戏',
-    description: '主要竞争对手发布了一款新的MOBA游戏，可能影响我们的市场份额',
-    type: 'market',
-    date: '2024/3/20',
-    solution: '推出新活动和皮肤，增强玩家粘性',
+    name: "竞争对手发布新游戏",
+    description: "主要竞争对手发布了一款新的MOBA游戏，可能影响我们的市场份额",
+    type: "market",
+    date: "2024/3/20",
+    solution: "推出新活动和皮肤，增强玩家粘性",
     impact: {
-      status: 'neutral',
-      description: '市场份额保持稳定，玩家流失率在可控范围内',
+      status: "neutral",
+      description: "市场份额保持稳定，玩家流失率在可控范围内",
     },
   },
   {
     id: 4,
-    name: '支付系统故障',
-    description: '部分玩家无法正常进行支付，影响收入',
-    type: 'technical',
-    date: '2024/3/25',
-    solution: '修复支付系统漏洞，恢复支付功能',
+    name: "支付系统故障",
+    description: "部分玩家无法正常进行支付，影响收入",
+    type: "technical",
+    date: "2024/3/25",
+    solution: "修复支付系统漏洞，恢复支付功能",
     impact: {
-      status: 'resolved',
-      description: '支付功能恢复正常，补偿受影响玩家',
+      status: "resolved",
+      description: "支付功能恢复正常，补偿受影响玩家",
     },
   },
   {
     id: 5,
-    name: '玩家大规模投诉',
-    description: '由于版本更新问题，导致大量玩家投诉',
-    type: 'operation',
-    date: '2024/3/30',
-    solution: '发布道歉公告，发放补偿奖励',
+    name: "玩家大规模投诉",
+    description: "由于版本更新问题，导致大量玩家投诉",
+    type: "operation",
+    date: "2024/3/30",
+    solution: "发布道歉公告，发放补偿奖励",
     impact: {
-      status: 'negative',
-      description: '口碑-10，需加强版本测试',
+      status: "negative",
+      description: "口碑-10，需加强版本测试",
     },
   },
 ]);
 
 // 标签页选项
 const tabs = [
-  { label: '全部事件', value: 'all' },
-  { label: '技术事件', value: 'technical' },
-  { label: '运营事件', value: 'operation' },
-  { label: '市场事件', value: 'market' },
+  { label: "全部事件", value: "all" },
+  { label: "技术事件", value: "technical" },
+  { label: "运营事件", value: "operation" },
+  { label: "市场事件", value: "market" },
 ];
 
 // 时间范围选项
 const timeRanges = [
-  { label: '全部时间', value: 'all' },
-  { label: '最近7天', value: '7days' },
-  { label: '最近30天', value: '30days' },
-  { label: '最近90天', value: '90days' },
+  { label: "全部时间", value: "all" },
+  { label: "最近7天", value: "7days" },
+  { label: "最近30天", value: "30days" },
+  { label: "最近90天", value: "90days" },
 ];
 
 // 事件状态选项
 const eventStatuses = [
-  { label: '全部状态', value: 'all' },
-  { label: '已解决', value: 'resolved' },
-  { label: '正面影响', value: 'positive' },
-  { label: '负面影响', value: 'negative' },
-  { label: '中性', value: 'neutral' },
+  { label: "全部状态", value: "all" },
+  { label: "已解决", value: "resolved" },
+  { label: "正面影响", value: "positive" },
+  { label: "负面影响", value: "negative" },
+  { label: "中性", value: "neutral" },
 ];
 
 // 筛选条件
 const selectedFilters = ref({
-  timeRange: 'all',
-  status: 'all',
+  timeRange: "all",
+  status: "all",
 });
 
 // 当前显示的事件
@@ -234,14 +234,14 @@ const currentEvents = computed(() => {
   let filteredEvents = events.value;
 
   // 根据标签页筛选事件类型
-  if (activeTab.value !== 'all') {
+  if (activeTab.value !== "all") {
     filteredEvents = filteredEvents.filter(
       (event) => event.type === activeTab.value,
     );
   }
 
   // 应用筛选条件
-  if (selectedFilters.value.status !== 'all') {
+  if (selectedFilters.value.status !== "all") {
     filteredEvents = filteredEvents.filter(
       (event) => event.impact.status === selectedFilters.value.status,
     );
@@ -251,17 +251,16 @@ const currentEvents = computed(() => {
 });
 
 // 重置筛选条件
-const resetFilters = () => {
+const resetFilters = (): void => {
   selectedFilters.value = {
-    timeRange: 'all',
-    status: 'all',
+    timeRange: "all",
+    status: "all",
   };
 };
 
 // 应用筛选条件
-const applyFilters = () => {
+const applyFilters = (): void => {
   showFilterModal.value = false;
-  console.log('应用筛选条件', selectedFilters.value);
 };
 </script>
 

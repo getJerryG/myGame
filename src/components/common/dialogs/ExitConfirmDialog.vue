@@ -20,8 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-
 // Props定义
 const props = defineProps<{
   isVisible: boolean;
@@ -37,22 +35,22 @@ const emit = defineEmits<{
 }>();
 
 // 默认属性
-const title = props.title || '退出游戏确认';
-const message = props.message || '您正在退出游戏，如未保存将造成数据丢失！';
+const title = props.title || "退出游戏确认";
+const message = props.message || "您正在退出游戏，如未保存将造成数据丢失！";
 
 // 处理遮罩点击
-const handleOverlayClick = () => {
-  emit('close');
+const handleOverlayClick = (): void => {
+  emit("close");
 };
 
 // 处理直接退出
-const handleExit = () => {
-  emit('exit');
+const handleExit = (): void => {
+  emit("exit");
 };
 
 // 处理保存
-const handleSave = () => {
-  emit('save');
+const handleSave = (): void => {
+  emit("save");
 };
 </script>
 

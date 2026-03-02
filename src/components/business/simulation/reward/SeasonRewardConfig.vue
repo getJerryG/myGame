@@ -32,17 +32,31 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
-  ranks: {
-    type: Array,
-    default: () => [],
-  },
-});
+interface Reward {
+  id: number;
+  name: string;
+  icon: string;
+  amount: number;
+  value: number;
+}
 
-const emit = defineEmits(['edit-rank-reward']);
+interface Rank {
+  id: number;
+  name: string;
+  icon: string;
+  rewards: Reward[];
+}
 
-const editRankReward = (rank) => {
-  emit('edit-rank-reward', rank);
+defineProps<{
+  ranks: Rank[];
+}>();
+
+const emit = defineEmits<{
+  (e: "edit-rank-reward", rank: Rank): void;
+}>();
+
+const editRankReward = (rank: Rank): void => {
+  emit("edit-rank-reward", rank);
 };
 </script>
 

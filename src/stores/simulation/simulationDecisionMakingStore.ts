@@ -1,10 +1,10 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 // 定义决策类型
 interface Decision {
   id: string;
   name: string;
-  category: 'business' | 'product' | 'marketing' | 'team';
+  category: "business" | "product" | "marketing" | "team";
   description: string;
   options: Array<{
     id: string;
@@ -23,7 +23,7 @@ interface Decision {
     };
   }>;
   deadline: number;
-  status: 'pending' | 'decided' | 'implemented';
+  status: "pending" | "decided" | "implemented";
   selectedOption?: string;
   decisionTime?: number;
   implementationProgress: number;
@@ -57,7 +57,7 @@ interface SimulationDecisionMakingState {
 
 // 创建并导出决策制定store
 export const useSimulationDecisionMakingStore = defineStore(
-  'simulationDecisionMaking',
+  "simulationDecisionMaking",
   {
     state: (): SimulationDecisionMakingState => ({
       // 初始当前决策为空数组
@@ -78,14 +78,14 @@ export const useSimulationDecisionMakingStore = defineStore(
       // 获取待处理决策
       pendingDecisions: (state) => {
         return state.currentDecisions
-          .filter((decision) => decision.status === 'pending')
+          .filter((decision) => decision.status === "pending")
           .sort((a, b) => a.deadline - b.deadline);
       },
 
       // 获取已决定的决策
       decidedDecisions: (state) => {
         return state.currentDecisions.filter(
-          (decision) => decision.status === 'decided',
+          (decision) => decision.status === "decided",
         );
       },
 
@@ -93,7 +93,7 @@ export const useSimulationDecisionMakingStore = defineStore(
       implementedDecisions: (state) => {
         return [
           ...state.currentDecisions.filter(
-            (decision) => decision.status === 'implemented',
+            (decision) => decision.status === "implemented",
           ),
           ...state.historicalDecisions,
         ];
@@ -112,20 +112,20 @@ export const useSimulationDecisionMakingStore = defineStore(
       createDecision(
         decisionData: Omit<
           Decision,
-          'id' | 'status' | 'implementationProgress'
+          "id" | "status" | "implementationProgress"
         >,
       ) {
         if (
           this.pendingDecisions.length >=
           this.decisionConfig.maxPendingDecisions
         ) {
-          throw new Error('已达到最大待处理决策数量限制');
+          throw new Error("已达到最大待处理决策数量限制");
         }
 
         const newDecision: Decision = {
           ...decisionData,
           id: `decision_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-          status: 'pending',
+          status: "pending",
           implementationProgress: 0,
         };
 
@@ -138,7 +138,7 @@ export const useSimulationDecisionMakingStore = defineStore(
         const decision = this.getDecisionById(decisionId);
         if (decision) {
           decision.selectedOption = optionId;
-          decision.status = 'decided';
+          decision.status = "decided";
           decision.decisionTime = Date.now();
         }
       },
@@ -154,9 +154,9 @@ export const useSimulationDecisionMakingStore = defineStore(
 
           if (
             decision.implementationProgress >= 100 &&
-            decision.status === 'decided'
+            decision.status === "decided"
           ) {
-            decision.status = 'implemented';
+            decision.status = "implemented";
 
             // 将已实施的决策移至历史记录
             const index = this.currentDecisions.findIndex(
@@ -177,7 +177,7 @@ export const useSimulationDecisionMakingStore = defineStore(
       recordDecisionImpact(
         decisionId: string,
         optionId: string,
-        actualImpact: Decision['options'][0]['impact'],
+        actualImpact: Decision["options"][0]["impact"],
       ) {
         this.decisionImpacts.push({
           decisionId,
@@ -197,7 +197,7 @@ export const useSimulationDecisionMakingStore = defineStore(
 
     // 持久化存储
     persist: {
-      key: 'simulation-decision-making',
+      key: "simulation-decision-making",
       storage: localStorage,
     },
   },

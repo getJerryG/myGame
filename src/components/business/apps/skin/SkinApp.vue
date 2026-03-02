@@ -208,63 +208,64 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useHeroSkinStore } from '@/stores/heroSkinStore';
-import ApplicationWindow from '@/components/common/window/ApplicationWindow.vue';
+import { ref, onMounted } from "vue";
+import { useHeroSkinStore } from "@/stores/heroSkinStore";
+import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
+import type { Skin } from "@/utils/HeroSkinManager";
 
 // 使用Pinia store
 const heroSkinStore = useHeroSkinStore();
 
 // 状态管理
-const activeTab = ref<string>('new');
-const selectedHeroId = ref<string>('');
-const selectedQuality = ref<string>('伴生');
-const selectedStyle = ref<string>('古风');
-const selectedMethod = ref<string>('自研');
+const activeTab = ref<string>("new");
+const selectedHeroId = ref<string>("");
+const selectedQuality = ref<string>("companion");
+const selectedStyle = ref<string>("古风");
+const selectedMethod = ref<string>("自研");
 
 // 皮肤品质列表
 const skinQualities = [
-  { id: '伴生', name: '伴生', color: '#9E9E9E' },
-  { id: '勇者', name: '勇者', color: '#4CAF50' },
-  { id: '史诗', name: '史诗', color: '#2196F3' },
-  { id: '传说', name: '传说', color: '#FF9800' },
-  { id: '限定', name: '限定', color: '#F44336' },
-  { id: '荣耀典藏', name: '荣耀典藏', color: '#9C27B0' },
+  { id: "companion", name: "伴生", color: "#9E9E9E" },
+  { id: "brave", name: "勇者", color: "#4CAF50" },
+  { id: "epic", name: "史诗", color: "#2196F3" },
+  { id: "legend", name: "传说", color: "#FF9800" },
+  { id: "limited", name: "限定", color: "#F44336" },
+  { id: "glory", name: "荣耀典藏", color: "#9C27B0" },
 ];
 
 // 皮肤风格列表
 const skinStyles = [
-  { id: '古风', name: '古风', icon: '🏮' },
-  { id: '未来科技', name: '未来科技', icon: '🤖' },
-  { id: '机甲', name: '机甲', icon: '🤖' },
-  { id: '二次元', name: '二次元', icon: '🧚' },
-  { id: '运动', name: '运动', icon: '⚽' },
-  { id: '暗黑', name: '暗黑', icon: '🌑' },
+  { id: "古风", name: "古风", icon: "🏮" },
+  { id: "未来科技", name: "未来科技", icon: "🤖" },
+  { id: "机甲", name: "机甲", icon: "🤖" },
+  { id: "二次元", name: "二次元", icon: "🧚" },
+  { id: "运动", name: "运动", icon: "⚽" },
+  { id: "暗黑", name: "暗黑", icon: "🌑" },
 ];
 
 // 研发方式列表
 const developmentMethods = [
-  { id: '自研', name: '自研' },
-  { id: '联动', name: '联动' },
+  { id: "自研", name: "自研" },
+  { id: "联动", name: "联动" },
 ];
 
 // 随机皮肤名称列表
 const skinNames = [
-  '金色传说',
-  '暗影刺客',
-  '皇家骑士',
-  '魔法少女',
-  '星际旅行',
-  '深海之灵',
-  '火焰使者',
-  '冰霜女王',
-  '光明守护者',
-  '黑暗领主',
-  '雷霆战将',
-  '风之游侠',
-  '地之守护者',
-  '水之精灵',
-  '火之魔王',
+  "金色传说",
+  "暗影刺客",
+  "皇家骑士",
+  "魔法少女",
+  "星际旅行",
+  "深海之灵",
+  "火焰使者",
+  "冰霜女王",
+  "光明守护者",
+  "黑暗领主",
+  "雷霆战将",
+  "风之游侠",
+  "地之守护者",
+  "水之精灵",
+  "火之魔王",
 ];
 
 // 生成随机皮肤名称
@@ -274,37 +275,37 @@ const generateRandomSkinName = (): string => {
 
 // 生成随机皮肤图标
 const generateRandomIcon = (): string => {
-  const icons = ['🎨', '🧵', '🎭', '🌟', '🎪', '🎯', '🎮', '🎰', '🎲', '🎳'];
+  const icons = ["🎨", "🧵", "🎭", "🌟", "🎪", "🎯", "🎮", "🎰", "🎲", "🎳"];
   return icons[Math.floor(Math.random() * icons.length)];
 };
 
 // 根据英雄id获取英雄名称
 const getHeroName = (heroId: string): string => {
   const hero = heroSkinStore.getHeroById(heroId);
-  return hero ? hero.name : '未知英雄';
+  return hero ? hero.name : "未知英雄";
 };
 
 // 根据风格id获取风格名称
 const getStyleName = (styleId: string): string => {
   const style = skinStyles.find((s) => s.id === styleId);
-  return style ? style.name : '未知风格';
+  return style ? style.name : "未知风格";
 };
 
 // 根据品质获取颜色
 const getQualityColor = (quality: string): string => {
   const qualityItem = skinQualities.find((q) => q.id === quality);
-  return qualityItem ? qualityItem.color : 'rgba(74, 158, 255, 0.2)';
+  return qualityItem ? qualityItem.color : "rgba(74, 158, 255, 0.2)";
 };
 
 // 根据品质获取价格
 const getPriceByQuality = (quality: string): number => {
   const priceMap: Record<string, number> = {
-    伴生: 288,
-    勇者: 488,
-    史诗: 888,
-    传说: 1688,
-    限定: 1988,
-    荣耀典藏: 2888,
+    companion: 288,
+    brave: 488,
+    epic: 888,
+    legend: 1688,
+    limited: 1988,
+    glory: 2888,
   };
   return priceMap[quality] || 288;
 };
@@ -312,12 +313,12 @@ const getPriceByQuality = (quality: string): number => {
 // 根据品质获取特效数量
 const getEffectsByQuality = (quality: string): number => {
   const effectsMap: Record<string, number> = {
-    伴生: 0,
-    勇者: 1,
-    史诗: 3,
-    传说: 5,
-    限定: 6,
-    荣耀典藏: 8,
+    companion: 0,
+    brave: 1,
+    epic: 3,
+    legend: 5,
+    limited: 6,
+    glory: 8,
   };
   return effectsMap[quality] || 0;
 };
@@ -329,7 +330,7 @@ const confirmSkinCreation = (): void => {
   }
 
   // 创建皮肤对象
-  const newSkin: any = {
+  const newSkin: Skin = {
     id: Date.now().toString(),
     name: generateRandomSkinName(),
     icon: generateRandomIcon(),
@@ -337,23 +338,34 @@ const confirmSkinCreation = (): void => {
     rarity: selectedQuality.value,
     price: getPriceByQuality(selectedQuality.value),
     effects: getEffectsByQuality(selectedQuality.value),
-    description: '',
+    description: "",
     createdAt: new Date().toISOString(),
+    creationType: selectedMethod.value,
     style: selectedStyle.value,
-    developmentMethod: selectedMethod.value,
-    isDeveloping: true,
-    progress: 0,
-    sales: 0,
+    developmentTime: 30, // 默认研发时间
+    developmentCost: 1000, // 默认研发成本
+    developmentProgress: 0,
+    status: "in_development",
+    sales: {
+      daily: 0,
+      total: 0,
+    },
+    designFit: 0.5, // 默认设计契合度
+    scarcity: 0.5, // 默认稀缺感
+    costEffectiveness: 0.5, // 默认性价比
+    obtainDifficulty: 0.5, // 默认获取难度
+    communityHeat: 0.5, // 默认社群讨论度
+    negativePublicOpinion: 0.1, // 默认负面舆情
   };
 
   // 添加到store
   heroSkinStore.addSkin(newSkin);
 
   // 重置选择
-  selectedHeroId.value = '';
-  selectedQuality.value = '伴生';
-  selectedStyle.value = '古风';
-  selectedMethod.value = '自研';
+  selectedHeroId.value = "";
+  selectedQuality.value = "伴生";
+  selectedStyle.value = "古风";
+  selectedMethod.value = "自研";
 };
 
 // 初始化数据

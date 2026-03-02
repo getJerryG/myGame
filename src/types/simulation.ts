@@ -101,7 +101,13 @@ export interface SimulationEventOption {
 }
 
 export interface SimulationEventRequirement {
-  type: "money" | "reputation" | "popularity" | "level" | "heroCount" | "skinCount";
+  type:
+    | "money"
+    | "reputation"
+    | "popularity"
+    | "level"
+    | "heroCount"
+    | "skinCount";
   value: number;
   operator: ">=" | "<=" | ">" | "<" | "==";
 }
@@ -145,4 +151,23 @@ export interface SimulationHeroAttributes {
   intelligence: number;
   agility: number;
   charisma: number;
+}
+
+// 完整的模拟状态，包含所有相关数据
+export interface SimulationFullState {
+  id: string;
+  name: string;
+  state: SimulationState;
+  config: SimulationConfig;
+  stats: SimulationStats;
+  currentTime: SimulationTime;
+  startTime: SimulationTime;
+  endTime: SimulationTime;
+  isRunning: boolean;
+  isPaused: boolean;
+  decisions: SimulationDecision[];
+  events: SimulationEvent[];
+  heroes: SimulationHero[];
+  createdAt: Date;
+  updatedAt?: Date;
 }

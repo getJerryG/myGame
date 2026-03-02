@@ -67,49 +67,49 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onUnmounted, watch } from 'vue';
-import { useWindowManagerStore } from '@/stores/windowManagerStore';
+import { ref, computed, onUnmounted, type DefineComponent } from "vue";
+// import { useWindowManagerStore } from "@/stores/windowManagerStore";
 
 // 导入所有应用组件
-import ChatApp from '@/components/business/apps/chat/ChatApp.vue';
-import CareerApp from '@/components/business/apps/career/CareerApp.vue';
-import CollabCenterApp from '@/components/business/apps/CollabCenter/CollabCenterApp.vue';
-import ContentApp from '@/components/business/apps/content/ContentApp.vue';
-import DataCenterApp from '@/components/business/apps/DataCenter/DataCenterApp.vue';
-import EventApp from '@/components/business/apps/event/EventApp.vue';
-import EventLogApp from '@/components/business/apps/EventLog/EventLogApp.vue';
-import GameReleaseApp from '@/components/business/apps/GameRelease/GameReleaseApp.vue';
-import HeroApp from '@/components/business/apps/hero/HeroApp.vue';
-import LotteryApp from '@/components/business/apps/lottery/LotteryApp.vue';
-import OperationsApp from '@/components/business/apps/operations/OperationsApp.vue';
-import RewardsApp from '@/components/business/apps/rewards/RewardsApp.vue';
-import SentimentCenterApp from '@/components/business/apps/SentimentCenter/SentimentCenterApp.vue';
-import SkinApp from '@/components/business/apps/skin/SkinApp.vue';
-import SystemSettingsApp from '@/components/business/apps/SystemSettings/SystemSettingsApp.vue';
-import TaskCenterApp from '@/components/business/apps/TaskCenter/TaskCenterApp.vue';
-import WalletApp from '@/components/business/apps/wallet/WalletApp.vue';
-import AppStore from '@/components/business/apps/AppStore/AppStore.vue';
+import ChatApp from "@/components/business/apps/chat/ChatApp.vue";
+import CareerApp from "@/components/business/apps/career/CareerApp.vue";
+import CollabCenterApp from "@/components/business/apps/CollabCenter/CollabCenterApp.vue";
+import ContentApp from "@/components/business/apps/content/ContentApp.vue";
+import DataCenterApp from "@/components/business/apps/DataCenter/DataCenterApp.vue";
+import EventApp from "@/components/business/apps/event/EventApp.vue";
+import EventLogApp from "@/components/business/apps/EventLog/EventLogApp.vue";
+import GameReleaseApp from "@/components/business/apps/GameRelease/GameReleaseApp.vue";
+import HeroApp from "@/components/business/apps/hero/HeroApp.vue";
+import LotteryApp from "@/components/business/apps/lottery/LotteryApp.vue";
+import OperationsApp from "@/components/business/apps/operations/OperationsApp.vue";
+import RewardsApp from "@/components/business/apps/rewards/RewardsApp.vue";
+import SentimentCenterApp from "@/components/business/apps/SentimentCenter/SentimentCenterApp.vue";
+import SkinApp from "@/components/business/apps/skin/SkinApp.vue";
+import SystemSettingsApp from "@/components/business/apps/SystemSettings/SystemSettingsApp.vue";
+import TaskCenterApp from "@/components/business/apps/TaskCenter/TaskCenterApp.vue";
+import WalletApp from "@/components/business/apps/wallet/WalletApp.vue";
+import AppStore from "@/components/business/apps/AppStore/AppStore.vue";
 
 // 应用组件映射
-const appComponents: Record<string, any> = {
+const appComponents: Record<string, DefineComponent> = {
   chat: ChatApp,
   career: CareerApp,
-  'collab-center': CollabCenterApp,
+  "collab-center": CollabCenterApp,
   content: ContentApp,
-  'data-center': DataCenterApp,
+  "data-center": DataCenterApp,
   event: EventApp,
-  'event-log': EventLogApp,
-  'game-release': GameReleaseApp,
+  "event-log": EventLogApp,
+  "game-release": GameReleaseApp,
   hero: HeroApp,
   lottery: LotteryApp,
   operations: OperationsApp,
   rewards: RewardsApp,
-  'sentiment-center': SentimentCenterApp,
+  "sentiment-center": SentimentCenterApp,
   skin: SkinApp,
-  'system-settings': SystemSettingsApp,
-  'task-center': TaskCenterApp,
+  "system-settings": SystemSettingsApp,
+  "task-center": TaskCenterApp,
   wallet: WalletApp,
-  'app-store': AppStore,
+  "app-store": AppStore,
 };
 
 // 定义应用类型
@@ -118,7 +118,7 @@ interface App {
   name: string;
   icon: string;
   position: { x: number; y: number };
-  coreData: Record<string, any>;
+  coreData: Record<string, unknown>;
   modules: Array<{
     id: string;
     name: string;
@@ -134,23 +134,26 @@ interface WindowState {
   activeModule: string;
 }
 
+// 定义游戏数据类型
+type GameData = Record<string, unknown>;
+
 // Props定义
 const props = defineProps<{
   windowId: string;
   windowState: WindowState;
   app: App;
-  gameData: any;
+  gameData: GameData;
 }>();
 
 // Emits定义
 const emit = defineEmits<{
   close: [appId: string];
-  'update:windowState': [windowState: WindowState];
-  'app-installed': [app: any];
+  "update:windowState": [windowState: WindowState];
+  "app-installed": [app: App];
 }>();
 
 // 获取窗口管理器store
-const windowManagerStore = useWindowManagerStore();
+// const windowManagerStore = useWindowManagerStore();
 
 // 当前应用组件
 const currentAppComponent = computed(() => {
@@ -161,10 +164,10 @@ const currentAppComponent = computed(() => {
 const containerStyle = computed(() => {
   if (props.windowState.isMaximized) {
     return {
-      left: '0px',
-      top: '0px',
-      width: '100vw',
-      height: '100vh',
+      left: "0px",
+      top: "0px",
+      width: "100vw",
+      height: "100vh",
     };
   }
   return {
@@ -187,8 +190,8 @@ const startDrag = (event: MouseEvent) => {
     x: event.clientX - props.windowState.position.x,
     y: event.clientY - props.windowState.position.y,
   };
-  document.addEventListener('mousemove', handleDrag);
-  document.addEventListener('mouseup', stopDrag);
+  document.addEventListener("mousemove", handleDrag);
+  document.addEventListener("mouseup", stopDrag);
 };
 
 // 开始拖拽标题栏
@@ -203,7 +206,7 @@ const handleDrag = (event: MouseEvent) => {
     x: event.clientX - dragOffset.value.x,
     y: event.clientY - dragOffset.value.y,
   };
-  emit('update:windowState', {
+  emit("update:windowState", {
     ...props.windowState,
     position: newPosition,
   });
@@ -212,18 +215,18 @@ const handleDrag = (event: MouseEvent) => {
 // 停止拖拽
 const stopDrag = () => {
   isDragging.value = false;
-  document.removeEventListener('mousemove', handleDrag);
-  document.removeEventListener('mouseup', stopDrag);
+  document.removeEventListener("mousemove", handleDrag);
+  document.removeEventListener("mouseup", stopDrag);
 };
 
 // 处理关闭
 const handleClose = () => {
-  emit('close', props.app.id);
+  emit("close", props.app.id);
 };
 
 // 处理模块切换
 const handleModuleChange = (moduleId: string) => {
-  emit('update:windowState', {
+  emit("update:windowState", {
     ...props.windowState,
     activeModule: moduleId,
   });
@@ -232,24 +235,24 @@ const handleModuleChange = (moduleId: string) => {
 // 获取模块图标
 const getModuleIcon = (moduleId: string): string => {
   const iconMap: Record<string, string> = {
-    'balance-info': '💰',
-    'transaction-history': '📊',
-    'lottery-main': '🎰',
-    'lottery-history': '📝',
-    'lottery-rewards': '🎁',
-    'hero-new': '➕',
-    'hero-manage': '📋',
-    'basic-settings': '⚙️',
-    'advanced-settings': '🔧',
-    about: 'ℹ️',
+    "balance-info": "💰",
+    "transaction-history": "📊",
+    "lottery-main": "🎰",
+    "lottery-history": "📝",
+    "lottery-rewards": "🎁",
+    "hero-new": "➕",
+    "hero-manage": "📋",
+    "basic-settings": "⚙️",
+    "advanced-settings": "🔧",
+    about: "ℹ️",
   };
-  return iconMap[moduleId] || '📄';
+  return iconMap[moduleId] || "📄";
 };
 
 // 组件卸载时清理事件监听器
 onUnmounted(() => {
-  document.removeEventListener('mousemove', handleDrag);
-  document.removeEventListener('mouseup', stopDrag);
+  document.removeEventListener("mousemove", handleDrag);
+  document.removeEventListener("mouseup", stopDrag);
 });
 </script>
 

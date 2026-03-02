@@ -88,12 +88,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useLotteryStore } from '@/stores/lotteryStore';
-import Panel from '@/components/common/Panel/index.vue';
-import Card from '@/components/common/Card/index.vue';
-import List from '@/components/common/List/index.vue';
-import Button from '@/components/common/Button/index.vue';
+import { computed } from "vue";
+import { useLotteryStore } from "@/stores/lotteryStore";
+import Panel from "@/components/common/Panel/index.vue";
+import Card from "@/components/common/Card/index.vue";
+import List from "@/components/common/List/index.vue";
+import Button from "@/components/common/Button/index.vue";
 
 const lotteryStore = useLotteryStore();
 

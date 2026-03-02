@@ -1,15 +1,7 @@
 <template>
-  <section
-    class="data-panel"
-    aria-labelledby="data-trends-title"
-  >
+  <section class="data-panel" aria-labelledby="data-trends-title">
     <div class="panel-header">
-      <h2
-        id="data-trends-title"
-        class="panel-title"
-      >
-        数据趋势
-      </h2>
+      <h2 id="data-trends-title" class="panel-title">数据趋势</h2>
       <button
         class="collapse-btn"
         aria-expanded="!isCollapsed"
@@ -19,10 +11,7 @@
       </button>
     </div>
 
-    <div
-      class="panel-content"
-      :class="{ collapsed: isCollapsed }"
-    >
+    <div class="panel-content" :class="{ collapsed: isCollapsed }">
       <!-- 收入趋势图表 -->
       <div class="trend-chart">
         <h3 class="chart-title">收入趋势</h3>
@@ -91,7 +80,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed } from "vue";
 
 // 定义类型接口
 interface HistoryItem {
@@ -112,9 +101,11 @@ const props = defineProps<{
   businessData: BusinessData;
 }>();
 
-// 响应式数�?const isCollapsed = ref(false);
+// 响应式数据
+const isCollapsed = ref(false);
 
-// 计算属�?const revenueHistory = computed<HistoryItem[]>(() => {
+// 计算属性
+const revenueHistory = computed<HistoryItem[]>(() => {
   return props.businessData.revenueHistory.slice(-7);
 });
 
@@ -133,14 +124,14 @@ const maxRevenueValue = computed<number>(() => {
 const maxDownloadsValue = computed<number>(() => {
   return Math.max(
     ...props.businessData.downloadsHistory.map((h) => h.value),
-    1
+    1,
   );
 });
 
 const maxActiveUsersValue = computed<number>(() => {
   return Math.max(
     ...props.businessData.dailyLoginHistory.map((h) => h.value),
-    1
+    1,
   );
 });
 
@@ -243,11 +234,19 @@ const toggleCollapse = (): void => {
             min-height: 2px;
 
             &.revenue-bar {
-              background: linear-gradient(180deg, tokens.$primary-light, tokens.$primary);
+              background: linear-gradient(
+                180deg,
+                tokens.$primary-light,
+                tokens.$primary
+              );
             }
 
             &.downloads-bar {
-              background: linear-gradient(180deg, tokens.$success-green, tokens.$secondary-dark);
+              background: linear-gradient(
+                180deg,
+                tokens.$success-green,
+                tokens.$secondary-dark
+              );
             }
 
             &.active-users-bar {

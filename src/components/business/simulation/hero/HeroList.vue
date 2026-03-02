@@ -30,13 +30,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import HeroCard from './HeroCard.vue';
-import HeroDetailSidebar from './HeroDetailSidebar.vue';
-import HeroEmptyState from './HeroEmptyState.vue';
+import { ref, computed } from "vue";
+import HeroCard from "./HeroCard.vue";
+import HeroDetailSidebar from "./HeroDetailSidebar.vue";
+import HeroEmptyState from "./HeroEmptyState.vue";
 
-import type { Hero } from './HeroCard.vue';
-import type { HeroWithSkills } from './HeroDetailSidebar.vue';
+import type { HeroWithSkills } from "./HeroDetailSidebar.vue";
 
 const props = defineProps<{
   heroes: HeroWithSkills[];
@@ -47,9 +46,9 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  'select-hero': [hero: HeroWithSkills];
-  'add-to-team': [hero: HeroWithSkills];
-  'reset-filters': [];
+  "select-hero": [hero: HeroWithSkills];
+  "add-to-team": [hero: HeroWithSkills];
+  "reset-filters": [];
 }>();
 
 const selectedHero = ref<HeroWithSkills | null>(null);
@@ -68,17 +67,17 @@ const filteredHeroes = computed(() => {
   return result;
 });
 
-const handleSelectHero = (hero: HeroWithSkills) => {
+const handleSelectHero = (hero: HeroWithSkills): void => {
   selectedHero.value = hero;
-  emit('select-hero', hero);
+  emit("select-hero", hero);
 };
 
-const handleViewDetails = (hero: HeroWithSkills) => {
+const handleViewDetails = (hero: HeroWithSkills): void => {
   selectedHero.value = hero;
 };
 
-const handleAddToTeam = (hero: HeroWithSkills) => {
-  emit('add-to-team', hero);
+const handleAddToTeam = (hero: HeroWithSkills): void => {
+  emit("add-to-team", hero);
   selectedHero.value = null;
 };
 </script>

@@ -84,9 +84,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import ApplicationWindow from '@/components/common/window/ApplicationWindow.vue';
-import { getModuleIcon } from '@/utils/appUtils';
+import { ref, computed } from "vue";
+import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
+import { getModuleIcon } from "@/utils/appUtils";
 
 const props = defineProps({
   app: {
@@ -99,7 +99,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['update:activeModule']);
+const emit = defineEmits(["update:activeModule"]);
 
 // 活跃模块状态
 const activeModule = ref(props.app.modules[0].id);
@@ -117,28 +117,28 @@ const sidebarItems = computed(() => {
 const transactionHistory = ref([
   {
     id: 1,
-    type: '收入',
+    type: "收入",
     amount: 5000,
-    date: '2026-02-03 10:00',
+    date: "2026-02-03 10:00",
   },
   {
     id: 2,
-    type: '支出',
+    type: "支出",
     amount: -2000,
-    date: '2026-02-02 15:30',
+    date: "2026-02-02 15:30",
   },
   {
     id: 3,
-    type: '收入',
+    type: "收入",
     amount: 8000,
-    date: '2026-02-01 09:15',
+    date: "2026-02-01 09:15",
   },
 ]);
 
 // 处理侧边栏项点击
 const handleItemChange = (itemId: string): void => {
   activeModule.value = itemId;
-  emit('update:activeModule', itemId);
+  emit("update:activeModule", itemId);
 };
 </script>
 

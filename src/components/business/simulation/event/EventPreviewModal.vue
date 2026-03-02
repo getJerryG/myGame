@@ -1,24 +1,18 @@
 <template>
   <!-- 活动预览弹窗 -->
-  <div
-    v-if="showPreview"
-    class="preview-modal"
-  >
+  <div v-if="showPreview" class="preview-modal">
     <div class="preview-content">
       <div class="preview-header">
         <h4>活动预览</h4>
-        <button
-          class="preview-close"
-          @click="closePreview"
-        >
-          ✕
-        </button>
+        <button class="preview-close" @click="closePreview">✕</button>
       </div>
       <div class="preview-body">
         <div class="preview-section">
           <h5>活动信息</h5>
           <p><strong>名称：</strong>{{ previewConfig.name || "未设置" }}</p>
-          <p><strong>类型：</strong>{{ getEventTypeLabel(previewConfig.type) }}</p>
+          <p>
+            <strong>类型：</strong>{{ getEventTypeLabel(previewConfig.type) }}
+          </p>
           <p>
             <strong>时间：</strong>{{ previewConfig.startDate }} ~
             {{ previewConfig.endDate }}
@@ -27,10 +21,7 @@
         <div class="preview-section">
           <h5>奖励设置</h5>
           <ul>
-            <li
-              v-for="(reward, index) in previewConfig.rewards"
-              :key="index"
-            >
+            <li v-for="(reward, index) in previewConfig.rewards" :key="index">
               {{ reward.name }} ({{ reward.quantity }}个)
             </li>
             <li v-if="previewConfig.rewards.length === 0">暂无奖励</li>
@@ -39,9 +30,20 @@
         <div class="preview-section">
           <h5>参与条件</h5>
           <ul>
-            <li v-if="previewConfig.conditions.level">等级 ≥ {{ previewConfig.levelRequirement }}</li>
-            <li v-if="previewConfig.conditions.rank">段位 ≥ {{ previewConfig.rankRequirement }}</li>
-            <li v-if="!previewConfig.conditions.level && !previewConfig.conditions.rank">无特殊条件</li>
+            <li v-if="previewConfig.conditions.level">
+              等级 ≥ {{ previewConfig.levelRequirement }}
+            </li>
+            <li v-if="previewConfig.conditions.rank">
+              段位 ≥ {{ previewConfig.rankRequirement }}
+            </li>
+            <li
+              v-if="
+                !previewConfig.conditions.level &&
+                !previewConfig.conditions.rank
+              "
+            >
+              无特殊条件
+            </li>
           </ul>
         </div>
       </div>
@@ -50,7 +52,8 @@
 </template>
 
 <script setup lang="ts">
-// 接收父组件传递的属�?const props = defineProps({
+// 接收父组件传递的属性
+const props = defineProps({
   showPreview: {
     type: Boolean,
     default: false,
@@ -58,30 +61,31 @@
   previewConfig: {
     type: Object,
     default: () => ({
-      name: '',
-      startDate: '',
-      endDate: '',
-      type: 'limited',
-      rewards: [{ type: 'skin', name: '', quantity: 1 }],
+      name: "",
+      startDate: "",
+      endDate: "",
+      type: "limited",
+      rewards: [{ type: "skin", name: "", quantity: 1 }],
       conditions: {
         level: false,
         rank: false,
       },
       levelRequirement: 10,
-      rankRequirement: '钻石',
+      rankRequirement: "钻石",
     }),
   },
   eventTypes: {
     type: Array,
     default: () => [
-      { label: '限时活动', value: 'limited', icon: '⏱️' },
-      { label: '节日活动', value: 'holiday', icon: '🎄' },
-      { label: '社区活动', value: 'community', icon: '👥' },
+      { label: "限时活动", value: "limited", icon: "⏱️" },
+      { label: "节日活动", value: "holiday", icon: "🎄" },
+      { label: "社区活动", value: "community", icon: "👥" },
     ],
   },
 });
 
-// 向父组件传递事�?const emit = defineEmits(['preview-closed']);
+// 向父组件传递事件
+const emit = defineEmits(["preview-closed"]);
 
 // 获取活动类型标签
 const getEventTypeLabel = (value: string): string => {
@@ -91,7 +95,7 @@ const getEventTypeLabel = (value: string): string => {
 
 // 关闭预览
 const closePreview = (): void => {
-  emit('preview-closed');
+  emit("preview-closed");
 };
 </script>
 

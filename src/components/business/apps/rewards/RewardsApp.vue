@@ -141,12 +141,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
 
 // 导入类型
-import type { App } from '../../../types/app';
-import type { GameData } from '../../../types/game';
-import type { Modal } from '../../../types/modal';
+import type { App } from "../../../types/app";
+import type { GameData } from "../../../types/game";
+import type { Modal } from "../../../types/modal";
 
 // Props定义
 defineProps<{
@@ -156,32 +156,32 @@ defineProps<{
 }>();
 
 // 活跃标签页
-const activeTab = ref('daily');
+const activeTab = ref("daily");
 
 // 每日奖励
 const dailyRewards = ref([
   {
-    id: 'daily-1',
-    name: '每日登录',
-    icon: '📅',
-    description: '每天登录游戏即可领取',
-    amount: '100金币',
+    id: "daily-1",
+    name: "每日登录",
+    icon: "📅",
+    description: "每天登录游戏即可领取",
+    amount: "100金币",
     claimed: false,
   },
   {
-    id: 'daily-2',
-    name: '每日任务',
-    icon: '📋',
-    description: '完成3个日常任务',
-    amount: '200金币',
+    id: "daily-2",
+    name: "每日任务",
+    icon: "📋",
+    description: "完成3个日常任务",
+    amount: "200金币",
     claimed: true,
   },
   {
-    id: 'daily-3',
-    name: '每日分享',
-    icon: '📤',
-    description: '分享游戏到社交平台',
-    amount: '50金币',
+    id: "daily-3",
+    name: "每日分享",
+    icon: "📤",
+    description: "分享游戏到社交平台",
+    amount: "50金币",
     claimed: false,
   },
 ]);
@@ -189,35 +189,35 @@ const dailyRewards = ref([
 // 成就奖励
 const achievements = ref([
   {
-    id: 'ach-1',
-    name: '初出茅庐',
-    icon: '🎖️',
-    description: '完成新手教程',
+    id: "ach-1",
+    name: "初出茅庐",
+    icon: "🎖️",
+    description: "完成新手教程",
     current: 1,
     target: 1,
-    reward: '500金币',
+    reward: "500金币",
     completed: true,
     claimed: true,
   },
   {
-    id: 'ach-2',
-    name: '策划新手',
-    icon: '🎯',
-    description: '成功发布1个英雄',
+    id: "ach-2",
+    name: "策划新手",
+    icon: "🎯",
+    description: "成功发布1个英雄",
     current: 0,
     target: 1,
-    reward: '1000金币',
+    reward: "1000金币",
     completed: false,
     claimed: false,
   },
   {
-    id: 'ach-3',
-    name: '皮肤大师',
-    icon: '🧵',
-    description: '成功发布5个皮肤',
+    id: "ach-3",
+    name: "皮肤大师",
+    icon: "🧵",
+    description: "成功发布5个皮肤",
     current: 2,
     target: 5,
-    reward: '2000金币',
+    reward: "2000金币",
     completed: false,
     claimed: false,
   },
@@ -226,27 +226,27 @@ const achievements = ref([
 // 特殊奖励
 const specialRewards = ref([
   {
-    id: 'special-1',
-    name: '首充礼包',
-    icon: '🎁',
-    description: '首次充值即可获得超值礼包',
-    amount: '3000金币 + 限定皮肤',
-    badge: '限时',
+    id: "special-1",
+    name: "首充礼包",
+    icon: "🎁",
+    description: "首次充值即可获得超值礼包",
+    amount: "3000金币 + 限定皮肤",
+    badge: "限时",
     claimed: false,
   },
   {
-    id: 'special-2',
-    name: 'VIP特权',
-    icon: '👑',
-    description: '成为VIP会员享受专属特权',
-    amount: '每日500金币',
-    badge: 'VIP',
+    id: "special-2",
+    name: "VIP特权",
+    icon: "👑",
+    description: "成为VIP会员享受专属特权",
+    amount: "每日500金币",
+    badge: "VIP",
     claimed: true,
   },
 ]);
 
 // 领取每日奖励
-const claimDailyReward = (rewardId: string) => {
+const claimDailyReward = (rewardId: string): void => {
   const reward = dailyRewards.value.find((r) => r.id === rewardId);
   if (reward && !reward.claimed) {
     reward.claimed = true;
@@ -255,7 +255,7 @@ const claimDailyReward = (rewardId: string) => {
 };
 
 // 领取成就奖励
-const claimAchievementReward = (achievementId: string) => {
+const claimAchievementReward = (achievementId: string): void => {
   const achievement = achievements.value.find((a) => a.id === achievementId);
   if (achievement && achievement.completed && !achievement.claimed) {
     achievement.claimed = true;
@@ -264,7 +264,7 @@ const claimAchievementReward = (achievementId: string) => {
 };
 
 // 领取特殊奖励
-const claimSpecialReward = (rewardId: string) => {
+const claimSpecialReward = (rewardId: string): void => {
   const reward = specialRewards.value.find((r) => r.id === rewardId);
   if (reward && !reward.claimed) {
     reward.claimed = true;

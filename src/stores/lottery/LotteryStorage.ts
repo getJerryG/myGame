@@ -1,4 +1,13 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
+
+// 定义抽奖配置类型
+export type LotteryConfig = Record<string, unknown>;
+
+// 定义抽奖结果类型
+export interface LotteryResult {
+  type: string;
+  amount: number;
+}
 
 // 定义抽奖存储状态类型
 interface LotteryStorageState {
@@ -9,14 +18,14 @@ interface LotteryStorageState {
     // 配置版本
     version: string;
     // 配置数据
-    data: Record<string, any>;
+    data: LotteryConfig;
   };
   // 抽奖结果缓存
   resultCache: {
     // 缓存的抽奖结果
     cachedResults: Array<{
       cacheKey: string;
-      results: any[];
+      results: LotteryResult[];
       timestamp: number;
       expiration: number;
     }>;
@@ -45,12 +54,12 @@ interface LotteryStorageState {
 }
 
 // 创建并导出存储store
-export const useLotteryStorageStore = defineStore('lotteryStorage', {
+export const useLotteryStorageStore = defineStore("lotteryStorage", {
   state: (): LotteryStorageState => ({
     // 初始配置存储
     configStorage: {
       lastUpdated: Date.now(),
-      version: '1.0.0',
+      version: "1.0.0",
       data: {},
     },
     // 初始结果缓存
@@ -72,7 +81,7 @@ export const useLotteryStorageStore = defineStore('lotteryStorage', {
   getters: {
     // 获取今日抽奖数据
     todayStatistics: (state) => {
-      const today = new Date().toISOString().split('T')[0];
+      const today = new Date().toISOString().split("T")[0];
       return (
         state.statistics.daily[today] || {
           date: today,
@@ -97,18 +106,22 @@ export const useLotteryStorageStore = defineStore('lotteryStorage', {
 
   actions: {
     // 保存抽奖配置
-    saveConfig(configData: Record<string, any>) {
+    saveConfig(configData: LotteryConfig) {
       this.configStorage.data = { ...this.configStorage.data, ...configData };
       this.configStorage.lastUpdated = Date.now();
     },
 
     // 加载抽奖配置
-    loadConfig(): Record<string, any> {
+    loadConfig(): LotteryConfig {
       return { ...this.configStorage.data };
     },
 
     // 缓存抽奖结果
-    cacheResults(cacheKey: string, results: any[], expirationMinutes = 60) {
+    cacheResults(
+      cacheKey: string,
+      results: LotteryResult[],
+      expirationMinutes = 60,
+    ) {
       // 移除旧的相同key的缓存
       this.resultCache.cachedResults = this.resultCache.cachedResults.filter(
         (item) => item.cacheKey !== cacheKey,
@@ -185,7 +198,7 @@ export const useLotteryStorageStore = defineStore('lotteryStorage', {
 
   // 持久化存储
   persist: {
-    key: 'lottery-storage',
+    key: "lottery-storage",
     storage: localStorage,
   },
 });

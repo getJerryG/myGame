@@ -3,12 +3,7 @@
     <!-- 应用头部 -->
     <div class="app-header">
       <h2 class="app-title">皮肤开发</h2>
-      <button
-        class="close-btn"
-        @click="closeApp"
-      >
-        ×
-      </button>
+      <button class="close-btn" @click="closeApp">×</button>
     </div>
 
     <!-- 应用内容 -->
@@ -29,10 +24,7 @@
               <div class="skin-name">{{ skin.name }}</div>
               <div class="skin-hero">{{ skin.heroName }}</div>
             </div>
-            <div
-              class="skin-rarity"
-              :class="skin.rarity"
-            >
+            <div class="skin-rarity" :class="skin.rarity">
               {{ getRarityText(skin.rarity) }}
             </div>
           </div>
@@ -40,42 +32,25 @@
       </div>
 
       <!-- 皮肤详情 -->
-      <div
-        v-if="selectedSkin"
-        class="skin-detail-section"
-      >
+      <div v-if="selectedSkin" class="skin-detail-section">
         <div class="detail-preview">{{ selectedSkin.preview }}</div>
         <div class="detail-info">
           <h3 class="detail-name">{{ selectedSkin.name }}</h3>
           <div class="detail-hero">所属英雄: {{ selectedSkin.heroName }}</div>
-          <div
-            class="detail-rarity"
-            :class="selectedSkin.rarity"
-          >
+          <div class="detail-rarity" :class="selectedSkin.rarity">
             {{ getRarityText(selectedSkin.rarity) }}
           </div>
           <div class="detail-description">{{ selectedSkin.description }}</div>
         </div>
         <div class="detail-actions">
-          <button
-            class="action-btn edit"
-            @click="editSkin"
-          >
-            编辑皮肤
-          </button>
-          <button
-            class="action-btn preview"
-            @click="previewSkin"
-          >
+          <button class="action-btn edit" @click="editSkin">编辑皮肤</button>
+          <button class="action-btn preview" @click="previewSkin">
             预览效果
           </button>
         </div>
       </div>
 
-      <div
-        v-else
-        class="no-selection"
-      >
+      <div v-else class="no-selection">
         <div class="no-selection-icon">🎨</div>
         <p>请选择一款皮肤查看详情</p>
       </div>
@@ -326,7 +301,11 @@ const closeApp = (): void => {
     }
 
     &.legendary {
-      background: linear-gradient(135deg, tokens.$primary-gold 0%, #f59e0b 100%);
+      background: linear-gradient(
+        135deg,
+        tokens.$primary-gold 0%,
+        #f59e0b 100%
+      );
       color: tokens.$gray-900;
     }
   }
@@ -395,7 +374,11 @@ const closeApp = (): void => {
       }
 
       &.legendary {
-        background: linear-gradient(135deg, tokens.$primary-gold 0%, #f59e0b 100%);
+        background: linear-gradient(
+          135deg,
+          tokens.$primary-gold 0%,
+          #f59e0b 100%
+        );
         color: tokens.$gray-900;
       }
     }
@@ -424,7 +407,11 @@ const closeApp = (): void => {
       min-width: 120px;
 
       &.edit {
-        background: linear-gradient(135deg, tokens.$lottery-purple 0%, #7c3aed 100%);
+        background: linear-gradient(
+          135deg,
+          tokens.$lottery-purple 0%,
+          #7c3aed 100%
+        );
         color: tokens.$text-primary;
         box-shadow: 0 4px 15px rgb(139 92 246 / 40%);
 

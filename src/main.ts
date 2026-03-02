@@ -1,9 +1,9 @@
-import { createApp } from 'vue';
-import { createPinia } from 'pinia';
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
-import router from './router';
-import App from './App.vue';
-import '@/styles/index.scss';
+import { createApp } from "vue";
+import { createPinia } from "pinia";
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
+import router from "./router";
+import App from "./App.vue";
+import "@/styles/index.scss";
 
 // 创建应用实例
 const app = createApp(App);
@@ -16,4 +16,4 @@ pinia.use(piniaPluginPersistedstate);
 app
   .use(pinia)
   .use(router) // 注册路由
-  .mount('#app'); // 挂载应用
+  .mount("#app"); // 挂载应用

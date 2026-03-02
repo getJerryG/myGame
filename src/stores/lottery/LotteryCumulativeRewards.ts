@@ -1,7 +1,7 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 // 定义累计奖励类型
-export type CumulativeRewardType = 'currency' | 'item' | 'special';
+export type CumulativeRewardType = "currency" | "item" | "special";
 
 // 定义累计奖励配置类型
 export interface CumulativeRewardConfig {
@@ -64,7 +64,7 @@ interface CumulativeRewardsState {
 
 // 创建并导出累计奖励store
 export const useLotteryCumulativeRewardsStore = defineStore(
-  'lotteryCumulativeRewards',
+  "lotteryCumulativeRewards",
   {
     state: (): CumulativeRewardsState => ({
       // 累计抽奖次数
@@ -73,25 +73,25 @@ export const useLotteryCumulativeRewardsStore = defineStore(
       rewardConfigs: {
         currency: [
           {
-            type: 'currency',
+            type: "currency",
             minAmount: 100,
             maxAmount: 500,
             probability: 0.5,
           },
           {
-            type: 'currency',
+            type: "currency",
             minAmount: 500,
             maxAmount: 1000,
             probability: 0.3,
           },
           {
-            type: 'currency',
+            type: "currency",
             minAmount: 1000,
             maxAmount: 2000,
             probability: 0.15,
           },
           {
-            type: 'currency',
+            type: "currency",
             minAmount: 2000,
             maxAmount: 5000,
             probability: 0.05,
@@ -99,66 +99,66 @@ export const useLotteryCumulativeRewardsStore = defineStore(
         ],
         item: [
           {
-            type: 'item',
+            type: "item",
             minAmount: 1,
             maxAmount: 3,
             probability: 0.4,
-            itemId: 'common-item',
+            itemId: "common-item",
             itemCount: 1,
           },
           {
-            type: 'item',
+            type: "item",
             minAmount: 1,
             maxAmount: 2,
             probability: 0.25,
-            itemId: 'rare-item',
+            itemId: "rare-item",
             itemCount: 1,
           },
           {
-            type: 'item',
+            type: "item",
             minAmount: 1,
             maxAmount: 1,
             probability: 0.15,
-            itemId: 'epic-item',
+            itemId: "epic-item",
             itemCount: 1,
           },
           {
-            type: 'item',
+            type: "item",
             minAmount: 1,
             maxAmount: 1,
             probability: 0.05,
-            itemId: 'legendary-item',
+            itemId: "legendary-item",
             itemCount: 1,
           },
         ],
         special: [
           {
-            type: 'special',
+            type: "special",
             minAmount: 1,
             maxAmount: 1,
             probability: 0.04,
-            specialEffect: 'double-currency',
+            specialEffect: "double-currency",
           },
           {
-            type: 'special',
+            type: "special",
             minAmount: 1,
             maxAmount: 1,
             probability: 0.03,
-            specialEffect: 'free-draw',
+            specialEffect: "free-draw",
           },
           {
-            type: 'special',
+            type: "special",
             minAmount: 1,
             maxAmount: 1,
             probability: 0.02,
-            specialEffect: 'guaranteed-epic',
+            specialEffect: "guaranteed-epic",
           },
           {
-            type: 'special',
+            type: "special",
             minAmount: 1,
             maxAmount: 1,
             probability: 0.01,
-            specialEffect: 'legendary-chance',
+            specialEffect: "legendary-chance",
           },
         ],
       },
@@ -269,17 +269,17 @@ export const useLotteryCumulativeRewardsStore = defineStore(
 
         let cumulative = 0;
         if (random < cumulative + totalProbability.currency) {
-          return 'currency';
+          return "currency";
         } else if (
           random <
           (cumulative += totalProbability.currency) + totalProbability.item
         ) {
-          return 'item';
+          return "item";
         } else if (
           random <
           (cumulative += totalProbability.item) + totalProbability.special
         ) {
-          return 'special';
+          return "special";
         }
 
         return null;
@@ -422,7 +422,7 @@ export const useLotteryCumulativeRewardsStore = defineStore(
 
     // 持久化存储
     persist: {
-      key: 'lottery-cumulative-rewards',
+      key: "lottery-cumulative-rewards",
       storage: localStorage,
     },
   },

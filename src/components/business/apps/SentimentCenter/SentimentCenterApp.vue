@@ -212,12 +212,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
 
 // 导入类型
-import type { App } from '../../../types/app';
-import type { GameData } from '../../../types/game';
-import type { Modal } from '../../../types/modal';
+import type { App } from "../../../types/app";
+import type { GameData } from "../../../types/game";
+import type { Modal } from "../../../types/modal";
 
 // Props定义
 defineProps<{
@@ -227,16 +227,16 @@ defineProps<{
 }>();
 
 // 活跃标签页
-const activeTab = ref('realtime');
+const activeTab = ref("realtime");
 
 // 舆情状态标签映射
 const getSentimentLabel = (sentiment: string): string => {
   const sentimentMap = {
-    positive: '正面',
-    neutral: '中性',
-    negative: '负面',
+    positive: "正面",
+    neutral: "中性",
+    negative: "负面",
   };
-  return sentimentMap[sentiment as keyof typeof sentimentMap] || '未知';
+  return sentimentMap[sentiment as keyof typeof sentimentMap] || "未知";
 };
 
 // 实时舆情统计
@@ -250,38 +250,38 @@ const realtimeStats = ref({
 const latestComments = ref([
   {
     id: 1,
-    user: '玩家123',
-    content: '新英雄李白太好玩了！技能设计得很有创意，手感也很棒',
-    sentiment: 'positive',
-    time: '今天 10:30',
+    user: "玩家123",
+    content: "新英雄李白太好玩了！技能设计得很有创意，手感也很棒",
+    sentiment: "positive",
+    time: "今天 10:30",
   },
   {
     id: 2,
-    user: '游戏爱好者',
-    content: '这个版本的平衡做得还不错，各个英雄的出场率都比较均衡',
-    sentiment: 'neutral',
-    time: '今天 09:15',
+    user: "游戏爱好者",
+    content: "这个版本的平衡做得还不错，各个英雄的出场率都比较均衡",
+    sentiment: "neutral",
+    time: "今天 09:15",
   },
   {
     id: 3,
-    user: '资深玩家',
-    content: '最近服务器有点不稳定，经常卡顿，希望能尽快修复',
-    sentiment: 'negative',
-    time: '昨天 22:45',
+    user: "资深玩家",
+    content: "最近服务器有点不稳定，经常卡顿，希望能尽快修复",
+    sentiment: "negative",
+    time: "昨天 22:45",
   },
   {
     id: 4,
-    user: '新手玩家',
-    content: '游戏的新手引导很友好，让我很快就上手了',
-    sentiment: 'positive',
-    time: '昨天 18:20',
+    user: "新手玩家",
+    content: "游戏的新手引导很友好，让我很快就上手了",
+    sentiment: "positive",
+    time: "昨天 18:20",
   },
   {
     id: 5,
-    user: '竞技玩家',
-    content: '排位赛匹配机制还有待优化，经常遇到队友差距很大的情况',
-    sentiment: 'negative',
-    time: '昨天 16:50',
+    user: "竞技玩家",
+    content: "排位赛匹配机制还有待优化，经常遇到队友差距很大的情况",
+    sentiment: "negative",
+    time: "昨天 16:50",
   },
 ]);
 
@@ -307,9 +307,9 @@ const satisfactionDistribution = ref({
 });
 
 // 导出舆情报告
-const exportReport = () => {
-  console.log('导出舆情报告');
-  alert('舆情报告导出成功');
+const exportReport = (): void => {
+  console.log("导出舆情报告");
+  alert("舆情报告导出成功");
 };
 </script>
 

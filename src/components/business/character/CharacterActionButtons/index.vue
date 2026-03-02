@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-defineEmits(['toggle-inventory', 'show-achievements', 'go-to-lottery']);
+defineEmits(["toggle-inventory", "show-achievements", "go-to-lottery"]);
 </script>
 
 <style lang="scss" scoped>

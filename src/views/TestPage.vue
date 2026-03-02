@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import FundsTestPage from '@/components/common/NotchBar/FundsTestPage.vue';
+import FundsTestPage from "@/components/common/NotchBar/FundsTestPage.vue";
 </script>
 
 <style lang="scss" scoped>

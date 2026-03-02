@@ -140,8 +140,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from 'vue';
-import { useSimulationStore } from '../../stores/simulationStore';
+import { computed, watch } from "vue";
+import { useSimulationStore } from "../../stores/simulationStore";
 
 // 定义类型接口
 interface CoreGoal {
@@ -182,10 +182,10 @@ const goToStage = (_month: number): void => {
 // 获取目标标签
 const getGoalLabel = (type: string): string => {
   const labels = {
-    downloads: '累计下载量',
-    dau: '日活跃用户',
-    revenue: '总收入',
-    marketSentiment: '市场情绪',
+    downloads: "累计下载量",
+    dau: "日活跃用户",
+    revenue: "总收入",
+    marketSentiment: "市场情绪",
   };
   return labels[type as keyof typeof labels] || type;
 };

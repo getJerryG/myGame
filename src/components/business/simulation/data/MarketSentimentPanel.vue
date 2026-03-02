@@ -125,48 +125,59 @@
 
 <script lang="ts">
 export default {
-  name: 'MarketSentimentPanel',
-  data() {
+  name: "MarketSentimentPanel",
+  data(): {
+    sentimentValue: number;
+    recentFeedback: Array<{
+      id: number;
+      text: string;
+      source: string;
+      type: string;
+      icon: string;
+    }>;
+    sentimentTrend: Array<{ date: string; value: number }>;
+    sentimentFactors: Array<{ name: string; value: number; trend: string }>;
+  } {
     return {
-      // 市场情绪�?(0-100)
+      // 市场情绪值(0-100)
       sentimentValue: 75,
 
       // 最近反馈
       recentFeedback: [
         {
           id: 1,
-          text: '新皮肤特效太酷了！',
-          source: '玩家评论',
-          type: 'positive',
-          icon: '😊',
+          text: "新皮肤特效太酷了！",
+          source: "玩家评论",
+          type: "positive",
+          icon: "😊",
         },
         {
           id: 2,
-          text: '英雄XX削弱过度，影响游戏体验',
-          source: '论坛反馈',
-          type: 'negative',
-          icon: '😞',
+          text: "英雄XX削弱过度，影响游戏体验",
+          source: "论坛反馈",
+          type: "negative",
+          icon: "😞",
         },
         {
           id: 3,
-          text: '活动奖励很丰厚，值得参与',
-          source: '社交媒体',
-          type: 'positive',
-          icon: '👍',
+          text: "活动奖励很丰厚，值得参与",
+          source: "社交媒体",
+          type: "positive",
+          icon: "👍",
         },
         {
           id: 4,
-          text: '服务器有点卡，希望优化',
-          source: '客服反馈',
-          type: 'neutral',
-          icon: '😐',
+          text: "服务器有点卡，希望优化",
+          source: "客服反馈",
+          type: "neutral",
+          icon: "😐",
         },
         {
           id: 5,
-          text: '新英雄设计很有创意',
-          source: '媒体评价',
-          type: 'positive',
-          icon: '⭐',
+          text: "新英雄设计很有创意",
+          source: "媒体评价",
+          type: "positive",
+          icon: "⭐",
         },
       ],
 
@@ -174,21 +185,21 @@ export default {
       pendingDecisions: [
         {
           id: 1,
-          title: '设置本周登录奖励',
-          due: '今天',
-          icon: '🎁',
+          title: "设置本周登录奖励",
+          due: "今天",
+          icon: "🎁",
         },
         {
           id: 2,
-          title: '调整英雄平衡性',
-          due: '明天',
-          icon: '⚖️',
+          title: "调整英雄平衡性",
+          due: "明天",
+          icon: "⚖️",
         },
         {
           id: 3,
-          title: '策划下周活动',
-          due: '2天内',
-          icon: '📅',
+          title: "策划下周活动",
+          due: "2天内",
+          icon: "📅",
         },
       ],
     };
@@ -197,22 +208,22 @@ export default {
     // 情绪状�?
     sentimentStatus(): string {
       if (this.sentimentValue >= 70) {
-        return '积极';
+        return "积极";
       } else if (this.sentimentValue >= 40) {
-        return '中立';
+        return "中立";
       } else {
-        return '危机';
+        return "危机";
       }
     },
 
     // 情绪状态类
     sentimentClass(): string {
       if (this.sentimentValue >= 70) {
-        return 'status-positive';
+        return "status-positive";
       } else if (this.sentimentValue >= 40) {
-        return 'status-warning';
+        return "status-warning";
       } else {
-        return 'status-danger';
+        return "status-danger";
       }
     },
 

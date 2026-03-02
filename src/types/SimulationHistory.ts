@@ -5,7 +5,7 @@ export interface SimulationHistoryEntry {
   simulationId: string;
   timestamp: Date;
   eventType: string;
-  eventData: Record<string, any>;
+  eventData: Record<string, unknown>;
   outcome: string;
   playerAction?: string;
 }

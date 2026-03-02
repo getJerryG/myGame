@@ -42,18 +42,31 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
-  tasks: {
-    type: Array,
-    required: true,
-  },
-});
+interface TaskReward {
+  icon: string;
+  name: string;
+  amount: number;
+}
 
-const emit = defineEmits(['edit-task']);
+interface Task {
+  id: number;
+  icon: string;
+  name: string;
+  description: string;
+  rewards: TaskReward[];
+}
+
+defineProps<{
+  tasks: Task[];
+}>();
+
+const emit = defineEmits<{
+  (e: "edit-task", task: Task): void;
+}>();
 
 // 编辑任务
-function editTask(task) {
-  emit('edit-task', task);
+function editTask(task: Task): void {
+  emit("edit-task", task);
 }
 </script>
 

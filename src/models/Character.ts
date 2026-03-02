@@ -2,16 +2,17 @@ import type {
   PlayerAttributes,
   PlayerStats,
   PlayerCareer,
-} from '../types/player';
-import type { Skill } from '../types/skill';
+  CharacterState,
+} from "../types/player";
+import type { Skill } from "../types/skill";
 
 // 角色状态类型
 export type CharacterStatus =
-  | 'active'
-  | 'resting'
-  | 'injured'
-  | 'dead'
-  | 'retired';
+  | "active"
+  | "resting"
+  | "injured"
+  | "dead"
+  | "retired";
 
 // 角色类
 export class Character {
@@ -51,13 +52,13 @@ export class Character {
       maxHealth: 100,
     };
     this.career = {
-      title: '初级策划',
+      title: "初级策划",
       level: 1,
       subLevel: 1,
-      titleName: '策划',
-      subLevelName: '初级',
+      titleName: "策划",
+      subLevelName: "初级",
     };
-    this.status = 'active';
+    this.status = "active";
     this.funds = funds;
     this.createdAt = new Date();
     this.updatedAt = new Date();
@@ -235,7 +236,7 @@ export class Character {
   }
 
   // 获取角色当前状态
-  public getCurrentState(): any {
+  public getCurrentState(): CharacterState {
     return {
       id: this.id,
       name: this.name,
@@ -262,12 +263,12 @@ export class Character {
 
   // 检查角色是否存活
   public isAlive(): boolean {
-    return this.status !== 'dead';
+    return this.status !== "dead";
   }
 
   // 检查角色是否活跃
   public isActive(): boolean {
-    return this.status === 'active';
+    return this.status === "active";
   }
 
   // 重置角色
@@ -290,13 +291,13 @@ export class Character {
       maxHealth: 100,
     };
     this.career = {
-      title: '初级策划',
+      title: "初级策划",
       level: 1,
       subLevel: 1,
-      titleName: '策划',
-      subLevelName: '初级',
+      titleName: "策划",
+      subLevelName: "初级",
     };
-    this.status = 'active';
+    this.status = "active";
     this.funds = 0;
     this.updatedAt = new Date();
   }

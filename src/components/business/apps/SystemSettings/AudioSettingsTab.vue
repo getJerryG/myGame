@@ -62,21 +62,21 @@ export interface AudioSettings {
 }
 
 const volumeLevels = [
-  { id: '0', name: '静音', value: 0 },
-  { id: '25', name: '25%', value: 25 },
-  { id: '50', name: '50%', value: 50 },
-  { id: '75', name: '75%', value: 75 },
-  { id: '100', name: '100%', value: 100 },
+  { id: "0", name: "静音", value: 0 },
+  { id: "25", name: "25%", value: 25 },
+  { id: "50", name: "50%", value: 50 },
+  { id: "75", name: "75%", value: 75 },
+  { id: "100", name: "100%", value: 100 },
 ];
 
-const props = defineProps<{
+const _props = defineProps<{
   modelValue: AudioSettings;
 }>();
 
-const emit = defineEmits<{
-  'update:bgMusic': [value: number];
-  'update:soundEffects': [value: number];
-  'update:voice': [value: number];
+const _emit = defineEmits<{
+  "update:bgMusic": [value: number];
+  "update:soundEffects": [value: number];
+  "update:voice": [value: number];
 }>();
 </script>
 

@@ -143,15 +143,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from "vue";
 
 // 导入类型
-import type { App } from '../../../types/app';
-import type { GameData } from '../../../types/game';
-import type { Modal } from '../../../types/modal';
+import type { App } from "../../../types/app";
+import type { GameData } from "../../../types/game";
+import type { Modal } from "../../../types/modal";
 
 // 导入服务
-import { GameReleaseService } from '../../../../services/GameReleaseService';
+import { GameReleaseService } from "../../../../services/GameReleaseService";
 
 // Props定义
 defineProps<{
@@ -161,34 +161,33 @@ defineProps<{
 }>();
 
 // 活跃标签页
-const activeTab = ref('pending');
+const activeTab = ref("pending");
 
 // 待发布内容
-const pendingContent = ref<any[]>([]);
+const pendingContent = ref<GameReleaseData[]>([]);
 
 // 版本历史
-const versionHistory = ref<any[]>([]);
+const versionHistory = ref<GameReleaseData[]>([]);
 
 // 加载数据
-const loadData = () => {
+const loadData = (): void => {
   pendingContent.value = GameReleaseService.getPendingContent();
   versionHistory.value = GameReleaseService.getVersionHistory();
 };
 
 // 确认发布
-const confirmRelease = async () => {
+const confirmRelease = async (): Promise<void> => {
   try {
     const result = await GameReleaseService.confirmRelease(
       pendingContent.value,
     );
     if (result) {
-      alert('发布成功');
-      // 重新加载数据
+      alert("发布成功");
       loadData();
     }
   } catch (error) {
-    console.error('发布失败:', error);
-    alert('发布失败');
+    console.error("发布失败:", error);
+    alert("发布失败");
   }
 };
 

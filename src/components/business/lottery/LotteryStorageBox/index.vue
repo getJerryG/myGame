@@ -67,8 +67,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
-import { useLotteryStore } from '@/stores/lotteryStore';
+import { computed, ref, watch } from "vue";
+import { useLotteryStore } from "@/stores/lotteryStore";
 // import type { GeneratedReward } from '../../stores/lottery/lottery-rewards';
 
 const lotteryStore = useLotteryStore();
@@ -111,7 +111,8 @@ const organizedStorageBox = computed<OrganizedStorageItem[]>(() => {
     }
   });
 
-  // 转换为数�?  return Array.from(map.values());
+  // 转换为数组
+  return Array.from(map.values());
 });
 
 // 监听收纳盒变化，重置分解数量数组

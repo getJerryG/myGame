@@ -4,7 +4,10 @@
     <DesktopSystem :gameData="gameData" />
 
     <!-- 首次进入欢迎模态框 -->
-    <div v-if="showHelloModal" class="hello-modal-overlay">
+    <div
+      v-if="showHelloModal"
+      class="hello-modal-overlay"
+    >
       <div class="hello-modal-content">
         <HelloPage @close="handleHelloModalClose" />
       </div>
@@ -13,12 +16,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch, defineAsyncComponent } from 'vue';
-import HelloPage from './HelloPage.vue';
+import { ref, onMounted, watch, defineAsyncComponent } from "vue";
+import HelloPage from "./HelloPage.vue";
 
 // 异步加载 DesktopSystem 组件，减少首屏加载时间
 const DesktopSystem = defineAsyncComponent({
-  loader: () => import('@/components/common/DesktopSystem/index.vue'),
+  loader: () => import("@/components/common/DesktopSystem/index.vue"),
   loadingComponent: {
     template: '<div class="desktop-loading">正在加载桌面...</div>',
   },
@@ -53,7 +56,7 @@ watch(
       gameData.value.gameState.currentDate.day = dayNumber;
     }
   },
-  { immediate: true },
+  { immediate: true }
 );
 
 // 首次进入欢迎模态框控制
@@ -61,7 +64,7 @@ const showHelloModal = ref(false);
 
 // 检查是否首次进入
 onMounted(() => {
-  const hasVisited = localStorage.getItem('hasVisited');
+  const hasVisited = localStorage.getItem("hasVisited");
   if (!hasVisited) {
     showHelloModal.value = true;
   }
@@ -70,7 +73,7 @@ onMounted(() => {
 // 处理欢迎模态框关闭
 const handleHelloModalClose = () => {
   showHelloModal.value = false;
-  localStorage.setItem('hasVisited', 'true');
+  localStorage.setItem("hasVisited", "true");
 };
 </script>
 
@@ -111,12 +114,7 @@ const handleHelloModalClose = () => {
 
   @include utils.flex-center;
 
-  background: linear-gradient(
-    135deg,
-    tokens.$bg-dark 0%,
-    tokens.$bg-secondary 50%,
-    tokens.$bg-tertiary 100%
-  );
+  background: linear-gradient(135deg, tokens.$bg-dark 0%, tokens.$bg-secondary 50%, tokens.$bg-tertiary 100%);
   color: tokens.$text-primary;
   font-size: tokens.$font-size-2xl;
   animation: pulse 1.5s ease-in-out infinite;
@@ -173,11 +171,7 @@ const handleHelloModalClose = () => {
   background-color: tokens.$primary;
   border-radius: 3px;
   transition: width tokens.$transition-normal;
-  background-image: linear-gradient(
-    90deg,
-    tokens.$primary,
-    tokens.$primary-dark
-  );
+  background-image: linear-gradient(90deg, tokens.$primary, tokens.$primary-dark);
 }
 
 /* 欢迎模态框样式 */

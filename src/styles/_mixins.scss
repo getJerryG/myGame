@@ -8,7 +8,7 @@
 // ============================================
 
 // @forward 必须放在最前面（SCSS 规则要求）
-@forward 'utilities';
+@forward "utilities";
 
 // 警告信息放在 @forward 之后
 @warn "_mixins.scss 已弃用，请迁移到 _utilities.scss，使用 'utils' 作为命名空间";

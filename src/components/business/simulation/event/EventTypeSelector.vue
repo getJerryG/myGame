@@ -41,7 +41,6 @@ const selectEventType = (type: string): void => {
 </script>
 
 <style lang="scss" scoped>
-
 .event-type-selector {
   margin-bottom: tokens.$spacing-lg;
 
@@ -74,11 +73,7 @@ const selectEventType = (type: string): void => {
     }
 
     &.active {
-      background: linear-gradient(
-        135deg,
-        tokens.$bg-dark 0%,
-        tokens.$primary-blue 100%
-      );
+      background: linear-gradient(135deg, tokens.$bg-dark 0%, tokens.$primary-blue 100%);
       color: white;
       box-shadow: tokens.$shadow-blue;
     }

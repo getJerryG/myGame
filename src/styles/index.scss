@@ -7,10 +7,10 @@
 // ============================================
 
 // 1. 基础变量和CSS自定义属性
-@forward 'tokens';
+@forward "tokens";
 
 // 2. 公共混入
-@forward 'utilities';
+@forward "utilities";
 
 // ============================================
 // 全局基础样式
@@ -22,7 +22,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   min-height: 100vh;
   font-family: tokens.$font-family-base;
   background-color: tokens.$bg-primary;
@@ -71,46 +72,112 @@ html, body {
 }
 
 // 间距工具类
-.gap-xs { gap: tokens.$spacing-xs; }
-.gap-sm { gap: tokens.$spacing-sm; }
-.gap-md { gap: tokens.$spacing-md; }
-.gap-lg { gap: tokens.$spacing-lg; }
-.gap-xl { gap: tokens.$spacing-xl; }
+.gap-xs {
+  gap: tokens.$spacing-xs;
+}
+.gap-sm {
+  gap: tokens.$spacing-sm;
+}
+.gap-md {
+  gap: tokens.$spacing-md;
+}
+.gap-lg {
+  gap: tokens.$spacing-lg;
+}
+.gap-xl {
+  gap: tokens.$spacing-xl;
+}
 
-.p-xs { padding: tokens.$spacing-xs; }
-.p-sm { padding: tokens.$spacing-sm; }
-.p-md { padding: tokens.$spacing-md; }
-.p-lg { padding: tokens.$spacing-lg; }
-.p-xl { padding: tokens.$spacing-xl; }
+.p-xs {
+  padding: tokens.$spacing-xs;
+}
+.p-sm {
+  padding: tokens.$spacing-sm;
+}
+.p-md {
+  padding: tokens.$spacing-md;
+}
+.p-lg {
+  padding: tokens.$spacing-lg;
+}
+.p-xl {
+  padding: tokens.$spacing-xl;
+}
 
-.m-xs { margin: tokens.$spacing-xs; }
-.m-sm { margin: tokens.$spacing-sm; }
-.m-md { margin: tokens.$spacing-md; }
-.m-lg { margin: tokens.$spacing-lg; }
-.m-xl { margin: tokens.$spacing-xl; }
+.m-xs {
+  margin: tokens.$spacing-xs;
+}
+.m-sm {
+  margin: tokens.$spacing-sm;
+}
+.m-md {
+  margin: tokens.$spacing-md;
+}
+.m-lg {
+  margin: tokens.$spacing-lg;
+}
+.m-xl {
+  margin: tokens.$spacing-xl;
+}
 
 // 文本工具类
-.text-xs { font-size: tokens.$font-size-xs; }
-.text-sm { font-size: tokens.$font-size-sm; }
-.text-base { font-size: tokens.$font-size-base; }
-.text-lg { font-size: tokens.$font-size-lg; }
-.text-xl { font-size: tokens.$font-size-xl; }
+.text-xs {
+  font-size: tokens.$font-size-xs;
+}
+.text-sm {
+  font-size: tokens.$font-size-sm;
+}
+.text-base {
+  font-size: tokens.$font-size-base;
+}
+.text-lg {
+  font-size: tokens.$font-size-lg;
+}
+.text-xl {
+  font-size: tokens.$font-size-xl;
+}
 
-.text-primary { color: tokens.$text-primary; }
-.text-secondary { color: tokens.$text-secondary; }
-.text-muted { color: tokens.$text-muted; }
-.text-gold { color: tokens.$primary-gold; }
-.text-success { color: tokens.$success; }
-.text-error { color: tokens.$error; }
+.text-primary {
+  color: tokens.$text-primary;
+}
+.text-secondary {
+  color: tokens.$text-secondary;
+}
+.text-muted {
+  color: tokens.$text-muted;
+}
+.text-gold {
+  color: tokens.$primary-gold;
+}
+.text-success {
+  color: tokens.$success;
+}
+.text-error {
+  color: tokens.$error;
+}
 
-.font-normal { font-weight: tokens.$font-weight-normal; }
-.font-medium { font-weight: tokens.$font-weight-medium; }
-.font-semibold { font-weight: tokens.$font-weight-semibold; }
-.font-bold { font-weight: tokens.$font-weight-bold; }
+.font-normal {
+  font-weight: tokens.$font-weight-normal;
+}
+.font-medium {
+  font-weight: tokens.$font-weight-medium;
+}
+.font-semibold {
+  font-weight: tokens.$font-weight-semibold;
+}
+.font-bold {
+  font-weight: tokens.$font-weight-bold;
+}
 
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.text-right { text-align: right; }
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
 
 .truncate {
   overflow: hidden;
@@ -126,14 +193,26 @@ html, body {
   padding: 0 tokens.$spacing-md;
 }
 
-.w-full { width: 100%; }
-.h-full { height: 100%; }
+.w-full {
+  width: 100%;
+}
+.h-full {
+  height: 100%;
+}
 
 // 显示/隐藏
-.hidden { display: none; }
-.block { display: block; }
-.inline { display: inline; }
-.inline-block { display: inline-block; }
+.hidden {
+  display: none;
+}
+.block {
+  display: block;
+}
+.inline {
+  display: inline;
+}
+.inline-block {
+  display: inline-block;
+}
 
 // 滚动条样式
 .scrollbar-thin {

@@ -20,51 +20,51 @@
 // 模块图标映射
 const MODULE_ICONS: Record<string, string> = {
   // 数据中心模块图标
-  'core-data': '📊',
-  'revenue-analysis': '💰',
-  'user-profile': '👥',
-  'data-trends': '📈',
+  "core-data": "📊",
+  "revenue-analysis": "💰",
+  "user-profile": "👥",
+  "data-trends": "📈",
 
   // 钱包模块图标
-  'balance-info': '💰',
-  'transaction-history': '📜',
+  "balance-info": "💰",
+  "transaction-history": "📜",
 
   // 默认图标
-  default: '📦',
+  default: "📦",
 };
 
 // 核心数据标签映射
 const CORE_DATA_LABELS: Record<string, string> = {
   // 通用核心数据
-  money: '当前资金',
-  reputation: '声望',
-  popularity: '游戏热度',
-  wordOfMouth: '口碑',
-  totalMoney: '累计总流水',
-  heroCount: '已上线英雄',
-  skinCount: '已上线皮肤',
-  downloads: '下载量',
-  dau: '日活跃用户',
-  mau: '月活跃用户',
-  totalRevenue: '总收入',
-  dailyRevenue: '日收入',
-  marketSentiment: '市场情绪',
-  sevenDayRetention: '七日留存率',
-  paymentRate: '付费率',
-  arpu: 'ARPU',
-  userComplaints: '用户投诉量',
-  revenue: '收入',
+  money: "当前资金",
+  reputation: "声望",
+  popularity: "游戏热度",
+  wordOfMouth: "口碑",
+  totalMoney: "累计总流水",
+  heroCount: "已上线英雄",
+  skinCount: "已上线皮肤",
+  downloads: "下载量",
+  dau: "日活跃用户",
+  mau: "月活跃用户",
+  totalRevenue: "总收入",
+  dailyRevenue: "日收入",
+  marketSentiment: "市场情绪",
+  sevenDayRetention: "七日留存率",
+  paymentRate: "付费率",
+  arpu: "ARPU",
+  userComplaints: "用户投诉量",
+  revenue: "收入",
 
   // 钱包模块数据
-  balance: '余额',
+  balance: "余额",
 };
 
 // 渠道类型标签映射
 const CHANNEL_TYPE_LABELS: Record<string, string> = {
-  online: '线上',
-  offline: '线下',
-  cooperation: '合作',
-  default: '未知',
+  online: "线上",
+  offline: "线下",
+  cooperation: "合作",
+  default: "未知",
 };
 
 /**
@@ -96,10 +96,7 @@ export const getModuleIcon = (moduleId: string): string => {
  * const customLabel = getCoreDataLabel('customKey', { customKey: '自定义标签' }); // 返回 '自定义标签'
  * ```
  */
-export const getCoreDataLabel = (
-  key: string,
-  customLabels: Record<string, string> = {},
-): string => {
+export const getCoreDataLabel = (key: string, customLabels: Record<string, string> = {}): string => {
   return customLabels[key] || CORE_DATA_LABELS[key] || key;
 };
 
@@ -133,8 +130,8 @@ export const getChannelTypeName = (type: string): string => {
  */
 export const formatNumber = (num: number): string => {
   const numStr = num.toString();
-  const [integerPart, decimalPart] = numStr.split('.');
-  const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const [integerPart, decimalPart] = numStr.split(".");
+  const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
   if (decimalPart) {
     return `${formattedInteger}.${decimalPart}`;
@@ -197,21 +194,21 @@ export const getDaysDifference = (date1: Date, date2: Date): number => {
  * const formattedDate3 = formatDate(date, 'MM/DD/YYYY'); // 返回 '01/01/2024'
  * ```
  */
-export const formatDate = (date: Date, format = 'YYYY-MM-DD'): string => {
+export const formatDate = (date: Date, format = "YYYY-MM-DD"): string => {
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  const seconds = String(date.getSeconds()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
 
   return format
-    .replace('YYYY', year.toString())
-    .replace('MM', month)
-    .replace('DD', day)
-    .replace('HH', hours)
-    .replace('mm', minutes)
-    .replace('ss', seconds);
+    .replace("YYYY", year.toString())
+    .replace("MM", month)
+    .replace("DD", day)
+    .replace("HH", hours)
+    .replace("mm", minutes)
+    .replace("ss", seconds);
 };
 
 /**
@@ -243,8 +240,8 @@ export const formatPercentage = (value: number, digits = 2): string => {
  * ```
  */
 export const generateRandomColor = (): string => {
-  const letters = '0123456789ABCDEF';
-  let color = '#';
+  const letters = "0123456789ABCDEF";
+  let color = "#";
   for (let i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
@@ -267,7 +264,7 @@ export const generateRandomColor = (): string => {
  */
 export const debounce = <T extends (...args: any[]) => any>(
   func: T,
-  delay: number,
+  delay: number
 ): ((...args: Parameters<T>) => void) => {
   let timeoutId: ReturnType<typeof setTimeout>;
   return (...args: Parameters<T>) => {
@@ -292,7 +289,7 @@ export const debounce = <T extends (...args: any[]) => any>(
  */
 export const throttle = <T extends (...args: any[]) => any>(
   func: T,
-  delay: number,
+  delay: number
 ): ((...args: Parameters<T>) => void) => {
   let lastCall = 0;
   return (...args: Parameters<T>) => {
@@ -317,7 +314,7 @@ export const throttle = <T extends (...args: any[]) => any>(
  * ```
  */
 export const deepClone = <T>(obj: T): T => {
-  if (obj === null || typeof obj !== 'object') {
+  if (obj === null || typeof obj !== "object") {
     return obj;
   }
   if (obj instanceof Date) {
@@ -326,7 +323,7 @@ export const deepClone = <T>(obj: T): T => {
   if (obj instanceof Array) {
     return obj.map((item) => deepClone(item)) as unknown as T;
   }
-  if (typeof obj === 'object') {
+  if (typeof obj === "object") {
     const clonedObj = {} as T;
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
@@ -352,7 +349,7 @@ export const deepClone = <T>(obj: T): T => {
  */
 export const getRandomElement = <T>(array: T[]): T => {
   if (array.length === 0) {
-    throw new Error('数组不能为空');
+    throw new Error("数组不能为空");
   }
   return array[Math.floor(Math.random() * array.length)];
 };
@@ -392,9 +389,9 @@ export const shuffleArray = <T>(array: T[]): T[] => {
  * ```
  */
 export const formatFileSize = (bytes: number, digits = 2): string => {
-  if (bytes === 0) return '0 Bytes';
+  if (bytes === 0) return "0 Bytes";
   const k = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return `${(bytes / Math.pow(k, i)).toFixed(digits)} ${sizes[i]}`;
 };
@@ -412,7 +409,7 @@ export const formatFileSize = (bytes: number, digits = 2): string => {
  * ```
  */
 export const isDevEnv = (): boolean => {
-  return import.meta.env.MODE === 'development';
+  return import.meta.env.MODE === "development";
 };
 
 /**
@@ -428,7 +425,7 @@ export const isDevEnv = (): boolean => {
  * ```
  */
 export const isProdEnv = (): boolean => {
-  return import.meta.env.MODE === 'production';
+  return import.meta.env.MODE === "production";
 };
 
 /**
@@ -443,6 +440,6 @@ export const isProdEnv = (): boolean => {
  * const apiUrl = getEnvVar('VITE_API_URL', 'http://localhost:3000');
  * ```
  */
-export const getEnvVar = (key: string, defaultValue = ''): string => {
+export const getEnvVar = (key: string, defaultValue = ""): string => {
   return (import.meta.env as any)[key] || defaultValue;
 };

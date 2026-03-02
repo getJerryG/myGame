@@ -7,7 +7,7 @@ export interface SimulationStage {
   durationDays: number;
   startDate: Date;
   endDate: Date;
-  status: 'pending' | 'active' | 'completed';
+  status: "pending" | "active" | "completed";
   goals: SimulationStageGoal[];
   events: SimulationStageEvent[];
 }
@@ -19,7 +19,7 @@ export interface SimulationStageGoal {
   targetValue: number;
   actualValue: number;
   isCompleted: boolean;
-  priority: 'low' | 'medium' | 'high';
+  priority: "low" | "medium" | "high";
 }
 
 export interface SimulationStageEvent {

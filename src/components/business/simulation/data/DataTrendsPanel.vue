@@ -1,17 +1,28 @@
 <template>
-  <section class="data-panel" aria-labelledby="data-trends-title">
+  <section
+    class="data-panel"
+    aria-labelledby="data-trends-title"
+  >
     <div class="panel-header">
-      <h2 id="data-trends-title" class="panel-title">数据趋势</h2>
+      <h2
+        id="data-trends-title"
+        class="panel-title"
+      >
+        数据趋势
+      </h2>
       <button
         class="collapse-btn"
         aria-expanded="!isCollapsed"
         @click="toggleCollapse"
       >
-        <span class="collapse-icon">{{ isCollapsed ? '▶️' : '🔽' }}</span>
+        <span class="collapse-icon">{{ isCollapsed ? "▶️" : "🔽" }}</span>
       </button>
     </div>
 
-    <div class="panel-content" :class="{ collapsed: isCollapsed }">
+    <div
+      class="panel-content"
+      :class="{ collapsed: isCollapsed }"
+    >
       <!-- 收入趋势图表 -->
       <div class="trend-chart">
         <h3 class="chart-title">收入趋势</h3>
@@ -140,7 +151,6 @@ const toggleCollapse = (): void => {
 </script>
 
 <style lang="scss" scoped>
-
 .data-panel {
   background: white;
   border-radius: tokens.$radius-lg;

@@ -2,7 +2,12 @@
   <div class="app-page">
     <div class="app-header">
       <h1>{{ getPageTitle() }}</h1>
-      <button class="back-button" @click="goBack">返回桌面</button>
+      <button
+        class="back-button"
+        @click="goBack"
+      >
+        返回桌面
+      </button>
     </div>
 
     <div class="app-content">
@@ -13,8 +18,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { computed } from "vue";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 
@@ -26,35 +31,34 @@ const props = defineProps<{
 // 定义可用的应用组件映射
 const appComponents: Record<string, () => Promise<{ default: any }>> = {
   // 引用项目中实际存在的组件
-  hero: () => import('../../modules/game/views/HeroDevelopmentApp.vue'),
-  game: () => import('../../modules/game/views/GameReleaseApp.vue'),
-  settings: () => import('../../modules/game/views/GameSettingsApp.vue'),
-  lottery: () => import('../../modules/lottery/views/LotteryPage.vue'),
-  simulation: () =>
-    import('../../modules/simulation/views/NewSimulationPanel.vue'),
+  hero: () => import("../../modules/game/views/HeroDevelopmentApp.vue"),
+  game: () => import("../../modules/game/views/GameReleaseApp.vue"),
+  settings: () => import("../../modules/game/views/GameSettingsApp.vue"),
+  lottery: () => import("../../modules/lottery/views/LotteryPage.vue"),
+  simulation: () => import("../../modules/simulation/views/NewSimulationPanel.vue"),
 };
 
 // 根据page参数获取当前应用组件
 const currentAppComponent = computed(() => {
-  const page = props.page || 'hero';
+  const page = props.page || "hero";
   return appComponents[page] || appComponents.hero;
 });
 
 // 获取页面标题
 const getPageTitle = () => {
   const titleMap: Record<string, string> = {
-    hero: '英雄开发',
-    game: '游戏发布',
-    settings: '游戏设置',
-    lottery: '抽奖系统',
-    simulation: '模拟设置',
+    hero: "英雄开发",
+    game: "游戏发布",
+    settings: "游戏设置",
+    lottery: "抽奖系统",
+    simulation: "模拟设置",
   };
-  return titleMap[props.page || 'hero'] || '应用页面';
+  return titleMap[props.page || "hero"] || "应用页面";
 };
 
 // 返回桌面
 const goBack = () => {
-  router.push('/desktop/1'); // 默认返回第一天桌面
+  router.push("/desktop/1"); // 默认返回第一天桌面
 };
 </script>
 

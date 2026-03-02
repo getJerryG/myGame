@@ -1,5 +1,8 @@
 <template>
-  <div class="metric-card" :aria-label="`${metricName}: ${value}`">
+  <div
+    class="metric-card"
+    :aria-label="`${metricName}: ${value}`"
+  >
     <div class="metric-header">
       <span class="metric-icon">{{ icon }}</span>
       <span class="metric-name">{{ metricName }}</span>
@@ -15,12 +18,27 @@
       >
         {{ change > 0 ? "+" : "" }}{{ Math.abs(change) }}%
       </span>
-      <span class="factor-icon" v-if="change > 0">{{ positiveIcon }}</span>
-      <span class="factor-icon" v-else-if="change < 0">{{ negativeIcon }}</span>
+      <span
+        class="factor-icon"
+        v-if="change > 0"
+        >{{ positiveIcon }}</span
+      >
+      <span
+        class="factor-icon"
+        v-else-if="change < 0"
+        >{{ negativeIcon }}</span
+      >
     </div>
-    <div class="metric-trend" v-if="showTrend">
+    <div
+      class="metric-trend"
+      v-if="showTrend"
+    >
       <div class="mini-trend">
-        <svg width="100" height="30" viewBox="0 0 100 30">
+        <svg
+          width="100"
+          height="30"
+          viewBox="0 0 100 30"
+        >
           <polyline
             :points="trendPoints"
             fill="none"

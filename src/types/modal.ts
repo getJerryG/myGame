@@ -16,7 +16,7 @@ export interface ModalState {
   modals: ModalConfig[];
 }
 
-export type ModalType = 'info' | 'success' | 'warning' | 'error' | 'confirm';
+export type ModalType = "info" | "success" | "warning" | "error" | "confirm";
 
 export interface ModalOptions {
   title: string;

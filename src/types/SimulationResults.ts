@@ -10,7 +10,7 @@ export interface SimulationResults {
 }
 
 export interface SimulationFinalState {
-  status: 'completed' | 'failed' | 'aborted';
+  status: "completed" | "failed" | "aborted";
   reason: string;
   finalScore: number;
   finalLevel: number;
@@ -33,7 +33,7 @@ export interface SimulationKeyEvent {
   timestamp: Date;
   type: string;
   description: string;
-  impact: 'low' | 'medium' | 'high';
+  impact: "low" | "medium" | "high";
 }
 
 export interface SimulationTimelineEntry {

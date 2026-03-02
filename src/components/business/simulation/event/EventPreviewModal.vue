@@ -1,18 +1,24 @@
 <template>
   <!-- 活动预览弹窗 -->
-  <div v-if="showPreview" class="preview-modal">
+  <div
+    v-if="showPreview"
+    class="preview-modal"
+  >
     <div class="preview-content">
       <div class="preview-header">
         <h4>活动预览</h4>
-        <button class="preview-close" @click="closePreview">✕</button>
+        <button
+          class="preview-close"
+          @click="closePreview"
+        >
+          ✕
+        </button>
       </div>
       <div class="preview-body">
         <div class="preview-section">
           <h5>活动信息</h5>
-          <p><strong>名称：</strong>{{ previewConfig.name || '未设置' }}</p>
-          <p>
-            <strong>类型：</strong>{{ getEventTypeLabel(previewConfig.type) }}
-          </p>
+          <p><strong>名称：</strong>{{ previewConfig.name || "未设置" }}</p>
+          <p><strong>类型：</strong>{{ getEventTypeLabel(previewConfig.type) }}</p>
           <p>
             <strong>时间：</strong>{{ previewConfig.startDate }} ~
             {{ previewConfig.endDate }}
@@ -21,7 +27,10 @@
         <div class="preview-section">
           <h5>奖励设置</h5>
           <ul>
-            <li v-for="(reward, index) in previewConfig.rewards" :key="index">
+            <li
+              v-for="(reward, index) in previewConfig.rewards"
+              :key="index"
+            >
               {{ reward.name }} ({{ reward.quantity }}个)
             </li>
             <li v-if="previewConfig.rewards.length === 0">暂无奖励</li>
@@ -30,20 +39,9 @@
         <div class="preview-section">
           <h5>参与条件</h5>
           <ul>
-            <li v-if="previewConfig.conditions.level">
-              等级 ≥ {{ previewConfig.levelRequirement }}
-            </li>
-            <li v-if="previewConfig.conditions.rank">
-              段位 ≥ {{ previewConfig.rankRequirement }}
-            </li>
-            <li
-              v-if="
-                !previewConfig.conditions.level &&
-                !previewConfig.conditions.rank
-              "
-            >
-              无特殊条件
-            </li>
+            <li v-if="previewConfig.conditions.level">等级 ≥ {{ previewConfig.levelRequirement }}</li>
+            <li v-if="previewConfig.conditions.rank">段位 ≥ {{ previewConfig.rankRequirement }}</li>
+            <li v-if="!previewConfig.conditions.level && !previewConfig.conditions.rank">无特殊条件</li>
           </ul>
         </div>
       </div>
@@ -98,7 +96,6 @@ const closePreview = (): void => {
 </script>
 
 <style lang="scss" scoped>
-
 .preview-modal {
   @include utils.modal-overlay;
 

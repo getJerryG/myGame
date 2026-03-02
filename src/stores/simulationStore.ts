@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 // 定义模拟系统状态类型
 interface SimulationState {
@@ -9,7 +9,7 @@ interface SimulationState {
 }
 
 // 创建并导出模拟系统store
-export const useSimulationStore = defineStore('simulation', {
+export const useSimulationStore = defineStore("simulation", {
   state: (): SimulationState => ({
     // 模拟数据
     simulationData: null,

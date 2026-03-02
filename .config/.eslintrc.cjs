@@ -24,10 +24,14 @@ module.exports = {
     'postcss.config.js',
     'vite.config.ts',
     '*.cjs',
-    '*.config.js',
-    '*.js',
     'test-type-rule.ts',
+    ".config/"
   ],
+  languageOptions: {// 全局变量
+    parserOptions: {
+      projectService: true,// 开启项目服务，用于类型检查
+    }
+  },
   parser: 'vue-eslint-parser',
   parserOptions: {
     ecmaVersion: 2021,
@@ -131,5 +135,5 @@ module.exports = {
   //       '@typescript-eslint/no-unused-vars': 'error'
   //     }
   //   }]
-  
+
 };

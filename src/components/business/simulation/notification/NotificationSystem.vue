@@ -230,5 +230,3 @@ const getEventIcon = (type: 'positive' | 'negative' | 'neutral' | 'info'): strin
   }
 }
 </style>
-
-

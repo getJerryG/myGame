@@ -15,9 +15,7 @@
       <div class="settlement-overview">
         <div class="overview-item">
           <div class="overview-label">日收入</div>
-          <div class="overview-value income">
-            ¥{{ dailyRevenue.toFixed(2) }}
-          </div>
+          <div class="overview-value income">¥{{ dailyRevenue.toFixed(2) }}</div>
         </div>
         <div class="overview-item">
           <div class="overview-label">总下载量</div>
@@ -41,7 +39,10 @@
         <div class="chart-card">
           <h3>收入趋势</h3>
           <div class="chart-container">
-            <Line :data="revenueChartData" :options="chartOptions" />
+            <Line
+              :data="revenueChartData"
+              :options="chartOptions"
+            />
           </div>
         </div>
 
@@ -49,7 +50,10 @@
         <div class="chart-card">
           <h3>用户数据</h3>
           <div class="chart-container">
-            <Bar :data="userChartData" :options="chartOptions" />
+            <Bar
+              :data="userChartData"
+              :options="chartOptions"
+            />
           </div>
         </div>
 
@@ -57,7 +61,10 @@
         <div class="chart-card">
           <h3>市场表现</h3>
           <div class="chart-container">
-            <Line :data="marketChartData" :options="marketChartOptions" />
+            <Line
+              :data="marketChartData"
+              :options="marketChartOptions"
+            />
           </div>
         </div>
 
@@ -65,7 +72,10 @@
         <div class="chart-card">
           <h3>付费数据</h3>
           <div class="chart-container">
-            <Doughnut :data="paymentChartData" :options="doughnutOptions" />
+            <Doughnut
+              :data="paymentChartData"
+              :options="doughnutOptions"
+            />
           </div>
         </div>
       </div>
@@ -84,15 +94,11 @@
           </div>
           <div class="data-item">
             <span class="data-label">7日留存率</span>
-            <span class="data-value"
-              >{{ (sevenDayRetention * 100).toFixed(1) }}%</span
-            >
+            <span class="data-value">{{ (sevenDayRetention * 100).toFixed(1) }}%</span>
           </div>
           <div class="data-item">
             <span class="data-label">付费率</span>
-            <span class="data-value"
-              >{{ (paymentRate * 100).toFixed(1) }}%</span
-            >
+            <span class="data-value">{{ (paymentRate * 100).toFixed(1) }}%</span>
           </div>
           <div class="data-item">
             <span class="data-label">ARPU</span>
@@ -108,17 +114,23 @@
           </div>
           <div class="data-item">
             <span class="data-label">渠道转化率</span>
-            <span class="data-value"
-              >{{ (channelConversionRate * 100).toFixed(1) }}%</span
-            >
+            <span class="data-value">{{ (channelConversionRate * 100).toFixed(1) }}%</span>
           </div>
         </div>
       </div>
 
       <!-- 操作按钮 -->
       <div class="settlement-actions">
-        <button class="action-button" @click="backToHome">返回主页</button>
-        <button class="action-button primary" @click="continueGame">
+        <button
+          class="action-button"
+          @click="backToHome"
+        >
+          返回主页
+        </button>
+        <button
+          class="action-button primary"
+          @click="continueGame"
+        >
           继续游戏
         </button>
       </div>
@@ -127,9 +139,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
-import { useRouter } from 'vue-router';
-import { useSimulationStore } from '@/stores/simulationStore';
+import { ref, computed, watch } from "vue";
+import { useRouter } from "vue-router";
+import { useSimulationStore } from "@/stores/simulationStore";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -142,8 +154,8 @@ import {
   Tooltip,
   Legend,
   Filler,
-} from 'chart.js';
-import { Line, Bar, Doughnut } from 'vue-chartjs';
+} from "chart.js";
+import { Line, Bar, Doughnut } from "vue-chartjs";
 
 // 注册Chart.js组件
 ChartJS.register(
@@ -156,7 +168,7 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  Filler,
+  Filler
 );
 
 const router = useRouter();
@@ -182,12 +194,11 @@ watch(
       // 例如：businessDataStore.fetchDataByDay(dayNumber);
     }
   },
-  { immediate: true },
+  { immediate: true }
 );
 
 // 从store获取数据
-const { money, reputation, popularity, wordOfMouth, totalMoney, currentDate } =
-  gameStore;
+const { money, reputation, popularity, wordOfMouth, totalMoney, currentDate } = gameStore;
 
 // 提供默认数据
 const dailyRevenue = ref(1000 + Math.random() * 5000);
@@ -204,15 +215,8 @@ const heroAverageUsage = ref(0.2 + Math.random() * 0.6);
 const channelConversionRate = ref(0.02 + Math.random() * 0.08);
 
 // 生成历史数据
-const generateHistoryData = (
-  days: number,
-  baseValue: number,
-  variation: number,
-) => {
-  return Array.from(
-    { length: days },
-    () => baseValue + Math.random() * variation - variation / 2,
-  );
+const generateHistoryData = (days: number, baseValue: number, variation: number) => {
+  return Array.from({ length: days }, () => baseValue + Math.random() * variation - variation / 2);
 };
 
 const revenueHistory = ref(generateHistoryData(7, 2000, 3000));
@@ -223,20 +227,16 @@ const retentionHistory = ref(generateHistoryData(7, 0.4, 0.3));
 
 // 格式化日期
 const formatDate = (date: Date): string => {
-  return date.toLocaleDateString('zh-CN', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    weekday: 'long',
+  return date.toLocaleDateString("zh-CN", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    weekday: "long",
   });
 };
 
 // 生成模拟历史数据（如果没有足够的数据）
-const generateMockHistory = (
-  length: number,
-  baseValue: number,
-  variation: number,
-) => {
+const generateMockHistory = (length: number, baseValue: number, variation: number) => {
   return Array.from({ length }, (_, i) => {
     return baseValue + Math.random() * variation - variation / 2;
   });
@@ -248,9 +248,9 @@ const chartOptions = {
   maintainAspectRatio: false,
   plugins: {
     legend: {
-      position: 'top' as const,
+      position: "top" as const,
       labels: {
-        color: '#ffffff',
+        color: "#ffffff",
       },
     },
     title: {
@@ -260,18 +260,18 @@ const chartOptions = {
   scales: {
     x: {
       grid: {
-        color: 'rgba(255, 255, 255, 0.1)',
+        color: "rgba(255, 255, 255, 0.1)",
       },
       ticks: {
-        color: '#ffffff',
+        color: "#ffffff",
       },
     },
     y: {
       grid: {
-        color: 'rgba(255, 255, 255, 0.1)',
+        color: "rgba(255, 255, 255, 0.1)",
       },
       ticks: {
-        color: '#ffffff',
+        color: "#ffffff",
       },
     },
   },
@@ -285,14 +285,14 @@ const marketChartOptions = {
     y: {
       ...chartOptions.scales?.y,
       y1: {
-        type: 'linear' as const,
+        type: "linear" as const,
         display: true,
-        position: 'right' as const,
+        position: "right" as const,
         grid: {
           drawOnChartArea: false,
         },
         ticks: {
-          color: '#ffffff',
+          color: "#ffffff",
         },
       },
     },
@@ -305,9 +305,9 @@ const doughnutOptions = {
   maintainAspectRatio: false,
   plugins: {
     legend: {
-      position: 'bottom' as const,
+      position: "bottom" as const,
       labels: {
-        color: '#ffffff',
+        color: "#ffffff",
       },
     },
   },
@@ -315,18 +315,15 @@ const doughnutOptions = {
 
 // 收入趋势图数据
 const revenueChartData = computed(() => {
-  const history =
-    revenueHistory.value.length > 0
-      ? revenueHistory
-      : generateMockHistory(7, 1000, 500);
+  const history = revenueHistory.value.length > 0 ? revenueHistory : generateMockHistory(7, 1000, 500);
   return {
     labels: history.map((_, i) => `第${i + 1}天`),
     datasets: [
       {
-        label: '日收入',
+        label: "日收入",
         data: history,
-        borderColor: '#4a9eff',
-        backgroundColor: 'rgba(74, 158, 255, 0.2)',
+        borderColor: "#4a9eff",
+        backgroundColor: "rgba(74, 158, 255, 0.2)",
         tension: 0.4,
         fill: true,
       },
@@ -338,26 +335,22 @@ const revenueChartData = computed(() => {
 const userChartData = computed(() => {
   const days = 7;
   const downloadHistory =
-    downloadsHistory.value.length > 0
-      ? downloadsHistory.value.slice(-days)
-      : generateMockHistory(days, 500, 200);
+    downloadsHistory.value.length > 0 ? downloadsHistory.value.slice(-days) : generateMockHistory(days, 500, 200);
   const dauHistoryData =
-    dauHistory.value.length > 0
-      ? dauHistory.value.slice(-days)
-      : generateMockHistory(days, 200, 100);
+    dauHistory.value.length > 0 ? dauHistory.value.slice(-days) : generateMockHistory(days, 200, 100);
 
   return {
     labels: downloadHistory.map((_, i) => `第${i + 1}天`),
     datasets: [
       {
-        label: '下载量',
+        label: "下载量",
         data: downloadHistory,
-        backgroundColor: 'rgba(74, 158, 255, 0.6)',
+        backgroundColor: "rgba(74, 158, 255, 0.6)",
       },
       {
-        label: '日活跃',
+        label: "日活跃",
         data: dauHistoryData,
-        backgroundColor: 'rgba(34, 197, 94, 0.6)',
+        backgroundColor: "rgba(34, 197, 94, 0.6)",
       },
     ],
   };
@@ -379,20 +372,20 @@ const marketChartData = computed(() => {
     labels: sentimentHistory.map((_, i) => `第${i + 1}天`),
     datasets: [
       {
-        label: '市场情绪',
+        label: "市场情绪",
         data: sentimentHistory,
-        borderColor: '#4a9eff',
-        backgroundColor: 'rgba(74, 158, 255, 0.2)',
+        borderColor: "#4a9eff",
+        backgroundColor: "rgba(74, 158, 255, 0.2)",
         tension: 0.4,
-        yAxisID: 'y',
+        yAxisID: "y",
       },
       {
-        label: '7日留存率',
+        label: "7日留存率",
         data: retentionHistoryData,
-        borderColor: '#22c55e',
-        backgroundColor: 'rgba(34, 197, 94, 0.2)',
+        borderColor: "#22c55e",
+        backgroundColor: "rgba(34, 197, 94, 0.2)",
         tension: 0.4,
-        yAxisID: 'y1',
+        yAxisID: "y1",
       },
     ],
   };
@@ -404,12 +397,12 @@ const paymentChartData = computed(() => {
   const nonPayerCount = dau.value - payerCount;
 
   return {
-    labels: ['付费用户', '非付费用户'],
+    labels: ["付费用户", "非付费用户"],
     datasets: [
       {
         data: [payerCount, nonPayerCount],
-        backgroundColor: ['rgba(255, 215, 0, 0.8)', 'rgba(100, 116, 139, 0.8)'],
-        borderColor: ['rgba(255, 215, 0, 1)', 'rgba(100, 116, 139, 1)'],
+        backgroundColor: ["rgba(255, 215, 0, 0.8)", "rgba(100, 116, 139, 0.8)"],
+        borderColor: ["rgba(255, 215, 0, 1)", "rgba(100, 116, 139, 1)"],
         borderWidth: 1,
       },
     ],
@@ -418,12 +411,12 @@ const paymentChartData = computed(() => {
 
 // 返回主页
 const backToHome = (): void => {
-  router.push('/');
+  router.push("/");
 };
 
 // 继续游戏
 const continueGame = (): void => {
-  router.push('/desktop');
+  router.push("/desktop");
 };
 </script>
 
@@ -445,12 +438,7 @@ const continueGame = (): void => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    135deg,
-    tokens.$bg-dark 0%,
-    tokens.$bg-secondary 50%,
-    tokens.$bg-tertiary 100%
-  );
+  background: linear-gradient(135deg, tokens.$bg-dark 0%, tokens.$bg-secondary 50%, tokens.$bg-tertiary 100%);
   background-size: cover;
   background-position: center;
   opacity: 0.9;
@@ -464,21 +452,9 @@ const continueGame = (): void => {
     width: 100%;
     height: 100%;
     background-image:
-      radial-gradient(
-        circle at 30% 40%,
-        rgb(255 215 0 / 10%) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        circle at 70% 60%,
-        rgb(255 107 107 / 10%) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        circle at 50% 20%,
-        rgb(74 158 255 / 10%) 0%,
-        transparent 50%
-      );
+      radial-gradient(circle at 30% 40%, rgb(255 215 0 / 10%) 0%, transparent 50%),
+      radial-gradient(circle at 70% 60%, rgb(255 107 107 / 10%) 0%, transparent 50%),
+      radial-gradient(circle at 50% 20%, rgb(74 158 255 / 10%) 0%, transparent 50%);
     animation: backgroundPulse 4s ease-in-out infinite alternate;
   }
 }
@@ -721,19 +697,11 @@ const continueGame = (): void => {
     }
 
     &.primary {
-      background: linear-gradient(
-        135deg,
-        tokens.$primary 0%,
-        tokens.$primary-dark 100%
-      );
+      background: linear-gradient(135deg, tokens.$primary 0%, tokens.$primary-dark 100%);
       border-color: rgb(74 158 255 / 50%);
 
       &:hover {
-        background: linear-gradient(
-          135deg,
-          tokens.$primary-dark 0%,
-          tokens.$primary 100%
-        );
+        background: linear-gradient(135deg, tokens.$primary-dark 0%, tokens.$primary 100%);
         box-shadow: 0 6px 20px rgb(74 158 255 / 40%);
       }
     }

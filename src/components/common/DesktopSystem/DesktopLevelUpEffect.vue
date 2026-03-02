@@ -1,5 +1,8 @@
 <template>
-  <div v-if="visible" class="level-up-effect">
+  <div
+    v-if="visible"
+    class="level-up-effect"
+  >
     <div class="level-up-message">{{ message }}</div>
   </div>
 </template>

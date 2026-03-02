@@ -3,7 +3,12 @@
     <!-- 主要内容 -->
     <div class="hello-content">
       <!-- 关闭按钮 -->
-      <button class="close-button" @click="emit('close')">×</button>
+      <button
+        class="close-button"
+        @click="emit('close')"
+      >
+        ×
+      </button>
 
       <!-- 左侧：欢迎信息 -->
       <div class="left-column">
@@ -24,10 +29,17 @@
       <div class="right-column">
         <div class="form-container">
           <h3 class="form-title">开始新游戏</h3>
-          <form @submit.prevent="handleSubmit" class="user-form">
+          <form
+            @submit.prevent="handleSubmit"
+            class="user-form"
+          >
             <!-- 策划名输入 -->
             <div class="form-group">
-              <label for="plannerName" class="form-label">策划名</label>
+              <label
+                for="plannerName"
+                class="form-label"
+                >策划名</label
+              >
               <input
                 type="text"
                 id="plannerName"
@@ -38,7 +50,10 @@
                 maxlength="15"
                 @input="validateField('plannerName')"
               />
-              <div v-if="errors.plannerName" class="error-message">
+              <div
+                v-if="errors.plannerName"
+                class="error-message"
+              >
                 {{ errors.plannerName }}
               </div>
               <div class="char-count">{{ formData.plannerName.length }}/15</div>
@@ -46,7 +61,11 @@
 
             <!-- 游戏名输入 -->
             <div class="form-group">
-              <label for="gameName" class="form-label">游戏名</label>
+              <label
+                for="gameName"
+                class="form-label"
+                >游戏名</label
+              >
               <input
                 type="text"
                 id="gameName"
@@ -57,7 +76,10 @@
                 maxlength="20"
                 @input="validateField('gameName')"
               />
-              <div v-if="errors.gameName" class="error-message">
+              <div
+                v-if="errors.gameName"
+                class="error-message"
+              >
                 {{ errors.gameName }}
               </div>
               <div class="char-count">{{ formData.gameName.length }}/20</div>
@@ -75,10 +97,7 @@
             <!-- 提交结果反馈 -->
             <div
               v-if="submitResult"
-              :class="[
-                'submit-result',
-                submitResult.success ? 'success' : 'error',
-              ]"
+              :class="['submit-result', submitResult.success ? 'success' : 'error']"
             >
               {{ submitResult.message }}
             </div>
@@ -88,27 +107,30 @@
     </div>
 
     <!-- 新手引导系统 -->
-    <NewbieGuide :is-visible="showGuide" @close="showGuide = false" />
+    <NewbieGuide
+      :is-visible="showGuide"
+      @close="showGuide = false"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
-import { useRouter } from 'vue-router';
-import NewbieGuide from '@/components/common/NewbieGuide/index.vue';
+import { ref, computed, watch } from "vue";
+import { useRouter } from "vue-router";
+import NewbieGuide from "@/components/common/NewbieGuide/index.vue";
 
 const router = useRouter();
 
 // 表单数据
 const formData = ref({
-  plannerName: '',
-  gameName: '',
+  plannerName: "",
+  gameName: "",
 });
 
 // 表单验证错误
 const errors = ref({
-  plannerName: '',
-  gameName: '',
+  plannerName: "",
+  gameName: "",
 });
 
 // 提交状态
@@ -119,27 +141,26 @@ const submitResult = ref<{ success: boolean; message: string } | null>(null);
 const showGuide = ref(false);
 
 // 验证单个字段
-const validateField = (field: 'plannerName' | 'gameName') => {
+const validateField = (field: "plannerName" | "gameName") => {
   const value = formData.value[field];
-  errors.value[field] = '';
+  errors.value[field] = "";
 
   if (!value.trim()) {
-    errors.value[field] =
-      field === 'plannerName' ? '请输入策划名' : '请输入游戏名';
+    errors.value[field] = field === "plannerName" ? "请输入策划名" : "请输入游戏名";
     return;
   }
 
-  if (field === 'plannerName' && (value.length < 1 || value.length > 15)) {
-    errors.value.plannerName = '策划名长度必须在1-15个字符之间';
-  } else if (field === 'gameName' && (value.length < 1 || value.length > 20)) {
-    errors.value.gameName = '游戏名长度必须在1-20个字符之间';
+  if (field === "plannerName" && (value.length < 1 || value.length > 15)) {
+    errors.value.plannerName = "策划名长度必须在1-15个字符之间";
+  } else if (field === "gameName" && (value.length < 1 || value.length > 20)) {
+    errors.value.gameName = "游戏名长度必须在1-20个字符之间";
   }
 };
 
 // 验证整个表单
 const validateForm = () => {
-  validateField('plannerName');
-  validateField('gameName');
+  validateField("plannerName");
+  validateField("gameName");
   return !errors.value.plannerName && !errors.value.gameName;
 };
 
@@ -166,17 +187,17 @@ const handleSubmit = async () => {
 
     // 保存用户信息到localStorage
     localStorage.setItem(
-      'userInfo',
+      "userInfo",
       JSON.stringify({
         plannerName: formData.value.plannerName,
         gameName: formData.value.gameName,
-      }),
+      })
     );
 
     // 显示成功消息
     submitResult.value = {
       success: true,
-      message: '游戏创建成功！即将进入新手引导...',
+      message: "游戏创建成功！即将进入新手引导...",
     };
 
     // 延迟显示新手引导
@@ -187,7 +208,7 @@ const handleSubmit = async () => {
     // 显示错误消息
     submitResult.value = {
       success: false,
-      message: '提交失败，请重试',
+      message: "提交失败，请重试",
     };
   } finally {
     submitting.value = false;
@@ -195,13 +216,13 @@ const handleSubmit = async () => {
 };
 
 // 定义事件
-const emit = defineEmits(['close']);
+const emit = defineEmits(["close"]);
 
 // 监听新手引导关闭，触发关闭事件
 watch(showGuide, (newVal) => {
   if (!newVal) {
     // 新手引导关闭后触发关闭事件
-    emit('close');
+    emit("close");
   }
 });
 </script>
@@ -215,12 +236,7 @@ watch(showGuide, (newVal) => {
 
   font-family: tokens.$font-family-base;
   position: relative;
-  background: linear-gradient(
-    135deg,
-    tokens.$bg-dark 0%,
-    tokens.$bg-secondary 50%,
-    tokens.$bg-tertiary 100%
-  );
+  background: linear-gradient(135deg, tokens.$bg-dark 0%, tokens.$bg-secondary 50%, tokens.$bg-tertiary 100%);
   border-radius: tokens.$radius-xl;
   overflow: hidden;
   box-shadow: tokens.$shadow-xl;
@@ -425,11 +441,7 @@ watch(showGuide, (newVal) => {
   font-size: tokens.$font-size-xl;
   font-weight: tokens.$font-weight-bold;
   color: tokens.$text-primary;
-  background: linear-gradient(
-    135deg,
-    tokens.$primary 0%,
-    tokens.$primary-dark 100%
-  );
+  background: linear-gradient(135deg, tokens.$primary 0%, tokens.$primary-dark 100%);
   border: none;
   border-radius: tokens.$radius-full;
   cursor: pointer;
@@ -446,11 +458,7 @@ watch(showGuide, (newVal) => {
     &:not(:disabled) {
       transform: translateY(-3px);
       box-shadow: 0 6px 20px rgb(74 158 255 / 60%);
-      background: linear-gradient(
-        135deg,
-        tokens.$primary-dark 0%,
-        tokens.$primary 100%
-      );
+      background: linear-gradient(135deg, tokens.$primary-dark 0%, tokens.$primary 100%);
     }
   }
 

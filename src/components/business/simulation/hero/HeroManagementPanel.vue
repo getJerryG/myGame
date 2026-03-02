@@ -7,7 +7,10 @@
     />
 
     <!-- 面板内容 -->
-    <div class="panel-content" :class="{ collapsed: isCollapsed }">
+    <div
+      class="panel-content"
+      :class="{ collapsed: isCollapsed }"
+    >
       <!-- 筛选器 -->
       <HeroFilters
         :filters="filters"
@@ -26,7 +29,7 @@
   </div>
 </template>
 
-<script setup lang=ts>
+<script setup lang="ts">
 import { computed, ref } from 'vue';
 import HeroManagementHeader from './HeroManagementHeader.vue';
 import HeroFilters from './HeroFilters.vue';
@@ -268,7 +271,6 @@ const selectHero = (hero: Hero): void => {
 </script>
 
 <style lang="scss" scoped>
-
 .hero-management-panel {
   @include utils.panel-base;
 }
@@ -284,7 +286,3 @@ const selectHero = (hero: Hero): void => {
   }
 }
 </style>
-
-
-
-

@@ -1,7 +1,7 @@
 // 英雄-皮肤关联管理模块
-import type { SkinIndicatorConfig, SimulateResult } from './SkinSimulation';
-import { calculateSkinMarketData } from './SkinSimulation';
-import skinSimulationConfig from '../config/SkinSimulateConfig';
+import type { SkinIndicatorConfig, SimulateResult } from "./SkinSimulation";
+import { calculateSkinMarketData } from "./SkinSimulation";
+import skinSimulationConfig from "../config/SkinSimulateConfig";
 
 // 类型定义
 export interface Hero {
@@ -22,7 +22,7 @@ export interface Hero {
   developmentTime: number; // 研发时间（天）
   developmentCost: number; // 研发成本
   developmentProgress: number; // 研发进度（0-100）
-  status: 'in_development' | 'released' | 'deprecated'; // 英雄状态
+  status: "in_development" | "released" | "deprecated"; // 英雄状态
   // 模拟相关字段
   pickRate: number; // 英雄出场率（0-1）
   userBase: number; // 英雄用户基数（0-1）
@@ -47,7 +47,7 @@ export interface Skin {
   developmentTime: number; // 研发时间（天）
   developmentCost: number; // 研发成本
   developmentProgress: number; // 研发进度（0-100）
-  status: 'in_development' | 'released' | 'deprecated'; // 皮肤状态
+  status: "in_development" | "released" | "deprecated"; // 皮肤状态
   // 销量相关字段
   sales: {
     daily: number; // 日销量
@@ -73,39 +73,39 @@ export interface SkinRarity {
 }
 
 // 本地存储键
-const HEROES_STORAGE_KEY = 'hero-development-heroes';
-const SKINS_STORAGE_KEY = 'skin-development-skins';
+const HEROES_STORAGE_KEY = "hero-development-heroes";
+const SKINS_STORAGE_KEY = "skin-development-skins";
 
 // 皮肤品质分类
 export const SKIN_RARITIES = [
-  { id: '伴生', name: '伴生', color: '#9E9E9E', baseCost: 0, basePrice: 288 },
-  { id: '勇气', name: '勇气', color: '#4CAF50', baseCost: 200, basePrice: 588 },
-  { id: '史诗', name: '史诗', color: '#2196F3', baseCost: 500, basePrice: 888 },
+  { id: "伴生", name: "伴生", color: "#9E9E9E", baseCost: 0, basePrice: 288 },
+  { id: "勇气", name: "勇气", color: "#4CAF50", baseCost: 200, basePrice: 588 },
+  { id: "史诗", name: "史诗", color: "#2196F3", baseCost: 500, basePrice: 888 },
   {
-    id: '传说',
-    name: '传说',
-    color: '#FF9800',
+    id: "传说",
+    name: "传说",
+    color: "#FF9800",
     baseCost: 1000,
     basePrice: 1688,
   },
   {
-    id: '珍品限定',
-    name: '珍品限定',
-    color: '#F44336',
+    id: "珍品限定",
+    name: "珍品限定",
+    color: "#F44336",
     baseCost: 1500,
     basePrice: 1988,
   },
   {
-    id: '无双限定',
-    name: '无双限定',
-    color: '#270200',
+    id: "无双限定",
+    name: "无双限定",
+    color: "#270200",
     baseCost: 2000,
     basePrice: 2288,
   },
   {
-    id: '皮肤无双限定',
-    name: '皮肤无双限定',
-    color: '#FF5722',
+    id: "皮肤无双限定",
+    name: "皮肤无双限定",
+    color: "#FF5722",
     baseCost: 3000,
     basePrice: 2588,
   },
@@ -115,23 +115,23 @@ export const SKIN_RARITIES = [
 const CREATION_TYPE_RARITY_MAP = {
   自己创作: {
     cost: 400,
-    color: '#4CAF50',
-    availableRarities: ['伴生', '勇气', '史诗'],
+    color: "#4CAF50",
+    availableRarities: ["伴生", "勇气", "史诗"],
   },
   合作创作: {
     cost: 500,
-    color: '#2196F3',
-    availableRarities: ['勇气', '史诗', '传说'],
+    color: "#2196F3",
+    availableRarities: ["勇气", "史诗", "传说"],
   },
   聘请大师: {
     cost: 1500,
-    color: '#FF9800',
-    availableRarities: ['传说', '无双限定'],
+    color: "#FF9800",
+    availableRarities: ["传说", "无双限定"],
   },
   特邀大师: {
     cost: 3000,
-    color: '#F44336',
-    availableRarities: ['珍品限定', '无双限定', '珍品无双限定'],
+    color: "#F44336",
+    availableRarities: ["珍品限定", "无双限定", "珍品无双限定"],
   },
 } as const;
 
@@ -141,7 +141,7 @@ export const getHeroesFromStorage = (): Hero[] => {
     const heroesJson = localStorage.getItem(HEROES_STORAGE_KEY);
     return heroesJson ? JSON.parse(heroesJson) : [];
   } catch (error) {
-    console.error('Failed to get heroes from storage:', error);
+    console.error("Failed to get heroes from storage:", error);
     return [];
   }
 };
@@ -152,7 +152,7 @@ export const getSkinsFromStorage = (): Skin[] => {
     const skinsJson = localStorage.getItem(SKINS_STORAGE_KEY);
     return skinsJson ? JSON.parse(skinsJson) : [];
   } catch (error) {
-    console.error('Failed to get skins from storage:', error);
+    console.error("Failed to get skins from storage:", error);
     return [];
   }
 };
@@ -162,7 +162,7 @@ export const saveHeroesToStorage = (heroes: Hero[]): void => {
   try {
     localStorage.setItem(HEROES_STORAGE_KEY, JSON.stringify(heroes));
   } catch (error) {
-    console.error('Failed to save heroes to storage:', error);
+    console.error("Failed to save heroes to storage:", error);
   }
 };
 
@@ -171,7 +171,7 @@ export const saveSkinsToStorage = (skins: Skin[]): void => {
   try {
     localStorage.setItem(SKINS_STORAGE_KEY, JSON.stringify(skins));
   } catch (error) {
-    console.error('Failed to save skins to storage:', error);
+    console.error("Failed to save skins to storage:", error);
   }
 };
 
@@ -198,31 +198,20 @@ export const getSkinHero = (heroName: string): Hero | undefined => {
 
 // 验证创作类型是否允许创作指定品质的皮肤
 // 在实际应用中，这里应该使用用户是否拥有英雄作为判断条件，简化为检查英雄数量
-const canCreateSkinWithRarity = (
-  creationType: string,
-  rarity: string,
-  heroCount: number,
-): boolean => {
+const canCreateSkinWithRarity = (creationType: string, rarity: string, heroCount: number): boolean => {
   // 获取该创作类型允许的皮肤品质
-  const creationTypeConfig =
-    CREATION_TYPE_RARITY_MAP[
-      creationType as keyof typeof CREATION_TYPE_RARITY_MAP
-    ];
+  const creationTypeConfig = CREATION_TYPE_RARITY_MAP[creationType as keyof typeof CREATION_TYPE_RARITY_MAP];
   if (!creationTypeConfig) return false;
 
   // 检查是否允许该品质的皮肤
-  const allowedRarity = creationTypeConfig.availableRarities.find(
-    (allowed) => allowed === rarity,
-  );
+  const allowedRarity = creationTypeConfig.availableRarities.find((allowed) => allowed === rarity);
   if (!allowedRarity) {
     return false;
   }
 
   // 检查英雄数量是否满足要求
   const rarityConfig =
-    skinSimulationConfig.rarityPermissions[
-      rarity as keyof typeof skinSimulationConfig.rarityPermissions
-    ];
+    skinSimulationConfig.rarityPermissions[rarity as keyof typeof skinSimulationConfig.rarityPermissions];
   if (rarityConfig && heroCount < rarityConfig.requiredHeroCount) {
     return false;
   }
@@ -232,7 +221,7 @@ const canCreateSkinWithRarity = (
 
 // 创建皮肤前的验证
 export const validateSkinCreation = (
-  skinData: Omit<Skin, 'id' | 'createdAt'>,
+  skinData: Omit<Skin, "id" | "createdAt">
 ): {
   valid: boolean;
   message: string;
@@ -241,7 +230,7 @@ export const validateSkinCreation = (
   if (!isHeroExists(skinData.heroName)) {
     return {
       valid: false,
-      message: '所属英雄不存在，请先创建英雄',
+      message: "所属英雄不存在，请先创建英雄",
     };
   }
 
@@ -249,7 +238,7 @@ export const validateSkinCreation = (
   if (!isValidSkinRarity(skinData.rarity)) {
     return {
       valid: false,
-      message: '无效的皮肤品质',
+      message: "无效的皮肤品质",
     };
   }
 
@@ -257,13 +246,9 @@ export const validateSkinCreation = (
   const heroCount = getHeroesFromStorage().length;
 
   // 4. 验证创作类型是否允许创作该品质的皮肤，以及英雄数量是否满足要求
-  if (
-    !canCreateSkinWithRarity(skinData.creationType, skinData.rarity, heroCount)
-  ) {
+  if (!canCreateSkinWithRarity(skinData.creationType, skinData.rarity, heroCount)) {
     const rarityConfig =
-      skinSimulationConfig.rarityPermissions[
-        skinData.rarity as keyof typeof skinSimulationConfig.rarityPermissions
-      ];
+      skinSimulationConfig.rarityPermissions[skinData.rarity as keyof typeof skinSimulationConfig.rarityPermissions];
     if (heroCount < (rarityConfig?.requiredHeroCount || 0)) {
       return {
         valid: false,
@@ -278,50 +263,45 @@ export const validateSkinCreation = (
 
   return {
     valid: true,
-    message: '验证通过',
+    message: "验证通过",
   };
 };
 
 // 创建皮肤
-export const createSkin = (skinData: Omit<Skin, 'id' | 'createdAt'>): Skin => {
+export const createSkin = (skinData: Omit<Skin, "id" | "createdAt">): Skin => {
   // 生成唯一ID
   const id = `skin-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
   // 根据皮肤品质获取基础研发时间和成本
-  const rarityConfig = SKIN_RARITIES.find(
-    (rarity) => rarity.id === skinData.rarity,
-  );
+  const rarityConfig = SKIN_RARITIES.find((rarity) => rarity.id === skinData.rarity);
   const baseDevelopmentTime = rarityConfig
-    ? rarityConfig.id === '传说' || rarityConfig.id === '无双限定'
+    ? rarityConfig.id === "传说" || rarityConfig.id === "无双限定"
       ? 30
-      : rarityConfig.id === '史诗'
+      : rarityConfig.id === "史诗"
         ? 20
-        : rarityConfig.id === '勇气'
+        : rarityConfig.id === "勇气"
           ? 15
           : 10
     : 10;
   const baseDevelopmentCost = rarityConfig ? rarityConfig.baseCost * 100 : 2000;
 
   // 根据创作类型调整研发时间和成本
-  const creationTypeConfig =
-    CREATION_TYPE_RARITY_MAP[
-      skinData.creationType as keyof typeof CREATION_TYPE_RARITY_MAP
-    ];
+  const creationTypeConfig = CREATION_TYPE_RARITY_MAP[skinData.creationType as keyof typeof CREATION_TYPE_RARITY_MAP];
   const timeMultiplier = creationTypeConfig
-    ? skinData.creationType === '自己创作'
+    ? skinData.creationType === "自己创作"
       ? 1.5
-      : skinData.creationType === '合作创作'
+      : skinData.creationType === "合作创作"
         ? 1.0
-        : skinData.creationType === '聘请大师'
+        : skinData.creationType === "聘请大师"
           ? 0.7
           : 0.5
     : 1.0;
   const costMultiplier = creationTypeConfig
-    ? skinData.creationType === '自己创作'
+    ? skinData.creationType === "自己创作"
       ? 0.8
-      : skinData.creationType === '合作创作'
+      : skinData.creationType === "合作创作"
         ? 1.0
-        : skinData.creationType === '聘请大师'
+        : skinData.creationType === "聘请大师"
           ? 1.5
           : 2.0
     : 1.0;
@@ -339,7 +319,7 @@ export const createSkin = (skinData: Omit<Skin, 'id' | 'createdAt'>): Skin => {
     developmentTime,
     developmentCost,
     developmentProgress: 0,
-    status: 'in_development',
+    status: "in_development",
     // 销量相关字段
     sales: {
       daily: 0,
@@ -405,7 +385,7 @@ export const deleteHeroAndSkins = (heroName: string): void => {
 export const batchCreateSkins = (count: number): void => {
   const heroes = getHeroesFromStorage();
   if (heroes.length === 0) {
-    console.warn('没有英雄数据，无法创建皮肤');
+    console.warn("没有英雄数据，无法创建皮肤");
     return;
   }
 
@@ -413,23 +393,21 @@ export const batchCreateSkins = (count: number): void => {
 
   for (let i = 0; i < count; i++) {
     const randomHero = heroes[Math.floor(Math.random() * heroes.length)];
-    const randomRarity =
-      SKIN_RARITIES[Math.floor(Math.random() * SKIN_RARITIES.length)];
-    const randomCreationType = Object.keys(CREATION_TYPE_RARITY_MAP)[
-      Math.floor(Math.random() * Object.keys(CREATION_TYPE_RARITY_MAP).length)
-    ];
+    const randomRarity = SKIN_RARITIES[Math.floor(Math.random() * SKIN_RARITIES.length)];
+    const randomCreationType =
+      Object.keys(CREATION_TYPE_RARITY_MAP)[Math.floor(Math.random() * Object.keys(CREATION_TYPE_RARITY_MAP).length)];
 
     // 验证是否可以创建该皮肤
-    const skinData: Omit<Skin, 'id' | 'createdAt'> = {
+    const skinData: Omit<Skin, "id" | "createdAt"> = {
       name: `${randomHero.name}皮肤${i + 1}`,
-      icon: '🧱',
+      icon: "🧱",
       heroName: randomHero.name,
       rarity: randomRarity.id,
       price: randomRarity.basePrice,
       effects: Math.floor(Math.random() * 100),
       description: `${randomHero.name}的${randomRarity.name}皮肤，具有独特的外观和效果`,
       creationType: randomCreationType,
-      style: 'standard',
+      style: "standard",
       designFit: Math.random(),
       scarcity: Math.random(),
       costEffectiveness: Math.random(),
@@ -440,7 +418,7 @@ export const batchCreateSkins = (count: number): void => {
       developmentTime: 10,
       developmentCost: 2000,
       developmentProgress: 0,
-      status: 'in_development',
+      status: "in_development",
       // 销量相关字段
       sales: {
         daily: 0,
@@ -472,14 +450,9 @@ export const getAllSkinMarketData = (): Array<{
 };
 
 // 验证英雄是否可以创建指定品质的皮肤（基于英雄数量）
-export const validateHeroSkinCreation = (
-  heroCount: number,
-  rarity: string,
-): boolean => {
+export const validateHeroSkinCreation = (heroCount: number, rarity: string): boolean => {
   const rarityConfig =
-    skinSimulationConfig.rarityPermissions[
-      rarity as keyof typeof skinSimulationConfig.rarityPermissions
-    ];
+    skinSimulationConfig.rarityPermissions[rarity as keyof typeof skinSimulationConfig.rarityPermissions];
   return !rarityConfig || heroCount >= rarityConfig.requiredHeroCount;
 };
 
@@ -490,17 +463,14 @@ export const advanceDevelopment = (id: string, isHero = false): void => {
     const heroes = getHeroesFromStorage();
     const heroIndex = heroes.findIndex((hero) => hero.id === id);
 
-    if (heroIndex !== -1 && heroes[heroIndex].status === 'in_development') {
+    if (heroIndex !== -1 && heroes[heroIndex].status === "in_development") {
       // 每天推进的进度 = 100 / 研发时间
       const dailyProgress = 100 / heroes[heroIndex].developmentTime;
-      heroes[heroIndex].developmentProgress = Math.min(
-        100,
-        heroes[heroIndex].developmentProgress + dailyProgress,
-      );
+      heroes[heroIndex].developmentProgress = Math.min(100, heroes[heroIndex].developmentProgress + dailyProgress);
 
       // 如果研发完成，将状态改为已发布
       if (heroes[heroIndex].developmentProgress >= 100) {
-        heroes[heroIndex].status = 'released';
+        heroes[heroIndex].status = "released";
         heroes[heroIndex].developmentProgress = 100;
       }
 
@@ -511,17 +481,14 @@ export const advanceDevelopment = (id: string, isHero = false): void => {
     const skins = getSkinsFromStorage();
     const skinIndex = skins.findIndex((skin) => skin.id === id);
 
-    if (skinIndex !== -1 && skins[skinIndex].status === 'in_development') {
+    if (skinIndex !== -1 && skins[skinIndex].status === "in_development") {
       // 每天推进的进度 = 100 / 研发时间
       const dailyProgress = 100 / skins[skinIndex].developmentTime;
-      skins[skinIndex].developmentProgress = Math.min(
-        100,
-        skins[skinIndex].developmentProgress + dailyProgress,
-      );
+      skins[skinIndex].developmentProgress = Math.min(100, skins[skinIndex].developmentProgress + dailyProgress);
 
       // 如果研发完成，将状态改为已发布并计算初始销量
       if (skins[skinIndex].developmentProgress >= 100) {
-        skins[skinIndex].status = 'released';
+        skins[skinIndex].status = "released";
         skins[skinIndex].developmentProgress = 100;
 
         // 计算初始销量
@@ -541,31 +508,25 @@ export const calculateSkinInitialSales = (skin: Skin, hero: Hero): void => {
   // 初始销量公式：英雄用户基数 × 英雄出场率 × 皮肤吸引力 × 价格系数 × 品质系数
 
   // 皮肤吸引力：基于设计契合度、稀缺感、社群讨论度等因素计算
-  const skinAttraction =
-    (skin.designFit + skin.scarcity + skin.communityHeat) / 3;
+  const skinAttraction = (skin.designFit + skin.scarcity + skin.communityHeat) / 3;
 
   // 价格系数：价格越高，系数越低（防止价格过高导致销量过低）
   const priceCoeff = Math.max(0.1, 1 - (skin.price - 200) / 10000);
 
   // 品质系数：不同品质的皮肤有不同的系数
   const rarityCoeff = SKIN_RARITIES.find((rarity) => rarity.id === skin.rarity)
-    ? skin.rarity === '传说' || skin.rarity === '无双限定'
+    ? skin.rarity === "传说" || skin.rarity === "无双限定"
       ? 1.5
-      : skin.rarity === '史诗'
+      : skin.rarity === "史诗"
         ? 1.2
-        : skin.rarity === '勇气'
+        : skin.rarity === "勇气"
           ? 1.0
           : 0.8
     : 0.8;
 
   // 计算初始销量（总销量）
   const initialTotalSales = Math.floor(
-    100000 *
-      hero.userBase *
-      hero.pickRate *
-      skinAttraction *
-      priceCoeff *
-      rarityCoeff,
+    100000 * hero.userBase * hero.pickRate * skinAttraction * priceCoeff * rarityCoeff
   );
 
   // 计算初始日销量（总销量的10%）
@@ -583,9 +544,9 @@ export const calculateSkinDailySales = (
   skin: Skin,
   hero: Hero,
   gamePopularity: number,
-  gameWordOfMouth: number,
+  gameWordOfMouth: number
 ): void => {
-  if (skin.status !== 'released') return;
+  if (skin.status !== "released") return;
 
   // 每日销量公式：基础销量 × 热度系数 × 口碑系数 × 英雄表现系数 × 时间衰减系数
 
@@ -599,26 +560,17 @@ export const calculateSkinDailySales = (
   const wordOfMouthCoeff = Math.max(0.5, gameWordOfMouth / 100);
 
   // 英雄表现系数：英雄使用率和胜率越高，皮肤销量越高
-  const heroPerformanceCoeff = Math.max(
-    0.5,
-    (hero.usageRate + hero.winRate) / 200,
-  );
+  const heroPerformanceCoeff = Math.max(0.5, (hero.usageRate + hero.winRate) / 200);
 
   // 时间衰减系数：皮肤发布时间越长，销量越低
   const releaseDate = new Date(skin.createdAt);
   const currentDate = new Date();
-  const daysSinceRelease = Math.floor(
-    (currentDate.getTime() - releaseDate.getTime()) / (1000 * 60 * 60 * 24),
-  );
+  const daysSinceRelease = Math.floor((currentDate.getTime() - releaseDate.getTime()) / (1000 * 60 * 60 * 24));
   const timeDecayCoeff = Math.max(0.3, 1 - daysSinceRelease / 365);
 
   // 计算当日销量
   const dailySales = Math.floor(
-    baseDailySales *
-      popularityCoeff *
-      wordOfMouthCoeff *
-      heroPerformanceCoeff *
-      timeDecayCoeff,
+    baseDailySales * popularityCoeff * wordOfMouthCoeff * heroPerformanceCoeff * timeDecayCoeff
   );
 
   // 更新皮肤销量数据
@@ -627,15 +579,12 @@ export const calculateSkinDailySales = (
 };
 
 // 批量计算所有已发布皮肤的每日销量
-export const calculateAllSkinDailySales = (
-  gamePopularity: number,
-  gameWordOfMouth: number,
-): void => {
+export const calculateAllSkinDailySales = (gamePopularity: number, gameWordOfMouth: number): void => {
   const skins = getSkinsFromStorage();
   const heroes = getHeroesFromStorage();
 
   skins.forEach((skin) => {
-    if (skin.status === 'released') {
+    if (skin.status === "released") {
       const hero = heroes.find((h) => h.name === skin.heroName);
       if (hero) {
         calculateSkinDailySales(skin, hero, gamePopularity, gameWordOfMouth);
@@ -648,22 +597,18 @@ export const calculateAllSkinDailySales = (
 
 // 获取所有正在研发的项目（英雄和皮肤）
 export const getInDevelopmentProjects = (): Array<{
-  type: 'hero' | 'skin';
+  type: "hero" | "skin";
   item: Hero | Skin;
 }> => {
-  const heroes = getHeroesFromStorage().filter(
-    (hero) => hero.status === 'in_development',
-  );
-  const skins = getSkinsFromStorage().filter(
-    (skin) => skin.status === 'in_development',
-  );
+  const heroes = getHeroesFromStorage().filter((hero) => hero.status === "in_development");
+  const skins = getSkinsFromStorage().filter((skin) => skin.status === "in_development");
 
-  const projects: Array<{ type: 'hero' | 'skin'; item: Hero | Skin }> = [];
+  const projects: Array<{ type: "hero" | "skin"; item: Hero | Skin }> = [];
 
   // 添加英雄项目
   heroes.forEach((hero) => {
     projects.push({
-      type: 'hero',
+      type: "hero",
       item: hero,
     });
   });
@@ -671,29 +616,23 @@ export const getInDevelopmentProjects = (): Array<{
   // 添加皮肤项目
   skins.forEach((skin) => {
     projects.push({
-      type: 'skin',
+      type: "skin",
       item: skin,
     });
   });
 
   // 按研发进度排序
   return projects.sort((a, b) => {
-    const progressA =
-      a.type === 'hero'
-        ? (a.item as Hero).developmentProgress
-        : (a.item as Skin).developmentProgress;
-    const progressB =
-      b.type === 'hero'
-        ? (b.item as Hero).developmentProgress
-        : (b.item as Skin).developmentProgress;
+    const progressA = a.type === "hero" ? (a.item as Hero).developmentProgress : (a.item as Skin).developmentProgress;
+    const progressB = b.type === "hero" ? (b.item as Hero).developmentProgress : (b.item as Skin).developmentProgress;
     return progressA - progressB;
   });
 };
 
 // 创建皮肤前的验证（简化版，只验证必要条件）
 export const validateSimpleSkinCreation = (
-  skinData: Pick<Skin, 'heroName' | 'rarity' | 'creationType'>,
-  heroCount: number,
+  skinData: Pick<Skin, "heroName" | "rarity" | "creationType">,
+  heroCount: number
 ): {
   valid: boolean;
   message: string;
@@ -702,7 +641,7 @@ export const validateSimpleSkinCreation = (
   if (!isHeroExists(skinData.heroName)) {
     return {
       valid: false,
-      message: '所属英雄不存在，请先创建英雄',
+      message: "所属英雄不存在，请先创建英雄",
     };
   }
 
@@ -710,15 +649,13 @@ export const validateSimpleSkinCreation = (
   if (!isValidSkinRarity(skinData.rarity)) {
     return {
       valid: false,
-      message: '无效的皮肤品质',
+      message: "无效的皮肤品质",
     };
   }
 
   // 3. 验证英雄数量是否满足要求
   const rarityConfig =
-    skinSimulationConfig.rarityPermissions[
-      skinData.rarity as keyof typeof skinSimulationConfig.rarityPermissions
-    ];
+    skinSimulationConfig.rarityPermissions[skinData.rarity as keyof typeof skinSimulationConfig.rarityPermissions];
   if (rarityConfig && heroCount < rarityConfig.requiredHeroCount) {
     return {
       valid: false,
@@ -727,13 +664,8 @@ export const validateSimpleSkinCreation = (
   }
 
   // 4. 验证创作类型是否允许创作该品质的皮肤
-  const creationTypeConfig =
-    CREATION_TYPE_RARITY_MAP[
-      skinData.creationType as keyof typeof CREATION_TYPE_RARITY_MAP
-    ];
-  const allowedRarity = creationTypeConfig?.availableRarities.find(
-    (allowed) => allowed === skinData.rarity,
-  );
+  const creationTypeConfig = CREATION_TYPE_RARITY_MAP[skinData.creationType as keyof typeof CREATION_TYPE_RARITY_MAP];
+  const allowedRarity = creationTypeConfig?.availableRarities.find((allowed) => allowed === skinData.rarity);
   if (!allowedRarity) {
     return {
       valid: false,
@@ -743,6 +675,6 @@ export const validateSimpleSkinCreation = (
 
   return {
     valid: true,
-    message: '验证通过',
+    message: "验证通过",
   };
 };

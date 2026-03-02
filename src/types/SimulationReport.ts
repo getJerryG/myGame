@@ -28,7 +28,7 @@ export interface SimulationInsight {
   type: string;
   title: string;
   description: string;
-  severity: 'low' | 'medium' | 'high';
+  severity: "low" | "medium" | "high";
   timestamp: Date;
 }
 
@@ -37,6 +37,6 @@ export interface SimulationRecommendation {
   insightId: string;
   title: string;
   description: string;
-  priority: 'low' | 'medium' | 'high';
+  priority: "low" | "medium" | "high";
   expectedImpact: string;
 }

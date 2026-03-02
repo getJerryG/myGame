@@ -1,23 +1,27 @@
 <template>
   <div class="home-page">
     <!-- 背景 - 使用CSS而非图片，避免LCP延迟 -->
-    <div class="home-background" aria-hidden="true"></div>
+    <div
+      class="home-background"
+      aria-hidden="true"
+    ></div>
 
     <!-- 主要内容 -->
     <div class="home-content">
       <!-- 左侧：游戏标题和游戏描述 -->
       <div class="left-column">
         <!-- 游戏标题 - LCP元素，确保快速渲染 -->
-        <div class="game-title" data-lcp-element>
+        <div
+          class="game-title"
+          data-lcp-element
+        >
           <h1>策划大师：王者经营</h1>
           <p class="subtitle">游戏开发模拟</p>
         </div>
 
         <!-- 游戏描述 -->
         <div class="game-description">
-          <p>
-            在这个游戏中，你将扮演一名游戏策划师，从无到有创建属于自己的游戏帝国！
-          </p>
+          <p>在这个游戏中，你将扮演一名游戏策划师，从无到有创建属于自己的游戏帝国！</p>
           <p>设计游戏玩法、管理团队、制定营销策略，最终成为游戏行业的王者！</p>
           <p>体验真实的游戏开发流程，感受策划大师的成长之路！</p>
         </div>
@@ -27,16 +31,34 @@
       <div class="right-column">
         <div class="button-container">
           <!-- 主要按钮 -->
-          <button class="main-button" @click="startNewGame">开始新游戏</button>
+          <button
+            class="main-button"
+            @click="startNewGame"
+          >
+            开始新游戏
+          </button>
 
-          <button class="main-button" @click="showSaveModal = true">
+          <button
+            class="main-button"
+            @click="showSaveModal = true"
+          >
             继续游戏
           </button>
 
           <!-- 次要按钮 -->
-          <button class="secondary-button" @click="openSettings">设置</button>
+          <button
+            class="secondary-button"
+            @click="openSettings"
+          >
+            设置
+          </button>
 
-          <button class="secondary-button" @click="openAbout">关于</button>
+          <button
+            class="secondary-button"
+            @click="openAbout"
+          >
+            关于
+          </button>
         </div>
       </div>
     </div>
@@ -47,10 +69,18 @@
       class="modal-overlay"
       @click="showSaveModal = false"
     >
-      <div class="modal-content" @click.stop>
+      <div
+        class="modal-content"
+        @click.stop
+      >
         <div class="modal-header">
           <h2>选择存档</h2>
-          <button class="close-button" @click="showSaveModal = false">×</button>
+          <button
+            class="close-button"
+            @click="showSaveModal = false"
+          >
+            ×
+          </button>
         </div>
         <div class="modal-body">
           <div class="save-list">
@@ -75,7 +105,12 @@
               </div>
             </div>
 
-            <div v-if="saveGames.length === 0" class="no-saves">暂无存档</div>
+            <div
+              v-if="saveGames.length === 0"
+              class="no-saves"
+            >
+              暂无存档
+            </div>
           </div>
         </div>
       </div>
@@ -84,8 +119,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 
@@ -113,17 +148,14 @@ interface GameSnapshot {
 
 // 加载存档
 const loadSaveGames = (): void => {
-  const saved = localStorage.getItem('game-snapshots');
+  const saved = localStorage.getItem("game-snapshots");
   if (saved) {
     const snapshots: GameSnapshot[] = JSON.parse(saved);
     saveGames.value = snapshots
       .map((snapshot) => ({
         timestamp: snapshot.timestamp,
         level: snapshot.playerStore?.player?.level || 1,
-        progress: Math.min(
-          100,
-          Math.floor(((snapshot.playerStore?.player?.exp || 0) / 100) * 100),
-        ),
+        progress: Math.min(100, Math.floor(((snapshot.playerStore?.player?.exp || 0) / 100) * 100)),
       }))
       .reverse(); // 最新的存档在最前面
   }
@@ -138,19 +170,19 @@ const formatDate = (timestamp: number): string => {
 // 预加载 DesktopSystem 组件
 const preloadDesktopSystem = (): void => {
   // 使用 requestIdleCallback 在浏览器空闲时预加载
-  if ('requestIdleCallback' in window) {
+  if ("requestIdleCallback" in window) {
     requestIdleCallback(
       () => {
-        import('@/components/common/DesktopSystem/index.vue');
-        import('@/views/main/DesktopPage.vue');
+        import("@/components/common/DesktopSystem/index.vue");
+        import("@/views/main/DesktopPage.vue");
       },
-      { timeout: 2000 },
+      { timeout: 2000 }
     );
   } else {
     // 降级方案：使用 setTimeout
     setTimeout(() => {
-      import('@/components/common/DesktopSystem/index.vue');
-      import('@/views/main/DesktopPage.vue');
+      import("@/components/common/DesktopSystem/index.vue");
+      import("@/views/main/DesktopPage.vue");
     }, 1000);
   }
 };
@@ -164,28 +196,28 @@ onMounted(() => {
 // 开始新游戏
 const startNewGame = (): void => {
   // 清除可能存在的临时数据，开始全新游戏
-  localStorage.removeItem('current-game-state');
-  router.push('/desktop/1'); // 新游戏从第1天开始
+  localStorage.removeItem("current-game-state");
+  router.push("/desktop/1"); // 新游戏从第1天开始
 };
 
 // 加载存档
 const loadGame = (save: SaveGame): void => {
   // 这里可以添加加载存档的逻辑
   // 例如：将选中的存档ID存储到localStorage
-  localStorage.setItem('current-save-id', save.timestamp.toString());
+  localStorage.setItem("current-save-id", save.timestamp.toString());
   showSaveModal.value = false;
-  router.push('/desktop/1'); // 加载存档后从第1天开始，实际项目中可以从存档中读取天数
+  router.push("/desktop/1"); // 加载存档后从第1天开始，实际项目中可以从存档中读取天数
 };
 
 // 打开设置
 const openSettings = (): void => {
-  router.push('/app/settings'); // 使用应用页面路由
+  router.push("/app/settings"); // 使用应用页面路由
 };
 
 // 打开关于
 const openAbout = (): void => {
   // 关于页面暂未实现，跳转到首页
-  router.push('/');
+  router.push("/");
 };
 </script>
 
@@ -207,12 +239,7 @@ const openAbout = (): void => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    135deg,
-    tokens.$bg-dark 0%,
-    tokens.$bg-secondary 50%,
-    tokens.$bg-tertiary 100%
-  );
+  background: linear-gradient(135deg, tokens.$bg-dark 0%, tokens.$bg-secondary 50%, tokens.$bg-tertiary 100%);
   background-size: cover;
   background-position: center;
   opacity: 0.9;
@@ -229,21 +256,9 @@ const openAbout = (): void => {
     width: 100%;
     height: 100%;
     background-image:
-      radial-gradient(
-        circle at 20% 50%,
-        rgb(74 158 255 / 10%) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        circle at 80% 20%,
-        rgb(255 215 0 / 10%) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        circle at 40% 80%,
-        rgb(255 107 107 / 10%) 0%,
-        transparent 50%
-      );
+      radial-gradient(circle at 20% 50%, rgb(74 158 255 / 10%) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgb(255 215 0 / 10%) 0%, transparent 50%),
+      radial-gradient(circle at 40% 80%, rgb(255 107 107 / 10%) 0%, transparent 50%);
 
     /* 移除动画，使用静态效果 */
     opacity: 0.9;
@@ -369,11 +384,7 @@ const openAbout = (): void => {
   font-size: tokens.$font-size-xl;
   font-weight: tokens.$font-weight-bold;
   color: tokens.$text-primary;
-  background: linear-gradient(
-    135deg,
-    tokens.$primary 0%,
-    tokens.$primary-dark 100%
-  );
+  background: linear-gradient(135deg, tokens.$primary 0%, tokens.$primary-dark 100%);
   border: none;
   border-radius: tokens.$radius-full;
   cursor: pointer;
@@ -387,11 +398,7 @@ const openAbout = (): void => {
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgb(74 158 255 / 60%);
-    background: linear-gradient(
-      135deg,
-      tokens.$primary-dark 0%,
-      tokens.$primary 100%
-    );
+    background: linear-gradient(135deg, tokens.$primary-dark 0%, tokens.$primary 100%);
   }
 
   &:active {
@@ -548,11 +555,7 @@ const openAbout = (): void => {
 
     .save-progress-fill {
       height: 100%;
-      background: linear-gradient(
-        90deg,
-        tokens.$primary 0%,
-        tokens.$primary-dark 100%
-      );
+      background: linear-gradient(90deg, tokens.$primary 0%, tokens.$primary-dark 100%);
       border-radius: tokens.$radius-sm;
       transition: width tokens.$transition-normal;
     }

@@ -4,7 +4,7 @@ export interface LotteryDrawResult {
   id: string;
   prizeId: string;
   prizeName: string;
-  prizeType: 'skin' | 'currency' | 'item';
+  prizeType: "skin" | "currency" | "item";
   prizeValue: number | string;
   timestamp: Date;
   isSpecial: boolean;
@@ -13,9 +13,9 @@ export interface LotteryDrawResult {
 export interface LotteryPrize {
   id: string;
   name: string;
-  type: 'skin' | 'currency' | 'item';
+  type: "skin" | "currency" | "item";
   value: number | string;
-  rarity: 'common' | 'rare' | 'epic' | 'legendary';
+  rarity: "common" | "rare" | "epic" | "legendary";
   probability: number;
   imageUrl: string;
 }
@@ -32,7 +32,7 @@ export interface LotteryStorageItem {
   id: string;
   prizeId: string;
   prizeName: string;
-  prizeType: 'skin' | 'currency' | 'item';
+  prizeType: "skin" | "currency" | "item";
   prizeValue: number | string;
   acquiredAt: Date;
   isUsed: boolean;

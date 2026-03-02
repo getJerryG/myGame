@@ -15,7 +15,7 @@ export interface GameRelease {
   version: string;
   releaseDate: Date;
   changelog: string;
-  status: 'draft' | 'published' | 'archived';
+  status: "draft" | "published" | "archived";
 }
 
 export interface GameStats {
@@ -26,9 +26,9 @@ export interface GameStats {
 }
 
 export interface GameSettings {
-  difficulty: 'easy' | 'normal' | 'hard';
+  difficulty: "easy" | "normal" | "hard";
   volume: number;
-  graphics: 'low' | 'medium' | 'high';
+  graphics: "low" | "medium" | "high";
   soundEnabled: boolean;
   notificationsEnabled: boolean;
 }

@@ -7,13 +7,13 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix --config .config/.eslintrc.cjs",
-    "lint:style": "stylelint \"**/*.{scss,vue}\" --fix --config .config/.stylelintrc.json",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "typecheck": "tsc --noEmit",
-    "performance": "tsx performance-monitor.js"
+    "performance": "tsx performance-monitor.js",
+    "lint": "eslint src/ --ext .vue,.ts --cache --cache-location node_modules/.cache/eslint/ --fix --config .config/.eslintrc.cjs --color --report-unused-disable-directives",
+    "lint:style": "stylelint \"**/*.{scss,vue}\" --fix --config .config/.stylelintrc.json"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^8.55.0",

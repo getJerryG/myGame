@@ -27,7 +27,7 @@ export interface SimulationTime {
 
 export interface SimulationConfig {
   timeScale: number;
-  difficulty: 'easy' | 'normal' | 'hard';
+  difficulty: "easy" | "normal" | "hard";
   startingFunds: number;
   startingLevel: number;
   enableRandomEvents: boolean;
@@ -52,7 +52,7 @@ export interface SimulationDecision {
   description: string;
   options: SimulationDecisionOption[];
   deadline?: SimulationTime;
-  priority: 'low' | 'medium' | 'high';
+  priority: "low" | "medium" | "high";
 }
 
 export interface SimulationDecisionOption {
@@ -70,13 +70,13 @@ export interface SimulationEvent {
   title: string;
   description: string;
   timestamp: SimulationTime;
-  impact: 'low' | 'medium' | 'high';
+  impact: "low" | "medium" | "high";
   isActive: boolean;
   durationDays: number;
   effect: string;
   // 扩展事件属性
   category: string; // 事件分类
-  severity: 'low' | 'medium' | 'high' | 'critical'; // 事件严重程度
+  severity: "low" | "medium" | "high" | "critical"; // 事件严重程度
   options: SimulationEventOption[]; // 事件选项
   effects: SimulationEventEffect[]; // 事件效果
   triggeredBy?: string; // 触发该事件的事件ID
@@ -101,28 +101,22 @@ export interface SimulationEventOption {
 }
 
 export interface SimulationEventRequirement {
-  type:
-    | 'money'
-    | 'reputation'
-    | 'popularity'
-    | 'level'
-    | 'heroCount'
-    | 'skinCount';
+  type: "money" | "reputation" | "popularity" | "level" | "heroCount" | "skinCount";
   value: number;
-  operator: '>=' | '<=' | '>' | '<' | '==';
+  operator: ">=" | "<=" | ">" | "<" | "==";
 }
 
 export interface SimulationEventEffect {
   type:
-    | 'money'
-    | 'reputation'
-    | 'popularity'
-    | 'wordOfMouth'
-    | 'exp'
-    | 'heroCount'
-    | 'skinCount'
-    | 'gameSpeed'
-    | 'eventFrequency';
+    | "money"
+    | "reputation"
+    | "popularity"
+    | "wordOfMouth"
+    | "exp"
+    | "heroCount"
+    | "skinCount"
+    | "gameSpeed"
+    | "eventFrequency";
   value: number;
   duration?: number; // 效果持续时间（天）
   isPermanent?: boolean; // 效果是否永久
@@ -135,7 +129,7 @@ export interface SimulationHero {
   experience: number;
   skills: SimulationHeroSkill[];
   attributes: SimulationHeroAttributes;
-  status: 'active' | 'resting' | 'injured' | 'unavailable';
+  status: "active" | "resting" | "injured" | "unavailable";
 }
 
 export interface SimulationHeroSkill {

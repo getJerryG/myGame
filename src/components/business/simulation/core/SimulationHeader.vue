@@ -12,7 +12,7 @@
   </header>
 </template>
 
-<script setup lang=ts>
+<script setup lang="ts">
 import TopCoreData from './TopCoreData.vue';
 
 // 接收父组件传递的属�?defineProps({
@@ -42,7 +42,6 @@ import TopCoreData from './TopCoreData.vue';
 </script>
 
 <style lang="scss" scoped>
-
 .simulation-header {
   background-color: tokens.$bg-dark;
   padding: tokens.$spacing-sm tokens.$spacing-lg;
@@ -52,7 +51,3 @@ import TopCoreData from './TopCoreData.vue';
   border-bottom: 2px solid tokens.$primary-gold;
 }
 </style>
-
-
-
-

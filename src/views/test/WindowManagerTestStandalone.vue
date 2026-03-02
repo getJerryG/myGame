@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import WindowManager from '../components/common/window/WindowManager.vue';
+import WindowManager from "../components/common/window/WindowManager.vue";
 </script>
 
 <style lang="scss" scoped>

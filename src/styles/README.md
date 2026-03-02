@@ -21,7 +21,7 @@ src/styles/
 在 `main.ts` 中引入样式系统：
 
 ```typescript
-import '@/styles/index.scss'
+import "@/styles/index.scss";
 ```
 
 ### 2. 在组件中使用
@@ -30,14 +30,14 @@ import '@/styles/index.scss'
 
 ```vue
 <style scoped lang="scss">
-@use '@/styles/variables' as v;
-@use '@/styles/mixins' as m;
+@use "@/styles/variables" as v;
+@use "@/styles/mixins" as m;
 
 .my-component {
   // 使用变量
   background-color: v.$bg-secondary;
   padding: v.$spacing-md;
-  
+
   // 使用混入
   @include m.flex-between;
   @include m.panel-base;
@@ -84,11 +84,11 @@ $spacing-xl: 32px;
 ### 字体变量
 
 ```scss
-$font-size-xs: 0.75rem;   // 12px
-$font-size-sm: 0.875rem;  // 14px
-$font-size-base: 1rem;    // 16px
-$font-size-lg: 1.125rem;  // 18px
-$font-size-xl: 1.25rem;   // 20px
+$font-size-xs: 0.75rem; // 12px
+$font-size-sm: 0.875rem; // 14px
+$font-size-base: 1rem; // 16px
+$font-size-lg: 1.125rem; // 18px
+$font-size-xl: 1.25rem; // 20px
 ```
 
 ## 混入（Mixins）
@@ -97,62 +97,62 @@ $font-size-xl: 1.25rem;   // 20px
 
 ```scss
 // Flexbox 布局
-@include m.flex-center;                    // 水平垂直居中
-@include m.flex-row($gap, $align, $justify);  // 水平排列
-@include m.flex-col($gap, $align, $justify);  // 垂直排列
-@include m.flex-between($align);           // 两端对齐
+@include m.flex-center; // 水平垂直居中
+@include m.flex-row($gap, $align, $justify); // 水平排列
+@include m.flex-col($gap, $align, $justify); // 垂直排列
+@include m.flex-between($align); // 两端对齐
 ```
 
 ### 面板混入
 
 ```scss
 // 面板样式
-@include m.panel-base;        // 基础面板样式
-@include m.panel-header;      // 面板头部
-@include m.panel-title;       // 面板标题
-@include m.panel-content;     // 面板内容区域
-@include m.config-section;    // 配置区块
-@include m.section-title;     // 区块标题
-@include m.subsection-title;  // 子区块标题（金色）
+@include m.panel-base; // 基础面板样式
+@include m.panel-header; // 面板头部
+@include m.panel-title; // 面板标题
+@include m.panel-content; // 面板内容区域
+@include m.config-section; // 配置区块
+@include m.section-title; // 区块标题
+@include m.subsection-title; // 子区块标题（金色）
 ```
 
 ### 按钮混入
 
 ```scss
 // 按钮样式
-@include m.btn-base;      // 基础按钮
-@include m.btn-primary;   // 主要按钮（金色主题）
+@include m.btn-base; // 基础按钮
+@include m.btn-primary; // 主要按钮（金色主题）
 @include m.btn-secondary; // 次要按钮
-@include m.btn-danger;    // 危险按钮
-@include m.collapse-btn;  // 折叠按钮
+@include m.btn-danger; // 危险按钮
+@include m.collapse-btn; // 折叠按钮
 ```
 
 ### 表单混入
 
 ```scss
 // 表单元素
-@include m.input-base;   // 输入框
-@include m.select-base;  // 选择框
-@include m.slider-base;  // 滑块
+@include m.input-base; // 输入框
+@include m.select-base; // 选择框
+@include m.slider-base; // 滑块
 ```
 
 ### 标签页混入
 
 ```scss
 // 标签页
-@include m.tabs-container;  // 标签容器
-@include m.tab-item;        // 标签项
-@include m.tab-label;       // 标签文字
+@include m.tabs-container; // 标签容器
+@include m.tab-item; // 标签项
+@include m.tab-label; // 标签文字
 ```
 
 ### 卡片混入
 
 ```scss
 // 卡片/列表
-@include m.interactive-card;  // 可交互卡片
-@include m.list-item;         // 列表项
-@include m.stat-item;         // 统计项
-@include m.stat-label;        // 统计标签
+@include m.interactive-card; // 可交互卡片
+@include m.list-item; // 列表项
+@include m.stat-item; // 统计项
+@include m.stat-label; // 统计标签
 @include m.stat-value($color); // 统计值
 ```
 
@@ -171,10 +171,10 @@ $font-size-xl: 1.25rem;   // 20px
 
 ```scss
 // 动画
-@include m.fade-in($duration);  // 淡入
-@include m.pulse;               // 脉冲
-@include m.bounce;              // 弹跳
-@include m.float;               // 悬浮
+@include m.fade-in($duration); // 淡入
+@include m.pulse; // 脉冲
+@include m.bounce; // 弹跳
+@include m.float; // 悬浮
 ```
 
 ## 工具类
@@ -192,9 +192,12 @@ $font-size-xl: 1.25rem;   // 20px
 ### 间距
 
 ```html
-<div class="p-md">...</div>    <!-- padding: 16px -->
-<div class="m-sm">...</div>    <!-- margin: 8px -->
-<div class="gap-lg">...</div>  <!-- gap: 24px -->
+<div class="p-md">...</div>
+<!-- padding: 16px -->
+<div class="m-sm">...</div>
+<!-- margin: 8px -->
+<div class="gap-lg">...</div>
+<!-- gap: 24px -->
 ```
 
 ### 文本
@@ -202,7 +205,8 @@ $font-size-xl: 1.25rem;   // 20px
 ```html
 <span class="text-gold font-bold">...</span>
 <span class="text-muted text-sm">...</span>
-<p class="truncate">...</p>    <!-- 单行截断 -->
+<p class="truncate">...</p>
+<!-- 单行截断 -->
 ```
 
 ### 组件
@@ -218,6 +222,7 @@ $font-size-xl: 1.25rem;   // 20px
 ### 1. 始终使用变量
 
 ❌ 错误：
+
 ```scss
 .my-component {
   color: #fbbf24;
@@ -226,8 +231,9 @@ $font-size-xl: 1.25rem;   // 20px
 ```
 
 ✅ 正确：
+
 ```scss
-@use '@/styles/variables' as v;
+@use "@/styles/variables" as v;
 
 .my-component {
   color: v.$primary-gold;
@@ -238,6 +244,7 @@ $font-size-xl: 1.25rem;   // 20px
 ### 2. 合理使用混入
 
 ❌ 错误：
+
 ```scss
 .panel {
   background-color: v.$bg-secondary;
@@ -248,6 +255,7 @@ $font-size-xl: 1.25rem;   // 20px
 ```
 
 ✅ 正确：
+
 ```scss
 .panel {
   @include m.panel-base;
@@ -257,6 +265,7 @@ $font-size-xl: 1.25rem;   // 20px
 ### 3. 保持嵌套层级清晰
 
 ❌ 错误：
+
 ```scss
 .parent {
   .child {
@@ -270,6 +279,7 @@ $font-size-xl: 1.25rem;   // 20px
 ```
 
 ✅ 正确：
+
 ```scss
 .parent {
   // 父级样式
@@ -297,7 +307,9 @@ MyComponent/
 ```vue
 <!-- index.vue -->
 <template>...</template>
-<script setup>...</script>
+<script setup>
+...
+</script>
 <style scoped lang="scss" src="./index.scss"></style>
 ```
 
@@ -308,7 +320,7 @@ MyComponent/
 ```scss
 .my-component {
   padding: v.$spacing-lg;
-  
+
   @include m.mobile {
     padding: v.$spacing-md;
   }
@@ -343,8 +355,7 @@ A: 在 `_mixins.scss` 中添加，参考现有混入的格式。
 A: 可以，通过 CSS 自定义属性：
 
 ```javascript
-const primaryColor = getComputedStyle(document.documentElement)
-  .getPropertyValue('--primary-gold')
+const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary-gold");
 ```
 
 ### Q: 如何处理组件特有的样式？
@@ -363,6 +374,7 @@ A: 组件特有样式保留在组件的 `<style>` 块中，通用的样式使用
 ### 示例迁移
 
 **迁移前：**
+
 ```scss
 .skin-release-panel {
   background-color: var(--bg-secondary);
@@ -381,9 +393,10 @@ A: 组件特有样式保留在组件的 `<style>` 块中，通用的样式使用
 ```
 
 **迁移后：**
+
 ```scss
-@use '@/styles/variables' as v;
-@use '@/styles/mixins' as m;
+@use "@/styles/variables" as v;
+@use "@/styles/mixins" as m;
 
 .skin-release-panel {
   @include m.panel-base;

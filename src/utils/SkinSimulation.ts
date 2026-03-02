@@ -3,7 +3,7 @@
  * 基于分层维度+动态权重+非线性映射的模型
  */
 
-import skinSimulationConfig from '../config/SkinSimulateConfig';
+import skinSimulationConfig from "../config/SkinSimulateConfig";
 
 // 指标配置接口
 export interface SkinIndicatorConfig {
@@ -62,9 +62,7 @@ export const processIndicators = {
 /**
  * 计算动态权重（重新归一化）
  */
-export function calculateDynamicWeights(
-  weightConfig: Partial<WeightConfig> = {},
-): {
+export function calculateDynamicWeights(weightConfig: Partial<WeightConfig> = {}): {
   heroBase: number;
   skinAttract: number;
   decisionThreshold: number;
@@ -89,27 +87,16 @@ export function calculateDynamicWeights(
   // 合并用户配置和默认配置
   const baseWeights = {
     heroBase: weightConfig.baseWeights?.heroBase || defaultBaseWeights.heroBase,
-    skinAttract:
-      weightConfig.baseWeights?.skinAttract || defaultBaseWeights.skinAttract,
-    decisionThreshold:
-      weightConfig.baseWeights?.decisionThreshold ||
-      defaultBaseWeights.decisionThreshold,
-    publicOpinion:
-      weightConfig.baseWeights?.publicOpinion ||
-      defaultBaseWeights.publicOpinion,
+    skinAttract: weightConfig.baseWeights?.skinAttract || defaultBaseWeights.skinAttract,
+    decisionThreshold: weightConfig.baseWeights?.decisionThreshold || defaultBaseWeights.decisionThreshold,
+    publicOpinion: weightConfig.baseWeights?.publicOpinion || defaultBaseWeights.publicOpinion,
   };
 
   const adjustCoeffs = {
-    heroBase:
-      weightConfig.adjustCoeffs?.heroBase || defaultAdjustCoeffs.heroBase,
-    skinAttract:
-      weightConfig.adjustCoeffs?.skinAttract || defaultAdjustCoeffs.skinAttract,
-    decisionThreshold:
-      weightConfig.adjustCoeffs?.decisionThreshold ||
-      defaultAdjustCoeffs.decisionThreshold,
-    publicOpinion:
-      weightConfig.adjustCoeffs?.publicOpinion ||
-      defaultAdjustCoeffs.publicOpinion,
+    heroBase: weightConfig.adjustCoeffs?.heroBase || defaultAdjustCoeffs.heroBase,
+    skinAttract: weightConfig.adjustCoeffs?.skinAttract || defaultAdjustCoeffs.skinAttract,
+    decisionThreshold: weightConfig.adjustCoeffs?.decisionThreshold || defaultAdjustCoeffs.decisionThreshold,
+    publicOpinion: weightConfig.adjustCoeffs?.publicOpinion || defaultAdjustCoeffs.publicOpinion,
   };
 
   // 计算总权重和归一化后的动态权重
@@ -126,13 +113,9 @@ export function calculateDynamicWeights(
 
   return {
     heroBase: (baseWeights.heroBase * adjustCoeffs.heroBase) / totalWeight,
-    skinAttract:
-      (baseWeights.skinAttract * adjustCoeffs.skinAttract) / totalWeight,
-    decisionThreshold:
-      (baseWeights.decisionThreshold * adjustCoeffs.decisionThreshold) /
-      totalWeight,
-    publicOpinion:
-      (baseWeights.publicOpinion * adjustCoeffs.publicOpinion) / totalWeight,
+    skinAttract: (baseWeights.skinAttract * adjustCoeffs.skinAttract) / totalWeight,
+    decisionThreshold: (baseWeights.decisionThreshold * adjustCoeffs.decisionThreshold) / totalWeight,
+    publicOpinion: (baseWeights.publicOpinion * adjustCoeffs.publicOpinion) / totalWeight,
   };
 }
 
@@ -144,25 +127,20 @@ export function calculateDynamicWeights(
  */
 export function calculateSkinMarketData(
   indicators: SkinIndicatorConfig,
-  weightConfig?: Partial<WeightConfig>,
+  weightConfig?: Partial<WeightConfig>
 ): SimulateResult {
   // 1. 计算动态权重
   const dynamicWeights = calculateDynamicWeights(weightConfig);
 
   // 2. 非线性处理指标
   const scarcityPrime = processIndicators.scarcity(indicators.scarcity);
-  const obtainDiffPrime = processIndicators.obtainDifficulty(
-    indicators.obtainDifficulty,
-  );
-  const negativeOpPrime = processIndicators.negativePublicOpinion(
-    indicators.negativePublicOpinion,
-  );
+  const obtainDiffPrime = processIndicators.obtainDifficulty(indicators.obtainDifficulty);
+  const negativeOpPrime = processIndicators.negativePublicOpinion(indicators.negativePublicOpinion);
 
   // 3. 计算各维度得分
   const heroScore = (indicators.pickRate + indicators.userBase) / 2;
   const skinAttractScore = (indicators.designFit + scarcityPrime) / 2;
-  const decisionThresholdScore =
-    (indicators.costEffectiveness + obtainDiffPrime) / 2;
+  const decisionThresholdScore = (indicators.costEffectiveness + obtainDiffPrime) / 2;
   const publicOpinionScore = (indicators.communityHeat + negativeOpPrime) / 2;
 
   // 4. 计算喜爱度和市场表现分
@@ -172,7 +150,7 @@ export function calculateSkinMarketData(
         skinAttractScore * dynamicWeights.skinAttract +
         publicOpinionScore * dynamicWeights.publicOpinion) *
       100
-    ).toFixed(2),
+    ).toFixed(2)
   );
 
   const marketScore = Number(
@@ -182,39 +160,26 @@ export function calculateSkinMarketData(
         decisionThresholdScore * dynamicWeights.decisionThreshold +
         publicOpinionScore * dynamicWeights.publicOpinion) *
       100
-    ).toFixed(2),
+    ).toFixed(2)
   );
 
   // 5. 获取基础模拟参数
-  const {
-    sales: baseSales,
-    discussion: baseDiscussion,
-    payRate: basePayRate,
-  } = skinSimulationConfig.baseValues;
+  const { sales: baseSales, discussion: baseDiscussion, payRate: basePayRate } = skinSimulationConfig.baseValues;
 
   // 6. 生成随机扰动因子
   const marketRandomFactor =
     skinSimulationConfig.randomFactors.market.min +
-    Math.random() *
-      (skinSimulationConfig.randomFactors.market.max -
-        skinSimulationConfig.randomFactors.market.min);
+    Math.random() * (skinSimulationConfig.randomFactors.market.max - skinSimulationConfig.randomFactors.market.min);
 
   const opinionRandomFactor =
     skinSimulationConfig.randomFactors.publicOpinion.min +
     Math.random() *
-      (skinSimulationConfig.randomFactors.publicOpinion.max -
-        skinSimulationConfig.randomFactors.publicOpinion.min);
+      (skinSimulationConfig.randomFactors.publicOpinion.max - skinSimulationConfig.randomFactors.publicOpinion.min);
 
   // 7. 映射到具体数值
-  const sales = Math.round(
-    baseSales * (marketScore / 100) * marketRandomFactor,
-  );
-  const discussionCount = Math.round(
-    baseDiscussion * (publicOpinionScore * 100) * opinionRandomFactor,
-  );
-  const payRate = Number(
-    (basePayRate * ((decisionThresholdScore * marketScore) / 100)).toFixed(4),
-  );
+  const sales = Math.round(baseSales * (marketScore / 100) * marketRandomFactor);
+  const discussionCount = Math.round(baseDiscussion * (publicOpinionScore * 100) * opinionRandomFactor);
+  const payRate = Number((basePayRate * ((decisionThresholdScore * marketScore) / 100)).toFixed(4));
 
   return {
     likeScore,
@@ -233,11 +198,9 @@ export function calculateSkinMarketData(
  */
 export function batchCalculateSkinMarketData(
   indicatorsList: SkinIndicatorConfig[],
-  weightConfig?: Partial<WeightConfig>,
+  weightConfig?: Partial<WeightConfig>
 ): SimulateResult[] {
-  return indicatorsList.map((indicators) =>
-    calculateSkinMarketData(indicators, weightConfig),
-  );
+  return indicatorsList.map((indicators) => calculateSkinMarketData(indicators, weightConfig));
 }
 
 /**
@@ -253,10 +216,7 @@ export function validateIndicatorValue(value: number): boolean {
  * 生成随机指标配置（用于测试）
  * @returns 随机生成的指标配置
  */
-export function generateRandomIndicatorConfig(
-  skinId: string,
-  heroId: string,
-): SkinIndicatorConfig {
+export function generateRandomIndicatorConfig(skinId: string, heroId: string): SkinIndicatorConfig {
   return {
     skinId,
     heroId,
@@ -284,10 +244,7 @@ export function generateRandomWeightConfig(): WeightConfig {
   };
 
   // 归一化基础权重
-  const totalBaseWeight = Object.values(baseWeights).reduce(
-    (sum, weight) => sum + weight,
-    0,
-  );
+  const totalBaseWeight = Object.values(baseWeights).reduce((sum, weight) => sum + weight, 0);
   for (const key in baseWeights) {
     baseWeights[key as keyof typeof baseWeights] /= totalBaseWeight;
   }
@@ -311,7 +268,7 @@ export function generateRandomWeightConfig(): WeightConfig {
  */
 export function simulateDifferentWeightConfigs(
   indicators: SkinIndicatorConfig,
-  weightConfigs: WeightConfig[],
+  weightConfigs: WeightConfig[]
 ): Array<{
   weightConfig: WeightConfig;
   result: SimulateResult;

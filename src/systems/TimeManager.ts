@@ -6,11 +6,7 @@ export interface GameDate {
 }
 
 // 时间阶段类型
-export type TimePhase =
-  | 'new_day'
-  | 'auto_settlement'
-  | 'player_operation'
-  | 'waiting_next_day';
+export type TimePhase = "new_day" | "auto_settlement" | "player_operation" | "waiting_next_day";
 
 // 时间管理系统类
 export class TimeManager {
@@ -18,9 +14,7 @@ export class TimeManager {
   private startTime: GameDate;
   private isPlayerTurn: boolean;
   private currentPhase: TimePhase;
-  private timeUpdateCallback:
-    | ((date: GameDate, phase: TimePhase) => void)
-    | null = null;
+  private timeUpdateCallback: ((date: GameDate, phase: TimePhase) => void) | null = null;
 
   // 构造函数
   constructor() {
@@ -33,21 +27,19 @@ export class TimeManager {
 
     this.startTime = { ...this.currentDate };
     this.isPlayerTurn = true;
-    this.currentPhase = 'player_operation';
+    this.currentPhase = "player_operation";
   }
 
   // 初始化时间管理器
   public init() {
     this.currentDate = { ...this.startTime };
     this.isPlayerTurn = true;
-    this.currentPhase = 'player_operation';
+    this.currentPhase = "player_operation";
     this.notifyTimeUpdate();
   }
 
   // 设置时间更新回调
-  public setTimeUpdateCallback(
-    callback: (date: GameDate, phase: TimePhase) => void,
-  ): void {
+  public setTimeUpdateCallback(callback: (date: GameDate, phase: TimePhase) => void): void {
     this.timeUpdateCallback = callback;
   }
 
@@ -76,25 +68,25 @@ export class TimeManager {
     // 执行4个阶段的时间流程
 
     // 1. 新一天00:00开始
-    this.currentPhase = 'new_day';
+    this.currentPhase = "new_day";
     this.notifyTimeUpdate();
 
     // 2. 自动运行至24:00（系统自动结算）
-    this.currentPhase = 'auto_settlement';
+    this.currentPhase = "auto_settlement";
     this.notifyTimeUpdate();
 
     // 3. 推进日期
     this.advanceDate();
 
     // 4. 玩家操作阶段
-    this.currentPhase = 'player_operation';
+    this.currentPhase = "player_operation";
     this.isPlayerTurn = true;
     this.notifyTimeUpdate();
   }
 
   // 手动结束当天，进入下一天
   public endCurrentDay(): void {
-    this.currentPhase = 'waiting_next_day';
+    this.currentPhase = "waiting_next_day";
     this.isPlayerTurn = false;
     this.notifyTimeUpdate();
 
@@ -139,7 +131,7 @@ export class TimeManager {
   public reset(): void {
     this.currentDate = { ...this.startTime };
     this.isPlayerTurn = true;
-    this.currentPhase = 'player_operation';
+    this.currentPhase = "player_operation";
     this.notifyTimeUpdate();
   }
 }

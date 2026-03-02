@@ -21,7 +21,7 @@
         class="content-header"
         v-if="showHeader"
       >
-        <h2>{{ currentItem?.name || '' }}</h2>
+        <h2>{{ currentItem?.name || "" }}</h2>
         <div
           class="module-core-data"
           v-if="coreData"
@@ -337,5 +337,3 @@ const getCoreDataLabel = (key: string): string => {
   overflow-y: auto;
 }
 </style>
-
-

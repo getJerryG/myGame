@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 export interface WindowInfo {
   id: string;
@@ -32,7 +32,7 @@ export interface WindowManagerState {
   downloadProgress: DownloadProgress[];
 }
 
-export const useWindowManagerStore = defineStore('windowManager', {
+export const useWindowManagerStore = defineStore("windowManager", {
   state: (): WindowManagerState => ({
     windows: [],
     activeWindowId: null,
@@ -56,9 +56,7 @@ export const useWindowManagerStore = defineStore('windowManager', {
      */
     activeWindow(): WindowInfo | null {
       if (!this.activeWindowId) return null;
-      return (
-        this.windows.find((window) => window.id === this.activeWindowId) || null
-      );
+      return this.windows.find((window) => window.id === this.activeWindowId) || null;
     },
 
     /**
@@ -66,10 +64,7 @@ export const useWindowManagerStore = defineStore('windowManager', {
      */
     maximizedWindow(): WindowInfo | null {
       if (!this.maximizedWindowId) return null;
-      return (
-        this.windows.find((window) => window.id === this.maximizedWindowId) ||
-        null
-      );
+      return this.windows.find((window) => window.id === this.maximizedWindowId) || null;
     },
 
     /**
@@ -86,9 +81,7 @@ export const useWindowManagerStore = defineStore('windowManager', {
      */
     normalWindows(): WindowInfo[] {
       return this.windows.filter(
-        (window) =>
-          !this.minimizedWindows.includes(window.id) &&
-          window.id !== this.maximizedWindowId,
+        (window) => !this.minimizedWindows.includes(window.id) && window.id !== this.maximizedWindowId
       );
     },
   },
@@ -97,12 +90,7 @@ export const useWindowManagerStore = defineStore('windowManager', {
     /**
      * 创建新窗口
      */
-    createWindow(
-      options: Omit<
-        WindowInfo,
-        'id' | 'zIndex' | 'isActive' | 'isMaximized' | 'isMinimized'
-      >,
-    ): string {
+    createWindow(options: Omit<WindowInfo, "id" | "zIndex" | "isActive" | "isMaximized" | "isMinimized">): string {
       const newWindowId = `window_${this.nextWindowId++}`;
       const newWindow: WindowInfo = {
         ...options,
@@ -223,9 +211,7 @@ export const useWindowManagerStore = defineStore('windowManager', {
       if (this.activeWindowId === windowId) {
         this.activeWindowId = null;
         const sorted = this.sortedWindows;
-        const nextActiveWindow = sorted.find(
-          (w) => w.id !== windowId && !this.minimizedWindows.includes(w.id),
-        );
+        const nextActiveWindow = sorted.find((w) => w.id !== windowId && !this.minimizedWindows.includes(w.id));
         if (nextActiveWindow) {
           this.activateWindow(nextActiveWindow.id);
         }
@@ -303,10 +289,7 @@ export const useWindowManagerStore = defineStore('windowManager', {
       }
 
       this.windows = this.windows.filter((w) => w.id === this.activeWindowId);
-      this.maximizedWindowId =
-        this.maximizedWindowId === this.activeWindowId
-          ? this.activeWindowId
-          : null;
+      this.maximizedWindowId = this.maximizedWindowId === this.activeWindowId ? this.activeWindowId : null;
       this.minimizedWindows = [];
     },
 

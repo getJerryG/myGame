@@ -91,9 +91,7 @@ export class ActionEffects {
 
   // 获取特定类型的效果
   public getEffectsByType(type: string): ActionEffect[] {
-    return Array.from(this.effects.values()).filter(
-      (effect) => effect.type === type,
-    );
+    return Array.from(this.effects.values()).filter((effect) => effect.type === type);
   }
 
   // 检查是否有特定效果
@@ -127,16 +125,12 @@ export class ActionEffects {
 
   // 获取所有正面效果
   public getPositiveEffects(): ActionEffect[] {
-    return Array.from(this.effects.values()).filter(
-      (effect) => effect.isPositive,
-    );
+    return Array.from(this.effects.values()).filter((effect) => effect.isPositive);
   }
 
   // 获取所有负面效果
   public getNegativeEffects(): ActionEffect[] {
-    return Array.from(this.effects.values()).filter(
-      (effect) => !effect.isPositive,
-    );
+    return Array.from(this.effects.values()).filter((effect) => !effect.isPositive);
   }
 
   // 创建效果实例
@@ -148,7 +142,7 @@ export class ActionEffects {
     value: number,
     duration = 0,
     isPositive = true,
-    isStackable = false,
+    isStackable = false
   ): ActionEffect {
     return {
       id,

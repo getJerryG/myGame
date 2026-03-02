@@ -1,4 +1,4 @@
-@use '@/styles/tokens' as tokens;
+@use "@/styles/tokens" as tokens;
 
 .skin-release-panel {
   background-color: var(--bg-secondary);
@@ -172,7 +172,7 @@
   overflow: hidden;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -100%;
@@ -213,7 +213,9 @@
 .skin-avatar {
   font-size: 48px;
   display: block;
-  transition: transform 0.3s ease, filter 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
   animation: float 3s ease-in-out infinite;
 }
 
@@ -232,7 +234,8 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
 
@@ -242,7 +245,8 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
 
@@ -502,7 +506,7 @@
   gap: 8px;
 
   input {
-    &[type='checkbox'] {
+    &[type="checkbox"] {
       width: 16px;
       height: 16px;
       accent-color: var(--primary-gold);
@@ -676,13 +680,13 @@
 
 .feature-item {
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, var(--primary-gold), var(--success-green), var(--primary-blue), #8B5CF6);
+    background: linear-gradient(90deg, var(--primary-gold), var(--success-green), var(--primary-blue), #8b5cf6);
     transform: scaleX(0);
     transition: transform 0.3s ease;
   }
@@ -738,7 +742,7 @@
 
 .feature-item-4 {
   .feature-icon {
-    color: #8B5CF6;
+    color: #8b5cf6;
   }
 }
 

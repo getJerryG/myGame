@@ -72,7 +72,6 @@
 </script>
 
 <style lang="scss" scoped>
-
 .history-effects {
   margin-top: tokens.$spacing-lg;
 

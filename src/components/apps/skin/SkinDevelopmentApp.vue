@@ -3,7 +3,12 @@
     <!-- 应用头部 -->
     <div class="app-header">
       <h2 class="app-title">皮肤开发</h2>
-      <button class="close-btn" @click="closeApp">×</button>
+      <button
+        class="close-btn"
+        @click="closeApp"
+      >
+        ×
+      </button>
     </div>
 
     <!-- 应用内容 -->
@@ -24,7 +29,10 @@
               <div class="skin-name">{{ skin.name }}</div>
               <div class="skin-hero">{{ skin.heroName }}</div>
             </div>
-            <div class="skin-rarity" :class="skin.rarity">
+            <div
+              class="skin-rarity"
+              :class="skin.rarity"
+            >
               {{ getRarityText(skin.rarity) }}
             </div>
           </div>
@@ -32,25 +40,42 @@
       </div>
 
       <!-- 皮肤详情 -->
-      <div v-if="selectedSkin" class="skin-detail-section">
+      <div
+        v-if="selectedSkin"
+        class="skin-detail-section"
+      >
         <div class="detail-preview">{{ selectedSkin.preview }}</div>
         <div class="detail-info">
           <h3 class="detail-name">{{ selectedSkin.name }}</h3>
           <div class="detail-hero">所属英雄: {{ selectedSkin.heroName }}</div>
-          <div class="detail-rarity" :class="selectedSkin.rarity">
+          <div
+            class="detail-rarity"
+            :class="selectedSkin.rarity"
+          >
             {{ getRarityText(selectedSkin.rarity) }}
           </div>
           <div class="detail-description">{{ selectedSkin.description }}</div>
         </div>
         <div class="detail-actions">
-          <button class="action-btn edit" @click="editSkin">编辑皮肤</button>
-          <button class="action-btn preview" @click="previewSkin">
+          <button
+            class="action-btn edit"
+            @click="editSkin"
+          >
+            编辑皮肤
+          </button>
+          <button
+            class="action-btn preview"
+            @click="previewSkin"
+          >
             预览效果
           </button>
         </div>
       </div>
 
-      <div v-else class="no-selection">
+      <div
+        v-else
+        class="no-selection"
+      >
         <div class="no-selection-icon">🎨</div>
         <p>请选择一款皮肤查看详情</p>
       </div>
@@ -59,7 +84,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
 
 // 皮肤数据
 interface Skin {
@@ -67,50 +92,50 @@ interface Skin {
   name: string;
   heroName: string;
   preview: string;
-  rarity: 'common' | 'rare' | 'epic' | 'legendary';
+  rarity: "common" | "rare" | "epic" | "legendary";
   description: string;
 }
 
 const skins = ref<Skin[]>([
   {
     id: 1,
-    name: '经典皮肤',
-    heroName: '战士',
-    preview: '⚔️',
-    rarity: 'common',
-    description: '战士的默认外观，简洁而实用。',
+    name: "经典皮肤",
+    heroName: "战士",
+    preview: "⚔️",
+    rarity: "common",
+    description: "战士的默认外观，简洁而实用。",
   },
   {
     id: 2,
-    name: '火焰法师',
-    heroName: '法师',
-    preview: '🔥',
-    rarity: 'rare',
-    description: '法师的火焰主题皮肤，燃烧吧！',
+    name: "火焰法师",
+    heroName: "法师",
+    preview: "🔥",
+    rarity: "rare",
+    description: "法师的火焰主题皮肤，燃烧吧！",
   },
   {
     id: 3,
-    name: '暗影刺客',
-    heroName: '刺客',
-    preview: '🌑',
-    rarity: 'epic',
-    description: '刺客的暗影主题皮肤，潜行于黑暗之中。',
+    name: "暗影刺客",
+    heroName: "刺客",
+    preview: "🌑",
+    rarity: "epic",
+    description: "刺客的暗影主题皮肤，潜行于黑暗之中。",
   },
   {
     id: 4,
-    name: '黄金圣骑士',
-    heroName: '坦克',
-    preview: '👑',
-    rarity: 'legendary',
-    description: '坦克的黄金主题皮肤，闪耀着神圣的光芒。',
+    name: "黄金圣骑士",
+    heroName: "坦克",
+    preview: "👑",
+    rarity: "legendary",
+    description: "坦克的黄金主题皮肤，闪耀着神圣的光芒。",
   },
   {
     id: 5,
-    name: '森林射手',
-    heroName: '射手',
-    preview: '🌲',
-    rarity: 'rare',
-    description: '射手的森林主题皮肤，与自然融为一体。',
+    name: "森林射手",
+    heroName: "射手",
+    preview: "🌲",
+    rarity: "rare",
+    description: "射手的森林主题皮肤，与自然融为一体。",
   },
 ]);
 
@@ -120,31 +145,31 @@ const selectedSkin = ref<Skin | null>(null);
 // 获取稀有度文本
 const getRarityText = (rarity: string): string => {
   const rarityMap: Record<string, string> = {
-    common: '普通',
-    rare: '稀有',
-    epic: '史诗',
-    legendary: '传说',
+    common: "普通",
+    rare: "稀有",
+    epic: "史诗",
+    legendary: "传说",
   };
   return rarityMap[rarity] || rarity;
 };
 
 // 选择皮肤
-const selectSkin = (skin: Skin) => {
+const selectSkin = (skin: Skin): void => {
   selectedSkin.value = skin;
 };
 
 // 编辑皮肤
-const editSkin = () => {
-  alert('编辑皮肤功能开发中...');
+const editSkin = (): void => {
+  alert("编辑皮肤功能开发中...");
 };
 
 // 预览皮肤
-const previewSkin = () => {
-  alert('预览皮肤功能开发中...');
+const previewSkin = (): void => {
+  alert("预览皮肤功能开发中...");
 };
 
 // 关闭应用
-const closeApp = () => {
+const closeApp = (): void => {
   window.history.back();
 };
 </script>
@@ -301,11 +326,7 @@ const closeApp = () => {
     }
 
     &.legendary {
-      background: linear-gradient(
-        135deg,
-        tokens.$primary-gold 0%,
-        #f59e0b 100%
-      );
+      background: linear-gradient(135deg, tokens.$primary-gold 0%, #f59e0b 100%);
       color: tokens.$gray-900;
     }
   }
@@ -374,11 +395,7 @@ const closeApp = () => {
       }
 
       &.legendary {
-        background: linear-gradient(
-          135deg,
-          tokens.$primary-gold 0%,
-          #f59e0b 100%
-        );
+        background: linear-gradient(135deg, tokens.$primary-gold 0%, #f59e0b 100%);
         color: tokens.$gray-900;
       }
     }
@@ -407,11 +424,7 @@ const closeApp = () => {
       min-width: 120px;
 
       &.edit {
-        background: linear-gradient(
-          135deg,
-          tokens.$lottery-purple 0%,
-          #7c3aed 100%
-        );
+        background: linear-gradient(135deg, tokens.$lottery-purple 0%, #7c3aed 100%);
         color: tokens.$text-primary;
         box-shadow: 0 4px 15px rgb(139 92 246 / 40%);
 

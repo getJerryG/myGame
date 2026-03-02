@@ -1,12 +1,12 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
 // 定义游戏设置类型
 interface GameSetup {
   id: string;
   name: string;
-  type: 'casual' | 'core' | 'hardcore' | 'simulation' | 'rpg' | 'strategy';
-  platform: 'pc' | 'mobile' | 'console' | 'cross_platform';
-  targetAudience: 'children' | 'teen' | 'adult' | 'all_ages';
+  type: "casual" | "core" | "hardcore" | "simulation" | "rpg" | "strategy";
+  platform: "pc" | "mobile" | "console" | "cross_platform";
+  targetAudience: "children" | "teen" | "adult" | "all_ages";
   developmentTime: number; // 预估开发时间（天）
   estimatedCost: number; // 预估开发成本
   requiredTeamSize: {
@@ -24,7 +24,7 @@ interface GameSetup {
     developmentTime: number;
     isSelected: boolean;
   }>;
-  status: 'planning' | 'in_development' | 'testing' | 'completed' | 'cancelled';
+  status: "planning" | "in_development" | "testing" | "completed" | "cancelled";
   createdAt: number;
   updatedAt: number;
 }
@@ -53,7 +53,7 @@ interface SimulationSetupState {
 }
 
 // 创建并导出游戏设置store
-export const useSimulationSetupStore = defineStore('simulationSetup', {
+export const useSimulationSetupStore = defineStore("simulationSetup", {
   state: (): SimulationSetupState => ({
     // 初始游戏设置列表
     gameSetups: [],
@@ -69,29 +69,29 @@ export const useSimulationSetupStore = defineStore('simulationSetup', {
     // 初始平台配置
     platformConfig: [
       {
-        id: 'platform_pc',
-        name: 'PC',
+        id: "platform_pc",
+        name: "PC",
         costMultiplier: 1.0,
         timeMultiplier: 1.0,
         audienceSize: 1000000,
       },
       {
-        id: 'platform_mobile',
-        name: '移动设备',
+        id: "platform_mobile",
+        name: "移动设备",
         costMultiplier: 0.8,
         timeMultiplier: 0.7,
         audienceSize: 5000000,
       },
       {
-        id: 'platform_console',
-        name: '主机',
+        id: "platform_console",
+        name: "主机",
         costMultiplier: 1.5,
         timeMultiplier: 1.3,
         audienceSize: 2000000,
       },
       {
-        id: 'platform_cross',
-        name: '跨平台',
+        id: "platform_cross",
+        name: "跨平台",
         costMultiplier: 2.0,
         timeMultiplier: 1.8,
         audienceSize: 8000000,
@@ -103,23 +103,18 @@ export const useSimulationSetupStore = defineStore('simulationSetup', {
     // 获取活跃的游戏设置
     activeSetups: (state) => {
       return state.gameSetups.filter(
-        (setup) =>
-          setup.status === 'planning' ||
-          setup.status === 'in_development' ||
-          setup.status === 'testing',
+        (setup) => setup.status === "planning" || setup.status === "in_development" || setup.status === "testing"
       );
     },
 
     // 获取已完成的游戏设置
     completedSetups: (state) => {
-      return state.gameSetups.filter((setup) => setup.status === 'completed');
+      return state.gameSetups.filter((setup) => setup.status === "completed");
     },
 
     // 根据平台获取配置
     getPlatformConfig: (state) => (platformId: string) => {
-      return state.platformConfig.find(
-        (platform) => platform.id === platformId,
-      );
+      return state.platformConfig.find((platform) => platform.id === platformId);
     },
 
     // 根据ID获取游戏设置
@@ -130,43 +125,41 @@ export const useSimulationSetupStore = defineStore('simulationSetup', {
 
   actions: {
     // 创建新游戏设置
-    createGameSetup(
-      setupData: Omit<GameSetup, 'id' | 'createdAt' | 'updatedAt' | 'features'>,
-    ) {
+    createGameSetup(setupData: Omit<GameSetup, "id" | "createdAt" | "updatedAt" | "features">) {
       if (this.activeSetups.length >= this.setupConfig.maxSimultaneousSetups) {
-        throw new Error('已达到最大同时设置数量限制');
+        throw new Error("已达到最大同时设置数量限制");
       }
 
       // 初始化特性列表
       const initialFeatures = [
         {
-          id: 'feature_multiplayer',
-          name: '多人游戏',
-          description: '支持玩家之间的在线交互',
+          id: "feature_multiplayer",
+          name: "多人游戏",
+          description: "支持玩家之间的在线交互",
           cost: 5000,
           developmentTime: 15,
           isSelected: false,
         },
         {
-          id: 'feature_graphics',
-          name: '高级图形',
-          description: '高质量的视觉效果和图形',
+          id: "feature_graphics",
+          name: "高级图形",
+          description: "高质量的视觉效果和图形",
           cost: 8000,
           developmentTime: 20,
           isSelected: false,
         },
         {
-          id: 'feature_story',
-          name: '丰富剧情',
-          description: '深入的游戏剧情和角色发展',
+          id: "feature_story",
+          name: "丰富剧情",
+          description: "深入的游戏剧情和角色发展",
           cost: 6000,
           developmentTime: 25,
           isSelected: false,
         },
         {
-          id: 'feature_customization',
-          name: '角色定制',
-          description: '允许玩家自定义角色外观和能力',
+          id: "feature_customization",
+          name: "角色定制",
+          description: "允许玩家自定义角色外观和能力",
           cost: 4000,
           developmentTime: 10,
           isSelected: false,
@@ -223,18 +216,12 @@ export const useSimulationSetupStore = defineStore('simulationSetup', {
       }
 
       // 团队规模成本
-      const teamSize = Object.values(setup.requiredTeamSize).reduce(
-        (sum, count) => sum + count,
-        0,
-      );
+      const teamSize = Object.values(setup.requiredTeamSize).reduce((sum, count) => sum + count, 0);
       totalCost *= 1 + teamSize * 0.1;
 
       // 特性成本
       const selectedFeatures = setup.features.filter((f) => f.isSelected);
-      const featuresCost = selectedFeatures.reduce(
-        (sum, feature) => sum + feature.cost,
-        0,
-      );
+      const featuresCost = selectedFeatures.reduce((sum, feature) => sum + feature.cost, 0);
       totalCost += featuresCost;
 
       return Math.round(totalCost);
@@ -253,10 +240,7 @@ export const useSimulationSetupStore = defineStore('simulationSetup', {
 
       // 特性开发时间
       const selectedFeatures = setup.features.filter((f) => f.isSelected);
-      const featuresTime = selectedFeatures.reduce(
-        (sum, feature) => sum + feature.developmentTime,
-        0,
-      );
+      const featuresTime = selectedFeatures.reduce((sum, feature) => sum + feature.developmentTime, 0);
       totalTime += featuresTime;
 
       return Math.round(totalTime);
@@ -265,7 +249,7 @@ export const useSimulationSetupStore = defineStore('simulationSetup', {
 
   // 持久化存储
   persist: {
-    key: 'simulation-setup',
+    key: "simulation-setup",
     storage: localStorage,
   },
 });

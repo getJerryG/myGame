@@ -1,27 +1,27 @@
 // 导出应用相关类型
-export * from './app';
+export * from "./app";
 
 // 导出游戏相关类型
-export * from './game';
+export * from "./game";
 
 // 导出抽奖相关类型
-export * from './lottery';
+export * from "./lottery";
 
 // 导出模态框相关类型
-export * from './modal';
+export * from "./modal";
 
 // 导出玩家相关类型
-export * from './player';
+export * from "./player";
 
 // 导出模拟相关类型
-export * from './simulation';
-export * from './simulation-history';
-export * from './simulation-report';
-export * from './simulation-results';
-export * from './simulation-stage';
+export * from "./simulation";
+export * from "./simulation-history";
+export * from "./simulation-report";
+export * from "./simulation-results";
+export * from "./simulation-stage";
 
 // 导出技能相关类型
-export * from './skill';
+export * from "./skill";
 
 // 添加缺失的类型定义
 export interface GameTime {

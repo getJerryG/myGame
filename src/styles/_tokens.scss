@@ -130,7 +130,8 @@ $space-16: 4rem;
 // --------------------------------------------
 // 3. 字体系统
 // --------------------------------------------
-$font-family-base: -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, 'Helvetica Neue', arial, 'Microsoft YaHei', sans-serif;
+$font-family-base:
+  -apple-system, blinkmacsystemfont, "Segoe UI", roboto, "Helvetica Neue", arial, "Microsoft YaHei", sans-serif;
 
 // 字体大小
 $font-size-xs: 0.75rem;
@@ -169,9 +170,15 @@ $radius-full: 9999px;
 // 5. 阴影系统
 // --------------------------------------------
 $shadow-sm: 0 1px 2px rgb(0 0 0 / 5%);
-$shadow-md: 0 4px 6px rgb(0 0 0 / 10%), 0 2px 4px rgb(0 0 0 / 6%);
-$shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -2px rgb(0 0 0 / 5%);
-$shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 10%), 0 10px 10px -5px rgb(0 0 0 / 4%);
+$shadow-md:
+  0 4px 6px rgb(0 0 0 / 10%),
+  0 2px 4px rgb(0 0 0 / 6%);
+$shadow-lg:
+  0 10px 15px -3px rgb(0 0 0 / 10%),
+  0 4px 6px -2px rgb(0 0 0 / 5%);
+$shadow-xl:
+  0 20px 25px -5px rgb(0 0 0 / 10%),
+  0 10px 10px -5px rgb(0 0 0 / 4%);
 
 // 特殊阴影
 $shadow-gold: 0 2px 8px rgb(251 191 36 / 30%);
@@ -240,14 +247,14 @@ $height-breakpoint-sm: 600px;
   --text-muted: #{$text-muted};
   --border-light: #{$border-light};
   --border-medium: #{$border-medium};
-  
+
   // 间距
   --spacing-xs: #{$spacing-xs};
   --spacing-sm: #{$spacing-sm};
   --spacing-md: #{$spacing-md};
   --spacing-lg: #{$spacing-lg};
   --spacing-xl: #{$spacing-xl};
-  
+
   // 字体大小
   --font-size-xs: #{$font-size-xs};
   --font-size-sm: #{$font-size-sm};
@@ -256,24 +263,24 @@ $height-breakpoint-sm: 600px;
   --font-size-xl: #{$font-size-xl};
   --font-size-2xl: #{$font-size-2xl};
   --font-size-3xl: #{$font-size-3xl};
-  
+
   // 圆角
   --radius-sm: #{$radius-sm};
   --radius-md: #{$radius-md};
   --radius-lg: #{$radius-lg};
   --radius-xl: #{$radius-xl};
-  
+
   // 阴影
   --shadow-sm: #{$shadow-sm};
   --shadow-md: #{$shadow-md};
   --shadow-lg: #{$shadow-lg};
   --shadow-xl: #{$shadow-xl};
-  
+
   // 过渡
   --transition-fast: #{$transition-fast};
   --transition-normal: #{$transition-normal};
   --transition-slow: #{$transition-slow};
-  
+
   // 布局
   --header-height: #{$header-height};
   --sidebar-width: #{$sidebar-width};

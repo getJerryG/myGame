@@ -20,7 +20,11 @@
 
       <!-- 活动名称 -->
       <div class="form-group">
-        <label for="event-name" class="form-label">活动名称</label>
+        <label
+          for="event-name"
+          class="form-label"
+          >活动名称</label
+        >
         <input
           id="event-name"
           v-model="localConfig.name"
@@ -33,7 +37,11 @@
       <!-- 时间范围设置 -->
       <div class="form-row">
         <div class="form-group">
-          <label for="start-date" class="form-label">开始日期</label>
+          <label
+            for="start-date"
+            class="form-label"
+            >开始日期</label
+          >
           <input
             id="start-date"
             v-model="localConfig.startDate"
@@ -42,7 +50,11 @@
           />
         </div>
         <div class="form-group">
-          <label for="end-date" class="form-label">结束日期</label>
+          <label
+            for="end-date"
+            class="form-label"
+            >结束日期</label
+          >
           <input
             id="end-date"
             v-model="localConfig.endDate"
@@ -61,7 +73,10 @@
             :key="index"
             class="reward-item"
           >
-            <select v-model="reward.type" class="form-select">
+            <select
+              v-model="reward.type"
+              class="form-select"
+            >
               <option value="skin">皮肤</option>
               <option value="hero">英雄</option>
               <option value="currency">游戏币</option>
@@ -98,7 +113,11 @@
               ✕
             </button>
           </div>
-          <button type="button" class="add-reward-btn" @click="addReward">
+          <button
+            type="button"
+            class="add-reward-btn"
+            @click="addReward"
+          >
             <span class="btn-icon">+</span>
             <span class="btn-text">添加奖励</span>
           </button>
@@ -111,7 +130,10 @@
         <div class="conditions-container">
           <div class="condition-item">
             <label class="checkbox-label">
-              <input v-model="localConfig.conditions.level" type="checkbox" />
+              <input
+                v-model="localConfig.conditions.level"
+                type="checkbox"
+              />
               <span class="label-text">等级限制</span>
             </label>
             <input
@@ -128,11 +150,19 @@
 
       <!-- 预览按钮 -->
       <div class="form-actions">
-        <button type="button" class="btn btn-secondary" @click="previewEvent">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          @click="previewEvent"
+        >
           <span class="btn-icon">👁️</span>
           <span class="btn-text">预览活动</span>
         </button>
-        <button type="button" class="btn btn-primary" @click="saveEvent">
+        <button
+          type="button"
+          class="btn btn-primary"
+          @click="saveEvent"
+        >
           <span class="btn-icon">💾</span>
           <span class="btn-text">保存活动</span>
         </button>
@@ -271,7 +301,6 @@ const saveEvent = (): void => {
 </script>
 
 <style lang="scss" scoped>
-
 .event-config {
   margin-bottom: tokens.$spacing-lg;
 
@@ -390,7 +419,7 @@ const saveEvent = (): void => {
       color: tokens.$text-secondary;
 
       input {
-        &[type='checkbox'] {
+        &[type="checkbox"] {
           width: 16px;
           height: 16px;
           accent-color: tokens.$primary-blue;

@@ -45,7 +45,7 @@ import { computed } from "vue";
 /**
  * 侧边栏布局组件 - 提供带有侧边导航和主内容区域的布局
  *
- * @description 该组件用于创建包含侧边导航栏和主内容区域的布局，支持深�?浅色主题切换，适用于多模块应用
+ * @description 该组件用于创建包含侧边导航栏和主内容区域的布局，支持深色/浅色主题切换，适用于多模块应用
  * @example
  * ```vue
  * <SidebarLayout
@@ -58,7 +58,7 @@ import { computed } from "vue";
  *   @update:activeItemId="updateActiveModule"
  *   @item-click="handleItemClick"
  * >
- *   <!-- 主内容区�?-->
+ *   <!-- 主内容区域 -->
  * </SidebarLayout>
  * ```
  */
@@ -268,7 +268,7 @@ const getCoreDataLabel = (key: string): string => {
   }
 }
 
-/* 侧边栏样�? */
+/* 侧边栏样式 */
 .sidebar-layout-sidebar {
   width: 200px;
   overflow-y: auto;
@@ -295,7 +295,7 @@ const getCoreDataLabel = (key: string): string => {
   font-weight: 500;
 }
 
-/* 主内容区域样�? */
+/* 主内容区域样式 */
 .sidebar-layout-main {
   flex: 1;
   display: flex;

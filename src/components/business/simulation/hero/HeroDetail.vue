@@ -53,7 +53,7 @@
         </div>
       </div>
 
-      <!-- 数值调整工�?-->
+      <!-- 数值调整工具 -->
       <div class="detail-section">
         <h5>数值调整</h5>
         <div class="adjustment-tools">
@@ -102,7 +102,7 @@
         </div>
       </div>
 
-      <!-- 平衡性分�?-->
+      <!-- 平衡性分析 -->
       <div class="detail-section">
         <h5>平衡性分析</h5>
         <div class="balance-analysis">

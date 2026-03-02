@@ -83,7 +83,7 @@
                   }}</span>
                 </div>
                 <div class="event-time">
-                  {{ event.startDate }} �?{{ event.endDate }}
+                  {{ event.startDate }} 至 {{ event.endDate }}
                 </div>
               </div>
               <div class="event-data">

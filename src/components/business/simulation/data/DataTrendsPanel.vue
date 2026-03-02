@@ -32,7 +32,7 @@
         </div>
       </div>
 
-      <!-- 下载量趋势图�?-->
+      <!-- 下载量趋势图表 -->
       <div class="trend-chart">
         <h3 class="chart-title">下载量趋势</h3>
         <div class="chart-container">

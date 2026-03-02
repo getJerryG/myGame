@@ -5,7 +5,7 @@
       <h2>游戏发布</h2>
     </div>
 
-    <!-- 标签页导�?-->
+    <!-- 标签页导航 -->
     <div class="app-tabs">
       <button
         class="tab-btn"

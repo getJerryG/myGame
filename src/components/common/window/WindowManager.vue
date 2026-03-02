@@ -7,7 +7,7 @@
         :key="window.id"
         :window-id="window.id"
       >
-        <!-- 动态插槽内�?-->
+        <!-- 动态插槽内容 -->
         <component
           v-for="tab in window.tabs || []"
           :key="tab.id"
@@ -32,7 +32,7 @@
       + 新建窗口
     </button>
 
-    <!-- 合并预览指示�?-->
+    <!-- 合并预览指示器 -->
     <div v-if="windowManagerStore.mergePreview" class="merge-preview-indicator">
       <div class="merge-preview-arrow"></div>
       <div class="merge-preview-text">释放鼠标合并窗口</div>
@@ -238,7 +238,7 @@ onMounted(() => {
         height: 400,
       },
     );
-    // 创建一个示例窗�?    setTimeout(() => createNewWindow(), 100);
+    // 创建一个示例窗口    setTimeout(() => createNewWindow(), 100);
   }, 100);
 });
 

@@ -107,8 +107,8 @@
             @change="handleGameModeChange($event)"
           >
             <option value="classic">经典模式</option>
-            <option value="quick">快速模�?/option></option>
-            <option value="ARAM">大乱�?/option></option>
+            <option value="quick">快速模式</option>
+            <option value="ARAM">大乱斗</option>
           </select>
         </div>
         <div class="config-item">

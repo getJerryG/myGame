@@ -51,7 +51,7 @@
         </div>
       </div>
 
-      <!-- 快捷功能选项�?-->
+      <!-- 快捷功能选项卡 -->
       <div v-show="activeTab === 'quick-actions'" class="tab-panel">
         <h2 class="section-title">快捷功能</h2>
         <div class="quick-actions-grid">
@@ -171,7 +171,7 @@ function handleQuickAction(action: string): void {
   position: relative;
 }
 
-/* 选项卡导航样�? */
+/* 选项卡导航样式 */
 .tabs-navigation {
   display: flex;
   gap: 10px;
@@ -183,7 +183,7 @@ function handleQuickAction(action: string): void {
   border: 2px solid #e2e8f0;
 }
 
-/* 选项卡按钮样�? */
+/* 选项卡按钮样式 */
 .tab-button {
   display: flex;
   align-items: center;
@@ -265,7 +265,7 @@ function handleQuickAction(action: string): void {
   letter-spacing: 0.5px;
 }
 
-/* 选项卡内容区�? */
+/* 选项卡内容区域 */
 .tabs-content {
   flex: 1;
   overflow-y: auto;
@@ -274,7 +274,7 @@ function handleQuickAction(action: string): void {
   padding-right: 5px;
 }
 
-/* 滚动条样�? */
+/* 滚动条样式 */
 .tabs-content {
   &::-webkit-scrollbar {
     width: 8px;
@@ -296,7 +296,7 @@ function handleQuickAction(action: string): void {
   }
 }
 
-/* 选项卡面板样�? */
+/* 选项卡面板样式 */
 .tab-panel {
   animation: panelFadeIn 0.4s ease;
 }
@@ -415,7 +415,7 @@ function handleQuickAction(action: string): void {
   }
 }
 
-/* 任务状态徽章样�? */
+/* 任务状态徽章样式 */
 .task-status-badge {
   padding: 8px 16px;
   border-radius: 20px;
@@ -616,7 +616,7 @@ function handleQuickAction(action: string): void {
   border-left: 3px solid #667eea;
 }
 
-/* 响应式设�? */
+/* 响应式设计 */
 @media (width <= 768px) {
   .tabs-navigation {
     flex-direction: column;

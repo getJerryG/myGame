@@ -1,7 +1,7 @@
 <template>
   <div class="filters">
     <div class="filter-row">
-      <!-- 英雄分类筛�?-->
+      <!-- 英雄分类筛选 -->
       <div class="filter-group">
         <label class="filter-label">分类</label>
         <select
@@ -19,7 +19,7 @@
         </select>
       </div>
 
-      <!-- 强度分级筛�?-->
+      <!-- 强度分级筛选 -->
       <div class="filter-group">
         <label class="filter-label">强度</label>
         <select
@@ -35,7 +35,7 @@
         </select>
       </div>
 
-      <!-- 搜索�?-->
+      <!-- 搜索框 -->
       <div class="filter-group search">
         <label class="filter-label">搜索</label>
         <input
@@ -65,7 +65,7 @@
         </select>
       </div>
 
-      <!-- 出场率排�?-->
+      <!-- 出场率排序 -->
       <div class="filter-group">
         <label class="filter-label">出场率</label>
         <select

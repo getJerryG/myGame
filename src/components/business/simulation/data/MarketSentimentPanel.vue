@@ -1,6 +1,6 @@
 <template>
   <div class="market-sentiment-panel">
-    <!-- 市场情绪仪表�?-->
+    <!-- 市场情绪仪表盘 -->
     <div class="sentiment-dashboard">
       <h3 class="panel-title">市场情绪</h3>
       <div class="dashboard-container">
@@ -56,7 +56,7 @@
             stroke-linecap="round"
           />
 
-          <!-- 中心�?-->
+          <!-- 中心值 -->
           <circle
             class="gauge-center"
             cx="100"
@@ -75,7 +75,7 @@
       </div>
     </div>
 
-    <!-- 最新反馈摘�?-->
+    <!-- 最新反馈摘要 -->
     <div class="feedback-summary">
       <h3 class="panel-title">最新反馈</h3>
       <div class="feedback-scroll">
@@ -94,7 +94,7 @@
       </div>
     </div>
 
-    <!-- 待处理决策提�?-->
+    <!-- 待处理决策提醒 -->
     <div class="pending-decisions">
       <h3 class="panel-title">
         待处理决策
@@ -205,7 +205,7 @@ export default {
     };
   },
   computed: {
-    // 情绪状�?
+    // 情绪状态
     sentimentStatus(): string {
       if (this.sentimentValue >= 70) {
         return "积极";
@@ -239,7 +239,7 @@ export default {
     },
   },
   mounted(): void {
-    // 模拟情绪值变�?
+    // 模拟情绪值变化
     this.simulateSentimentChange();
   },
   methods: {
@@ -277,7 +277,7 @@ export default {
     @include utils.badge-notification;
   }
 
-  /* 市场情绪仪表�? */
+  /* 市场情绪仪表盘 */
   .sentiment-dashboard {
     @include utils.flex-col(tokens.$spacing-md, stretch, flex-start);
 
@@ -332,7 +332,7 @@ export default {
     }
   }
 
-  /* 最新反馈摘�? */
+  /* 最新反馈摘要 */
   .feedback-summary {
     @include utils.flex-col(tokens.$spacing-md, stretch, flex-start);
 
@@ -397,7 +397,7 @@ export default {
     }
   }
 
-  /* 待处理决策提�? */
+  /* 待处理决策提醒 */
   .pending-decisions {
     @include utils.flex-col(tokens.$spacing-md, stretch, flex-start);
 

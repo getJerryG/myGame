@@ -1320,7 +1320,15 @@ export const analyzeHeroBalance = (hero: Hero): HeroBalanceAnalysis => {
   const idealDefense = classStats.averageDefense;
 
   // 3. 分析属性平衡性
-  const analyzeAttribute = (value: number, ideal: number) => {
+  const analyzeAttribute = (
+    value: number,
+    ideal: number,
+  ): {
+    value: number;
+    ideal: number;
+    deviation: number;
+    status: "underpowered" | "balanced" | "overpowered";
+  } => {
     const deviation = (Math.abs(value - ideal) / ideal) * 100;
     let status: "underpowered" | "balanced" | "overpowered" = "balanced";
 

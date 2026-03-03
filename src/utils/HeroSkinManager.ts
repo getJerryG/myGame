@@ -111,6 +111,28 @@ export const SkinRarities = [
   },
 ] as const;
 
+// 英雄职业类型
+export const HeroClasses = [
+  { id: "warrior", name: "战士", icon: "⚔️" },
+  { id: "mage", name: "法师", icon: "✨" },
+  { id: "archer", name: "射手", icon: "🏹" },
+  { id: "tank", name: "坦克", icon: "🛡️" },
+  { id: "assassin", name: "刺客", icon: "🗡️" },
+  { id: "support", name: "辅助", icon: "🩹" },
+] as const;
+
+// 英雄风格类型
+export const HeroStyles = [
+  "传统",
+  "现代",
+  "科幻",
+  "奇幻",
+  "古风",
+  "未来",
+  "暗黑",
+  "光明",
+] as const;
+
 // 创作类型与皮肤品质关联
 const CreationTypeRarityMap = {
   selfCreation: {
@@ -134,6 +156,14 @@ const CreationTypeRarityMap = {
     availableRarities: ["珍品限定", "无双限定", "珍品无双限定"],
   },
 } as const;
+
+// 英雄创作类型
+export const HeroCreationTypes = [
+  "自己创作",
+  "合作创作",
+  "聘请大师",
+  "特邀大师",
+] as const;
 
 // 从本地存储获取英雄列表
 export const getHeroesFromStorage = (): Hero[] => {
@@ -412,6 +442,219 @@ export const deleteSkin = (skinId: string): void => {
   saveSkinsToStorage(updatedSkins);
 };
 
+// 验证英雄是否可以创建
+export const validateHeroCreation = (
+  heroData: Omit<Hero, "id" | "createdAt">,
+): {
+  valid: boolean;
+  message: string;
+} => {
+  // 1. 验证英雄名称是否已存在
+  if (isHeroExists(heroData.name)) {
+    return {
+      valid: false,
+      message: "英雄名称已存在，请使用其他名称",
+    };
+  }
+
+  // 2. 验证英雄职业是否合法
+  const isValidClass = HeroClasses.some((cls) => cls.name === heroData.class);
+  if (!isValidClass) {
+    return {
+      valid: false,
+      message: "无效的英雄职业",
+    };
+  }
+
+  return {
+    valid: true,
+    message: "验证通过",
+  };
+};
+
+// 创建英雄
+export const createHero = (heroData: Omit<Hero, "id" | "createdAt">): Hero => {
+  // 生成唯一ID
+  const id = `hero-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+
+  // 创建英雄对象
+  const newHero: Hero = {
+    ...heroData,
+    id,
+    createdAt: new Date().toISOString(),
+    // 确保必要字段有默认值
+    pickRate: heroData.pickRate || 0.01,
+    userBase: heroData.userBase || 0.01,
+    usageRate: heroData.usageRate || 0,
+    winRate: heroData.winRate || 50,
+    banRate: heroData.banRate || 0,
+  };
+
+  // 保存到本地存储
+  const heroes = getHeroesFromStorage();
+  heroes.push(newHero);
+  saveHeroesToStorage(heroes);
+
+  return newHero;
+};
+
+// 生成随机英雄数据
+export const generateRandomHeroData = (): Omit<Hero, "id" | "createdAt"> => {
+  // 随机选择英雄职业
+  const randomClass =
+    HeroClasses[Math.floor(Math.random() * HeroClasses.length)];
+
+  // 随机选择英雄风格
+  const randomStyle = HeroStyles[Math.floor(Math.random() * HeroStyles.length)];
+
+  // 随机选择创作类型
+  const randomCreationType =
+    HeroCreationTypes[Math.floor(Math.random() * HeroCreationTypes.length)];
+
+  // 随机生成英雄名称
+  const heroNames = [
+    "雷电",
+    "火焰",
+    "冰霜",
+    "风暴",
+    "大地",
+    "光明",
+    "黑暗",
+    "星辰",
+    "钢铁",
+    "疾风",
+    "幻影",
+    "雷霆",
+    "曙光",
+    "暮色",
+    "黎明",
+    "黄昏",
+  ];
+  const heroAdjectives = [
+    "勇士",
+    "法师",
+    "射手",
+    "守护者",
+    "刺客",
+    "贤者",
+    "行者",
+    "猎人",
+    "骑士",
+    "术士",
+    "游侠",
+    "斗士",
+    "祭司",
+    "忍者",
+    "武士",
+    "宗师",
+  ];
+  const randomName = `${heroNames[Math.floor(Math.random() * heroNames.length)]}${heroAdjectives[Math.floor(Math.random() * heroAdjectives.length)]}`;
+
+  // 随机生成基础属性（根据职业调整）
+  let baseHealth = 1000;
+  let baseAttack = 100;
+  let baseDefense = 50;
+
+  // 根据职业调整基础属性
+  switch (randomClass.id) {
+    case "warrior":
+      baseHealth = 1500;
+      baseAttack = 120;
+      baseDefense = 80;
+      break;
+    case "mage":
+      baseHealth = 800;
+      baseAttack = 180;
+      baseDefense = 30;
+      break;
+    case "archer":
+      baseHealth = 900;
+      baseAttack = 150;
+      baseDefense = 40;
+      break;
+    case "tank":
+      baseHealth = 2000;
+      baseAttack = 80;
+      baseDefense = 120;
+      break;
+    case "assassin":
+      baseHealth = 700;
+      baseAttack = 200;
+      baseDefense = 20;
+      break;
+    case "support":
+      baseHealth = 1000;
+      baseAttack = 90;
+      baseDefense = 60;
+      break;
+  }
+
+  return {
+    name: randomName,
+    icon: randomClass.icon,
+    class: randomClass.name,
+    stats: {
+      health: baseHealth + Math.floor(Math.random() * 200),
+      attack: baseAttack + Math.floor(Math.random() * 30),
+      defense: baseDefense + Math.floor(Math.random() * 20),
+    },
+    description: `${randomName}是一名强大的${randomClass.name}，擅长${
+      randomClass.name === "战士"
+        ? "近身战斗"
+        : randomClass.name === "法师"
+          ? "远程魔法攻击"
+          : randomClass.name === "射手"
+            ? "远程物理攻击"
+            : randomClass.name === "坦克"
+              ? "承受伤害和保护队友"
+              : randomClass.name === "刺客"
+                ? "暗杀和爆发伤害"
+                : "辅助队友和提供增益效果"
+    }。`,
+    creationType: randomCreationType,
+    style: randomStyle,
+    // 研发相关字段
+    developmentTime: 15 + Math.floor(Math.random() * 15), // 15-30天
+    developmentCost: 5000 + Math.floor(Math.random() * 5000), // 5000-10000
+    developmentProgress: 0,
+    status: "in_development",
+    // 模拟相关字段
+    pickRate: 0.01 + Math.random() * 0.04, // 1%-5%
+    userBase: 0.01 + Math.random() * 0.04, // 1%-5%
+    usageRate: 0,
+    winRate: 48 + Math.random() * 4, // 48%-52%
+    banRate: 0,
+  };
+};
+
+// 全自动生成英雄
+export const autoGenerateHero = (): Hero => {
+  // 生成随机英雄数据
+  const heroData = generateRandomHeroData();
+
+  // 验证英雄数据
+  const validation = validateHeroCreation(heroData);
+  if (!validation.valid) {
+    // 如果生成的数据无效，重新生成
+    return autoGenerateHero();
+  }
+
+  // 创建英雄
+  return createHero(heroData);
+};
+
+// 批量生成英雄
+export const batchGenerateHeroes = (count: number): Hero[] => {
+  const generatedHeroes: Hero[] = [];
+
+  for (let i = 0; i < count; i++) {
+    const hero = autoGenerateHero();
+    generatedHeroes.push(hero);
+  }
+
+  return generatedHeroes;
+};
+
 // 删除英雄时，同时删除其所有皮肤
 export const deleteHeroAndSkins = (heroName: string): void => {
   // 删除英雄
@@ -507,25 +750,87 @@ export const validateHeroSkinCreation = (
   return !rarityConfig || heroCount >= rarityConfig.requiredHeroCount;
 };
 
-// 推进研发进度
-export const advanceDevelopment = (id: string, isHero = false): void => {
+// 英雄研发加速选项
+export interface HeroAccelerateOption {
+  id: string;
+  name: string;
+  description: string;
+  costMultiplier: number; // 成本乘数
+  timeReduction: number; // 时间减少百分比 (0-100)
+  resourceType: "money" | "points" | "both";
+}
+
+// 研发加速选项配置
+export const HeroAccelerateOptions: HeroAccelerateOption[] = [
+  {
+    id: "normal",
+    name: "正常研发",
+    description: "使用常规资源进行研发，无额外成本",
+    costMultiplier: 1.0,
+    timeReduction: 0,
+    resourceType: "money",
+  },
+  {
+    id: "fast",
+    name: "快速研发",
+    description: "增加50%成本，减少20%研发时间",
+    costMultiplier: 1.5,
+    timeReduction: 20,
+    resourceType: "money",
+  },
+  {
+    id: "super_fast",
+    name: "超级研发",
+    description: "增加100%成本，减少40%研发时间",
+    costMultiplier: 2.0,
+    timeReduction: 40,
+    resourceType: "money",
+  },
+  {
+    id: "urgent",
+    name: "紧急研发",
+    description: "增加200%成本，减少60%研发时间",
+    costMultiplier: 3.0,
+    timeReduction: 60,
+    resourceType: "both",
+  },
+] as const;
+
+// 推进研发进度 - 带加速选项
+export const advanceDevelopment = (
+  id: string,
+  isHero = false,
+  accelerateOptionId = "normal",
+): void => {
   if (isHero) {
     // 推进英雄研发进度
     const heroes = getHeroesFromStorage();
     const heroIndex = heroes.findIndex((hero) => hero.id === id);
 
     if (heroIndex !== -1 && heroes[heroIndex].status === "in_development") {
-      // 每天推进的进度 = 100 / 研发时间
-      const dailyProgress = 100 / heroes[heroIndex].developmentTime;
+      // 获取加速选项
+      const accelerateOption =
+        HeroAccelerateOptions.find((opt) => opt.id === accelerateOptionId) ||
+        HeroAccelerateOptions[0];
+
+      // 计算加速后的每天进度
+      const baseDailyProgress = 100 / heroes[heroIndex].developmentTime;
+      const timeReductionFactor = (100 - accelerateOption.timeReduction) / 100;
+      const dailyProgress = baseDailyProgress / timeReductionFactor;
+
+      // 推进进度
       heroes[heroIndex].developmentProgress = Math.min(
         100,
         heroes[heroIndex].developmentProgress + dailyProgress,
       );
 
-      // 如果研发完成，将状态改为已发布
+      // 如果研发完成，将状态改为已发布并执行完成逻辑
       if (heroes[heroIndex].developmentProgress >= 100) {
         heroes[heroIndex].status = "released";
         heroes[heroIndex].developmentProgress = 100;
+
+        // 执行英雄研发完成后的处理
+        handleHeroDevelopmentComplete(heroes[heroIndex]);
       }
 
       saveHeroesToStorage(heroes);
@@ -536,8 +841,17 @@ export const advanceDevelopment = (id: string, isHero = false): void => {
     const skinIndex = skins.findIndex((skin) => skin.id === id);
 
     if (skinIndex !== -1 && skins[skinIndex].status === "in_development") {
-      // 每天推进的进度 = 100 / 研发时间
-      const dailyProgress = 100 / skins[skinIndex].developmentTime;
+      // 获取加速选项
+      const accelerateOption =
+        HeroAccelerateOptions.find((opt) => opt.id === accelerateOptionId) ||
+        HeroAccelerateOptions[0];
+
+      // 计算加速后的每天进度
+      const baseDailyProgress = 100 / skins[skinIndex].developmentTime;
+      const timeReductionFactor = (100 - accelerateOption.timeReduction) / 100;
+      const dailyProgress = baseDailyProgress / timeReductionFactor;
+
+      // 推进进度
       skins[skinIndex].developmentProgress = Math.min(
         100,
         skins[skinIndex].developmentProgress + dailyProgress,
@@ -558,6 +872,121 @@ export const advanceDevelopment = (id: string, isHero = false): void => {
       saveSkinsToStorage(skins);
     }
   }
+};
+
+// 英雄研发完成后的处理
+export const handleHeroDevelopmentComplete = (hero: Hero): void => {
+  // 1. 更新英雄状态为已发布
+  hero.status = "released";
+  hero.developmentProgress = 100;
+
+  // 2. 初始化英雄的游戏数据
+  hero.pickRate = Math.max(hero.pickRate, 0.02); // 至少2%的初始出场率
+  hero.userBase = Math.max(hero.userBase, 0.02); // 至少2%的初始用户基数
+  hero.usageRate = 0; // 初始使用率为0
+  hero.winRate = Math.max(hero.winRate, 45); // 至少45%的初始胜率
+  hero.banRate = 0; // 初始Ban率为0
+
+  // 3. 保存更新后的英雄数据
+  const heroes = getHeroesFromStorage();
+  const heroIndex = heroes.findIndex((h) => h.id === hero.id);
+  if (heroIndex !== -1) {
+    heroes[heroIndex] = hero;
+    saveHeroesToStorage(heroes);
+  }
+};
+
+// 计算英雄研发成本
+export const calculateHeroDevelopmentCost = (
+  hero: Hero,
+  accelerateOptionId = "normal",
+): number => {
+  const accelerateOption =
+    HeroAccelerateOptions.find((opt) => opt.id === accelerateOptionId) ||
+    HeroAccelerateOptions[0];
+  return Math.floor(hero.developmentCost * accelerateOption.costMultiplier);
+};
+
+// 暂停英雄研发
+export const pauseHeroDevelopment = (heroId: string): void => {
+  const heroes = getHeroesFromStorage();
+  const heroIndex = heroes.findIndex((hero) => hero.id === heroId);
+
+  if (heroIndex !== -1 && heroes[heroIndex].status === "in_development") {
+    // 这里可以添加暂停逻辑，比如保存当前进度，释放资源等
+    // 目前简单实现为不改变状态，但可以扩展为添加"paused"状态
+    saveHeroesToStorage(heroes);
+  }
+};
+
+// 取消英雄研发
+export const cancelHeroDevelopment = (heroId: string): void => {
+  const heroes = getHeroesFromStorage();
+  const heroIndex = heroes.findIndex((hero) => hero.id === heroId);
+
+  if (heroIndex !== -1 && heroes[heroIndex].status === "in_development") {
+    // 删除该英雄
+    const updatedHeroes = heroes.filter((h) => h.id !== heroId);
+    saveHeroesToStorage(updatedHeroes);
+  }
+};
+
+// 获取英雄研发进度详情
+export const getHeroDevelopmentDetails = (
+  heroId: string,
+): {
+  hero: Hero | undefined;
+  daysRemaining: number;
+  progressPercentage: number;
+  estimatedCompletionDate: string;
+  developmentStage: "early" | "mid" | "late" | "completed";
+} => {
+  const heroes = getHeroesFromStorage();
+  const hero = heroes.find((h) => h.id === heroId);
+
+  if (!hero) {
+    return {
+      hero: undefined,
+      daysRemaining: 0,
+      progressPercentage: 0,
+      estimatedCompletionDate: new Date().toISOString(),
+      developmentStage: "completed",
+    };
+  }
+
+  if (hero.status === "released" || hero.status === "deprecated") {
+    return {
+      hero,
+      daysRemaining: 0,
+      progressPercentage: 100,
+      estimatedCompletionDate: hero.createdAt,
+      developmentStage: "completed",
+    };
+  }
+
+  const progressPercentage = hero.developmentProgress;
+  const daysRemaining = Math.ceil(
+    (100 - progressPercentage) / (100 / hero.developmentTime),
+  );
+  const estimatedCompletionDate = new Date();
+  estimatedCompletionDate.setDate(
+    estimatedCompletionDate.getDate() + daysRemaining,
+  );
+
+  let developmentStage: "early" | "mid" | "late" | "completed" = "early";
+  if (progressPercentage >= 70) {
+    developmentStage = "late";
+  } else if (progressPercentage >= 30) {
+    developmentStage = "mid";
+  }
+
+  return {
+    hero,
+    daysRemaining,
+    progressPercentage,
+    estimatedCompletionDate: estimatedCompletionDate.toISOString(),
+    developmentStage,
+  };
 };
 
 // 计算皮肤初始销量
@@ -768,5 +1197,523 @@ export const validateSimpleSkinCreation = (
   return {
     valid: true,
     message: "验证通过",
+  };
+};
+
+// 英雄平衡性分析结果类型
+export interface HeroBalanceAnalysis {
+  hero: Hero;
+  overallScore: number; // 整体平衡性评分 (0-100)
+  attributeScore: number; // 属性平衡性评分 (0-100)
+  performanceScore: number; // 游戏表现评分 (0-100)
+  classBalanceScore: number; // 职业平衡性评分 (0-100)
+  healthBalance: {
+    value: number;
+    ideal: number;
+    deviation: number; // 偏离理想值的百分比
+    status: "underpowered" | "balanced" | "overpowered";
+  };
+  attackBalance: {
+    value: number;
+    ideal: number;
+    deviation: number;
+    status: "underpowered" | "balanced" | "overpowered";
+  };
+  defenseBalance: {
+    value: number;
+    ideal: number;
+    deviation: number;
+    status: "underpowered" | "balanced" | "overpowered";
+  };
+  gamePerformance: {
+    pickRate: {
+      value: number;
+      idealRange: [number, number];
+      status: "low" | "balanced" | "high";
+    };
+    winRate: {
+      value: number;
+      idealRange: [number, number];
+      status: "low" | "balanced" | "high";
+    };
+    banRate: {
+      value: number;
+      idealRange: [number, number];
+      status: "low" | "balanced" | "high";
+    };
+    usageRate: {
+      value: number;
+      idealRange: [number, number];
+      status: "low" | "balanced" | "high";
+    };
+  };
+  classComparison: {
+    averageClassPickRate: number;
+    averageClassWinRate: number;
+    averageClassBanRate: number;
+    deviationFromClassAvg: {
+      pickRate: number;
+      winRate: number;
+      banRate: number;
+    };
+  };
+  recommendations: string[];
+}
+
+// 计算职业平均数据
+export const calculateClassAverageStats = (
+  className: string,
+): {
+  averagePickRate: number;
+  averageWinRate: number;
+  averageBanRate: number;
+  averageHealth: number;
+  averageAttack: number;
+  averageDefense: number;
+  heroCount: number;
+} => {
+  const heroes = getHeroesFromStorage().filter(
+    (h) => h.class === className && h.status === "released",
+  );
+
+  if (heroes.length === 0) {
+    return {
+      averagePickRate: 0,
+      averageWinRate: 0,
+      averageBanRate: 0,
+      averageHealth: 0,
+      averageAttack: 0,
+      averageDefense: 0,
+      heroCount: 0,
+    };
+  }
+
+  const totalPickRate = heroes.reduce((sum, hero) => sum + hero.pickRate, 0);
+  const totalWinRate = heroes.reduce((sum, hero) => sum + hero.winRate, 0);
+  const totalBanRate = heroes.reduce((sum, hero) => sum + hero.banRate, 0);
+  const totalHealth = heroes.reduce((sum, hero) => sum + hero.stats.health, 0);
+  const totalAttack = heroes.reduce((sum, hero) => sum + hero.stats.attack, 0);
+  const totalDefense = heroes.reduce(
+    (sum, hero) => sum + hero.stats.defense,
+    0,
+  );
+
+  return {
+    averagePickRate: totalPickRate / heroes.length,
+    averageWinRate: totalWinRate / heroes.length,
+    averageBanRate: totalBanRate / heroes.length,
+    averageHealth: totalHealth / heroes.length,
+    averageAttack: totalAttack / heroes.length,
+    averageDefense: totalDefense / heroes.length,
+    heroCount: heroes.length,
+  };
+};
+
+// 分析英雄平衡性
+export const analyzeHeroBalance = (hero: Hero): HeroBalanceAnalysis => {
+  // 1. 计算职业平均数据
+  const classStats = calculateClassAverageStats(hero.class);
+
+  // 2. 计算理想属性值（基于职业平均值）
+  const idealHealth = classStats.averageHealth;
+  const idealAttack = classStats.averageAttack;
+  const idealDefense = classStats.averageDefense;
+
+  // 3. 分析属性平衡性
+  const analyzeAttribute = (value: number, ideal: number) => {
+    const deviation = (Math.abs(value - ideal) / ideal) * 100;
+    let status: "underpowered" | "balanced" | "overpowered" = "balanced";
+
+    if (deviation > 20) {
+      status = value > ideal ? "overpowered" : "underpowered";
+    }
+
+    return {
+      value,
+      ideal,
+      deviation,
+      status,
+    };
+  };
+
+  const healthBalance = analyzeAttribute(hero.stats.health, idealHealth);
+  const attackBalance = analyzeAttribute(hero.stats.attack, idealAttack);
+  const defenseBalance = analyzeAttribute(hero.stats.defense, idealDefense);
+
+  // 4. 分析游戏表现
+  const analyzePerformance = (
+    value: number,
+    idealMin: number,
+    idealMax: number,
+  ): {
+    value: number;
+    idealRange: [number, number];
+    status: "low" | "balanced" | "high";
+  } => {
+    let status: "low" | "balanced" | "high" = "balanced";
+
+    if (value < idealMin) {
+      status = "low";
+    } else if (value > idealMax) {
+      status = "high";
+    }
+
+    return {
+      value,
+      idealRange: [idealMin, idealMax] as [number, number],
+      status,
+    };
+  };
+
+  const gamePerformance = {
+    pickRate: analyzePerformance(hero.pickRate, 0.01, 0.15), // 1%-15%
+    winRate: analyzePerformance(hero.winRate, 45, 55), // 45%-55%
+    banRate: analyzePerformance(hero.banRate, 0, 20), // 0%-20%
+    usageRate: analyzePerformance(hero.usageRate, 0, 30), // 0%-30%
+  };
+
+  // 5. 计算评分
+  const attributeScore = Math.max(
+    0,
+    100 -
+      (healthBalance.deviation +
+        attackBalance.deviation +
+        defenseBalance.deviation) /
+        3,
+  );
+
+  // 游戏表现评分（胜率权重更高）
+  let performanceScore = 100;
+  if (gamePerformance.winRate.status !== "balanced") {
+    performanceScore -= Math.abs(hero.winRate - 50) * 2;
+  }
+  if (gamePerformance.pickRate.status !== "balanced") {
+    performanceScore -= Math.abs(hero.pickRate - 0.08) * 500;
+  }
+  if (gamePerformance.banRate.status !== "balanced") {
+    performanceScore -= hero.banRate * 2;
+  }
+  performanceScore = Math.max(0, Math.min(100, performanceScore));
+
+  // 职业平衡性评分
+  const pickRateDeviation =
+    (Math.abs(hero.pickRate - classStats.averagePickRate) /
+      Math.max(0.01, classStats.averagePickRate)) *
+    100;
+  const winRateDeviation = Math.abs(hero.winRate - classStats.averageWinRate);
+  const classBalanceScore = Math.max(
+    0,
+    100 - (pickRateDeviation + winRateDeviation) / 2,
+  );
+
+  // 整体评分
+  const overallScore = Math.round(
+    attributeScore * 0.3 + performanceScore * 0.5 + classBalanceScore * 0.2,
+  );
+
+  // 6. 生成建议
+  const recommendations: string[] = [];
+
+  if (healthBalance.status !== "balanced") {
+    recommendations.push(
+      `${healthBalance.status === "overpowered" ? "降低" : "提高"}生命值至${Math.round(idealHealth)}左右`,
+    );
+  }
+  if (attackBalance.status !== "balanced") {
+    recommendations.push(
+      `${attackBalance.status === "overpowered" ? "降低" : "提高"}攻击力至${Math.round(idealAttack)}左右`,
+    );
+  }
+  if (defenseBalance.status !== "balanced") {
+    recommendations.push(
+      `${defenseBalance.status === "overpowered" ? "降低" : "提高"}防御力至${Math.round(idealDefense)}左右`,
+    );
+  }
+
+  if (gamePerformance.winRate.status === "high") {
+    recommendations.push("降低英雄强度，使其胜率保持在45%-55%之间");
+  } else if (gamePerformance.winRate.status === "low") {
+    recommendations.push("提高英雄强度，使其胜率保持在45%-55%之间");
+  }
+
+  if (gamePerformance.pickRate.status === "high") {
+    recommendations.push("考虑调整英雄机制，降低其出场率");
+  } else if (gamePerformance.pickRate.status === "low") {
+    recommendations.push("增强英雄吸引力，提高其出场率");
+  }
+
+  if (gamePerformance.banRate.status === "high") {
+    recommendations.push("降低英雄Ban率，使其保持在合理范围内");
+  }
+
+  if (classBalanceScore < 70) {
+    recommendations.push(`使英雄表现更接近${hero.class}职业的平均水平`);
+  }
+
+  // 7. 构建分析结果
+  return {
+    hero,
+    overallScore,
+    attributeScore,
+    performanceScore,
+    classBalanceScore,
+    healthBalance,
+    attackBalance,
+    defenseBalance,
+    gamePerformance,
+    classComparison: {
+      averageClassPickRate: classStats.averagePickRate,
+      averageClassWinRate: classStats.averageWinRate,
+      averageClassBanRate: classStats.averageBanRate,
+      deviationFromClassAvg: {
+        pickRate: hero.pickRate - classStats.averagePickRate,
+        winRate: hero.winRate - classStats.averageWinRate,
+        banRate: hero.banRate - classStats.averageBanRate,
+      },
+    },
+    recommendations,
+  };
+};
+
+// 分析所有英雄的平衡性
+export const analyzeAllHeroesBalance = (): HeroBalanceAnalysis[] => {
+  return getHeroesFromStorage()
+    .filter((hero) => hero.status === "released")
+    .map((hero) => analyzeHeroBalance(hero));
+};
+
+// 获取平衡性警告列表
+export const getBalanceWarnings = (): Array<{
+  heroId: string;
+  heroName: string;
+  heroClass: string;
+  warningType: "attribute" | "performance" | "class";
+  severity: "low" | "medium" | "high";
+  message: string;
+}> => {
+  const analyses = analyzeAllHeroesBalance();
+  const warnings: Array<{
+    heroId: string;
+    heroName: string;
+    heroClass: string;
+    warningType: "attribute" | "performance" | "class";
+    severity: "low" | "medium" | "high";
+    message: string;
+  }> = [];
+
+  analyses.forEach((analysis) => {
+    const hero = analysis.hero;
+
+    // 检查属性警告
+    if (analysis.attributeScore < 70) {
+      warnings.push({
+        heroId: hero.id,
+        heroName: hero.name,
+        heroClass: hero.class,
+        warningType: "attribute",
+        severity: analysis.attributeScore < 50 ? "high" : "medium",
+        message: `${hero.name}的属性平衡性较差，评分：${analysis.attributeScore}`,
+      });
+    }
+
+    // 检查表现警告
+    if (analysis.performanceScore < 70) {
+      warnings.push({
+        heroId: hero.id,
+        heroName: hero.name,
+        heroClass: hero.class,
+        warningType: "performance",
+        severity: analysis.performanceScore < 50 ? "high" : "medium",
+        message: `${hero.name}的游戏表现平衡性较差，评分：${analysis.performanceScore}`,
+      });
+    }
+
+    // 检查胜率异常
+    if (hero.winRate < 40 || hero.winRate > 60) {
+      warnings.push({
+        heroId: hero.id,
+        heroName: hero.name,
+        heroClass: hero.class,
+        warningType: "performance",
+        severity: "high",
+        message: `${hero.name}的胜率异常：${hero.winRate.toFixed(1)}%，建议调整`,
+      });
+    }
+
+    // 检查Ban率过高
+    if (hero.banRate > 30) {
+      warnings.push({
+        heroId: hero.id,
+        heroName: hero.name,
+        heroClass: hero.class,
+        warningType: "performance",
+        severity: "high",
+        message: `${hero.name}的Ban率过高：${hero.banRate.toFixed(1)}%，建议削弱`,
+      });
+    }
+
+    // 检查职业平衡性
+    if (analysis.classBalanceScore < 60) {
+      warnings.push({
+        heroId: hero.id,
+        heroName: hero.name,
+        heroClass: hero.class,
+        warningType: "class",
+        severity: "medium",
+        message: `${hero.name}与同职业英雄相比表现差异较大，评分：${analysis.classBalanceScore}`,
+      });
+    }
+  });
+
+  return warnings;
+};
+
+// 调整英雄属性
+export const adjustHeroAttributes = (
+  heroId: string,
+  adjustments: {
+    health?: number;
+    attack?: number;
+    defense?: number;
+  },
+): Hero | null => {
+  const heroes = getHeroesFromStorage();
+  const heroIndex = heroes.findIndex((h) => h.id === heroId);
+
+  if (heroIndex === -1) {
+    return null;
+  }
+
+  const hero = heroes[heroIndex];
+
+  // 应用调整
+  if (adjustments.health !== undefined) {
+    hero.stats.health = Math.max(1, hero.stats.health + adjustments.health);
+  }
+  if (adjustments.attack !== undefined) {
+    hero.stats.attack = Math.max(1, hero.stats.attack + adjustments.attack);
+  }
+  if (adjustments.defense !== undefined) {
+    hero.stats.defense = Math.max(1, hero.stats.defense + adjustments.defense);
+  }
+
+  // 保存调整后的英雄
+  heroes[heroIndex] = hero;
+  saveHeroesToStorage(heroes);
+
+  return hero;
+};
+
+// 获取平衡性报告
+export const getBalanceReport = (): {
+  overallAverageScore: number;
+  balancedHeroesCount: number;
+  totalHeroesCount: number;
+  classBalanceOverview: Record<
+    string,
+    {
+      className: string;
+      averageScore: number;
+      heroCount: number;
+    }
+  >;
+  topBalancedHeroes: Array<{
+    heroName: string;
+    heroClass: string;
+    score: number;
+  }>;
+  leastBalancedHeroes: Array<{
+    heroName: string;
+    heroClass: string;
+    score: number;
+  }>;
+  warnings: Array<{
+    heroId: string;
+    heroName: string;
+    heroClass: string;
+    warningType: "attribute" | "performance" | "class";
+    severity: "low" | "medium" | "high";
+    message: string;
+  }>;
+} => {
+  const analyses = analyzeAllHeroesBalance();
+  const totalHeroesCount = analyses.length;
+
+  // 计算总体平均评分
+  const overallAverageScore =
+    totalHeroesCount > 0
+      ? Math.round(
+          analyses.reduce((sum, a) => sum + a.overallScore, 0) /
+            totalHeroesCount,
+        )
+      : 0;
+
+  // 计算平衡英雄数量（评分 >= 70）
+  const balancedHeroesCount = analyses.filter(
+    (a) => a.overallScore >= 70,
+  ).length;
+
+  // 计算职业平衡概览
+  const classBalanceMap: Record<
+    string,
+    { totalScore: number; heroCount: number }
+  > = {};
+
+  analyses.forEach((analysis) => {
+    const className = analysis.hero.class;
+    if (!classBalanceMap[className]) {
+      classBalanceMap[className] = { totalScore: 0, heroCount: 0 };
+    }
+    classBalanceMap[className].totalScore += analysis.overallScore;
+    classBalanceMap[className].heroCount++;
+  });
+
+  const classBalanceOverview: Record<
+    string,
+    {
+      className: string;
+      averageScore: number;
+      heroCount: number;
+    }
+  > = {};
+
+  Object.entries(classBalanceMap).forEach(([className, data]) => {
+    classBalanceOverview[className] = {
+      className,
+      averageScore: Math.round(data.totalScore / data.heroCount),
+      heroCount: data.heroCount,
+    };
+  });
+
+  // 找出平衡性最好和最差的英雄
+  const sortedAnalyses = [...analyses].sort(
+    (a, b) => b.overallScore - a.overallScore,
+  );
+  const topBalancedHeroes = sortedAnalyses.slice(0, 5).map((a) => ({
+    heroName: a.hero.name,
+    heroClass: a.hero.class,
+    score: a.overallScore,
+  }));
+
+  const leastBalancedHeroes = sortedAnalyses
+    .slice(-5)
+    .reverse()
+    .map((a) => ({
+      heroName: a.hero.name,
+      heroClass: a.hero.class,
+      score: a.overallScore,
+    }));
+
+  // 获取警告列表
+  const warnings = getBalanceWarnings();
+
+  return {
+    overallAverageScore,
+    balancedHeroesCount,
+    totalHeroesCount,
+    classBalanceOverview,
+    topBalancedHeroes,
+    leastBalancedHeroes,
+    warnings,
   };
 };

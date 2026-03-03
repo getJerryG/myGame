@@ -1,11 +1,24 @@
 import { defineStore } from "pinia";
-import type { Hero, Skin } from "../utils/HeroSkinManager";
+import type { Hero, Skin, HeroBalanceAnalysis } from "../utils/HeroSkinManager";
 import type { SimulateResult } from "../utils/SkinSimulation";
 import {
   getHeroesFromStorage,
   getSkinsFromStorage,
   saveHeroesToStorage,
   saveSkinsToStorage,
+  createHero,
+  autoGenerateHero,
+  batchGenerateHeroes,
+  advanceDevelopment,
+  calculateHeroDevelopmentCost,
+  pauseHeroDevelopment,
+  cancelHeroDevelopment,
+  getHeroDevelopmentDetails,
+  analyzeHeroBalance,
+  analyzeAllHeroesBalance,
+  getBalanceWarnings,
+  adjustHeroAttributes,
+  getBalanceReport,
 } from "../utils/HeroSkinManager";
 
 // 定义英雄皮肤状态类型
@@ -296,6 +309,175 @@ export const useHeroSkinStore = defineStore("heroSkin", {
     // 验证皮肤是否存在
     isSkinExists(skinId: string): boolean {
       return this.skins.some((skin) => skin.id === skinId);
+    },
+
+    // 创建英雄
+    async createHero(heroData: Omit<Hero, "id" | "createdAt">) {
+      try {
+        // 创建英雄
+        const newHero = createHero(heroData);
+
+        // 添加到英雄列表
+        this.heroes.push(newHero);
+
+        // 保存到本地存储
+        await this.saveDataToStorage();
+
+        return newHero;
+      } catch (error) {
+        this.error = error instanceof Error ? error.message : "创建英雄失败";
+        throw error;
+      }
+    },
+
+    // 全自动生成英雄
+    async autoGenerateHero() {
+      try {
+        // 生成英雄
+        const newHero = autoGenerateHero();
+
+        // 添加到英雄列表
+        this.heroes.push(newHero);
+
+        // 保存到本地存储
+        await this.saveDataToStorage();
+
+        return newHero;
+      } catch (error) {
+        this.error =
+          error instanceof Error ? error.message : "自动生成英雄失败";
+        throw error;
+      }
+    },
+
+    // 批量生成英雄
+    async batchGenerateHeroes(count: number) {
+      try {
+        // 生成英雄
+        const generatedHeroes = batchGenerateHeroes(count);
+
+        // 添加到英雄列表
+        this.heroes.push(...generatedHeroes);
+
+        // 保存到本地存储
+        await this.saveDataToStorage();
+
+        return generatedHeroes;
+      } catch (error) {
+        this.error =
+          error instanceof Error ? error.message : "批量生成英雄失败";
+        throw error;
+      }
+    },
+
+    // 推进英雄研发进度
+    async advanceHeroDevelopment(
+      heroId: string,
+      accelerateOptionId = "normal",
+    ) {
+      try {
+        // 推进研发进度
+        advanceDevelopment(heroId, true, accelerateOptionId);
+
+        // 重新加载数据
+        await this.loadDataFromStorage();
+      } catch (error) {
+        this.error =
+          error instanceof Error ? error.message : "推进英雄研发进度失败";
+        throw error;
+      }
+    },
+
+    // 计算英雄研发成本
+    calculateHeroDevelopmentCost(hero: Hero, accelerateOptionId = "normal") {
+      return calculateHeroDevelopmentCost(hero, accelerateOptionId);
+    },
+
+    // 暂停英雄研发
+    async pauseHeroDevelopment(heroId: string) {
+      try {
+        // 暂停研发
+        pauseHeroDevelopment(heroId);
+
+        // 重新加载数据
+        await this.loadDataFromStorage();
+      } catch (error) {
+        this.error =
+          error instanceof Error ? error.message : "暂停英雄研发失败";
+        throw error;
+      }
+    },
+
+    // 取消英雄研发
+    async cancelHeroDevelopment(heroId: string) {
+      try {
+        // 取消研发
+        cancelHeroDevelopment(heroId);
+
+        // 重新加载数据
+        await this.loadDataFromStorage();
+      } catch (error) {
+        this.error =
+          error instanceof Error ? error.message : "取消英雄研发失败";
+        throw error;
+      }
+    },
+
+    // 获取英雄研发进度详情
+    getHeroDevelopmentDetails(heroId: string) {
+      return getHeroDevelopmentDetails(heroId);
+    },
+
+    // 分析英雄平衡性
+    analyzeHeroBalance(hero: Hero): HeroBalanceAnalysis {
+      return analyzeHeroBalance(hero);
+    },
+
+    // 分析所有英雄的平衡性
+    analyzeAllHeroesBalance(): HeroBalanceAnalysis[] {
+      return analyzeAllHeroesBalance();
+    },
+
+    // 获取平衡性警告列表
+    getBalanceWarnings() {
+      return getBalanceWarnings();
+    },
+
+    // 调整英雄属性
+    async adjustHeroAttributes(
+      heroId: string,
+      adjustments: {
+        health?: number;
+        attack?: number;
+        defense?: number;
+      },
+    ) {
+      try {
+        // 调整属性
+        const updatedHero = adjustHeroAttributes(heroId, adjustments);
+
+        if (updatedHero) {
+          // 更新英雄列表
+          const index = this.heroes.findIndex((h) => h.id === heroId);
+          if (index !== -1) {
+            this.heroes[index] = updatedHero;
+
+            // 保存到本地存储
+            await this.saveDataToStorage();
+          }
+        }
+
+        return updatedHero;
+      } catch (error) {
+        this.error =
+          error instanceof Error ? error.message : "调整英雄属性失败";
+        throw error;
+      }
+    },
+
+    // 获取平衡性报告
+    getBalanceReport() {
+      return getBalanceReport();
     },
   },
 

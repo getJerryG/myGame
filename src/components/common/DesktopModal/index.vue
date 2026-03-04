@@ -51,8 +51,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onUnmounted } from "vue";
-
 // 导入所有应用组件
 import ChatApp from "@/components/business/apps/chat/ChatApp.vue";
 import DataCenterApp from "@/components/business/apps/DataCenter/DataCenterApp.vue";

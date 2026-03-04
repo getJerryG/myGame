@@ -171,8 +171,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, computed } from "vue";
-
 type ListItem = Record<string, unknown>;
 
 interface ListProps {

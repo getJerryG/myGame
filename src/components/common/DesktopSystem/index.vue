@@ -1,60 +1,35 @@
 <template>
   <div class="desktop-system">
     <!-- 刘海栏 -->
-    <NotchBar
-      :levelName="plannerRankName"
-      :levelRank="plannerTier"
-      :currentExp="plannerExp"
-      :maxExp="plannerLevelUpExp"
-      :funds="plannerFunds"
-    />
+    <NotchBar :levelName="plannerRankName" :levelRank="plannerTier" :currentExp="plannerExp" :maxExp="plannerLevelUpExp"
+      :funds="plannerFunds" />
 
     <!-- 任务系统面板 -->
     <TaskSystemPanel />
 
     <!-- 退出确认对话框 -->
-    <ExitConfirmDialog
-      :isVisible="showExitDialog"
-      title="退出游戏确认"
-      message="您正在退出游戏，如未保存将造成数据丢失！"
-      @close="showExitDialog = false"
-      @exit="handleExit"
-      @save="handleSaveAndExit"
-    />
+    <ExitConfirmDialog :isVisible="showExitDialog" title="退出游戏确认" message="您正在退出游戏，如未保存将造成数据丢失！"
+      @close="showExitDialog = false" @exit="handleExit" @save="handleSaveAndExit" />
 
     <!-- 升级特效 -->
-    <DesktopLevelUpEffect
-      :visible="showLevelUpEffect"
-      :message="levelUpMessage"
-    />
+    <DesktopLevelUpEffect :visible="showLevelUpEffect" :message="levelUpMessage" />
 
     <!-- 桌面背景和图标 -->
     <DesktopBackground :apps="allDesktopApps" @click="openApp" />
 
     <!-- 任务栏（包含开始菜单） -->
-    <DesktopTaskbar
-      :game-data="gameData"
-      @save-game="saveGame"
-      @restart-game="restartGame"
-      @open-settings="openGameSettings"
-    />
+    <DesktopTaskbar :game-data="gameData" @save-game="saveGame" @restart-game="restartGame"
+      @open-settings="openGameSettings" />
 
     <!-- 应用窗口层 -->
     <div class="desktop-modals">
-      <DesktopAppContainer
-        v-for="modal in sortedModals"
-        :key="modal.id"
-        :window-id="modal.id"
-        :window-state="{
-          position: modal.position,
-          size: modal.size,
-          isMaximized: modal.isMaximized,
-          isMinimized: minimizedApps.includes(modal.appId),
-          activeModule: modal.activeModule,
-        }"
-        :app="allDesktopApps.find((a) => a.id === modal.appId)"
-        :gameData="gameData"
-        @close="closeApp(modal.appId)"
+      <DesktopAppContainer v-for="modal in sortedModals" :key="modal.id" :window-id="modal.id" :window-state="{
+        position: modal.position,
+        size: modal.size,
+        isMaximized: modal.isMaximized,
+        isMinimized: minimizedApps.includes(modal.appId),
+        activeModule: modal.activeModule,
+      }" :app="allDesktopApps.find((a) => a.id === modal.appId)" :gameData="gameData" @close="closeApp(modal.appId)"
         @update:windowState="
           (updatedState) => {
             const updatedModal = {
@@ -66,17 +41,13 @@
             };
             updateModal(updatedModal);
           }
-        "
-        @app-installed="handleAppInstalled"
-      >
+        " @app-installed="handleAppInstalled">
       </DesktopAppContainer>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed, watch, provide } from "vue";
-import { useRouter } from "vue-router";
 import DesktopAppContainer from "../DesktopAppContainer/index.vue";
 import TaskSystemPanel from "../TaskSystemPanel/index.vue";
 import ExitConfirmDialog from "../dialogs/ExitConfirmDialog.vue";

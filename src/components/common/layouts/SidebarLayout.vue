@@ -40,8 +40,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-
 /**
  * 侧边栏布局组件 - 提供带有侧边导航和主内容区域的布局
  *

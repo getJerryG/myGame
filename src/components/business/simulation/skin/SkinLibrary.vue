@@ -52,8 +52,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-
 // 定义皮肤接口
 interface Skin {
   id: number;

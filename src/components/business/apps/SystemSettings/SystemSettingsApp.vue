@@ -72,7 +72,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
 import SaveManagementTab from "./SaveManagementTab.vue";
 import GraphicsSettingsTab from "./GraphicsSettingsTab.vue";

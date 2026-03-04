@@ -7,11 +7,13 @@
     "skipLibCheck": true,
 
     /* Node resolution for compatibility */
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
 
     /* Path alias */
     "baseUrl": ".",
@@ -26,8 +28,22 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Vetur compatibility */
-    "types": ["vite/client"]
+    "types": ["vite/client","./src/auto-imports.d.ts"]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/**/*.vue", "src/**/*.js"],
-  "exclude": [".config/.eslintrc.cjs", "tailwind.config.js","node_modules","**/*.spec.ts","**/*.test.ts","src/**/*.scss"]
+  "include": [
+    "src/**/*.ts", 
+    "src/**/*.d.ts", 
+    "src/**/*.tsx", 
+    "src/**/**/*.vue", 
+    "src/**/*.js",
+    "src/auto-imports.d.ts"
+  ],
+  "exclude": [
+    ".config/.eslintrc.cjs", 
+    "tailwind.config.js",
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "src/**/*.scss"
+  ]
 }

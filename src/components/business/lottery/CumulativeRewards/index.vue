@@ -65,8 +65,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-
 // 接收props
 const props = defineProps({
   drawCount: {

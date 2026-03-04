@@ -141,8 +141,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-
 // 导入类型
 import type { App } from "../../../types/app";
 import type { GameData } from "../../../types/game";

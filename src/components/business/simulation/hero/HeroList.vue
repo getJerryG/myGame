@@ -30,7 +30,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
 import HeroCard from "./HeroCard.vue";
 import HeroDetailSidebar from "./HeroDetailSidebar.vue";
 import HeroEmptyState from "./HeroEmptyState.vue";

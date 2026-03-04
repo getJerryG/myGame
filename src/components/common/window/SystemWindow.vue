@@ -81,7 +81,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useWindowManagerStore } from "../../stores/windowManagerStore";
 import WindowTitleBar from "./WindowTitleBar.vue";
 import WindowSidebar from "./WindowSidebar.vue";

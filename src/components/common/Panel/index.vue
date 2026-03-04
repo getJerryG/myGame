@@ -56,8 +56,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, watch } from "vue";
-
 interface PanelProps {
   /**
    * 面板样式变体

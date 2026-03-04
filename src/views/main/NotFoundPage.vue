@@ -24,7 +24,6 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router";
 
 const router = useRouter();
 
@@ -46,12 +45,10 @@ const goBack = (): void => {
 
   @include utils.flex-center;
 
-  background: linear-gradient(
-    135deg,
-    tokens.$bg-dark 0%,
-    tokens.$bg-secondary 50%,
-    tokens.$bg-tertiary 100%
-  );
+  background: linear-gradient(135deg,
+      tokens.$bg-dark 0%,
+      tokens.$bg-secondary 50%,
+      tokens.$bg-tertiary 100%);
   overflow: hidden;
   position: relative;
 
@@ -63,21 +60,15 @@ const goBack = (): void => {
     width: 100%;
     height: 100%;
     background-image:
-      radial-gradient(
-        circle at 20% 50%,
+      radial-gradient(circle at 20% 50%,
         rgb(74 158 255 / 10%) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        circle at 80% 20%,
+        transparent 50%),
+      radial-gradient(circle at 80% 20%,
         rgb(255 215 0 / 10%) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        circle at 40% 80%,
+        transparent 50%),
+      radial-gradient(circle at 40% 80%,
         rgb(255 107 107 / 10%) 0%,
-        transparent 50%
-      );
+        transparent 50%);
     animation: backgroundPulse 4s ease-in-out infinite alternate;
   }
 }
@@ -116,6 +107,7 @@ const goBack = (): void => {
 }
 
 @keyframes numberFloat {
+
   0%,
   100% {
     transform: translateY(0);
@@ -151,11 +143,9 @@ const goBack = (): void => {
   font-size: tokens.$font-size-lg;
   font-weight: tokens.$font-weight-medium;
   color: tokens.$text-primary;
-  background: linear-gradient(
-    135deg,
-    tokens.$primary 0%,
-    tokens.$primary-dark 100%
-  );
+  background: linear-gradient(135deg,
+      tokens.$primary 0%,
+      tokens.$primary-dark 100%);
   border: none;
   border-radius: tokens.$radius-full;
   cursor: pointer;
@@ -165,11 +155,9 @@ const goBack = (): void => {
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgb(74 158 255 / 60%);
-    background: linear-gradient(
-      135deg,
-      tokens.$primary-dark 0%,
-      tokens.$primary 100%
-    );
+    background: linear-gradient(135deg,
+        tokens.$primary-dark 0%,
+        tokens.$primary 100%);
   }
 
   &.secondary {
@@ -238,6 +226,7 @@ const goBack = (): void => {
 }
 
 @keyframes float {
+
   0%,
   100% {
     transform: translate(0, 0) scale(1);
@@ -261,7 +250,7 @@ const goBack = (): void => {
 }
 
 /* 响应式设计 */
-@media (width <= 768px) {
+@media (width <=768px) {
   .not-found-container {
     padding: tokens.$spacing-lg tokens.$spacing-md;
     margin: tokens.$spacing-md;

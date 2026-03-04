@@ -23,7 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import CharacterCoreInfo from "./CharacterCoreInfo.vue";
 import ActionButtons from "./ActionButtons.vue";
 import InventoryModal from "../InventoryModal/index.vue";

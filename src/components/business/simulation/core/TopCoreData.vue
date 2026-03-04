@@ -5,18 +5,11 @@
     <!-- 上方：策划信息和时间系统 -->
     <div class="top-section">
       <!-- 策划信息 -->
-      <PlannerInfo
-        :level="gameState.plannerLevel"
-        :funds="gameState.plannerFunds"
-      />
+      <PlannerInfo :level="gameState.plannerLevel" :funds="gameState.plannerFunds" />
 
       <!-- 顶部时间系统 -->
-      <TimeSystem
-        :current-date="gameState.currentDate"
-        :current-phase="gameState.currentPhase"
-        :is-game-over="gameState.isGameOver"
-        @next-day="nextDay"
-      />
+      <TimeSystem :current-date="gameState.currentDate" :current-phase="gameState.currentPhase"
+        :is-game-over="gameState.isGameOver" @next-day="nextDay" />
     </div>
 
     <!-- 下方：核心指标总览 -->
@@ -24,92 +17,39 @@
       <!-- 核心指标总览 -->
       <div class="core-metrics-overview">
         <!-- 日活用户 -->
-        <MetricCard
-          metric-name="日活用户"
-          :value="animatedActiveUsers"
-          icon="👥"
-          :change="activeUsersChange"
-          positive-icon="🔥"
-          negative-icon="😢"
-          :trend-points="activeUsersTrend"
-          trend-color="var(--primary-gold)"
-          :show-trend="showTrends"
-        />
+        <MetricCard metric-name="日活用户" :value="animatedActiveUsers" icon="👥" :change="activeUsersChange"
+          positive-icon="🔥" negative-icon="😢" :trend-points="activeUsersTrend" trend-color="var(--primary-gold)"
+          :show-trend="showTrends" />
 
         <!-- 市场份额 -->
-        <MetricCard
-          metric-name="市场份额"
-          :value="marketShare"
-          suffix="%"
-          icon="📊"
-          :change="marketShareChange"
-          positive-icon="🚀"
-          negative-icon="📉"
-          :trend-points="marketShareTrend"
-          trend-color="var(--success-green)"
-          :show-trend="showTrends"
-        />
+        <MetricCard metric-name="市场份额" :value="marketShare" suffix="%" icon="📊" :change="marketShareChange"
+          positive-icon="🚀" negative-icon="📉" :trend-points="marketShareTrend" trend-color="var(--success-green)"
+          :show-trend="showTrends" />
 
         <!-- 玩家满意度 -->
-        <MetricCard
-          metric-name="玩家满意度"
-          :value="playerSatisfaction"
-          suffix="%"
-          icon="😊"
-          :change="satisfactionChange"
-          positive-icon="🌟"
-          negative-icon="😞"
-          :trend-points="satisfactionTrend"
-          trend-color="var(--primary-gold)"
-          :show-trend="showTrends"
-        />
+        <MetricCard metric-name="玩家满意度" :value="playerSatisfaction" suffix="%" icon="😊" :change="satisfactionChange"
+          positive-icon="🌟" negative-icon="😞" :trend-points="satisfactionTrend" trend-color="var(--primary-gold)"
+          :show-trend="showTrends" />
 
         <!-- 游戏评分 -->
-        <MetricCard
-          metric-name="游戏评分"
-          :value="gameRating"
-          icon="⭐"
-          :change="ratingChange"
-          positive-icon="👍"
-          negative-icon="👎"
-          :trend-points="ratingTrend"
-          trend-color="var(--warning-yellow)"
-          :show-trend="showTrends"
-        />
+        <MetricCard metric-name="游戏评分" :value="gameRating" icon="⭐" :change="ratingChange" positive-icon="👍"
+          negative-icon="👎" :trend-points="ratingTrend" trend-color="var(--warning-yellow)" :show-trend="showTrends" />
 
         <!-- 竞争指数 -->
-        <MetricCard
-          metric-name="竞争指数"
-          :value="competitionIndex"
-          icon="⚔️"
-          :change="competitionChange"
-          positive-icon="💪"
-          negative-icon="🛡️"
-          :trend-points="competitionTrend"
-          trend-color="var(--error-red)"
-          :show-trend="showTrends"
-        />
+        <MetricCard metric-name="竞争指数" :value="competitionIndex" icon="⚔️" :change="competitionChange"
+          positive-icon="💪" negative-icon="🛡️" :trend-points="competitionTrend" trend-color="var(--error-red)"
+          :show-trend="showTrends" />
 
         <!-- 项目进度 -->
-        <MetricCard
-          metric-name="项目进度"
-          :value="projectProgress"
-          suffix="%"
-          icon="🏗️"
-          :change="progressChange"
-          positive-icon="✅"
-          negative-icon="⏳"
-          :trend-points="progressTrend"
-          trend-color="var(--info-blue)"
-          :show-trend="showTrends"
-        />
+        <MetricCard metric-name="项目进度" :value="projectProgress" suffix="%" icon="🏗️" :change="progressChange"
+          positive-icon="✅" negative-icon="⏳" :trend-points="progressTrend" trend-color="var(--info-blue)"
+          :show-trend="showTrends" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from "vue";
 import PlannerInfo from "./PlannerInfo.vue";
 import TimeSystem from "./TimeSystem.vue";
 import MetricCard from "./MetricCard.vue";

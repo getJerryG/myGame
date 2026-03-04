@@ -78,7 +78,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import AdvertisingConfig from "./AdvertisingConfig.vue";
 import CollaborationConfig from "./CollaborationConfig.vue";
 import CrisisConfig from "./CrisisConfig.vue";

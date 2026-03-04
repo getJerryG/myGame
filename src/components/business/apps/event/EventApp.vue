@@ -2,19 +2,11 @@
   <ApplicationWindow windowTitle="活动">
     <template #sidebar>
       <div class="sidebar-menu">
-        <button
-          class="menu-item"
-          :class="{ active: activeTab === 'new' }"
-          @click="activeTab = 'new'"
-        >
+        <button class="menu-item" :class="{ active: activeTab === 'new' }" @click="activeTab = 'new'">
           <span class="menu-icon">+</span>
           <span class="menu-name">新建活动</span>
         </button>
-        <button
-          class="menu-item"
-          :class="{ active: activeTab === 'manage' }"
-          @click="activeTab = 'manage'"
-        >
+        <button class="menu-item" :class="{ active: activeTab === 'manage' }" @click="activeTab = 'manage'">
           <span class="menu-icon">📋</span>
           <span class="menu-name">活动管理</span>
         </button>
@@ -28,13 +20,8 @@
           <div class="section">
             <h3 class="text-gold">活动类型</h3>
             <div class="options-grid">
-              <button
-                v-for="type in eventTypes"
-                :key="type.value"
-                class="option-btn"
-                :class="{ active: selectedEvent.type === type.value }"
-                @click="selectedEvent.type = type.value"
-              >
+              <button v-for="type in eventTypes" :key="type.value" class="option-btn"
+                :class="{ active: selectedEvent.type === type.value }" @click="selectedEvent.type = type.value">
                 {{ type.label }}
               </button>
             </div>
@@ -43,13 +30,9 @@
           <div class="section">
             <h3 class="text-gold">活动力度</h3>
             <div class="options-grid">
-              <button
-                v-for="intensity in eventIntensities"
-                :key="intensity.value"
-                class="option-btn"
+              <button v-for="intensity in eventIntensities" :key="intensity.value" class="option-btn"
                 :class="{ active: selectedEvent.intensity === intensity.value }"
-                @click="selectedEvent.intensity = intensity.value"
-              >
+                @click="selectedEvent.intensity = intensity.value">
                 {{ intensity.label }}
               </button>
             </div>
@@ -80,7 +63,7 @@
                   <span class="event-type">{{ event.type }}</span>
                   <span class="event-status" :class="event.status">{{
                     event.status
-                  }}</span>
+                    }}</span>
                 </div>
                 <div class="event-time">
                   {{ event.startDate }} 至 {{ event.endDate }}
@@ -91,13 +74,11 @@
                   <span class="data-label">热度加成:</span>
                   <span class="data-value text-gold">{{
                     event.heatBoost
-                  }}</span>
+                    }}</span>
                 </div>
                 <div class="data-item">
                   <span class="data-label">收入加成:</span>
-                  <span class="data-value text-gold"
-                    >{{ event.revenueBoost }}%</span
-                  >
+                  <span class="data-value text-gold">{{ event.revenueBoost }}%</span>
                 </div>
               </div>
             </div>
@@ -112,7 +93,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
 
 // 导入类型

@@ -37,8 +37,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from "vue";
-
 // 公共导航栏组件
 const isMenuOpen = ref(false);
 const isHidden = ref(true); // 默认隐藏

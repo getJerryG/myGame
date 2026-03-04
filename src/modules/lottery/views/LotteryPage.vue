@@ -90,8 +90,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-
 // 奖品数据
 interface Prize {
   id: number;

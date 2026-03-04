@@ -27,7 +27,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
 import HeroManagementHeader from "./HeroManagementHeader.vue";
 import HeroFilters from "./HeroFilters.vue";
 import HeroList from "./HeroList.vue";

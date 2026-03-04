@@ -74,7 +74,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
 import { useWindowManagerStore } from "@/stores/windowManagerStore";
 
 // 定义应用类型

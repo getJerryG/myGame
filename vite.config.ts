@@ -2,7 +2,6 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { resolve } from 'path';
-import { visualizer } from 'rollup-plugin-visualizer';
 import viteImagemin from 'vite-plugin-imagemin';
 import viteCompression from 'vite-plugin-compression';
 
@@ -10,19 +9,10 @@ const PRECOMPRESS = {
   precompress: true,
 };
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
-    // 构建结果分析
-    visualizer({
-      open: false,
-      gzipSize: false,
-      brotliSize: false,
-      filename: 'visualizer.html'
-    }),
-
     // 图片压缩
     viteImagemin({
       gifsicle: {
@@ -192,7 +182,7 @@ export default defineConfig({
     // 启用 CSS 压缩
     cssMinify: true,
     // 目标浏览器
-    target: 'es2015',
+    target: 'es2017',
     // 动态导入优化
     dynamicImportVarsOptions: {
       warnOnError: true,

@@ -175,7 +175,7 @@ export default defineConfig({
     // 启用 CSS 压缩
     cssMinify: true,
     // 目标浏览器
-    target: 'es2015',
+    target: 'es2017',
     // 动态导入优化
     dynamicImportVarsOptions: {
       warnOnError: true,

@@ -7,10 +7,18 @@
 
     <!-- 标签页导航 -->
     <div class="app-tabs">
-      <button class="tab-btn" :class="{ active: activeTab === 'pending' }" @click="activeTab = 'pending'">
+      <button
+        class="tab-btn"
+        :class="{ active: activeTab === 'pending' }"
+        @click="activeTab = 'pending'"
+      >
         待发布内容
       </button>
-      <button class="tab-btn" :class="{ active: activeTab === 'history' }" @click="activeTab = 'history'">
+      <button
+        class="tab-btn"
+        :class="{ active: activeTab === 'history' }"
+        @click="activeTab = 'history'"
+      >
         版本历史
       </button>
     </div>
@@ -20,7 +28,11 @@
       <!-- 待发布内容-->
       <div v-if="activeTab === 'pending'" class="tab-content">
         <div class="content-list">
-          <div v-for="item in pendingContent" :key="item.id" class="content-item">
+          <div
+            v-for="item in pendingContent"
+            :key="item.id"
+            class="content-item"
+          >
             <div class="content-info">
               <div class="content-type">
                 {{ GameReleaseService.getItemTypeLabel(item.type) }}
@@ -37,11 +49,19 @@
                 <span class="option-label">发布渠道</span>
                 <div class="radio-group">
                   <label class="radio-option">
-                    <input type="radio" v-model="item.releaseChannel" value="experience" />
+                    <input
+                      type="radio"
+                      v-model="item.releaseChannel"
+                      value="experience"
+                    />
                     <span>体验服</span>
                   </label>
                   <label class="radio-option">
-                    <input type="radio" v-model="item.releaseChannel" value="official" />
+                    <input
+                      type="radio"
+                      v-model="item.releaseChannel"
+                      value="official"
+                    />
                     <span>正式服</span>
                   </label>
                 </div>
@@ -61,7 +81,11 @@
       <!-- 版本历史 -->
       <div v-else-if="activeTab === 'history'" class="tab-content">
         <div class="version-list">
-          <div v-for="version in versionHistory" :key="version.id" class="version-item">
+          <div
+            v-for="version in versionHistory"
+            :key="version.id"
+            class="version-item"
+          >
             <div class="version-header">
               <div class="version-info">
                 <div class="version-name">版本 {{ version.version }}</div>
@@ -89,19 +113,21 @@
                 <div class="feedback-stats">
                   <div class="feedback-item">
                     <span class="feedback-label">好评率：</span>
-                    <span class="feedback-value">{{ version.feedback.positiveRate }}%</span>
+                    <span class="feedback-value"
+                      >{{ version.feedback.positiveRate }}%</span
+                    >
                   </div>
                   <div class="feedback-item">
                     <span class="feedback-label">BUG报告：</span>
                     <span class="feedback-value">{{
                       version.feedback.bugReports
-                      }}</span>
+                    }}</span>
                   </div>
                   <div class="feedback-item">
                     <span class="feedback-label">建议数量：</span>
                     <span class="feedback-value">{{
                       version.feedback.suggestions
-                      }}</span>
+                    }}</span>
                   </div>
                 </div>
               </div>
@@ -117,11 +143,10 @@
 </template>
 
 <script setup lang="ts">
-
 // 导入类型
 import type { App } from "../../../types/app";
 import type { GameData } from "../../../types/game";
-import type { Modal } from "../../../types/modal";
+import type { Modal, GameReleaseData } from "../../../types";
 
 // 导入服务
 import { GameReleaseService } from "../../../../services/GameReleaseService";

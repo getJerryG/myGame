@@ -5,7 +5,8 @@
       <div class="header-content">
         <h3>累抽奖励</h3>
         <span class="draw-count-info">
-          当前累计：{{ lotteryStore.drawCount }}次</span>
+          当前累计：{{ lotteryStore.drawCount }}次</span
+        >
       </div>
     </template>
 
@@ -16,26 +17,41 @@
         <span>{{ lotteryStore.drawCount }}次</span>
       </div>
       <div class="progress-bar">
-        <div class="progress-fill" :style="{ width: progressPercentage + '%' }"></div>
+        <div
+          class="progress-fill"
+          :style="{ width: progressPercentage + '%' }"
+        ></div>
       </div>
     </div>
 
     <!-- 竖向滚动的累抽奖励区�?-->
     <div class="vertical-rewards-list">
       <!-- 可领取奖�?-->
-      <Card v-if="availableCumulativeRewards.length > 0" class="rewards-section" variant="success">
+      <Card
+        v-if="availableCumulativeRewards.length > 0"
+        class="rewards-section"
+        variant="success"
+      >
         <template #header>
           <h4>可领取</h4>
         </template>
 
-        <List :items="availableCumulativeRewards" layout="vertical" class="rewards-list">
+        <List
+          :items="availableCumulativeRewards"
+          layout="vertical"
+          class="rewards-list"
+        >
           <template #item="{ item }">
             <Card variant="success" size="small" class="reward-item">
               <div class="reward-info">
                 <span class="threshold">{{ item.threshold }}次</span>
                 <span class="reward-name">{{ item.reward.name }}</span>
               </div>
-              <Button variant="success" size="small" @click="claimCumulativeReward(item.threshold)">
+              <Button
+                variant="success"
+                size="small"
+                @click="claimCumulativeReward(item.threshold)"
+              >
                 领取
               </Button>
             </Card>
@@ -49,7 +65,11 @@
           <h4>未达到</h4>
         </template>
 
-        <List :items="unreachedCumulativeRewards" layout="vertical" class="rewards-list">
+        <List
+          :items="unreachedCumulativeRewards"
+          layout="vertical"
+          class="rewards-list"
+        >
           <template #item="{ item }">
             <Card variant="secondary" size="small" class="reward-item">
               <div class="reward-info">

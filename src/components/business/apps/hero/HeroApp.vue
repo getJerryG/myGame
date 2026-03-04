@@ -2,11 +2,19 @@
   <ApplicationWindow windowTitle="英雄开发">
     <template #sidebar>
       <div class="sidebar-menu">
-        <button class="menu-item" :class="{ active: activeTab === 'create' }" @click="activeTab = 'create'">
+        <button
+          class="menu-item"
+          :class="{ active: activeTab === 'create' }"
+          @click="activeTab = 'create'"
+        >
           <span class="menu-icon">📝</span>
           <span class="menu-name">新建英雄</span>
         </button>
-        <button class="menu-item" :class="{ active: activeTab === 'manage' }" @click="activeTab = 'manage'">
+        <button
+          class="menu-item"
+          :class="{ active: activeTab === 'manage' }"
+          @click="activeTab = 'manage'"
+        >
           <span class="menu-icon">📋</span>
           <span class="menu-name">英雄管理</span>
         </button>
@@ -24,8 +32,13 @@
             <div class="form-section">
               <h4>英雄定位</h4>
               <div class="option-buttons">
-                <button v-for="role in heroRoles" :key="role.id" class="option-btn"
-                  :class="{ active: selectedRole === role.id }" @click="selectedRole = role.id">
+                <button
+                  v-for="role in heroRoles"
+                  :key="role.id"
+                  class="option-btn"
+                  :class="{ active: selectedRole === role.id }"
+                  @click="selectedRole = role.id"
+                >
                   <span class="option-icon">{{ role.icon }}</span>
                   <span class="option-name">{{ role.name }}</span>
                 </button>
@@ -36,8 +49,13 @@
             <div class="form-section">
               <h4>英雄类型</h4>
               <div class="option-buttons">
-                <button v-for="type in heroTypes" :key="type.id" class="option-btn"
-                  :class="{ active: selectedType === type.id }" @click="selectedType = type.id">
+                <button
+                  v-for="type in heroTypes"
+                  :key="type.id"
+                  class="option-btn"
+                  :class="{ active: selectedType === type.id }"
+                  @click="selectedType = type.id"
+                >
                   <span class="option-name">{{ type.name }}</span>
                 </button>
               </div>
@@ -47,8 +65,13 @@
             <div class="form-section">
               <h4>研发方式</h4>
               <div class="option-buttons">
-                <button v-for="method in developmentMethods" :key="method.id" class="option-btn"
-                  :class="{ active: selectedMethod === method.id }" @click="selectedMethod = method.id">
+                <button
+                  v-for="method in developmentMethods"
+                  :key="method.id"
+                  class="option-btn"
+                  :class="{ active: selectedMethod === method.id }"
+                  @click="selectedMethod = method.id"
+                >
                   <span class="option-name">{{ method.name }}</span>
                 </button>
               </div>
@@ -67,7 +90,11 @@
         <div v-else-if="activeTab === 'manage'" class="tab-content">
           <h3 class="text-gold" style="margin-bottom: 20px">英雄管理</h3>
           <div class="hero-list">
-            <div v-for="hero in heroSkinStore.getAllHeroes" :key="hero.id" class="hero-card">
+            <div
+              v-for="hero in heroSkinStore.getAllHeroes"
+              :key="hero.id"
+              class="hero-card"
+            >
               <div class="hero-header">
                 <div class="hero-icon">{{ hero.icon }}</div>
                 <div class="hero-info">
@@ -75,7 +102,9 @@
                   <p class="hero-role">{{ getRoleName(hero.role) }}</p>
                 </div>
                 <div class="hero-status">
-                  <span v-if="hero.isDeveloping" class="status developing">研发中</span>
+                  <span v-if="hero.isDeveloping" class="status developing"
+                    >研发中</span
+                  >
                   <span v-else class="status online">已上线</span>
                 </div>
               </div>
@@ -83,7 +112,10 @@
               <!-- 研发进度 -->
               <div v-if="hero.isDeveloping" class="development-progress">
                 <div class="progress-bar">
-                  <div class="progress-fill" :style="{ width: `${hero.progress}%` }"></div>
+                  <div
+                    class="progress-fill"
+                    :style="{ width: `${hero.progress}%` }"
+                  ></div>
                 </div>
                 <span class="progress-text">{{ hero.progress }}% 完成</span>
               </div>
@@ -117,7 +149,10 @@
               </div>
             </div>
 
-            <div v-if="heroSkinStore.getAllHeroes.length === 0" class="empty-state">
+            <div
+              v-if="heroSkinStore.getAllHeroes.length === 0"
+              class="empty-state"
+            >
               <p>暂无英雄，前往"新建英雄"页创建</p>
             </div>
           </div>

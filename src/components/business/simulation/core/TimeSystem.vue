@@ -15,8 +15,13 @@
 
       <!-- 快捷操作按钮 -->
       <div class="quick-actions">
-        <button class="next-day-btn" :disabled="isGameOver" aria-label="进入下一天" :aria-disabled="isGameOver"
-          @click="$emit('next-day')">
+        <button
+          class="next-day-btn"
+          :disabled="isGameOver"
+          aria-label="进入下一天"
+          :aria-disabled="isGameOver"
+          @click="$emit('next-day')"
+        >
           <span class="btn-icon" aria-hidden="true">▶️</span>
           <span class="btn-text">下一天</span>
           <span class="btn-glow" aria-hidden="true"></span>
@@ -27,7 +32,6 @@
 </template>
 
 <script setup lang="ts">
-
 const props = defineProps<{
   currentDate?: {
     year: number;
@@ -120,9 +124,11 @@ const phaseName = computed(() => getPhaseName(props.currentPhase));
   .next-day-btn {
     position: relative;
     padding: tokens.$spacing-md tokens.$spacing-xl;
-    background: linear-gradient(135deg,
-        tokens.$primary-blue 0%,
-        color.adjust(tokens.$primary-blue, $lightness: -10%) 100%);
+    background: linear-gradient(
+      135deg,
+      tokens.$primary-blue 0%,
+      color.adjust(tokens.$primary-blue, $lightness: -10%) 100%
+    );
     border: none;
     border-radius: tokens.$radius-md;
     color: #fff;
@@ -162,9 +168,11 @@ const phaseName = computed(() => getPhaseName(props.currentPhase));
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle,
-          rgb(255 255 255 / 30%) 0%,
-          transparent 70%);
+      background: radial-gradient(
+        circle,
+        rgb(255 255 255 / 30%) 0%,
+        transparent 70%
+      );
       border-radius: tokens.$radius-md;
       opacity: 0;
       transition: opacity tokens.$transition-fast;

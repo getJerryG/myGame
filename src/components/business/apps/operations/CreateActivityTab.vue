@@ -7,8 +7,13 @@
       <div class="form-section">
         <h4>活动类型</h4>
         <div class="option-buttons">
-          <button v-for="type in activityTypes" :key="type.id" class="option-btn"
-            :class="{ active: selectedType === type.id }" @click="$emit('update:selectedType', type.id)">
+          <button
+            v-for="type in activityTypes"
+            :key="type.id"
+            class="option-btn"
+            :class="{ active: selectedType === type.id }"
+            @click="$emit('update:selectedType', type.id)"
+          >
             <span class="option-icon">{{ type.icon }}</span>
             <span class="option-name">{{ type.name }}</span>
           </button>
@@ -18,23 +23,35 @@
       <!-- 活动名称 -->
       <div class="form-section">
         <h4>活动名称</h4>
-        <input type="text" :value="activityName" @input="
-          $emit(
-            'update:activityName',
-            ($event.target as HTMLInputElement).value,
-          )
-          " placeholder="请输入活动名称" class="input-field" />
+        <input
+          type="text"
+          :value="activityName"
+          @input="
+            $emit(
+              'update:activityName',
+              ($event.target as HTMLInputElement).value,
+            )
+          "
+          placeholder="请输入活动名称"
+          class="input-field"
+        />
       </div>
 
       <!-- 活动描述 -->
       <div class="form-section">
         <h4>活动描述</h4>
-        <textarea :value="activityDescription" @input="
-          $emit(
-            'update:activityDescription',
-            ($event.target as HTMLTextAreaElement).value,
-          )
-          " placeholder="请输入活动描述" class="textarea-field" rows="3"></textarea>
+        <textarea
+          :value="activityDescription"
+          @input="
+            $emit(
+              'update:activityDescription',
+              ($event.target as HTMLTextAreaElement).value,
+            )
+          "
+          placeholder="请输入活动描述"
+          class="textarea-field"
+          rows="3"
+        ></textarea>
       </div>
 
       <!-- 活动时间 -->
@@ -43,21 +60,31 @@
         <div class="time-inputs">
           <div class="time-input-group">
             <label>开始时间</label>
-            <input type="datetime-local" :value="startTime" @input="
-              $emit(
-                'update:startTime',
-                ($event.target as HTMLInputElement).value,
-              )
-              " class="input-field" />
+            <input
+              type="datetime-local"
+              :value="startTime"
+              @input="
+                $emit(
+                  'update:startTime',
+                  ($event.target as HTMLInputElement).value,
+                )
+              "
+              class="input-field"
+            />
           </div>
           <div class="time-input-group">
             <label>结束时间</label>
-            <input type="datetime-local" :value="endTime" @input="
-              $emit(
-                'update:endTime',
-                ($event.target as HTMLInputElement).value,
-              )
-              " class="input-field" />
+            <input
+              type="datetime-local"
+              :value="endTime"
+              @input="
+                $emit(
+                  'update:endTime',
+                  ($event.target as HTMLInputElement).value,
+                )
+              "
+              class="input-field"
+            />
           </div>
         </div>
       </div>
@@ -68,28 +95,44 @@
         <div class="rewards-inputs">
           <div class="reward-input-group">
             <label>金币奖励</label>
-            <input type="number" :value="goldReward" @input="
-              $emit(
-                'update:goldReward',
-                Number(($event.target as HTMLInputElement).value),
-              )
-              " placeholder="0" class="input-field" />
+            <input
+              type="number"
+              :value="goldReward"
+              @input="
+                $emit(
+                  'update:goldReward',
+                  Number(($event.target as HTMLInputElement).value),
+                )
+              "
+              placeholder="0"
+              class="input-field"
+            />
           </div>
           <div class="reward-input-group">
             <label>经验奖励</label>
-            <input type="number" :value="expReward" @input="
-              $emit(
-                'update:expReward',
-                Number(($event.target as HTMLInputElement).value),
-              )
-              " placeholder="0" class="input-field" />
+            <input
+              type="number"
+              :value="expReward"
+              @input="
+                $emit(
+                  'update:expReward',
+                  Number(($event.target as HTMLInputElement).value),
+                )
+              "
+              placeholder="0"
+              class="input-field"
+            />
           </div>
         </div>
       </div>
 
       <!-- 确认创建按钮 -->
       <div class="action-section">
-        <button class="confirm-btn" @click="$emit('create')" :disabled="!canCreate">
+        <button
+          class="confirm-btn"
+          @click="$emit('create')"
+          :disabled="!canCreate"
+        >
           创建活动
         </button>
       </div>
@@ -98,7 +141,6 @@
 </template>
 
 <script setup lang="ts">
-
 const activityTypes = [
   { id: "login", name: "登录活动", icon: "📅" },
   { id: "recharge", name: "充值活动", icon: "💰" },
@@ -261,9 +303,11 @@ const canCreate = computed(() => {
 
 .confirm-btn {
   padding: tokens.$spacing-md tokens.$spacing-xl;
-  background: linear-gradient(135deg,
-      tokens.$primary-gold 0%,
-      color.adjust(tokens.$primary-gold, $lightness: -10%) 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$primary-gold 0%,
+    color.adjust(tokens.$primary-gold, $lightness: -10%) 100%
+  );
   border: none;
   border-radius: tokens.$radius-md;
   color: #fff;

@@ -84,11 +84,15 @@
           </div>
           <div class="data-item">
             <span class="data-label">7日留存率</span>
-            <span class="data-value">{{ (sevenDayRetention * 100).toFixed(1) }}%</span>
+            <span class="data-value"
+              >{{ (sevenDayRetention * 100).toFixed(1) }}%</span
+            >
           </div>
           <div class="data-item">
             <span class="data-label">付费率</span>
-            <span class="data-value">{{ (paymentRate * 100).toFixed(1) }}%</span>
+            <span class="data-value"
+              >{{ (paymentRate * 100).toFixed(1) }}%</span
+            >
           </div>
           <div class="data-item">
             <span class="data-label">ARPU</span>
@@ -104,7 +108,9 @@
           </div>
           <div class="data-item">
             <span class="data-label">渠道转化率</span>
-            <span class="data-value">{{ (channelConversionRate * 100).toFixed(1) }}%</span>
+            <span class="data-value"
+              >{{ (channelConversionRate * 100).toFixed(1) }}%</span
+            >
           </div>
         </div>
       </div>
@@ -430,10 +436,12 @@ const continueGame = (): void => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg,
-      tokens.$bg-dark 0%,
-      tokens.$bg-secondary 50%,
-      tokens.$bg-tertiary 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$bg-dark 0%,
+    tokens.$bg-secondary 50%,
+    tokens.$bg-tertiary 100%
+  );
   background-size: cover;
   background-position: center;
   opacity: 0.9;
@@ -447,15 +455,21 @@ const continueGame = (): void => {
     width: 100%;
     height: 100%;
     background-image:
-      radial-gradient(circle at 30% 40%,
+      radial-gradient(
+        circle at 30% 40%,
         rgb(255 215 0 / 10%) 0%,
-        transparent 50%),
-      radial-gradient(circle at 70% 60%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 70% 60%,
         rgb(255 107 107 / 10%) 0%,
-        transparent 50%),
-      radial-gradient(circle at 50% 20%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 50% 20%,
         rgb(74 158 255 / 10%) 0%,
-        transparent 50%);
+        transparent 50%
+      );
     animation: backgroundPulse 4s ease-in-out infinite alternate;
   }
 }
@@ -698,15 +712,19 @@ const continueGame = (): void => {
     }
 
     &.primary {
-      background: linear-gradient(135deg,
-          tokens.$primary 0%,
-          tokens.$primary-dark 100%);
+      background: linear-gradient(
+        135deg,
+        tokens.$primary 0%,
+        tokens.$primary-dark 100%
+      );
       border-color: rgb(74 158 255 / 50%);
 
       &:hover {
-        background: linear-gradient(135deg,
-            tokens.$primary-dark 0%,
-            tokens.$primary 100%);
+        background: linear-gradient(
+          135deg,
+          tokens.$primary-dark 0%,
+          tokens.$primary 100%
+        );
         box-shadow: 0 6px 20px rgb(74 158 255 / 40%);
       }
     }

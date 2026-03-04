@@ -32,3 +32,20 @@ export interface GameSettings {
   soundEnabled: boolean;
   notificationsEnabled: boolean;
 }
+
+// 游戏发布内容类型
+export interface GameReleaseData {
+  id: string;
+  type: "hero" | "skin" | "activity" | "event";
+  name: string;
+  status: string;
+  createdDate: string;
+  releaseChannel: "experience" | "official";
+}
+
+// 游戏反馈数据类型
+export interface GameFeedback {
+  positiveRate: number;
+  bugReports: number;
+  suggestions: number;
+}

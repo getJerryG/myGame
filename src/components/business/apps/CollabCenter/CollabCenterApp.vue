@@ -10,13 +10,25 @@
 
     <!-- 标签页导航 -->
     <div class="tab-nav">
-      <button class="tab-btn" :class="{ active: activeTab === 'ongoing' }" @click="activeTab = 'ongoing'">
+      <button
+        class="tab-btn"
+        :class="{ active: activeTab === 'ongoing' }"
+        @click="activeTab = 'ongoing'"
+      >
         进行中
       </button>
-      <button class="tab-btn" :class="{ active: activeTab === 'completed' }" @click="activeTab = 'completed'">
+      <button
+        class="tab-btn"
+        :class="{ active: activeTab === 'completed' }"
+        @click="activeTab = 'completed'"
+      >
         已完成
       </button>
-      <button class="tab-btn" :class="{ active: activeTab === 'all' }" @click="activeTab = 'all'">
+      <button
+        class="tab-btn"
+        :class="{ active: activeTab === 'all' }"
+        @click="activeTab = 'all'"
+      >
         全部
       </button>
     </div>
@@ -25,10 +37,15 @@
     <div class="app-content">
       <!-- 联动项目列表 -->
       <div class="collab-list">
-        <div v-for="collab in currentCollabs" :key="collab.id" class="collab-item" :class="{
-          ongoing: collab.status === '进行中',
-          completed: collab.status === '已结束',
-        }">
+        <div
+          v-for="collab in currentCollabs"
+          :key="collab.id"
+          class="collab-item"
+          :class="{
+            ongoing: collab.status === '进行中',
+            completed: collab.status === '已结束',
+          }"
+        >
           <div class="collab-info">
             <div class="collab-header">
               <div class="collab-name">{{ collab.name }}</div>
@@ -40,14 +57,23 @@
             <div class="collab-meta">
               <span class="meta-item">开始时间: {{ collab.startTime }}</span>
               <span class="meta-item">结束时间: {{ collab.endTime }}</span>
-              <span class="meta-item">预期收益: {{ collab.expectedRevenue }}</span>
+              <span class="meta-item"
+                >预期收益: {{ collab.expectedRevenue }}</span
+              >
             </div>
           </div>
           <div class="collab-actions">
-            <button class="action-btn view-detail" @click="viewCollabDetail(collab.id)">
+            <button
+              class="action-btn view-detail"
+              @click="viewCollabDetail(collab.id)"
+            >
               查看详情
             </button>
-            <button class="action-btn end-collab" @click="endCollab(collab.id)" v-if="collab.status === '进行中'">
+            <button
+              class="action-btn end-collab"
+              @click="endCollab(collab.id)"
+              v-if="collab.status === '进行中'"
+            >
               结束联动
             </button>
           </div>
@@ -65,7 +91,11 @@
     </div>
 
     <!-- 创建联动模态框 -->
-    <div v-if="showCreateModal" class="modal-overlay" @click="showCreateModal = false">
+    <div
+      v-if="showCreateModal"
+      class="modal-overlay"
+      @click="showCreateModal = false"
+    >
       <div class="modal-content" @click.stop>
         <div class="modal-header">
           <h3>创建新联动</h3>
@@ -75,20 +105,41 @@
           <form @submit.prevent="createCollab">
             <div class="form-group">
               <label for="collab-name">联动名称</label>
-              <input type="text" id="collab-name" v-model="newCollab.name" required placeholder="输入联动名称" />
+              <input
+                type="text"
+                id="collab-name"
+                v-model="newCollab.name"
+                required
+                placeholder="输入联动名称"
+              />
             </div>
             <div class="form-group">
               <label for="collab-description">联动描述</label>
-              <textarea id="collab-description" v-model="newCollab.description" required placeholder="输入联动描述"
-                rows="3"></textarea>
+              <textarea
+                id="collab-description"
+                v-model="newCollab.description"
+                required
+                placeholder="输入联动描述"
+                rows="3"
+              ></textarea>
             </div>
             <div class="form-group">
               <label for="collab-revenue">预期收益</label>
-              <input type="number" id="collab-revenue" v-model.number="newCollab.expectedRevenue" required
-                placeholder="输入预期收益" min="0" />
+              <input
+                type="number"
+                id="collab-revenue"
+                v-model.number="newCollab.expectedRevenue"
+                required
+                placeholder="输入预期收益"
+                min="0"
+              />
             </div>
             <div class="form-actions">
-              <button type="button" class="btn-cancel" @click="showCreateModal = false">
+              <button
+                type="button"
+                class="btn-cancel"
+                @click="showCreateModal = false"
+              >
                 取消
               </button>
               <button type="submit" class="btn-create">创建</button>
@@ -101,7 +152,6 @@
 </template>
 
 <script setup lang="ts">
-
 // 定义联动项目类型
 interface Collab {
   id: string;

@@ -315,7 +315,7 @@ export const batchGenerateTestEvents = (count: number): void => {
  * 清除所有事件
  */
 export const clearAllEvents = (): void => {
-  localStorage.removeItem(RANDOM_EVENTS_STORAGE_KEY);
+  localStorage.removeItem(RandomEventsStorageKey);
   // console.log("Cleared all random events");
 };
 

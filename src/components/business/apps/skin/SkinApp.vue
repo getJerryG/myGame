@@ -2,11 +2,19 @@
   <ApplicationWindow windowTitle="皮肤开发">
     <template #sidebar>
       <div class="sidebar-menu">
-        <button class="menu-item" :class="{ active: activeTab === 'new' }" @click="activeTab = 'new'">
+        <button
+          class="menu-item"
+          :class="{ active: activeTab === 'new' }"
+          @click="activeTab = 'new'"
+        >
           <span class="menu-icon">📝</span>
           <span class="menu-name">新建皮肤</span>
         </button>
-        <button class="menu-item" :class="{ active: activeTab === 'manage' }" @click="activeTab = 'manage'">
+        <button
+          class="menu-item"
+          :class="{ active: activeTab === 'manage' }"
+          @click="activeTab = 'manage'"
+        >
           <span class="menu-icon">📋</span>
           <span class="menu-name">皮肤管理</span>
         </button>
@@ -23,9 +31,17 @@
             <!-- 绑定英雄选择 -->
             <div class="form-section">
               <h4>绑定英雄</h4>
-              <div v-if="heroSkinStore.getAllHeroes.length > 0" class="option-buttons">
-                <button v-for="hero in heroSkinStore.getAllHeroes" :key="hero.id" class="option-btn hero-btn"
-                  :class="{ active: selectedHeroId === hero.id }" @click="selectedHeroId = hero.id">
+              <div
+                v-if="heroSkinStore.getAllHeroes.length > 0"
+                class="option-buttons"
+              >
+                <button
+                  v-for="hero in heroSkinStore.getAllHeroes"
+                  :key="hero.id"
+                  class="option-btn hero-btn"
+                  :class="{ active: selectedHeroId === hero.id }"
+                  @click="selectedHeroId = hero.id"
+                >
                   <span class="option-icon">{{ hero.icon }}</span>
                   <span class="option-name">{{ hero.name }}</span>
                 </button>
@@ -39,13 +55,19 @@
             <div class="form-section">
               <h4>品质</h4>
               <div class="option-buttons">
-                <button v-for="quality in skinQualities" :key="quality.id" class="option-btn"
-                  :class="{ active: selectedQuality === quality.id }" :style="{
+                <button
+                  v-for="quality in skinQualities"
+                  :key="quality.id"
+                  class="option-btn"
+                  :class="{ active: selectedQuality === quality.id }"
+                  :style="{
                     backgroundColor:
                       selectedQuality === quality.id
                         ? quality.color
                         : 'rgba(74, 158, 255, 0.2)',
-                  }" @click="selectedQuality = quality.id">
+                  }"
+                  @click="selectedQuality = quality.id"
+                >
                   <span class="option-name">{{ quality.name }}</span>
                 </button>
               </div>
@@ -55,8 +77,13 @@
             <div class="form-section">
               <h4>风格</h4>
               <div class="option-buttons">
-                <button v-for="style in skinStyles" :key="style.id" class="option-btn"
-                  :class="{ active: selectedStyle === style.id }" @click="selectedStyle = style.id">
+                <button
+                  v-for="style in skinStyles"
+                  :key="style.id"
+                  class="option-btn"
+                  :class="{ active: selectedStyle === style.id }"
+                  @click="selectedStyle = style.id"
+                >
                   <span class="option-icon">{{ style.icon }}</span>
                   <span class="option-name">{{ style.name }}</span>
                 </button>
@@ -67,8 +94,13 @@
             <div class="form-section">
               <h4>研发方式</h4>
               <div class="option-buttons">
-                <button v-for="method in developmentMethods" :key="method.id" class="option-btn"
-                  :class="{ active: selectedMethod === method.id }" @click="selectedMethod = method.id">
+                <button
+                  v-for="method in developmentMethods"
+                  :key="method.id"
+                  class="option-btn"
+                  :class="{ active: selectedMethod === method.id }"
+                  @click="selectedMethod = method.id"
+                >
                   <span class="option-name">{{ method.name }}</span>
                 </button>
               </div>
@@ -76,7 +108,11 @@
 
             <!-- 确认立项按钮 -->
             <div class="action-section">
-              <button class="confirm-btn" @click="confirmSkinCreation" :disabled="!selectedHeroId">
+              <button
+                class="confirm-btn"
+                @click="confirmSkinCreation"
+                :disabled="!selectedHeroId"
+              >
                 确认立项
               </button>
             </div>
@@ -87,7 +123,11 @@
         <div v-else-if="activeTab === 'manage'" class="tab-content">
           <h3 class="text-gold" style="margin-bottom: 20px">皮肤管理</h3>
           <div class="skin-list">
-            <div v-for="skin in heroSkinStore.getAllSkins" :key="skin.id" class="skin-card">
+            <div
+              v-for="skin in heroSkinStore.getAllSkins"
+              :key="skin.id"
+              class="skin-card"
+            >
               <div class="skin-header">
                 <div class="skin-icon">{{ skin.icon }}</div>
                 <div class="skin-info">
@@ -97,10 +137,15 @@
                   </p>
                 </div>
                 <div class="skin-status">
-                  <span class="status-badge" :style="{ backgroundColor: getQualityColor(skin.rarity) }">
+                  <span
+                    class="status-badge"
+                    :style="{ backgroundColor: getQualityColor(skin.rarity) }"
+                  >
                     {{ skin.rarity }}
                   </span>
-                  <span v-if="skin.isDeveloping" class="status developing">研发中</span>
+                  <span v-if="skin.isDeveloping" class="status developing"
+                    >研发中</span
+                  >
                   <span v-else class="status online">已上线</span>
                 </div>
               </div>
@@ -108,7 +153,10 @@
               <!-- 研发进度 -->
               <div v-if="skin.isDeveloping" class="development-progress">
                 <div class="progress-bar">
-                  <div class="progress-fill" :style="{ width: `${skin.progress}%` }"></div>
+                  <div
+                    class="progress-fill"
+                    :style="{ width: `${skin.progress}%` }"
+                  ></div>
                 </div>
                 <span class="progress-text">{{ skin.progress }}% 完成</span>
               </div>
@@ -121,11 +169,15 @@
                 </div>
                 <div class="stat-item">
                   <span class="stat-label">价格</span>
-                  <span class="stat-value text-gold">{{ skin.price }} 点券</span>
+                  <span class="stat-value text-gold"
+                    >{{ skin.price }} 点券</span
+                  >
                 </div>
                 <div class="stat-item">
                   <span class="stat-label">特效</span>
-                  <span class="stat-value text-gold">{{ skin.effects }} 种</span>
+                  <span class="stat-value text-gold"
+                    >{{ skin.effects }} 种</span
+                  >
                 </div>
               </div>
 
@@ -142,7 +194,10 @@
               </div>
             </div>
 
-            <div v-if="heroSkinStore.getAllSkins.length === 0" class="empty-state">
+            <div
+              v-if="heroSkinStore.getAllSkins.length === 0"
+              class="empty-state"
+            >
               <p>暂无皮肤，前往"新建皮肤"页创建</p>
             </div>
           </div>

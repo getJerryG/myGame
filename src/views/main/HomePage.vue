@@ -42,7 +42,11 @@
     </div>
 
     <!-- 存档弹窗 -->
-    <div v-if="showSaveModal" class="modal-overlay" @click="showSaveModal = false">
+    <div
+      v-if="showSaveModal"
+      class="modal-overlay"
+      @click="showSaveModal = false"
+    >
       <div class="modal-content" @click.stop>
         <div class="modal-header">
           <h2>选择存档</h2>
@@ -50,7 +54,12 @@
         </div>
         <div class="modal-body">
           <div class="save-list">
-            <div v-for="save in saveGames" :key="save.timestamp" class="save-item" @click="loadGame(save)">
+            <div
+              v-for="save in saveGames"
+              :key="save.timestamp"
+              class="save-item"
+              @click="loadGame(save)"
+            >
               <div class="save-info">
                 <div class="save-name">存档 {{ save.timestamp }}</div>
                 <div class="save-date">{{ formatDate(save.timestamp) }}</div>
@@ -58,7 +67,10 @@
               <div class="save-progress">
                 <div class="save-level">等级: {{ save.level || 1 }}</div>
                 <div class="save-progress-bar">
-                  <div class="save-progress-fill" :style="{ width: `${save.progress || 0}%` }"></div>
+                  <div
+                    class="save-progress-fill"
+                    :style="{ width: `${save.progress || 0}%` }"
+                  ></div>
                 </div>
               </div>
             </div>
@@ -72,7 +84,6 @@
 </template>
 
 <script setup lang="ts">
-
 const router = useRouter();
 
 // 存档列表
@@ -193,10 +204,12 @@ const openAbout = (): void => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg,
-      tokens.$bg-dark 0%,
-      tokens.$bg-secondary 50%,
-      tokens.$bg-tertiary 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$bg-dark 0%,
+    tokens.$bg-secondary 50%,
+    tokens.$bg-tertiary 100%
+  );
   background-size: cover;
   background-position: center;
   opacity: 0.9;
@@ -213,15 +226,21 @@ const openAbout = (): void => {
     width: 100%;
     height: 100%;
     background-image:
-      radial-gradient(circle at 20% 50%,
+      radial-gradient(
+        circle at 20% 50%,
         rgb(74 158 255 / 10%) 0%,
-        transparent 50%),
-      radial-gradient(circle at 80% 20%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 80% 20%,
         rgb(255 215 0 / 10%) 0%,
-        transparent 50%),
-      radial-gradient(circle at 40% 80%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 40% 80%,
         rgb(255 107 107 / 10%) 0%,
-        transparent 50%);
+        transparent 50%
+      );
 
     /* 移除动画，使用静态效果 */
     opacity: 0.9;
@@ -349,9 +368,11 @@ const openAbout = (): void => {
   font-size: tokens.$font-size-xl;
   font-weight: tokens.$font-weight-bold;
   color: tokens.$text-primary;
-  background: linear-gradient(135deg,
-      tokens.$primary 0%,
-      tokens.$primary-dark 100%);
+  background: linear-gradient(
+    135deg,
+    tokens.$primary 0%,
+    tokens.$primary-dark 100%
+  );
   border: none;
   border-radius: tokens.$radius-full;
   cursor: pointer;
@@ -365,9 +386,11 @@ const openAbout = (): void => {
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgb(74 158 255 / 60%);
-    background: linear-gradient(135deg,
-        tokens.$primary-dark 0%,
-        tokens.$primary 100%);
+    background: linear-gradient(
+      135deg,
+      tokens.$primary-dark 0%,
+      tokens.$primary 100%
+    );
   }
 
   &:active {
@@ -524,9 +547,11 @@ const openAbout = (): void => {
 
     .save-progress-fill {
       height: 100%;
-      background: linear-gradient(90deg,
-          tokens.$primary 0%,
-          tokens.$primary-dark 100%);
+      background: linear-gradient(
+        90deg,
+        tokens.$primary 0%,
+        tokens.$primary-dark 100%
+      );
       border-radius: tokens.$radius-sm;
       transition: width tokens.$transition-normal;
     }
@@ -652,7 +677,6 @@ const openAbout = (): void => {
 }
 
 @media (width <=480px) {
-
   .left-column,
   .right-column {
     padding: tokens.$spacing-md tokens.$spacing-xs;

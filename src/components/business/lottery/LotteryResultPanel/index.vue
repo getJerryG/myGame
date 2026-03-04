@@ -3,21 +3,27 @@
     <h3 v-if="lastResult">抽奖结果</h3>
     <div class="result-spacer"></div>
     <div v-if="lastResult" class="rewards">
-      <div v-for="(reward, index) in lastResult.rewards" :key="index" class="reward-item"
-        :class="{ 'reward-item-animated': isAnimating }" :style="{ animationDelay: `${index * 150}ms` }">
+      <div
+        v-for="(reward, index) in lastResult.rewards"
+        :key="index"
+        class="reward-item"
+        :class="{ 'reward-item-animated': isAnimating }"
+        :style="{ animationDelay: `${index * 150}ms` }"
+      >
         <span class="reward-name">{{ reward.name }}</span>
         <!-- 显示皮肤类型 -->
         <span v-if="reward.skinName" class="reward-type">{{
           reward.skinName
-          }}</span>
-        <span v-if="reward.type.includes('points')" class="reward-value">+{{ reward.value }}积分</span>
+        }}</span>
+        <span v-if="reward.type.includes('points')" class="reward-value"
+          >+{{ reward.value }}积分</span
+        >
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-
 // 接收父组件传递的结果和动画状态
 const props = defineProps({
   lastResult: {

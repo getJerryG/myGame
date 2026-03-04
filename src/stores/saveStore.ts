@@ -1,7 +1,46 @@
 import { defineStore } from "pinia";
 import { useGameStore } from "./gameStore";
 import type { Hero, Skin } from "../utils/HeroSkinManager";
-import type { Project, GameEvent } from "./gameStore";
+// 本地重新定义需要的类型
+interface Project {
+  id: string;
+  name: string;
+  type: "hero" | "skin";
+  progress: number;
+  dailyProgress: number;
+  status: "in_progress" | "completed";
+  details: Partial<Hero> | Partial<Skin>;
+  heroName?: string;
+  startDate?: {
+    year: number;
+    month: number;
+    day: number;
+  };
+}
+
+interface EventOption {
+  id: string;
+  text: string;
+  effects: {
+    money?: number;
+    reputation?: number;
+    popularity?: number;
+    wordOfMouth?: number;
+    exp?: number;
+  };
+}
+
+interface GameEvent {
+  id: string;
+  name: string;
+  type: string;
+  description: string;
+  startTime?: number;
+  endTime?: number;
+  active?: boolean;
+  options: EventOption[];
+  title?: string;
+}
 
 // 定义存档数据类型
 export interface SaveData {

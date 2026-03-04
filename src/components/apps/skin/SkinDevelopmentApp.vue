@@ -12,8 +12,13 @@
       <div class="skin-list-section">
         <h3 class="section-title">皮肤列表</h3>
         <div class="skin-grid">
-          <div v-for="skin in skins" :key="skin.id" class="skin-card"
-            :class="{ selected: selectedSkin?.id === skin.id }" @click="selectSkin(skin)">
+          <div
+            v-for="skin in skins"
+            :key="skin.id"
+            class="skin-card"
+            :class="{ selected: selectedSkin?.id === skin.id }"
+            @click="selectSkin(skin)"
+          >
             <div class="skin-preview">{{ skin.preview }}</div>
             <div class="skin-info">
               <div class="skin-name">{{ skin.name }}</div>
@@ -54,7 +59,6 @@
 </template>
 
 <script setup lang="ts">
-
 // 皮肤数据
 interface Skin {
   id: number;
@@ -295,9 +299,11 @@ const closeApp = (): void => {
     }
 
     &.legendary {
-      background: linear-gradient(135deg,
-          tokens.$primary-gold 0%,
-          #f59e0b 100%);
+      background: linear-gradient(
+        135deg,
+        tokens.$primary-gold 0%,
+        #f59e0b 100%
+      );
       color: tokens.$gray-900;
     }
   }
@@ -366,9 +372,11 @@ const closeApp = (): void => {
       }
 
       &.legendary {
-        background: linear-gradient(135deg,
-            tokens.$primary-gold 0%,
-            #f59e0b 100%);
+        background: linear-gradient(
+          135deg,
+          tokens.$primary-gold 0%,
+          #f59e0b 100%
+        );
         color: tokens.$gray-900;
       }
     }
@@ -397,9 +405,11 @@ const closeApp = (): void => {
       min-width: 120px;
 
       &.edit {
-        background: linear-gradient(135deg,
-            tokens.$lottery-purple 0%,
-            #7c3aed 100%);
+        background: linear-gradient(
+          135deg,
+          tokens.$lottery-purple 0%,
+          #7c3aed 100%
+        );
         color: tokens.$text-primary;
         box-shadow: 0 4px 15px rgb(139 92 246 / 40%);
 
@@ -433,7 +443,6 @@ const closeApp = (): void => {
 }
 
 @keyframes float {
-
   0%,
   100% {
     transform: translateY(0);

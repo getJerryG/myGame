@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-
 const router = useRouter();
 
 // 接收路由参数

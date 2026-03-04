@@ -39,7 +39,7 @@ export class EventBus {
 
     const listeners = this.listeners.get(event)!;
     const listenerConfig: ListenerConfig = {
-      callback,
+      callback: callback as EventListener,
       priority,
       isOnce: false,
     };
@@ -54,7 +54,7 @@ export class EventBus {
 
     // 返回取消订阅函数
     return () => {
-      this.off(event, callback);
+      this.off(event, callback as EventListener);
     };
   }
 
@@ -66,7 +66,7 @@ export class EventBus {
   ): () => void {
     const onceCallback: EventListener<T> = (data) => {
       callback(data);
-      this.off(event, onceCallback);
+      this.off(event, onceCallback as EventListener);
     };
 
     return this.on(event, onceCallback, priority);

@@ -7,13 +7,25 @@
 
     <!-- 标签页导航-->
     <div class="app-tabs">
-      <button class="tab-btn" :class="{ active: activeTab === 'daily' }" @click="activeTab = 'daily'">
+      <button
+        class="tab-btn"
+        :class="{ active: activeTab === 'daily' }"
+        @click="activeTab = 'daily'"
+      >
         日常任务
       </button>
-      <button class="tab-btn" :class="{ active: activeTab === 'main' }" @click="activeTab = 'main'">
+      <button
+        class="tab-btn"
+        :class="{ active: activeTab === 'main' }"
+        @click="activeTab = 'main'"
+      >
         主线任务
       </button>
-      <button class="tab-btn" :class="{ active: activeTab === 'achievement' }" @click="activeTab = 'achievement'">
+      <button
+        class="tab-btn"
+        :class="{ active: activeTab === 'achievement' }"
+        @click="activeTab = 'achievement'"
+      >
         成就任务
       </button>
     </div>
@@ -22,10 +34,15 @@
     <div class="app-content">
       <!-- 任务列表 -->
       <div class="task-list">
-        <div v-for="task in currentTasks" :key="task.id" class="task-item" :class="{
-          completed: task.status === 'completed',
-          claimed: task.status === 'rewarded',
-        }">
+        <div
+          v-for="task in currentTasks"
+          :key="task.id"
+          class="task-item"
+          :class="{
+            completed: task.status === 'completed',
+            claimed: task.status === 'rewarded',
+          }"
+        >
           <div class="task-info">
             <div class="task-header">
               <div class="task-name">{{ task.name }}</div>
@@ -36,9 +53,15 @@
 
             <div class="task-description">{{ task.description }}</div>
 
-            <div class="task-progress" v-if="task.conditions && task.conditions.length > 0">
+            <div
+              class="task-progress"
+              v-if="task.conditions && task.conditions.length > 0"
+            >
               <div class="progress-bar">
-                <div class="progress-fill" :style="{ width: `${getTaskProgress(task)}%` }"></div>
+                <div
+                  class="progress-fill"
+                  :style="{ width: `${getTaskProgress(task)}%` }"
+                ></div>
               </div>
               <div class="progress-text">{{ getTaskProgressText(task) }}</div>
             </div>
@@ -46,13 +69,21 @@
 
           <div class="task-rewards">
             <div class="rewards-list">
-              <div v-for="(reward, index) in getRewardDisplay(task)" :key="index" class="reward-item">
+              <div
+                v-for="(reward, index) in getRewardDisplay(task)"
+                :key="index"
+                class="reward-item"
+              >
                 <span class="reward-icon">{{ reward.icon }}</span>
                 <span class="reward-amount">{{ reward.amount }}</span>
               </div>
             </div>
 
-            <button v-if="task.status === 'completed'" class="claim-btn" @click="claimTask(task.id)">
+            <button
+              v-if="task.status === 'completed'"
+              class="claim-btn"
+              @click="claimTask(task.id)"
+            >
               领取奖励
             </button>
           </div>
@@ -65,7 +96,11 @@
 
       <!-- 一键领取按钮-->
       <div class="action-section">
-        <button class="claim-all-btn" :disabled="!hasCompletedTasks" @click="claimAllTasks">
+        <button
+          class="claim-all-btn"
+          :disabled="!hasCompletedTasks"
+          @click="claimAllTasks"
+        >
           一键领取所有奖励
         </button>
       </div>
@@ -74,7 +109,6 @@
 </template>
 
 <script setup lang="ts">
-
 // 导入类型
 import type { App } from "../../../types/app";
 import type { GameData } from "../../../types/game";

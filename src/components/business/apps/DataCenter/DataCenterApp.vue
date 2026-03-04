@@ -1,6 +1,12 @@
 <template>
-  <ApplicationWindow title="数据中心" title-icon="📊" :sidebar-items="sidebarItems" :active-item-id="activeModule"
-    @update:active-item-id="handleItemChange" @item-click="handleItemClick">
+  <ApplicationWindow
+    title="数据中心"
+    title-icon="📊"
+    :sidebar-items="sidebarItems"
+    :active-item-id="activeModule"
+    @update:active-item-id="handleItemChange"
+    @item-click="handleItemClick"
+  >
     <template #header-actions> </template>
 
     <!-- 核心数据模块 -->
@@ -75,7 +81,7 @@
               <span class="data-label">市场情绪</span>
               <span class="data-value">{{
                 coreOverviewData.marketSentiment
-                }}</span>
+              }}</span>
             </div>
           </div>
         </div>
@@ -90,17 +96,19 @@
               <span class="data-label">总收入</span>
               <span class="data-value">{{
                 coreOverviewData.totalRevenue
-                }}</span>
+              }}</span>
             </div>
             <div class="data-item">
               <span class="data-label">日收入</span>
               <span class="data-value">{{
                 coreOverviewData.dailyRevenue
-                }}</span>
+              }}</span>
             </div>
             <div class="data-item">
               <span class="data-label">付费率</span>
-              <span class="data-value">{{ coreOverviewData.paymentRate }}%</span>
+              <span class="data-value"
+                >{{ coreOverviewData.paymentRate }}%</span
+              >
             </div>
             <div class="data-item">
               <span class="data-label">ARPU</span>
@@ -108,7 +116,9 @@
             </div>
             <div class="data-item">
               <span class="data-label">七日留存率</span>
-              <span class="data-value">{{ coreOverviewData.sevenDayRetention }}%</span>
+              <span class="data-value"
+                >{{ coreOverviewData.sevenDayRetention }}%</span
+              >
             </div>
           </div>
         </div>
@@ -125,7 +135,11 @@
           <div class="chart-placeholder">
             <p>收入趋势图表</p>
             <div class="trend-data">
-              <div v-for="(item, index) in recentRevenueData" :key="index" class="trend-item">
+              <div
+                v-for="(item, index) in recentRevenueData"
+                :key="index"
+                class="trend-item"
+              >
                 <span class="trend-date">{{ item.date }}</span>
                 <span class="trend-value">{{ item.value }}</span>
               </div>

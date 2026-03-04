@@ -1,12 +1,20 @@
 <template>
-  <div v-if="showNotification" class="notification-popup" :class="notification.type">
+  <div
+    v-if="showNotification"
+    class="notification-popup"
+    :class="notification.type"
+  >
     <div class="notification-content">
       <div class="notification-header">
         <span class="notification-icon">{{
           getEventIcon(notification.type)
-          }}</span>
+        }}</span>
         <h3 class="notification-title">{{ notification.title }}</h3>
-        <button class="notification-close" aria-label="关闭通知" @click="closeNotification">
+        <button
+          class="notification-close"
+          aria-label="关闭通知"
+          @click="closeNotification"
+        >
           ×
         </button>
       </div>
@@ -14,14 +22,14 @@
       <div class="notification-footer">
         <span class="notification-time">{{
           formatDate(notification.date || currentDate)
-          }}</span>
+        }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-// 
+//
 
 // 定义日期类型接口
 interface GameDate {

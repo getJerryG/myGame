@@ -2,8 +2,13 @@
   <div class="content-app">
     <!-- 左侧菜单�?-->
     <div class="modal-sidebar">
-      <div class="sidebar-item" v-for="module in app.modules" :key="module.id"
-        :class="{ active: activeModule === module.id }" @click="switchModule(module.id)">
+      <div
+        class="sidebar-item"
+        v-for="module in app.modules"
+        :key="module.id"
+        :class="{ active: activeModule === module.id }"
+        @click="switchModule(module.id)"
+      >
         <span class="sidebar-item-icon">{{ getModuleIcon(module.id) }}</span>
         <span class="sidebar-item-name">{{ module.name }}</span>
       </div>
@@ -15,7 +20,11 @@
       <div class="content-header">
         <h2>{{ currentModule.name }}</h2>
         <div class="module-core-data" v-if="app.coreData">
-          <div class="core-data-item" v-for="(value, key) in app.coreData" :key="key">
+          <div
+            class="core-data-item"
+            v-for="(value, key) in app.coreData"
+            :key="key"
+          >
             <span class="core-data-label">{{ getCoreDataLabel(key) }}:</span>
             <span class="core-data-value">{{ value }}</span>
           </div>
@@ -37,7 +46,10 @@
         </div>
 
         <!-- 游戏优化模块 -->
-        <div v-else-if="activeModule === 'game-optimization'" class="module-content">
+        <div
+          v-else-if="activeModule === 'game-optimization'"
+          class="module-content"
+        >
           <h3>游戏优化</h3>
           <p>游戏优化功能开发中...</p>
         </div>
@@ -47,7 +59,6 @@
 </template>
 
 <script setup lang="ts">
-
 const props = defineProps({
   app: {
     type: Object,

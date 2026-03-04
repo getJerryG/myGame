@@ -1,5 +1,11 @@
 import { defineStore } from "pinia";
 import type { Hero, Skin } from "../utils/HeroSkinManager";
+import {
+  getMaxExp,
+  checkPromotionRequirements,
+  getNextLevelInfo,
+  getSubLevelIndex,
+} from "../utils/levelUtils";
 
 // 定义项目类型
 interface Project {
@@ -10,6 +16,12 @@ interface Project {
   dailyProgress: number;
   status: "in_progress" | "completed";
   details: Partial<Hero> | Partial<Skin>;
+  heroName?: string;
+  startDate?: {
+    year: number;
+    month: number;
+    day: number;
+  };
 }
 
 // 定义事件选项类型
@@ -21,6 +33,7 @@ interface EventOption {
     reputation?: number;
     popularity?: number;
     wordOfMouth?: number;
+    exp?: number;
   };
 }
 
@@ -30,10 +43,11 @@ interface GameEvent {
   name: string;
   type: string;
   description: string;
-  startTime: number;
-  endTime: number;
-  active: boolean;
+  startTime?: number;
+  endTime?: number;
+  active?: boolean;
   options: EventOption[];
+  title?: string;
 }
 
 // 定义游戏状态类型
@@ -127,7 +141,12 @@ export const useGameStore = defineStore("game", {
 
     // 检查是否可以升级
     canPromote: (state) => {
-      return checkPromotionRequirements(state);
+      return checkPromotionRequirements(
+        state.plannerLevel,
+        state.plannerSubLevel,
+        state.levelInRank,
+        state.plannerExp,
+      );
     },
   },
 
@@ -207,15 +226,9 @@ export const useGameStore = defineStore("game", {
               id: project.id,
               name: project.name,
               ...project.details,
-            });
+            } as Hero);
             this.heroCount++;
           } else if (project.type === "skin") {
-            this.onlineSkins.push({
-              id: project.id,
-              name: project.name,
-              heroName: project.heroName,
-              ...project.details,
-            });
             this.skinCount++;
           }
         }
@@ -234,6 +247,7 @@ export const useGameStore = defineStore("game", {
         // 这里可以根据事件系统生成随机事件
         this.activeEvents.push({
           id: Date.now().toString(),
+          name: "随机事件",
           type: "random",
           title: "随机事件",
           description: "发生了一个随机事件",
@@ -413,26 +427,19 @@ export const useGameStore = defineStore("game", {
       this.onlineHeroes.forEach((hero) => {
         // 这里可以根据英雄的使用情况和表现来更新数据
         // 例如随机波动或根据实际使用情况计算
-        if (!hero.stats) {
-          hero.stats = {
-            usageRate: 0,
-            winRate: 50,
-            banRate: 0,
-          };
-        }
 
         // 随机更新一些统计数据
-        hero.stats.usageRate = Math.max(
+        hero.usageRate = Math.max(
           0,
-          Math.min(100, hero.stats.usageRate + (Math.random() * 10 - 5)),
+          Math.min(100, hero.usageRate + (Math.random() * 10 - 5)),
         );
-        hero.stats.winRate = Math.max(
+        hero.winRate = Math.max(
           30,
-          Math.min(70, hero.stats.winRate + (Math.random() * 4 - 2)),
+          Math.min(70, hero.winRate + (Math.random() * 4 - 2)),
         );
-        hero.stats.banRate = Math.max(
+        hero.banRate = Math.max(
           0,
-          Math.min(30, hero.stats.banRate + (Math.random() * 5 - 2.5)),
+          Math.min(30, hero.banRate + (Math.random() * 5 - 2.5)),
         );
       });
     },
@@ -459,23 +466,23 @@ export const useGameStore = defineStore("game", {
           };
         }
 
-        // 基础销量（根据皮肤品质设置不同的基础销量）
+        // 基础销量（根据皮肤稀有度设置不同的基础销量）
         const baseSales =
-          skin.quality === "legendary"
+          skin.rarity === "传说"
             ? 1000
-            : skin.quality === "epic"
+            : skin.rarity === "史诗"
               ? 500
-              : skin.quality === "rare"
+              : skin.rarity === "勇气"
                 ? 200
                 : 50;
 
-        // 品质系数（根据皮肤品质设置不同的系数）
+        // 品质系数（根据皮肤稀有度设置不同的系数）
         const qualityCoeff =
-          skin.quality === "legendary"
+          skin.rarity === "传说"
             ? 2.0
-            : skin.quality === "epic"
+            : skin.rarity === "史诗"
               ? 1.5
-              : skin.quality === "rare"
+              : skin.rarity === "勇气"
                 ? 1.2
                 : 1.0;
 
@@ -505,11 +512,11 @@ export const useGameStore = defineStore("game", {
 
         // 将皮肤销售收入计入总流水和当前资金
         const skinPrice =
-          skin.quality === "legendary"
+          skin.rarity === "传说"
             ? 1688
-            : skin.quality === "epic"
+            : skin.rarity === "史诗"
               ? 888
-              : skin.quality === "rare"
+              : skin.rarity === "勇气"
                 ? 288
                 : 188;
 
@@ -566,98 +573,3 @@ export const useGameStore = defineStore("game", {
     storage: localStorage,
   },
 });
-
-// 职级列表（共8个职级）
-const plannerLevels = [
-  "见习",
-  "初级",
-  "中级",
-  "高级",
-  "资深",
-  "专家",
-  "经理",
-  "总监",
-];
-
-// 子等级列表
-const subLevels = ["III", "II", "I"];
-
-// 辅助函数：获取职级索引
-function getLevelIndex(level: string): number {
-  return plannerLevels.indexOf(level);
-}
-
-// 辅助函数：获取子等级索引
-function getSubLevelIndex(subLevel: string): number {
-  return subLevels.indexOf(subLevel);
-}
-
-// 辅助函数：获取总等级数（0-47）
-function getTotalLevelIndex(
-  level: string,
-  subLevel: string,
-  levelInRank: number,
-): number {
-  const levelIndex = getLevelIndex(level);
-  const subLevelIndex = getSubLevelIndex(subLevel);
-  return levelIndex * 6 + subLevelIndex * 2 + (levelInRank - 1);
-}
-
-// 辅助函数：获取最大经验值（实现48级的经验值系统）
-function getMaxExp(
-  level: string,
-  subLevel: string,
-  levelInRank: number,
-): number {
-  // 总等级索引（0-47）
-  const totalLevelIndex = getTotalLevelIndex(level, subLevel, levelInRank);
-
-  // 经验值公式：基础经验值 × 1.2^等级索引
-  // 基础经验值：见习III-1级为100
-  const baseExp = 100;
-  return Math.floor(baseExp * Math.pow(1.2, totalLevelIndex));
-}
-
-// 辅助函数：检查升级条件
-function checkPromotionRequirements(state: GameState): boolean {
-  const maxExp = getMaxExp(
-    state.plannerLevel,
-    state.plannerSubLevel,
-    state.levelInRank,
-  );
-  return state.plannerExp >= maxExp;
-}
-
-// 辅助函数：获取下一个等级信息
-function getNextLevelInfo(
-  level: string,
-  subLevel: string,
-  levelInRank: number,
-): { nextLevel: string; nextSubLevel: string; nextLevelInRank: number } {
-  let nextLevel = level;
-  let nextSubLevel = subLevel;
-  let nextLevelInRank = levelInRank;
-
-  // 1. 先提升等级内等级（1-2）
-  nextLevelInRank++;
-
-  // 2. 如果等级内等级达到3，重置为1并提升子等级
-  if (nextLevelInRank > 2) {
-    nextLevelInRank = 1;
-    const subLevelIndex = getSubLevelIndex(nextSubLevel);
-    nextSubLevel =
-      subLevelIndex > 0 ? subLevels[subLevelIndex - 1] : subLevels[0];
-
-    // 3. 如果子等级达到I且等级内等级达到3，重置为III并提升职级
-    if (subLevel === "I" && levelInRank === 2) {
-      nextSubLevel = "III";
-      const levelIndex = getLevelIndex(nextLevel);
-      nextLevel =
-        levelIndex < plannerLevels.length - 1
-          ? plannerLevels[levelIndex + 1]
-          : plannerLevels[plannerLevels.length - 1];
-    }
-  }
-
-  return { nextLevel, nextSubLevel, nextLevelInRank };
-}

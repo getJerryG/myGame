@@ -2,8 +2,13 @@
   <ApplicationWindow windowTitle="钱包">
     <template #sidebar>
       <div class="sidebar-menu">
-        <button v-for="item in sidebarItems" :key="item.id" class="menu-item"
-          :class="{ active: activeModule === item.id }" @click="handleItemChange(item.id)">
+        <button
+          v-for="item in sidebarItems"
+          :key="item.id"
+          class="menu-item"
+          :class="{ active: activeModule === item.id }"
+          @click="handleItemChange(item.id)"
+        >
           <span class="menu-icon">{{ item.icon }}</span>
           <span class="menu-name">{{ item.name }}</span>
         </button>
@@ -28,13 +33,13 @@
                   <span class="detail-label">可用余额</span>
                   <span class="detail-value">{{
                     gameData?.gameState?.plannerFunds || app.coreData.balance
-                    }}</span>
+                  }}</span>
                 </div>
                 <div class="detail-item">
                   <span class="detail-label">本月收入</span>
                   <span class="detail-value positive">{{
                     gameData?.businessData?.totalRevenue || 0
-                    }}</span>
+                  }}</span>
                 </div>
                 <div class="detail-item">
                   <span class="detail-label">本月支出</span>
@@ -46,15 +51,25 @@
         </div>
 
         <!-- 交易记录模块 -->
-        <div v-else-if="activeModule === 'transaction-history'" class="module-content">
+        <div
+          v-else-if="activeModule === 'transaction-history'"
+          class="module-content"
+        >
           <h3 class="text-gold">交易记录</h3>
           <div class="transaction-history">
-            <div class="transaction-item" v-for="(transaction, index) in transactionHistory" :key="index">
+            <div
+              class="transaction-item"
+              v-for="(transaction, index) in transactionHistory"
+              :key="index"
+            >
               <div class="transaction-info">
                 <div class="transaction-type">{{ transaction.type }}</div>
                 <div class="transaction-date">{{ transaction.date }}</div>
               </div>
-              <div class="transaction-amount" :class="transaction.amount >= 0 ? 'positive' : 'negative'">
+              <div
+                class="transaction-amount"
+                :class="transaction.amount >= 0 ? 'positive' : 'negative'"
+              >
                 {{ transaction.amount >= 0 ? "+" : "" }}{{ transaction.amount }}
               </div>
             </div>

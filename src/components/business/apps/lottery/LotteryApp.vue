@@ -2,27 +2,15 @@
   <ApplicationWindow windowTitle="抽奖中心">
     <template #sidebar>
       <div class="sidebar-menu">
-        <button
-          class="menu-item"
-          :class="{ active: activeTab === 'draw' }"
-          @click="activeTab = 'draw'"
-        >
+        <button class="menu-item" :class="{ active: activeTab === 'draw' }" @click="activeTab = 'draw'">
           <span class="menu-icon">🎰</span>
           <span class="menu-name">抽奖</span>
         </button>
-        <button
-          class="menu-item"
-          :class="{ active: activeTab === 'history' }"
-          @click="activeTab = 'history'"
-        >
+        <button class="menu-item" :class="{ active: activeTab === 'history' }" @click="activeTab = 'history'">
           <span class="menu-icon">📜</span>
           <span class="menu-name">抽奖记录</span>
         </button>
-        <button
-          class="menu-item"
-          :class="{ active: activeTab === 'prizes' }"
-          @click="activeTab = 'prizes'"
-        >
+        <button class="menu-item" :class="{ active: activeTab === 'prizes' }" @click="activeTab = 'prizes'">
           <span class="menu-icon">🎁</span>
           <span class="menu-name">奖品列表</span>
         </button>
@@ -44,13 +32,8 @@
 
             <div class="lottery-wheel">
               <div class="wheel-container" :class="{ spinning: isSpinning }">
-                <div
-                  v-for="(prize, index) in prizes"
-                  :key="index"
-                  class="wheel-item"
-                  :class="{ active: currentIndex === index }"
-                  :style="getWheelItemStyle(index)"
-                >
+                <div v-for="(prize, index) in prizes" :key="index" class="wheel-item"
+                  :class="{ active: currentIndex === index }" :style="getWheelItemStyle(index)">
                   <span class="prize-icon">{{ prize.icon }}</span>
                   <span class="prize-name">{{ prize.name }}</span>
                 </div>
@@ -59,11 +42,7 @@
             </div>
 
             <div class="lottery-controls">
-              <button
-                class="draw-btn"
-                :disabled="isSpinning || tickets <= 0"
-                @click="startDraw"
-              >
+              <button class="draw-btn" :disabled="isSpinning || tickets <= 0" @click="startDraw">
                 {{ isSpinning ? "抽奖中..." : "开始抽奖" }}
               </button>
               <button class="buy-btn" @click="buyTickets">购买抽奖券</button>
@@ -83,11 +62,7 @@
         <div v-else-if="activeTab === 'history'" class="tab-content">
           <h3 class="text-gold" style="margin-bottom: 20px">抽奖记录</h3>
           <div class="history-list">
-            <div
-              v-for="(record, index) in drawHistory"
-              :key="index"
-              class="history-item"
-            >
+            <div v-for="(record, index) in drawHistory" :key="index" class="history-item">
               <div class="history-prize">
                 <span class="prize-icon">{{ record.prize.icon }}</span>
                 <span class="prize-name">{{ record.prize.name }}</span>
@@ -105,12 +80,7 @@
         <div v-else-if="activeTab === 'prizes'" class="tab-content">
           <h3 class="text-gold" style="margin-bottom: 20px">奖品列表</h3>
           <div class="prizes-grid">
-            <div
-              v-for="(prize, index) in prizes"
-              :key="index"
-              class="prize-card"
-              :class="prize.rarity"
-            >
+            <div v-for="(prize, index) in prizes" :key="index" class="prize-card" :class="prize.rarity">
               <div class="prize-icon-large">{{ prize.icon }}</div>
               <div class="prize-info">
                 <div class="prize-name">{{ prize.name }}</div>
@@ -130,7 +100,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
 
 // 状态管理
@@ -478,6 +447,7 @@ const buyTickets = (): void => {
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     transform: scale(1);

@@ -120,7 +120,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { useSimulationStore } from "../../stores/simulationStore";
 
 const simulationStore = useSimulationStore();

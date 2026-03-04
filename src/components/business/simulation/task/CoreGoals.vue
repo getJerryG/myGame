@@ -140,7 +140,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from "vue";
 import { useSimulationStore } from "../../stores/simulationStore";
 
 // 定义类型接口

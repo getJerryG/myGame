@@ -1,20 +1,12 @@
 <template>
-  <div
-    v-if="showNotification"
-    class="notification-popup"
-    :class="notification.type"
-  >
+  <div v-if="showNotification" class="notification-popup" :class="notification.type">
     <div class="notification-content">
       <div class="notification-header">
         <span class="notification-icon">{{
           getEventIcon(notification.type)
-        }}</span>
+          }}</span>
         <h3 class="notification-title">{{ notification.title }}</h3>
-        <button
-          class="notification-close"
-          aria-label="关闭通知"
-          @click="closeNotification"
-        >
+        <button class="notification-close" aria-label="关闭通知" @click="closeNotification">
           ×
         </button>
       </div>
@@ -22,14 +14,14 @@
       <div class="notification-footer">
         <span class="notification-time">{{
           formatDate(notification.date || currentDate)
-        }}</span>
+          }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-// import { ref } from 'vue';
+// 
 
 // 定义日期类型接口
 interface GameDate {
@@ -177,7 +169,7 @@ const getEventIcon = (
   }
 
   /* 响应式设�? */
-  @media (width <= tokens.$breakpoint-md) {
+  @media (width <=tokens.$breakpoint-md) {
     top: 10px;
     right: 10px;
     left: 10px;
@@ -202,7 +194,7 @@ const getEventIcon = (
   }
 
   /* 横屏手机适配 */
-  @media (orientation: landscape) and (height <= 600px) {
+  @media (orientation: landscape) and (height <=600px) {
     top: 10px;
     right: 10px;
     max-width: 300px;

@@ -1,47 +1,27 @@
 <template>
   <div class="channel-delivery-app">
     <div class="app-tabs">
-      <button
-        class="tab-btn"
-        :class="{ active: activeTab === 'all' }"
-        @click="activeTab = 'all'"
-      >
+      <button class="tab-btn" :class="{ active: activeTab === 'all' }" @click="activeTab = 'all'">
         全部渠道
       </button>
-      <button
-        class="tab-btn"
-        :class="{ active: activeTab === 'online' }"
-        @click="activeTab = 'online'"
-      >
+      <button class="tab-btn" :class="{ active: activeTab === 'online' }" @click="activeTab = 'online'">
         线上渠道
       </button>
-      <button
-        class="tab-btn"
-        :class="{ active: activeTab === 'offline' }"
-        @click="activeTab = 'offline'"
-      >
+      <button class="tab-btn" :class="{ active: activeTab === 'offline' }" @click="activeTab = 'offline'">
         线下渠道
       </button>
-      <button
-        class="tab-btn"
-        :class="{ active: activeTab === 'cooperation' }"
-        @click="activeTab = 'cooperation'"
-      >
+      <button class="tab-btn" :class="{ active: activeTab === 'cooperation' }" @click="activeTab = 'cooperation'">
         合作渠道
       </button>
     </div>
 
     <div class="channels-container">
-      <div
-        v-for="channel in filteredChannels"
-        :key="channel.id"
-        class="channel-card"
-      >
+      <div v-for="channel in filteredChannels" :key="channel.id" class="channel-card">
         <div class="channel-header">
           <h3>{{ channel.name }}</h3>
           <span class="channel-type">{{
             getChannelTypeName(channel.type)
-          }}</span>
+            }}</span>
         </div>
 
         <div class="channel-stats">
@@ -57,23 +37,15 @@
             <span class="stat-label">状�?</span>
             <span class="stat-value" :class="channel.status">{{
               channel.status === "active" ? "投放中" : "未投放"
-            }}</span>
+              }}</span>
           </div>
         </div>
 
         <div class="channel-actions">
-          <button
-            v-if="channel.status === 'inactive'"
-            class="action-btn primary"
-            @click="openIntensityModal(channel)"
-          >
+          <button v-if="channel.status === 'inactive'" class="action-btn primary" @click="openIntensityModal(channel)">
             开启投�?
           </button>
-          <button
-            v-else
-            class="action-btn secondary"
-            @click="stopDelivery(channel)"
-          >
+          <button v-else class="action-btn secondary" @click="stopDelivery(channel)">
             停止投放
           </button>
         </div>
@@ -84,11 +56,7 @@
       <button class="report-btn" @click="viewReport">查看投放报告</button>
     </div>
 
-    <div
-      v-if="showIntensityModal"
-      class="modal-overlay"
-      @click="closeIntensityModal"
-    >
+    <div v-if="showIntensityModal" class="modal-overlay" @click="closeIntensityModal">
       <div class="modal-content" @click.stop>
         <h3>选择投放力度</h3>
         <div class="intensity-options">
@@ -112,7 +80,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
 import { getChannelTypeName } from "@/utils/appUtils";
 
 interface Channel {

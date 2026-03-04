@@ -114,8 +114,6 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from "vue";
-
 // 设置数据
 const settings = reactive({
   masterVolume: 80,

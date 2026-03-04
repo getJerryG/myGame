@@ -1,11 +1,6 @@
 <template>
-  <ApplicationWindow
-    title="策划成长"
-    title-icon="📊"
-    :sidebar-items="sidebarItems"
-    :active-item-id="activeModule"
-    @update:active-item-id="activeModule = $event"
-  >
+  <ApplicationWindow title="策划成长" title-icon="📊" :sidebar-items="sidebarItems" :active-item-id="activeModule"
+    @update:active-item-id="activeModule = $event">
     <!-- 等级信息 -->
     <section v-if="activeModule === 'level-info'" class="module-section">
       <div class="section-header">
@@ -22,10 +17,7 @@
           <div class="level-progress">
             <div class="progress-title">升级进度</div>
             <div class="progress-bar">
-              <div
-                class="progress-fill"
-                :style="{ width: progress + '%' }"
-              ></div>
+              <div class="progress-fill" :style="{ width: progress + '%' }"></div>
             </div>
             <div class="progress-text">
               <span class="text-gold">{{ progress }}%</span> 完成
@@ -38,12 +30,8 @@
       <div class="conditions-section">
         <h3>升级条件</h3>
         <div class="conditions-grid">
-          <div
-            class="condition-card"
-            v-for="condition in upgradeConditions"
-            :key="condition.id"
-            :class="{ completed: condition.completed }"
-          >
+          <div class="condition-card" v-for="condition in upgradeConditions" :key="condition.id"
+            :class="{ completed: condition.completed }">
             <div class="condition-icon">{{ condition.icon }}</div>
             <div class="condition-content">
               <div class="condition-title">{{ condition.title }}</div>
@@ -63,11 +51,7 @@
       <div class="permissions-section">
         <h3>已解锁权限</h3>
         <div class="permissions-grid">
-          <div
-            class="permission-card"
-            v-for="permission in unlockedPermissions"
-            :key="permission.id"
-          >
+          <div class="permission-card" v-for="permission in unlockedPermissions" :key="permission.id">
             <div class="permission-icon">{{ permission.icon }}</div>
             <div class="permission-content">
               <div class="permission-title">{{ permission.title }}</div>
@@ -85,11 +69,7 @@
           <span class="arrow">{{ showRewards ? "↑" : "↓" }}</span>
         </button>
         <div class="rewards-list" v-if="showRewards">
-          <div
-            class="reward-item"
-            v-for="reward in rewardsHistory"
-            :key="reward.id"
-          >
+          <div class="reward-item" v-for="reward in rewardsHistory" :key="reward.id">
             <div class="reward-date">{{ reward.date }}</div>
             <div class="reward-content">
               <div class="reward-title">{{ reward.title }}</div>
@@ -102,9 +82,7 @@
               </div>
               <div class="amount-item" v-if="reward.reputation > 0">
                 <span class="amount-icon">🏆</span>
-                <span class="text-gold amount-value"
-                  >+{{ reward.reputation }}</span
-                >
+                <span class="text-gold amount-value">+{{ reward.reputation }}</span>
               </div>
             </div>
           </div>
@@ -115,10 +93,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
 import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
 
-// 侧边栏配�?const sidebarItems = [{ id: 'level-info', name: '等级信息', icon: '📊' }];
+// 侧边栏配置
+const sidebarItems = [{ id: 'level-info', name: '等级信息', icon: '📊' }];
 
 const activeModule = ref("level-info");
 
@@ -550,6 +528,7 @@ const rewardsHistory = ref([
 
 /* 响应式设计 */
 @include utils.mobile {
+
   .conditions-grid,
   .permissions-grid {
     grid-template-columns: 1fr;

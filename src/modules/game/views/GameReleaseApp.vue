@@ -104,8 +104,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-
 // 发布状态
 const releaseStatus = ref<"idle" | "releasing" | "success" | "failed">("idle");
 const isReleasing = ref(false);

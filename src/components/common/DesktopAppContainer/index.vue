@@ -67,7 +67,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onUnmounted, type DefineComponent } from "vue";
 // import { useWindowManagerStore } from "@/stores/windowManagerStore";
 
 // 导入所有应用组件

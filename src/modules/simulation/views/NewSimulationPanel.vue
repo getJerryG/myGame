@@ -95,8 +95,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-
 // 模拟参数
 const simulationSpeed = ref(5);
 const initialFunds = ref(100000);

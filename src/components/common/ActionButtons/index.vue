@@ -31,8 +31,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits } from "vue";
-
 const emit = defineEmits(["toggle-inventory", "show-achievements"]);
 
 // 切换背包弹窗

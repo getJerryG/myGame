@@ -51,8 +51,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, nextTick } from "vue";
-
 // 定义组件 props
 const props = defineProps<{
   levelName: string;

@@ -101,7 +101,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import LoginRewardConfig from "./LoginRewardConfig.vue";
 import TaskRewardConfig from "./TaskRewardConfig.vue";
 import SeasonRewardConfig from "./SeasonRewardConfig.vue";

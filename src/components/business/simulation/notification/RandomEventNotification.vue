@@ -123,7 +123,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
 import type { RandomEvent } from "@/utils/RandomEvents";
 import { randomEventManager } from "@/utils/RandomEvents";
 import { getHeroesFromStorage } from "@/utils/HeroSkinManager";

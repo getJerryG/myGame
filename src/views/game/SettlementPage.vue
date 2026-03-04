@@ -84,15 +84,11 @@
           </div>
           <div class="data-item">
             <span class="data-label">7日留存率</span>
-            <span class="data-value"
-              >{{ (sevenDayRetention * 100).toFixed(1) }}%</span
-            >
+            <span class="data-value">{{ (sevenDayRetention * 100).toFixed(1) }}%</span>
           </div>
           <div class="data-item">
             <span class="data-label">付费率</span>
-            <span class="data-value"
-              >{{ (paymentRate * 100).toFixed(1) }}%</span
-            >
+            <span class="data-value">{{ (paymentRate * 100).toFixed(1) }}%</span>
           </div>
           <div class="data-item">
             <span class="data-label">ARPU</span>
@@ -108,9 +104,7 @@
           </div>
           <div class="data-item">
             <span class="data-label">渠道转化率</span>
-            <span class="data-value"
-              >{{ (channelConversionRate * 100).toFixed(1) }}%</span
-            >
+            <span class="data-value">{{ (channelConversionRate * 100).toFixed(1) }}%</span>
           </div>
         </div>
       </div>
@@ -127,8 +121,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
-import { useRouter } from "vue-router";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -438,12 +430,10 @@ const continueGame = (): void => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    135deg,
-    tokens.$bg-dark 0%,
-    tokens.$bg-secondary 50%,
-    tokens.$bg-tertiary 100%
-  );
+  background: linear-gradient(135deg,
+      tokens.$bg-dark 0%,
+      tokens.$bg-secondary 50%,
+      tokens.$bg-tertiary 100%);
   background-size: cover;
   background-position: center;
   opacity: 0.9;
@@ -457,21 +447,15 @@ const continueGame = (): void => {
     width: 100%;
     height: 100%;
     background-image:
-      radial-gradient(
-        circle at 30% 40%,
+      radial-gradient(circle at 30% 40%,
         rgb(255 215 0 / 10%) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        circle at 70% 60%,
+        transparent 50%),
+      radial-gradient(circle at 70% 60%,
         rgb(255 107 107 / 10%) 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        circle at 50% 20%,
+        transparent 50%),
+      radial-gradient(circle at 50% 20%,
         rgb(74 158 255 / 10%) 0%,
-        transparent 50%
-      );
+        transparent 50%);
     animation: backgroundPulse 4s ease-in-out infinite alternate;
   }
 }
@@ -519,7 +503,7 @@ const continueGame = (): void => {
     opacity: 0.8;
   }
 
-  @media (width <= 768px) {
+  @media (width <=768px) {
     h1 {
       font-size: tokens.$font-size-3xl;
     }
@@ -590,7 +574,7 @@ const continueGame = (): void => {
     }
   }
 
-  @media (width <= 768px) {
+  @media (width <=768px) {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -602,11 +586,11 @@ const continueGame = (): void => {
   width: 100%;
   margin-bottom: tokens.$spacing-lg;
 
-  @media (width <= 1200px) {
+  @media (width <=1200px) {
     grid-template-columns: 1fr;
   }
 
-  @media (width <= 768px) {
+  @media (width <=768px) {
     grid-template-columns: 1fr;
   }
 }
@@ -638,11 +622,11 @@ const continueGame = (): void => {
     height: 300px;
     width: 100%;
 
-    @media (width <= 1200px) {
+    @media (width <=1200px) {
       height: 250px;
     }
 
-    @media (width <= 768px) {
+    @media (width <=768px) {
       height: 200px;
     }
   }
@@ -663,7 +647,7 @@ const continueGame = (): void => {
   .data-grid {
     @include utils.grid-auto-fill(250px, tokens.$spacing-md);
 
-    @media (width <= 768px) {
+    @media (width <=768px) {
       grid-template-columns: 1fr;
     }
   }
@@ -714,25 +698,21 @@ const continueGame = (): void => {
     }
 
     &.primary {
-      background: linear-gradient(
-        135deg,
-        tokens.$primary 0%,
-        tokens.$primary-dark 100%
-      );
+      background: linear-gradient(135deg,
+          tokens.$primary 0%,
+          tokens.$primary-dark 100%);
       border-color: rgb(74 158 255 / 50%);
 
       &:hover {
-        background: linear-gradient(
-          135deg,
-          tokens.$primary-dark 0%,
-          tokens.$primary 100%
-        );
+        background: linear-gradient(135deg,
+            tokens.$primary-dark 0%,
+            tokens.$primary 100%);
         box-shadow: 0 6px 20px rgb(74 158 255 / 40%);
       }
     }
   }
 
-  @media (width <= 768px) {
+  @media (width <=768px) {
     flex-direction: column;
     gap: tokens.$spacing-sm;
     width: 100%;

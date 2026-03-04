@@ -70,8 +70,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-
 // 合作选项类型定义
 interface CollaborationOption {
   id: string;

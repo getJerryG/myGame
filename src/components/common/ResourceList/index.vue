@@ -2,12 +2,8 @@
   <div class="resource-list-container">
     <!-- 选项卡导航区 -->
     <div class="tabs-navigation">
-      <button
-        v-for="tab in tabs"
-        :key="tab.id"
-        :class="['tab-button', { active: activeTab === tab.id }]"
-        @click="activeTab = tab.id"
-      >
+      <button v-for="tab in tabs" :key="tab.id" :class="['tab-button', { active: activeTab === tab.id }]"
+        @click="activeTab = tab.id">
         <span class="tab-icon">{{ tab.icon }}</span>
         <span class="tab-label">{{ tab.label }}</span>
       </button>
@@ -19,12 +15,7 @@
       <div v-show="activeTab === 'tasks'" class="tab-panel">
         <h2 class="section-title">任务列表</h2>
         <div class="task-list">
-          <div
-            v-for="task in tasks"
-            :key="task.id"
-            class="task-item"
-            :class="task.status"
-          >
+          <div v-for="task in tasks" :key="task.id" class="task-item" :class="task.status">
             <div class="task-header">
               <div class="task-title">
                 <span class="task-icon">{{ task.icon }}</span>
@@ -33,16 +24,13 @@
               <div class="task-status-badge" :class="task.status">
                 <span class="status-text">{{
                   task.status === "completed" ? "已完成" : "进行中"
-                }}</span>
+                  }}</span>
               </div>
             </div>
             <div class="task-description">{{ task.description }}</div>
             <div class="task-progress">
               <div class="progress-bar">
-                <div
-                  class="progress-fill"
-                  :style="{ width: task.progress + '%' }"
-                ></div>
+                <div class="progress-fill" :style="{ width: task.progress + '%' }"></div>
                 <div class="progress-glow"></div>
               </div>
               <div class="progress-text">{{ task.progress }}%</div>
@@ -55,18 +43,12 @@
       <div v-show="activeTab === 'quick-actions'" class="tab-panel">
         <h2 class="section-title">快捷功能</h2>
         <div class="quick-actions-grid">
-          <div
-            class="quick-action-item"
-            @click="handleQuickAction('inventory')"
-          >
+          <div class="quick-action-item" @click="handleQuickAction('inventory')">
             <div class="quick-action-icon">🎒</div>
             <div class="quick-action-name">背包</div>
             <div class="quick-action-desc">查看和使用物品</div>
           </div>
-          <div
-            class="quick-action-item"
-            @click="handleQuickAction('achievements')"
-          >
+          <div class="quick-action-item" @click="handleQuickAction('achievements')">
             <div class="quick-action-icon">🏆</div>
             <div class="quick-action-name">成就</div>
             <div class="quick-action-desc">查看成就进度</div>
@@ -88,10 +70,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-
 import { useGameStore } from "@/stores/gameStore";
-import { useRouter } from "vue-router";
 
 const gameStore = useGameStore();
 const _router = useRouter();
@@ -210,12 +189,10 @@ function handleQuickAction(action: string): void {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgb(255 255 255 / 40%),
-      transparent
-    );
+    background: linear-gradient(90deg,
+        transparent,
+        rgb(255 255 255 / 40%),
+        transparent);
     transition: left 0.5s ease;
   }
 
@@ -244,6 +221,7 @@ function handleQuickAction(action: string): void {
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     transform: scale(1);
@@ -405,6 +383,7 @@ function handleQuickAction(action: string): void {
 }
 
 @keyframes bounce {
+
   0%,
   100% {
     transform: translateY(0);
@@ -487,6 +466,7 @@ function handleQuickAction(action: string): void {
 
 .task-item {
   &.in_progress {
+
     .progress-fill,
     .progress-glow {
       background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
@@ -494,6 +474,7 @@ function handleQuickAction(action: string): void {
   }
 
   &.completed {
+
     .progress-fill,
     .progress-glow {
       background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
@@ -554,12 +535,10 @@ function handleQuickAction(action: string): void {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgb(255 255 255 / 40%),
-      transparent
-    );
+    background: linear-gradient(90deg,
+        transparent,
+        rgb(255 255 255 / 40%),
+        transparent);
     transition: left 0.5s ease;
   }
 
@@ -617,7 +596,7 @@ function handleQuickAction(action: string): void {
 }
 
 /* 响应式设计 */
-@media (width <= 768px) {
+@media (width <=768px) {
   .tabs-navigation {
     flex-direction: column;
   }

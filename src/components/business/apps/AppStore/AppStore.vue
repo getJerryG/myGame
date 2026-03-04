@@ -1,12 +1,6 @@
 <template>
-  <ApplicationWindow
-    title="应用商店"
-    title-icon="🏪"
-    :sidebar-items="sidebarItems"
-    :active-item-id="activeCategory"
-    @update:active-item-id="activeCategory = $event"
-    @item-click="handleCategoryClick"
-  >
+  <ApplicationWindow title="应用商店" title-icon="🏪" :sidebar-items="sidebarItems" :active-item-id="activeCategory"
+    @update:active-item-id="activeCategory = $event" @item-click="handleCategoryClick">
     <template #header-actions> </template>
 
     <div class="app-store-content">
@@ -19,14 +13,12 @@
               <p class="app-description">{{ app.description }}</p>
               <div class="app-memory text-gold">虚拟内存: {{ app.memory }}</div>
               <div class="app-status">
-                <span
-                  :class="{
-                    'status-locked': !canUnlockApp(app),
-                    'status-available':
-                      canUnlockApp(app) && !isInstalled(app.id),
-                    'status-installed': isInstalled(app.id),
-                  }"
-                >
+                <span :class="{
+                  'status-locked': !canUnlockApp(app),
+                  'status-available':
+                    canUnlockApp(app) && !isInstalled(app.id),
+                  'status-installed': isInstalled(app.id),
+                }">
                   <span class="text-gold">{{ getAppStatusText(app) }}</span>
                 </span>
                 <span v-if="!canUnlockApp(app)" class="lock-reason">
@@ -36,15 +28,11 @@
             </div>
           </div>
           <div class="app-actions">
-            <button
-              v-if="
-                !isDownloading(app.id) &&
-                !isInstalled(app.id) &&
-                canUnlockApp(app)
-              "
-              class="download-btn"
-              @click="startDownload(app)"
-            >
+            <button v-if="
+              !isDownloading(app.id) &&
+              !isInstalled(app.id) &&
+              canUnlockApp(app)
+            " class="download-btn" @click="startDownload(app)">
               下载
             </button>
             <button v-else-if="!canUnlockApp(app)" class="locked-btn" disabled>
@@ -52,10 +40,7 @@
             </button>
             <div v-else-if="isDownloading(app.id)" class="download-progress">
               <div class="progress-bar">
-                <div
-                  class="progress-fill"
-                  :style="{ width: `${getDownloadProgress(app.id)}%` }"
-                ></div>
+                <div class="progress-fill" :style="{ width: `${getDownloadProgress(app.id)}%` }"></div>
               </div>
               <div class="progress-text">
                 {{ getDownloadProgress(app.id) }}%
@@ -70,7 +55,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
 import { useWindowManagerStore } from "@/stores/windowManagerStore";
 import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
 import type { SidebarItem } from "@/components/common/window/ApplicationWindow.vue";

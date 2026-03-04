@@ -2,9 +2,11 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { resolve } from 'path';
-import viteImagemin from 'vite-plugin-imagemin';
 import viteAutoImport from 'unplugin-auto-import/vite';
 
+// 引入图片压缩配置
+import viteImagemin from 'vite-plugin-imagemin';
+import viteImageminConfig from './.config/viteImagemin';
 const PRECOMPRESS = {
   precompress: true,
 };
@@ -13,8 +15,6 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
-<<<<<<< HEAD
-=======
     viteAutoImport({
       imports: ['vue', 'vue-router', 'pinia'],
       dts: './src/auto-imports.d.ts',
@@ -26,44 +26,17 @@ export default defineConfig({
       filename: 'visualizer.html'
     }),
 
->>>>>>> origin/main
     // 图片压缩
-    viteImagemin({
-      gifsicle: {
-        optimizationLevel: 7,
-        interlaced: true
-      },
-      optipng: {
-        optimizationLevel: 7
-      },
-      mozjpeg: {
-        quality: 85,
-        progressive: true
-      },
-      pngquant: {
-        quality: [0.85, 0.95],
-        speed: 3
-      },
-      svgo: {
-        plugins: [
-          {
-            name: 'removeViewBox'
-          },
-          {
-            name: 'removeEmptyAttrs',
-            active: false
-          },
-          {
-            name: 'cleanupIds',
-            active: true
-          }
-        ]
-      },
-    })
+    viteImagemin(viteImageminConfig),
+
   ],
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
+      // '~': resolve(__dirname, 'src/a'),
+      '~types': resolve(__dirname, 'src/types'),
+      '~styles': resolve(__dirname, 'src/styles'),
+      '~utils': resolve(__dirname, 'src/utils'),
     },
   },
   css: {

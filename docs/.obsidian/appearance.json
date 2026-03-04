@@ -1,10 +1,13 @@
 {
-  "cssTheme": "GitHub Theme",
+  "cssTheme": "Things",
   "theme": "obsidian",
   "showViewHeader": false,
   "baseFontSize": 16,
   "nativeMenus": false,
-  "accentColor": "",
+  "accentColor": "#f55cad",
   "showRibbon": false,
-  "baseFontSizeAction": false
+  "baseFontSizeAction": false,
+  "enabledCssSnippets": [
+    "custom-code-style"
+  ]
 }

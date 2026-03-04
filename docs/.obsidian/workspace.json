@@ -13,9 +13,9 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "01-产品核心备忘/04-玩法功能详情说明.md",
-                "mode": "preview",
-                "source": true,
+                "file": "01-产品核心备忘/02-策划等级体系详细说明.md",
+                "mode": "source",
+                "source": false,
                 "backlinks": true,
                 "backlinkOpts": {
                   "collapseAll": false,
@@ -28,7 +28,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "04-玩法功能详情说明"
+              "title": "02-策划等级体系详细说明"
             }
           }
         ]
@@ -196,6 +196,7 @@
   "active": "12d2eba6fa2b9f72",
   "lastOpenFiles": [
     "01-产品核心备忘/01-核心数值规则.md",
+    "01-产品核心备忘/04-玩法功能详情说明.md",
     "README.md",
     "01-产品核心备忘/02-策划等级体系详细说明.md",
     "文档格式规范.md",
@@ -203,7 +204,6 @@
     "02-技术落地文档/03-数据字典.md",
     "02-技术落地文档/01-项目架构设计.md",
     "游戏策划模拟经营游戏PRD.md",
-    "01-产品核心备忘/04-玩法功能详情说明.md",
     "01-产品核心备忘/03-桌面应用设计详细说明.md",
     "模拟经营：游戏任务系统设计方案.md",
     "PRD系统性拆解.md",

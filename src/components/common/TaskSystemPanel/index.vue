@@ -145,7 +145,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, inject } from "vue";
 import { useSimulationStore } from "@/stores/simulationStore";
 import { useSimulationTaskSystemStore } from "@/stores/simulation/simulationTaskSystemStore";
 

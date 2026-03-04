@@ -2,18 +2,13 @@
   <ApplicationWindow windowTitle="聊天">
     <template #sidebar>
       <div class="chat-contacts">
-        <div
-          v-for="contact in contacts"
-          :key="contact.id"
-          :class="[
-            'contact-item',
-            {
-              active: activeContactId === contact.id,
-              'has-unread': contact.unread > 0,
-            },
-          ]"
-          @click="selectContact(contact.id)"
-        >
+        <div v-for="contact in contacts" :key="contact.id" :class="[
+          'contact-item',
+          {
+            active: activeContactId === contact.id,
+            'has-unread': contact.unread > 0,
+          },
+        ]" @click="selectContact(contact.id)">
           <div class="contact-avatar">{{ contact.avatar }}</div>
           <div class="contact-info">
             <div class="contact-name">{{ contact.name }}</div>
@@ -36,14 +31,8 @@
         </div>
 
         <div class="chat-messages">
-          <div
-            v-for="(message, index) in chatMessages"
-            :key="index"
-            class="message"
-            :class="
-              message.sender === 'contact' ? 'contact-message' : 'user-message'
-            "
-          >
+          <div v-for="(message, index) in chatMessages" :key="index" class="message" :class="message.sender === 'contact' ? 'contact-message' : 'user-message'
+            ">
             <div class="message-content">{{ message.content }}</div>
             <div class="message-time">{{ message.time }}</div>
           </div>
@@ -52,12 +41,8 @@
         <div class="chat-options-area" v-if="replyOptions.length > 0">
           <div class="options-header">选择回复</div>
           <div class="options-list">
-            <button
-              v-for="(option, index) in replyOptions"
-              :key="index"
-              class="option-btn"
-              @click="selectReply(option)"
-            >
+            <button v-for="(option, index) in replyOptions" :key="index" class="option-btn"
+              @click="selectReply(option)">
               {{ option }}
             </button>
           </div>
@@ -68,7 +53,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
 import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
 
 defineProps<{

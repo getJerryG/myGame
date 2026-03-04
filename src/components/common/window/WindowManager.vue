@@ -41,7 +41,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted } from "vue";
 import { useWindowManagerStore } from "@/stores/windowManagerStore";
 import SystemWindow from "./SystemWindow.vue";
 // 导入实际应用组件

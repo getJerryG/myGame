@@ -95,7 +95,6 @@ import Button from "./Button/index.vue";
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import List from "./List/index.vue";
 
 const items = ref([

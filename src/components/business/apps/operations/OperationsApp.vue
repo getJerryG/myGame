@@ -2,27 +2,15 @@
   <ApplicationWindow windowTitle="运营活动">
     <template #sidebar>
       <div class="sidebar-menu">
-        <button
-          class="menu-item"
-          :class="{ active: activeTab === 'create' }"
-          @click="activeTab = 'create'"
-        >
+        <button class="menu-item" :class="{ active: activeTab === 'create' }" @click="activeTab = 'create'">
           <span class="menu-icon">📝</span>
           <span class="menu-name">创建活动</span>
         </button>
-        <button
-          class="menu-item"
-          :class="{ active: activeTab === 'manage' }"
-          @click="activeTab = 'manage'"
-        >
+        <button class="menu-item" :class="{ active: activeTab === 'manage' }" @click="activeTab = 'manage'">
           <span class="menu-icon">📋</span>
           <span class="menu-name">活动管理</span>
         </button>
-        <button
-          class="menu-item"
-          :class="{ active: activeTab === 'stats' }"
-          @click="activeTab = 'stats'"
-        >
+        <button class="menu-item" :class="{ active: activeTab === 'stats' }" @click="activeTab = 'stats'">
           <span class="menu-icon">📊</span>
           <span class="menu-name">活动统计</span>
         </button>
@@ -32,40 +20,24 @@
     <template #content>
       <div class="operations-content">
         <!-- 创建活动标签页 -->
-        <CreateActivityTab
-          v-if="activeTab === 'create'"
-          v-model:selected-type="selectedType"
-          v-model:activity-name="activityName"
-          v-model:activity-description="activityDescription"
-          v-model:start-time="startTime"
-          v-model:end-time="endTime"
-          v-model:gold-reward="goldReward"
-          v-model:exp-reward="expReward"
-          @create="handleCreateActivity"
-        />
+        <CreateActivityTab v-if="activeTab === 'create'" v-model:selected-type="selectedType"
+          v-model:activity-name="activityName" v-model:activity-description="activityDescription"
+          v-model:start-time="startTime" v-model:end-time="endTime" v-model:gold-reward="goldReward"
+          v-model:exp-reward="expReward" @create="handleCreateActivity" />
 
         <!-- 活动管理标签页 -->
-        <ActivityManagementTab
-          v-else-if="activeTab === 'manage'"
-          :activities="activities"
-          @start="handleStartActivity"
-          @end="handleEndActivity"
-          @delete="handleDeleteActivity"
-        />
+        <ActivityManagementTab v-else-if="activeTab === 'manage'" :activities="activities" @start="handleStartActivity"
+          @end="handleEndActivity" @delete="handleDeleteActivity" />
 
         <!-- 活动统计标签页 -->
-        <ActivityStatisticsTab
-          v-else-if="activeTab === 'stats'"
-          :stats="computedStats"
-          :participation-trend="participationTrend"
-        />
+        <ActivityStatisticsTab v-else-if="activeTab === 'stats'" :stats="computedStats"
+          :participation-trend="participationTrend" />
       </div>
     </template>
   </ApplicationWindow>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
 import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
 import CreateActivityTab from "./CreateActivityTab.vue";
 import ActivityManagementTab from "./ActivityManagementTab.vue";

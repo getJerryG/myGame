@@ -80,8 +80,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-
 // 定义类型接口
 interface HistoryItem {
   date: {

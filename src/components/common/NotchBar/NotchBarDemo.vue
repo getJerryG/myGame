@@ -66,7 +66,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import NotchBar from "./index.vue";
 
 const funds = ref(10000);

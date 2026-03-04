@@ -93,7 +93,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import EventTypeSelector from "./EventTypeSelector.vue";
 import EventConfigForm from "./EventConfigForm.vue";
 import EventHistoryList from "./EventHistoryList.vue";

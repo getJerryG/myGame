@@ -55,8 +55,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-
 export interface SidebarItem {
   id: string;
   name: string;
@@ -81,7 +79,7 @@ const _props = withDefaults(
     titleIcon: "",
     sidebarItems: () => [],
     activeItemId: "",
-    showWindowControls: false,
+    showWindowControls: true,
     isMaximized: false,
     className: "",
   },

@@ -142,8 +142,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
-
 // 接收父组件传递的属性
 const props = defineProps({
   eventConfig: {

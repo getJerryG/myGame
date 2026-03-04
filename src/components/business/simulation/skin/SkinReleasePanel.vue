@@ -56,7 +56,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import SkinLibrary from "./SkinLibrary.vue";
 import SkinDetail from "./SkinDetail.vue";
 

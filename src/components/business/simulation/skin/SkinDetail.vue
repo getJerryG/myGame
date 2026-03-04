@@ -164,8 +164,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
-
 const props = defineProps({
   skin: {
     type: Object,

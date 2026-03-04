@@ -4,18 +4,20 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import { resolve } from 'path';
 import { visualizer } from 'rollup-plugin-visualizer';
 import viteImagemin from 'vite-plugin-imagemin';
-import viteCompression from 'vite-plugin-compression';
+import viteAutoImport from 'unplugin-auto-import/vite';
 
 const PRECOMPRESS = {
   precompress: true,
 };
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
-    // 构建结果分析
+    viteAutoImport({
+      imports: ['vue', 'vue-router', 'pinia'],
+      dts: './src/auto-imports.d.ts',
+    }),
     visualizer({
       open: false,
       gzipSize: false,
@@ -55,25 +57,6 @@ export default defineConfig({
           }
         ]
       },
-      // 压缩后替换原始文件
-      replaceOrigin: true
-    }),
-
-    // Gzip 压缩
-    viteCompression({
-      verbose: true,
-      disable: false,
-      threshold: 10240,
-      algorithm: 'gzip',
-      ext: '.gz'
-    }),
-    // Brotli 压缩
-    viteCompression({
-      verbose: true,
-      disable: false,
-      threshold: 10240,
-      algorithm: 'brotliCompress',
-      ext: '.br'
     })
   ],
   resolve: {
@@ -98,6 +81,8 @@ export default defineConfig({
       localsConvention: 'camelCaseOnly'
     }
   },
+  // 配置缓存策略
+  cacheDir: './node_modules/.vite',
   build: {
     // 生产环境下启用sourcemap
     sourcemap: false,
@@ -160,10 +145,10 @@ export default defineConfig({
           if (info.endsWith('.css')) {
             return 'css/[name]-[hash][extname]';
           }
-          if (/\.(png|jpe?g|gif|svg|webp|ico)$/.test(info)) {
+          if (/(png|jpe?g|gif|svg|webp|ico)$/.test(info)) {
             return 'images/[name]-[hash][extname]';
           }
-          if (/\.(woff2?|ttf|otf|eot)$/.test(info)) {
+          if (/(woff2?|ttf|otf|eot)$/.test(info)) {
             return 'fonts/[name]-[hash][extname]';
           }
           return 'assets/[name]-[hash][extname]';
@@ -183,8 +168,6 @@ export default defineConfig({
         safari10: true
       }
     },
-    // 配置缓存策略
-    cacheDir: './node_modules/.vite',
     // 控制输出文件大小
     chunkSizeWarningLimit: 500,
     // 启用CSS代码分割
@@ -199,8 +182,8 @@ export default defineConfig({
       exclude: [/node_modules/]
     }
   },
-  server: PRECOMPRESS,
-  preview: PRECOMPRESS,
+  server: {},
+  preview: {},
   define: {
     // 暴露端口号给客户端代码
     'import.meta.env.VITE_PORT': JSON.stringify(5173),

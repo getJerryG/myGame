@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch, defineAsyncComponent } from "vue";
 import HelloPage from "./HelloPage.vue";
 
 // 异步加载 DesktopSystem 组件，减少首屏加载时间
@@ -111,18 +110,17 @@ const handleHelloModalClose = (): void => {
 
   @include utils.flex-center;
 
-  background: linear-gradient(
-    135deg,
-    tokens.$bg-dark 0%,
-    tokens.$bg-secondary 50%,
-    tokens.$bg-tertiary 100%
-  );
+  background: linear-gradient(135deg,
+      tokens.$bg-dark 0%,
+      tokens.$bg-secondary 50%,
+      tokens.$bg-tertiary 100%);
   color: tokens.$text-primary;
   font-size: tokens.$font-size-2xl;
   animation: pulse 1.5s ease-in-out infinite;
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     opacity: 0.6;
@@ -173,11 +171,9 @@ const handleHelloModalClose = (): void => {
   background-color: tokens.$primary;
   border-radius: 3px;
   transition: width tokens.$transition-normal;
-  background-image: linear-gradient(
-    90deg,
-    tokens.$primary,
-    tokens.$primary-dark
-  );
+  background-image: linear-gradient(90deg,
+      tokens.$primary,
+      tokens.$primary-dark );
 }
 
 /* 欢迎模态框样式 */

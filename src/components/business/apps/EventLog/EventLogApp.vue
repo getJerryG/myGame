@@ -6,13 +6,8 @@
     </div>
 
     <div class="app-tabs">
-      <button
-        v-for="tab in tabs"
-        :key="tab.value"
-        class="tab-btn"
-        :class="{ active: activeTab.value === tab.value }"
-        @click="activeTab.value = tab.value"
-      >
+      <button v-for="tab in tabs" :key="tab.value" class="tab-btn" :class="{ active: activeTab.value === tab.value }"
+        @click="activeTab.value = tab.value">
         {{ tab.label }}
       </button>
     </div>
@@ -49,11 +44,7 @@
     </div>
 
     <!-- 筛选弹窗 -->
-    <div
-      v-if="showFilterModal"
-      class="modal-overlay"
-      @click="showFilterModal = false"
-    >
+    <div v-if="showFilterModal" class="modal-overlay" @click="showFilterModal = false">
       <div class="modal-content" @click.stop>
         <div class="modal-header">
           <h3>筛选事件</h3>
@@ -65,13 +56,9 @@
             <div class="filter-group">
               <div class="filter-label">时间范围:</div>
               <div class="filter-buttons">
-                <button
-                  v-for="range in timeRanges"
-                  :key="range.value"
-                  class="filter-option-btn"
+                <button v-for="range in timeRanges" :key="range.value" class="filter-option-btn"
                   :class="{ active: selectedFilters.timeRange === range.value }"
-                  @click="selectedFilters.timeRange = range.value"
-                >
+                  @click="selectedFilters.timeRange = range.value">
                   {{ range.label }}
                 </button>
               </div>
@@ -80,13 +67,9 @@
             <div class="filter-group">
               <div class="filter-label">事件状态</div>
               <div class="filter-buttons">
-                <button
-                  v-for="status in eventStatuses"
-                  :key="status.value"
-                  class="filter-option-btn"
+                <button v-for="status in eventStatuses" :key="status.value" class="filter-option-btn"
                   :class="{ active: selectedFilters.status === status.value }"
-                  @click="selectedFilters.status = status.value"
-                >
+                  @click="selectedFilters.status = status.value">
                   {{ status.label }}
                 </button>
               </div>
@@ -104,7 +87,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
 
 // 导入类型
 import type { App } from "../../../types/app";

@@ -51,8 +51,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from "vue";
-
 interface CardTag {
   /**
    * 标签文本

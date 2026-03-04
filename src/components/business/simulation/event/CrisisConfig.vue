@@ -8,13 +8,8 @@
       <div class="crisis-section">
         <h5>危机类型</h5>
         <div class="crisis-types">
-          <div
-            v-for="crisis in crisisTypes"
-            :key="crisis.id"
-            class="crisis-card"
-            :class="{ selected: selectedCrisis === crisis.id }"
-            @click="selectCrisis(crisis.id)"
-          >
+          <div v-for="crisis in crisisTypes" :key="crisis.id" class="crisis-card"
+            :class="{ selected: selectedCrisis === crisis.id }" @click="selectCrisis(crisis.id)">
             <div class="crisis-icon">{{ crisis.icon }}</div>
             <div class="crisis-info">
               <div class="crisis-name">{{ crisis.name }}</div>
@@ -28,13 +23,8 @@
       <div v-if="selectedCrisis" class="solution-section">
         <h5>应对方案</h5>
         <div class="solutions-list">
-          <div
-            v-for="(solution, index) in currentCrisisSolutions"
-            :key="index"
-            class="solution-item"
-            :class="{ selected: selectedSolution === index }"
-            @click="selectSolution(index)"
-          >
+          <div v-for="(solution, index) in currentCrisisSolutions" :key="index" class="solution-item"
+            :class="{ selected: selectedSolution === index }" @click="selectSolution(index)">
             <div class="solution-header">
               <span class="solution-name">{{ solution.name }}</span>
               <span class="solution-cost">{{ solution.cost }}万元</span>
@@ -58,7 +48,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
 
 const props = defineProps({
   crisisTypes: {

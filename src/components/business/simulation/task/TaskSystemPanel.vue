@@ -123,7 +123,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
 import Panel from "@/components/common/Panel/index.vue";
 import Card from "@/components/common/Card/index.vue";
 import List from "@/components/common/List/index.vue";

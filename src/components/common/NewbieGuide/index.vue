@@ -42,8 +42,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-
 const props = defineProps({
   isVisible: {
     type: Boolean,

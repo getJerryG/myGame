@@ -81,8 +81,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-
 // 英雄数据
 interface Hero {
   id: number;

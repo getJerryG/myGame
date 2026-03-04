@@ -28,16 +28,9 @@
             <!-- 策划名输入 -->
             <div class="form-group">
               <label for="plannerName" class="form-label">策划名</label>
-              <input
-                type="text"
-                id="plannerName"
-                v-model="formData.plannerName"
-                class="form-input"
-                placeholder="请输入你的策划名（1-15字符）"
-                :class="{ error: errors.plannerName }"
-                maxlength="15"
-                @input="validateField('plannerName')"
-              />
+              <input type="text" id="plannerName" v-model="formData.plannerName" class="form-input"
+                placeholder="请输入你的策划名（1-15字符）" :class="{ error: errors.plannerName }" maxlength="15"
+                @input="validateField('plannerName')" />
               <div v-if="errors.plannerName" class="error-message">
                 {{ errors.plannerName }}
               </div>
@@ -47,16 +40,9 @@
             <!-- 游戏名输入 -->
             <div class="form-group">
               <label for="gameName" class="form-label">游戏名</label>
-              <input
-                type="text"
-                id="gameName"
-                v-model="formData.gameName"
-                class="form-input"
-                placeholder="请输入你要创建的游戏名（1-20字符）"
-                :class="{ error: errors.gameName }"
-                maxlength="20"
-                @input="validateField('gameName')"
-              />
+              <input type="text" id="gameName" v-model="formData.gameName" class="form-input"
+                placeholder="请输入你要创建的游戏名（1-20字符）" :class="{ error: errors.gameName }" maxlength="20"
+                @input="validateField('gameName')" />
               <div v-if="errors.gameName" class="error-message">
                 {{ errors.gameName }}
               </div>
@@ -64,22 +50,15 @@
             </div>
 
             <!-- 提交按钮 -->
-            <button
-              type="submit"
-              class="submit-button"
-              :disabled="!isFormValid"
-            >
+            <button type="submit" class="submit-button" :disabled="!isFormValid">
               {{ submitting ? "提交中..." : "开始游戏" }}
             </button>
 
             <!-- 提交结果反馈 -->
-            <div
-              v-if="submitResult"
-              :class="[
-                'submit-result',
-                submitResult.success ? 'success' : 'error',
-              ]"
-            >
+            <div v-if="submitResult" :class="[
+              'submit-result',
+              submitResult.success ? 'success' : 'error',
+            ]">
               {{ submitResult.message }}
             </div>
           </form>
@@ -93,8 +72,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
-// import { useRouter } from "vue-router";
 import NewbieGuide from "@/components/common/NewbieGuide/index.vue";
 
 // const router = useRouter();
@@ -215,12 +192,10 @@ watch(showGuide, (newVal) => {
 
   font-family: tokens.$font-family-base;
   position: relative;
-  background: linear-gradient(
-    135deg,
-    tokens.$bg-dark 0%,
-    tokens.$bg-secondary 50%,
-    tokens.$bg-tertiary 100%
-  );
+  background: linear-gradient(135deg,
+      tokens.$bg-dark 0%,
+      tokens.$bg-secondary 50%,
+      tokens.$bg-tertiary 100%);
   border-radius: tokens.$radius-xl;
   overflow: hidden;
   box-shadow: tokens.$shadow-xl;
@@ -425,11 +400,9 @@ watch(showGuide, (newVal) => {
   font-size: tokens.$font-size-xl;
   font-weight: tokens.$font-weight-bold;
   color: tokens.$text-primary;
-  background: linear-gradient(
-    135deg,
-    tokens.$primary 0%,
-    tokens.$primary-dark 100%
-  );
+  background: linear-gradient(135deg,
+      tokens.$primary 0%,
+      tokens.$primary-dark 100%);
   border: none;
   border-radius: tokens.$radius-full;
   cursor: pointer;
@@ -446,11 +419,9 @@ watch(showGuide, (newVal) => {
     &:not(:disabled) {
       transform: translateY(-3px);
       box-shadow: 0 6px 20px rgb(74 158 255 / 60%);
-      background: linear-gradient(
-        135deg,
-        tokens.$primary-dark 0%,
-        tokens.$primary 100%
-      );
+      background: linear-gradient(135deg,
+          tokens.$primary-dark 0%,
+          tokens.$primary 100%);
     }
   }
 
@@ -505,7 +476,7 @@ watch(showGuide, (newVal) => {
 }
 
 /* 响应式设计 */
-@media (width <= 992px) {
+@media (width <=992px) {
   .hello-content {
     flex-direction: column;
     gap: tokens.$spacing-xl;
@@ -524,7 +495,7 @@ watch(showGuide, (newVal) => {
   }
 }
 
-@media (width <= 768px) {
+@media (width <=768px) {
   .welcome-title {
     font-size: tokens.$font-size-3xl;
   }
@@ -562,7 +533,7 @@ watch(showGuide, (newVal) => {
   }
 }
 
-@media (width <= 480px) {
+@media (width <=480px) {
   .welcome-title {
     font-size: tokens.$font-size-2xl;
   }

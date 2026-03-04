@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { resolve } from 'path';
 import viteAutoImport from 'unplugin-auto-import/vite';
+import viteCompression from 'vite-plugin-compression';
 
 // 引入图片压缩配置
 import viteImagemin from 'vite-plugin-imagemin';
@@ -19,13 +20,6 @@ export default defineConfig({
       imports: ['vue', 'vue-router', 'pinia'],
       dts: './src/auto-imports.d.ts',
     }),
-    visualizer({
-      open: false,
-      gzipSize: false,
-      brotliSize: false,
-      filename: 'visualizer.html'
-    }),
-
     // 图片压缩
     viteImagemin(viteImageminConfig),
 

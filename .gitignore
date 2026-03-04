@@ -64,6 +64,4 @@ jspm_packages/
 
 # Yarn Integrity file
 .yarn-integrity
-docs/.obsidian/appearance.json
-docs/.obsidian/workspace.json
-docs/.obsidian/snippets/custom-code-style.css
+

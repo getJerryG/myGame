@@ -1,4 +1,5 @@
 const DEV = process.env.NODE_ENV !== 'production';
+
 const path = require('path');
 
 module.exports = {
@@ -28,13 +29,14 @@ module.exports = {
     'test-type-rule.ts',
     ".config/",
     "**/*.test.ts",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "**/*.md"
   ],
   parser: 'vue-eslint-parser',
   parserOptions: {
     ecmaVersion: 2021,
     sourceType: 'module',
-    project: path.resolve(__dirname, '../tsconfig.json'),
+    project: path.resolve(__dirname, 'tsconfig.json'),
     parser: '@typescript-eslint/parser',
     extraFileExtensions: ['.vue'],
     allowImportExportEverywhere: false
@@ -117,24 +119,4 @@ module.exports = {
     '@typescript-eslint/prefer-optional-chain': 'error',
     '@typescript-eslint/consistent-type-assertions': ['warn', { assertionStyle: 'as', objectLiteralTypeAssertions: 'allow-as-parameter' }]
   },
-  // overrides: [
-  //   {
-  //     files: ['*.md'],
-  //     processor: '@eslint/markdown/markdown',
-  //     extends: ['plugin:@eslint/markdown/recommended'],
-  //     rules: {
-  //       // 禁用一些不适用于Markdown的规则
-  //       'no-console': 'off',
-  //       'no-unused-vars': 'off',
-  //       '@typescript-eslint/no-unused-vars': 'off'
-  //     }
-  //   },
-  //   {
-  //     files: ['**/*.md/*.*'],
-  //     rules: {
-  //       // 对Markdown中的代码块应用正常规则
-  //       '@typescript-eslint/no-unused-vars': 'error'
-  //     }
-  //   }]
-
 };

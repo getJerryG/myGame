@@ -15,10 +15,10 @@ export * from "./player";
 
 // 导出模拟相关类型
 export * from "./simulation";
-export * from "./simulation-history";
-export * from "./simulation-report";
-export * from "./simulation-results";
-export * from "./simulation-stage";
+export * from "./SimulationHistory";
+export * from "./SimulationReport";
+export * from "./SimulationResults";
+export * from "./SimulationStage";
 
 // 导出技能相关类型
 export * from "./skill";

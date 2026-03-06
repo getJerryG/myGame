@@ -11,8 +11,8 @@
       <!-- 发布状态 -->
       <div class="release-status">
         <div class="status-card" :class="releaseStatus">
-          <div class="status-icon">{{ getStatusIcon() }}</div>
-          <div class="status-text">{{ getStatusText() }}</div>
+          <div class="status-icon">{{ statusIcon }}</div>
+          <div class="status-text">{{ statusText }}</div>
         </div>
       </div>
 
@@ -94,7 +94,7 @@
         <button
           class="action-btn primary"
           :disabled="isReleasing"
-          @click="startRelease"
+          @click="handleStartRelease"
         >
           {{ isReleasing ? "发布中..." : "开始发布" }}
         </button>
@@ -104,107 +104,69 @@
 </template>
 
 <script setup lang="ts">
+import { ref, computed, onMounted } from 'vue';
+import { gameReleaseService, type ReleaseConfig, type ReleaseStatus } from '../../../services/GameReleaseService';
+
 // 发布状态
-const releaseStatus = ref<"idle" | "releasing" | "success" | "failed">("idle");
+const releaseStatus = ref<ReleaseStatus>("idle");
 const isReleasing = ref(false);
 
 // 发布配置
-const releaseConfig = ref({
+const releaseConfig = ref<ReleaseConfig>({
   version: "1.0.0",
   changelog: "",
-  selectedChannels: [] as string[],
+  selectedChannels: [],
 });
 
-// 发布渠道
-const channels = ref([
-  { id: "appstore", name: "App Store" },
-  { id: "googleplay", name: "Google Play" },
-  { id: "steam", name: "Steam" },
-  { id: "epic", name: "Epic Games" },
-  { id: "tap", name: "TapTap" },
-]);
+// 数据
+const channels = ref(gameReleaseService.getChannels());
+const releaseHistory = ref(gameReleaseService.getReleaseHistory());
 
-// 发布历史
-interface Release {
-  id: number;
-  version: string;
-  date: string;
-  channels: string[];
-  changelog: string;
-}
+// 状态计算属性
+const statusIcon = computed(() => gameReleaseService.getStatusIcon(releaseStatus.value));
+const statusText = computed(() => gameReleaseService.getStatusText(releaseStatus.value));
 
-const releaseHistory = ref<Release[]>([
-  {
-    id: 1,
-    version: "0.9.0",
-    date: "2024-01-15",
-    channels: ["App Store", "Google Play"],
-    changelog: "Beta版本发布，包含基础游戏功能",
-  },
-  {
-    id: 2,
-    version: "0.8.0",
-    date: "2024-01-01",
-    channels: ["TestFlight"],
-    changelog: "Alpha测试版本",
-  },
-]);
+// 初始化
+onMounted(() => {
+  // 可以在这里加载初始数据
+  loadReleaseData();
+});
 
-// 获取状态图标
-const getStatusIcon = (): string => {
-  const icons: Record<string, string> = {
-    idle: "📦",
-    releasing: "🚀",
-    success: "✅",
-    failed: "❌",
-  };
-  return icons[releaseStatus.value] || "📦";
-};
-
-// 获取状态文本
-const getStatusText = (): string => {
-  const texts: Record<string, string> = {
-    idle: "准备发布",
-    releasing: "正在发布...",
-    success: "发布成功",
-    failed: "发布失败",
-  };
-  return texts[releaseStatus.value] || "准备发布";
+// 加载发布数据
+const loadReleaseData = () => {
+  releaseHistory.value = gameReleaseService.getReleaseHistory();
+  channels.value = gameReleaseService.getChannels();
 };
 
 // 开始发布
-const startRelease = (): void => {
-  if (releaseConfig.value.selectedChannels.length === 0) {
-    alert("请至少选择一个发布渠道");
-    return;
-  }
-
-  isReleasing.value = true;
-  releaseStatus.value = "releasing";
-
-  // 模拟发布过程
-  setTimeout(() => {
-    isReleasing.value = false;
+const handleStartRelease = async () => {
+  try {
+    isReleasing.value = true;
+    releaseStatus.value = "releasing";
+    
+    // 调用业务层方法
+    const newRelease = await gameReleaseService.startRelease(releaseConfig.value);
+    
+    // 更新状态
     releaseStatus.value = "success";
-
-    // 添加到历史记录
-    const selectedChannelNames = channels.value
-      .filter((c) => releaseConfig.value.selectedChannels.includes(c.id))
-      .map((c) => c.name);
-
-    releaseHistory.value.unshift({
-      id: Date.now(),
-      version: releaseConfig.value.version,
-      date: new Date().toISOString().split("T")[0],
-      channels: selectedChannelNames,
-      changelog: releaseConfig.value.changelog || "无更新说明",
-    });
-
+    releaseHistory.value = gameReleaseService.getReleaseHistory();
+    
     // 重置状态
     setTimeout(() => {
       releaseStatus.value = "idle";
     }, 3000);
-  }, 3000);
+  } catch (error) {
+    releaseStatus.value = "failed";
+    console.error("发布失败:", error);
+    alert((error as Error).message || "发布失败，请重试");
+    
+    // 重置状态
+    setTimeout(() => {
+      releaseStatus.value = "idle";
+    }, 3000);
+  } finally {
+    isReleasing.value = false;
+  }
 };
 
 // 关闭应用

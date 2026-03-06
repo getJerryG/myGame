@@ -70,24 +70,15 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref, computed } from 'vue';
 import { useWindowManagerStore } from "@/stores/windowManagerStore";
 import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
 import type { SidebarItem } from "@/components/common/window/ApplicationWindow.vue";
-
 import { useSimulationCareerSystemStore } from "@/stores/simulation/simulationCareerSystemStore";
-
-interface AvailableApp {
-  id: string;
-  name: string;
-  icon: string;
-  description: string;
-  memory: string;
-  category: "system" | "core" | "advanced";
-  requiredLevelId: string;
-  requiredSubLevel?: number;
-}
+import { AppStoreService, type AvailableApp, type AppStatus } from "@/services/AppStoreService";
 
 const careerSystemStore = useSimulationCareerSystemStore();
+const windowManagerStore = useWindowManagerStore();
 
 const sidebarItems: SidebarItem[] = [
   { id: "all", name: "全部应用", icon: "📱" },
@@ -98,241 +89,65 @@ const sidebarItems: SidebarItem[] = [
 ];
 
 const activeCategory = ref("all");
-
-const availableApps: AvailableApp[] = [
-  {
-    id: "app-store",
-    name: "应用商店",
-    icon: "🏪",
-    description: "所有高级应用的唯一获取入口",
-    memory: "128MB",
-    category: "system",
-    requiredLevelId: "trainee-planner",
-  },
-  {
-    id: "data-center",
-    name: "数据中心",
-    icon: "📊",
-    description: "每日结算报表、游戏数据可视化",
-    memory: "256MB",
-    category: "system",
-    requiredLevelId: "trainee-planner",
-  },
-  {
-    id: "career-growth",
-    name: "策划成长",
-    icon: "📈",
-    description: "职级体系、升级规则、权限管理",
-    memory: "128MB",
-    category: "system",
-    requiredLevelId: "trainee-planner",
-  },
-  {
-    id: "system-settings",
-    name: "系统设置",
-    icon: "⚙️",
-    description: "游戏存档、音量、画面设置",
-    memory: "128MB",
-    category: "system",
-    requiredLevelId: "trainee-planner",
-  },
-  {
-    id: "wallet",
-    name: "钱包",
-    icon: "💰",
-    description: "唯一财务入口：资金余额、收支流水",
-    memory: "128MB",
-    category: "core",
-    requiredLevelId: "trainee-planner",
-  },
-  {
-    id: "chat",
-    name: "聊天",
-    icon: "💬",
-    description: "与团队沟通、玩家舆情反馈",
-    memory: "128MB",
-    category: "core",
-    requiredLevelId: "trainee-planner",
-  },
-  {
-    id: "hero-development",
-    name: "英雄",
-    icon: "🦸",
-    description: "唯一英雄全生命周期管理",
-    memory: "256MB",
-    category: "core",
-    requiredLevelId: "trainee-planner",
-  },
-  {
-    id: "skin-development",
-    name: "皮肤",
-    icon: "🧵",
-    description: "唯一皮肤全生命周期管理",
-    memory: "128MB",
-    category: "core",
-    requiredLevelId: "trainee-planner",
-  },
-  {
-    id: "event-development",
-    name: "活动",
-    icon: "🎪",
-    description: "唯一运营活动管理",
-    memory: "192MB",
-    category: "core",
-    requiredLevelId: "trainee-planner",
-  },
-  {
-    id: "game-release",
-    name: "游戏发布",
-    icon: "📦",
-    description: "唯一版本上线入口",
-    memory: "320MB",
-    category: "core",
-    requiredLevelId: "trainee-planner",
-  },
-  {
-    id: "task-center",
-    name: "任务中心",
-    icon: "📋",
-    description: "日常任务、主线任务、成就任务",
-    memory: "128MB",
-    category: "advanced",
-    requiredLevelId: "junior-planner",
-    requiredSubLevel: 3,
-  },
-  {
-    id: "collaboration-center",
-    name: "联动中心",
-    icon: "🤝",
-    description: "全量可联动IP/工作室展示、联动项目管理",
-    memory: "192MB",
-    category: "advanced",
-    requiredLevelId: "intermediate-planner",
-    requiredSubLevel: 5,
-  },
-  {
-    id: "public-opinion-center",
-    name: "舆情中心",
-    icon: "📢",
-    description: "玩家社区评论、口碑变化明细",
-    memory: "192MB",
-    category: "advanced",
-    requiredLevelId: "senior-planner",
-    requiredSubLevel: 5,
-  },
-  {
-    id: "event-log",
-    name: "事件日志",
-    icon: "📝",
-    description: "历史随机事件全记录",
-    memory: "128MB",
-    category: "advanced",
-    requiredLevelId: "intermediate-planner",
-    requiredSubLevel: 3,
-  },
-  {
-    id: "channel-delivery",
-    name: "渠道投放",
-    icon: "📣",
-    description: "市场推广渠道选择、投放力度设置",
-    memory: "192MB",
-    category: "advanced",
-    requiredLevelId: "expert-planner",
-    requiredSubLevel: 5,
-  },
-];
-
-const InstalledAppsKey = "app-store-installed-apps";
-
-const windowManagerStore = useWindowManagerStore();
-
 const installedApps = ref<string[]>([]);
 
 const emit = defineEmits<{
   "app-installed": [app: AvailableApp];
 }>();
 
+// 加载已安装应用
 const loadInstalledApps = (): void => {
-  const saved = localStorage.getItem(InstalledAppsKey);
-  if (saved) {
-    installedApps.value = JSON.parse(saved);
-  }
+  installedApps.value = AppStoreService.loadInstalledApps();
 };
 
+// 保存已安装应用
 const saveInstalledApps = (): void => {
-  localStorage.setItem(InstalledAppsKey, JSON.stringify(installedApps.value));
+  AppStoreService.saveInstalledApps(installedApps.value);
 };
 
+// 检查应用是否正在下载
 const isDownloading = (appId: string): boolean => {
   return windowManagerStore.isDownloading(appId);
 };
 
+// 检查应用是否已安装
 const isInstalled = (appId: string): boolean => {
-  return installedApps.value.includes(appId);
+  return AppStoreService.isInstalled(appId, installedApps.value);
 };
 
+// 检查应用是否可解锁
 const canUnlockApp = (app: AvailableApp): boolean => {
-  // 假设所有应用都可以解锁，除了需要特定subLevel的
-  if (app.requiredSubLevel) {
-    // 使用当前小等级的索引作为order值
-    return careerSystemStore.subLevelIndex + 1 >= app.requiredSubLevel;
-  }
-
-  return true;
+  return AppStoreService.canUnlockApp(app, careerSystemStore.subLevelIndex);
 };
 
-const getLevelNameById = (levelId: string): string => {
-  const levelMap: Record<string, string> = {
-    "trainee-planner": "见习策划",
-    "junior-planner": "初级策划",
-    "intermediate-planner": "中级策划",
-    "senior-planner": "高级策划",
-    "expert-planner": "资深策划",
-    "master-planner": "专家策划",
-    "manager-planner": "策划经理",
-    "director-planner": "策划总监",
-  };
-  return levelMap[levelId] || levelId;
-};
-
-const getSubLevelName = (levelId: string, subLevelOrder: number): string => {
-  // 由于careerLevelsConfig结构不匹配，我们简化实现
-  return `${subLevelOrder}`;
-};
-
-const getUnlockConditionText = (app: AvailableApp): string => {
-  const levelName = getLevelNameById(app.requiredLevelId);
-  const subLevelName = app.requiredSubLevel
-    ? getSubLevelName(app.requiredLevelId, app.requiredSubLevel)
-    : "";
-  return `${levelName}${subLevelName}`;
-};
-
+// 获取应用状态文本
 const getAppStatusText = (app: AvailableApp): string => {
-  if (isInstalled(app.id)) {
-    return "已安装";
-  }
-
-  if (isDownloading(app.id)) {
-    return "下载中";
-  }
-
-  if (!canUnlockApp(app)) {
-    return "未解锁";
-  }
-
-  return "可下载";
+  const status = AppStoreService.getAppStatus(
+    app,
+    installedApps.value,
+    isDownloading,
+    careerSystemStore.subLevelIndex
+  );
+  return AppStoreService.getAppStatusText(status);
 };
 
+// 获取解锁条件文本
+const getUnlockConditionText = (app: AvailableApp): string => {
+  return AppStoreService.getUnlockConditionText(app);
+};
+
+// 获取下载进度
 const getDownloadProgress = (appId: string): number => {
   return windowManagerStore.getDownloadProgress(appId);
 };
 
+// 开始下载应用
 const startDownload = (app: AvailableApp): void => {
   windowManagerStore.startDownload(app.id);
   simulateDownload(app);
 };
 
+// 模拟下载过程
 const simulateDownload = (app: AvailableApp): void => {
   const interval = setInterval(() => {
     const currentProgress = windowManagerStore.getDownloadProgress(app.id);
@@ -359,25 +174,17 @@ const simulateDownload = (app: AvailableApp): void => {
   }, 300);
 };
 
+// 过滤应用
 const filteredApps = computed(() => {
-  switch (activeCategory.value) {
-    case "system":
-      return availableApps.filter((app) => app.category === "system");
-    case "unlocked":
-      return availableApps.filter((app) => canUnlockApp(app));
-    case "locked":
-      return availableApps.filter((app) => !canUnlockApp(app));
-    case "mini":
-      return [];
-    default:
-      return availableApps;
-  }
+  return AppStoreService.filterApps(activeCategory.value, careerSystemStore.subLevelIndex);
 });
 
+// 处理分类点击
 const handleCategoryClick = (item: SidebarItem): void => {
   activeCategory.value = item.id;
 };
 
+// 组件挂载时加载已安装应用
 onMounted(() => {
   loadInstalledApps();
 });

@@ -33,7 +33,7 @@
               <h4>英雄定位</h4>
               <div class="option-buttons">
                 <button
-                  v-for="role in heroRoles"
+                  v-for="role in HeroService.heroRoles"
                   :key="role.id"
                   class="option-btn"
                   :class="{ active: selectedRole === role.id }"
@@ -50,7 +50,7 @@
               <h4>英雄类型</h4>
               <div class="option-buttons">
                 <button
-                  v-for="type in heroTypes"
+                  v-for="type in HeroService.heroTypes"
                   :key="type.id"
                   class="option-btn"
                   :class="{ active: selectedType === type.id }"
@@ -66,7 +66,7 @@
               <h4>研发方式</h4>
               <div class="option-buttons">
                 <button
-                  v-for="method in developmentMethods"
+                  v-for="method in HeroService.developmentMethods"
                   :key="method.id"
                   class="option-btn"
                   :class="{ active: selectedMethod === method.id }"
@@ -99,25 +99,27 @@
                 <div class="hero-icon">{{ hero.icon }}</div>
                 <div class="hero-info">
                   <h4 class="text-gold">{{ hero.name }}</h4>
-                  <p class="hero-role">{{ getRoleName(hero.role) }}</p>
+                  <p class="hero-role">{{ HeroService.getRoleName(hero.role) }}</p>
                 </div>
                 <div class="hero-status">
-                  <span v-if="hero.isDeveloping" class="status developing"
-                    >研发中</span
+                  <span 
+                    class="status" 
+                    :class="HeroService.getStatusClass(hero.status)"
                   >
-                  <span v-else class="status online">已上线</span>
+                    {{ HeroService.getStatusText(hero.status) }}
+                  </span>
                 </div>
               </div>
 
               <!-- 研发进度 -->
-              <div v-if="hero.isDeveloping" class="development-progress">
+              <div v-if="hero.status === 'in_development'" class="development-progress">
                 <div class="progress-bar">
                   <div
                     class="progress-fill"
-                    :style="{ width: `${hero.progress}%` }"
+                    :style="{ width: `${hero.developmentProgress}%` }"
                   ></div>
                 </div>
-                <span class="progress-text">{{ hero.progress }}% 完成</span>
+                <span class="progress-text">{{ hero.developmentProgress }}% 完成</span>
               </div>
 
               <!-- 已上线英雄数据 -->
@@ -140,11 +142,11 @@
               <div class="hero-meta">
                 <div class="meta-item">
                   <span class="meta-label">类型:</span>
-                  <span class="meta-value">{{ getTypeName(hero.type) }}</span>
+                  <span class="meta-value">{{ HeroService.getTypeName(hero.type || 'physical') }}</span>
                 </div>
                 <div class="meta-item">
                   <span class="meta-label">研发方式:</span>
-                  <span class="meta-value">{{ hero.developmentMethod }}</span>
+                  <span class="meta-value">{{ hero.creationType === 'selfCreation' ? '自研' : '联动' }}</span>
                 </div>
               </div>
             </div>
@@ -163,8 +165,10 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref } from 'vue';
 import { useHeroSkinStore } from "@/stores/heroSkinStore";
 import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
+import { HeroService } from "@/services/HeroService";
 
 // 使用Pinia store
 const heroSkinStore = useHeroSkinStore();
@@ -175,112 +179,10 @@ const selectedRole = ref<string>("warrior");
 const selectedType = ref<string>("physical");
 const selectedMethod = ref<string>("self");
 
-// 英雄定位列表
-const heroRoles = [
-  { id: "warrior", name: "战士", icon: "⚔️" },
-  { id: "mage", name: "法师", icon: "🔮" },
-  { id: "archer", name: "射手", icon: "🏹" },
-  { id: "assassin", name: "刺客", icon: "🗡️" },
-  { id: "tank", name: "坦克", icon: "🛡️" },
-  { id: "support", name: "辅助", icon: "💚" },
-];
-
-// 英雄类型列表
-const heroTypes = [
-  { id: "physical", name: "物理" },
-  { id: "magic", name: "法术" },
-  { id: "hybrid", name: "混合" },
-];
-
-// 研发方式列表
-const developmentMethods = [
-  { id: "self", name: "自研" },
-  { id: "cooperation", name: "联动" },
-];
-
-// 随机英雄名称列表
-const heroNames = [
-  "李白",
-  "韩信",
-  "赵云",
-  "孙悟空",
-  "后羿",
-  "鲁班七号",
-  "妲己",
-  "王昭君",
-  "貂蝉",
-  "吕布",
-  "关羽",
-  "张飞",
-  "刘备",
-  "曹操",
-  "孙权",
-];
-
-// 生成随机英雄名称
-const generateRandomHeroName = (): string => {
-  return heroNames[Math.floor(Math.random() * heroNames.length)];
-};
-
-// 生成随机英雄图标
-const generateRandomIcon = (): string => {
-  const icons = [
-    "⚔️",
-    "🛡️",
-    "🔮",
-    "🏹",
-    "🗡️",
-    "💚",
-    "🦸",
-    "🦹",
-    "🧙",
-    "🧝",
-    "🧛",
-    "🧟",
-  ];
-  return icons[Math.floor(Math.random() * icons.length)];
-};
-
-// 根据定位id获取定位名称
-const getRoleName = (roleId: string): string => {
-  const role = heroRoles.find((r) => r.id === roleId);
-  return role ? role.name : "未知定位";
-};
-
-// 根据类型id获取类型名称
-const getTypeName = (typeId: string): string => {
-  const type = heroTypes.find((t) => t.id === typeId);
-  return type ? type.name : "未知类型";
-};
-
 // 确认英雄立项
 const confirmHeroCreation = (): void => {
-  // 创建英雄对象
-  const newHero = {
-    id: Date.now().toString(),
-    name: generateRandomHeroName(),
-    icon: generateRandomIcon(),
-    class: selectedRole.value,
-    stats: {
-      health: 100,
-      attack: 10,
-      defense: 5,
-    },
-    description: `${generateRandomHeroName()}是一个强大的${getRoleName(selectedRole.value)}`,
-    createdAt: new Date().toISOString(),
-    creationType:
-      selectedMethod.value === "self" ? "selfCreation" : "collaboration",
-    style: "standard",
-    developmentTime: 30,
-    developmentCost: 10000,
-    developmentProgress: 0,
-    status: "in_development",
-    pickRate: 0.1,
-    userBase: 0.1,
-    usageRate: 0,
-    winRate: 50,
-    banRate: 0,
-  };
+  // 使用HeroService创建英雄对象
+  const newHero = HeroService.createHero(selectedRole.value, selectedType.value, selectedMethod.value);
 
   // 添加到store
   heroSkinStore.addHero(newHero);

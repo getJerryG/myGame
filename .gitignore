@@ -34,7 +34,6 @@ coverage
 visualizer.html
 performance-reports
 localhost?*
-test?*
 
 # Build
 out

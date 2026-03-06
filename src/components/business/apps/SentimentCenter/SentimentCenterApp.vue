@@ -216,6 +216,8 @@
 import type { App } from "../../../types/app";
 import type { GameData } from "../../../types/game";
 import type { Modal } from "../../../types/modal";
+// 导入舆情服务
+import { SentimentService, type Comment } from '@/services/SentimentService';
 
 // Props定义
 defineProps<{
@@ -227,86 +229,32 @@ defineProps<{
 // 活跃标签页
 const activeTab = ref("realtime");
 
-// 舆情状态标签映射
-const getSentimentLabel = (sentiment: string): string => {
-  const sentimentMap = {
-    positive: "正面",
-    neutral: "中性",
-    negative: "负面",
-  };
-  return sentimentMap[sentiment as keyof typeof sentimentMap] || "未知";
-};
-
 // 实时舆情统计
-const realtimeStats = ref({
-  positive: 75,
-  neutral: 15,
-  negative: 10,
-});
+const realtimeStats = ref(SentimentService.getRealtimeStats());
 
 // 最新评论
-const latestComments = ref([
-  {
-    id: 1,
-    user: "玩家123",
-    content: "新英雄李白太好玩了！技能设计得很有创意，手感也很棒",
-    sentiment: "positive",
-    time: "今天 10:30",
-  },
-  {
-    id: 2,
-    user: "游戏爱好者",
-    content: "这个版本的平衡做得还不错，各个英雄的出场率都比较均衡",
-    sentiment: "neutral",
-    time: "今天 09:15",
-  },
-  {
-    id: 3,
-    user: "资深玩家",
-    content: "最近服务器有点不稳定，经常卡顿，希望能尽快修复",
-    sentiment: "negative",
-    time: "昨天 22:45",
-  },
-  {
-    id: 4,
-    user: "新手玩家",
-    content: "游戏的新手引导很友好，让我很快就上手了",
-    sentiment: "positive",
-    time: "昨天 18:20",
-  },
-  {
-    id: 5,
-    user: "竞技玩家",
-    content: "排位赛匹配机制还有待优化，经常遇到队友差距很大的情况",
-    sentiment: "negative",
-    time: "昨天 16:50",
-  },
-]);
+const latestComments = ref<Comment[]>(SentimentService.getLatestComments());
 
 // 口碑趋势数据
-const reputationTrend = ref([
-  65, 68, 70, 72, 75, 73, 76, 78, 80, 79, 82, 85, 83, 86, 88, 90, 89, 92, 94,
-  93, 95, 97, 96, 98, 100, 99, 102, 105, 103, 106,
-]);
+const reputationTrend = ref(SentimentService.getReputationTrend());
 
 // 当前口碑
-const currentReputation = ref(106);
+const currentReputation = ref(SentimentService.getCurrentReputation());
 
 // 玩家满意度
-const satisfactionScore = ref(85);
+const satisfactionScore = ref(SentimentService.getSatisfactionScore());
 
 // 满意度分布
-const satisfactionDistribution = ref({
-  verySatisfied: 45,
-  satisfied: 30,
-  neutral: 15,
-  dissatisfied: 8,
-  veryDissatisfied: 2,
-});
+const satisfactionDistribution = ref(SentimentService.getSatisfactionDistribution());
+
+// 获取舆情状态标签 - 组件方法，用于模板调用
+const getSentimentLabel = (sentiment: string): string => {
+  return SentimentService.getSentimentLabel(sentiment);
+};
 
 // 导出舆情报告
 const exportReport = (): void => {
-  alert("舆情报告导出成功");
+  SentimentService.exportReport();
 };
 </script>
 

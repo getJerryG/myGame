@@ -26,24 +26,20 @@
                 <h4>当前余额</h4>
               </div>
               <div class="balance-amount text-gold">
-                {{ gameData?.gameState?.plannerFunds || app.coreData.balance }}
+                {{ balanceDetails.available }}
               </div>
               <div class="balance-details">
                 <div class="detail-item">
                   <span class="detail-label">可用余额</span>
-                  <span class="detail-value">{{
-                    gameData?.gameState?.plannerFunds || app.coreData.balance
-                  }}</span>
+                  <span class="detail-value">{{ balanceDetails.available }}</span>
                 </div>
                 <div class="detail-item">
                   <span class="detail-label">本月收入</span>
-                  <span class="detail-value positive">{{
-                    gameData?.businessData?.totalRevenue || 0
-                  }}</span>
+                  <span class="detail-value positive">{{ balanceDetails.monthlyIncome }}</span>
                 </div>
                 <div class="detail-item">
                   <span class="detail-label">本月支出</span>
-                  <span class="detail-value negative">0</span>
+                  <span class="detail-value negative">{{ balanceDetails.monthlyExpense }}</span>
                 </div>
               </div>
             </div>
@@ -68,9 +64,9 @@
               </div>
               <div
                 class="transaction-amount"
-                :class="transaction.amount >= 0 ? 'positive' : 'negative'"
+                :class="WalletService.getTransactionTypeClass(transaction.type)"
               >
-                {{ transaction.amount >= 0 ? "+" : "" }}{{ transaction.amount }}
+                {{ WalletService.formatAmount(transaction.amount) }}
               </div>
             </div>
             <div class="no-transactions" v-if="transactionHistory.length === 0">
@@ -86,6 +82,7 @@
 <script setup lang="ts">
 import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
 import { getModuleIcon } from "@/utils/appUtils";
+import { WalletService, type Transaction, type BalanceDetails } from "@/services/WalletService";
 
 const props = defineProps({
   app: {
@@ -112,27 +109,13 @@ const sidebarItems = computed(() => {
   }));
 });
 
-// 模拟交易记录数据
-const transactionHistory = ref([
-  {
-    id: 1,
-    type: "收入",
-    amount: 5000,
-    date: "2026-02-03 10:00",
-  },
-  {
-    id: 2,
-    type: "支出",
-    amount: -2000,
-    date: "2026-02-02 15:30",
-  },
-  {
-    id: 3,
-    type: "收入",
-    amount: 8000,
-    date: "2026-02-01 09:15",
-  },
-]);
+// 交易记录数据
+const transactionHistory = ref<Transaction[]>(WalletService.getTransactionHistory());
+
+// 计算余额详情
+const balanceDetails = computed<BalanceDetails>(() => {
+  return WalletService.getBalanceDetails(props.gameData, props.app.coreData.balance);
+});
 
 // 处理侧边栏项点击
 const handleItemChange = (itemId: string): void => {

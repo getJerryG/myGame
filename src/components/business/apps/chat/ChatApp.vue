@@ -69,6 +69,7 @@
 
 <script setup lang="ts">
 import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
+import { ChatService, type Contact, type ChatMessage } from '@/services/ChatService';
 
 defineProps<{
   app?: unknown;
@@ -77,58 +78,10 @@ defineProps<{
 }>();
 
 const activeContactId = ref<number | null>(null);
-const contacts = ref([
-  {
-    id: 1,
-    name: "研发",
-    avatar: "👨‍💻",
-    lastMessage: "新英雄技能设计已完成，需要您确认",
-    unread: 1,
-    stage: "early",
-  },
-  {
-    id: 2,
-    name: "美术",
-    avatar: "🎨",
-    lastMessage: "皮肤设计稿已更新，请查看",
-    unread: 2,
-    stage: "mid",
-  },
-  {
-    id: 3,
-    name: "运营",
-    avatar: "📊",
-    lastMessage: "本周活动方案已准备好",
-    unread: 0,
-    stage: "early",
-  },
-  {
-    id: 4,
-    name: "玩家社区",
-    avatar: "👥",
-    lastMessage: "玩家对新英雄反响热烈",
-    unread: 0,
-    stage: "late",
-  },
-  {
-    id: 5,
-    name: "老板",
-    avatar: "👑",
-    lastMessage: "需要一份季度运营报告",
-    unread: 0,
-    stage: "late",
-  },
-  {
-    id: 6,
-    name: "IP合作",
-    avatar: "🤝",
-    lastMessage: "关于联动项目的进一步讨论",
-    unread: 0,
-    stage: "mid",
-  },
-]);
+// 从服务获取联系人数据
+const contacts = ref<Contact[]>(ChatService.getContacts());
 
-const chatMessages = ref([
+const chatMessages = ref<ChatMessage[]>([
   {
     sender: "contact",
     content: "您好，欢迎来到游戏策划模拟系统！",
@@ -140,185 +93,46 @@ const replyOptions = ref<string[]>([]);
 
 const selectContact = (contactId: number): void => {
   activeContactId.value = contactId;
-  const contact = contacts.value.find((c) => c.id === contactId);
-  if (contact) {
-    contact.unread = 0;
-  }
+  // 使用服务清除未读消息
+  contacts.value = ChatService.clearUnreadMessages(contacts.value, contactId);
   generateChatContent(contactId);
 };
 
 const currentContact = computed(() => {
-  return (
-    contacts.value.find((contact) => contact.id === activeContactId.value) ||
-    contacts.value[0]
-  );
+  return ChatService.getCurrentContact(contacts.value, activeContactId.value || 1);
 });
 
 const generateChatContent = (contactId: number): void => {
   const contact = contacts.value.find((c) => c.id === contactId);
   if (!contact) return;
 
-  chatMessages.value = [];
-  replyOptions.value = [];
-
-  switch (contact.name) {
-    case "研发":
-      chatMessages.value = [
-        {
-          sender: "contact",
-          content: "新英雄技能设计已完成，您需要进行确认",
-          time: "10:00",
-        },
-        {
-          sender: "contact",
-          content: "技能：造成物理伤害并减速",
-          time: "10:01",
-        },
-        {
-          sender: "contact",
-          content: "技能：位移并强化下次攻击",
-          time: "10:01",
-        },
-        {
-          sender: "contact",
-          content: "大招：AOE伤害并眩晕",
-          time: "10:01",
-        },
-      ];
-      replyOptions.value = ["确认通过", "需要调整技能数值", "重新设计技能机制"];
-      break;
-
-    case "美术":
-      chatMessages.value = [
-        {
-          sender: "contact",
-          content: "皮肤设计稿已更新，请查看",
-          time: "10:30",
-        },
-        {
-          sender: "contact",
-          content: "设计风格：古风",
-          time: "10:31",
-        },
-        {
-          sender: "contact",
-          content: "特效颜色：金色为主",
-          time: "10:31",
-        },
-      ];
-      replyOptions.value = ["设计通过", "调整颜色方案", "修改设计风格"];
-      break;
-
-    case "运营":
-      chatMessages.value = [
-        {
-          sender: "contact",
-          content: "本周活动方案已准备好，请审阅",
-          time: "11:00",
-        },
-        {
-          sender: "contact",
-          content: "活动类型：新英雄折扣",
-          time: "11:01",
-        },
-        {
-          sender: "contact",
-          content: "活动力度：中等",
-          time: "11:01",
-        },
-      ];
-      replyOptions.value = ["方案通过", "调整活动力度", "更换活动类型"];
-      break;
-
-    case "玩家社区":
-      chatMessages.value = [
-        {
-          sender: "contact",
-          content: "玩家对新英雄反响热烈，胜率达到52%",
-          time: "14:00",
-        },
-        {
-          sender: "contact",
-          content: "部分玩家反映技能操作难度较高",
-          time: "14:01",
-        },
-      ];
-      replyOptions.value = ["保持现状", "小幅降低技能难度", "加强英雄强度"];
-      break;
-
-    case "老板":
-      chatMessages.value = [
-        {
-          sender: "contact",
-          content: "需要一份季度运营报告，明天下午之前提交",
-          time: "15:00",
-        },
-      ];
-      replyOptions.value = ["立即准备报告", "需要更多时间", "请求协助"];
-      break;
-
-    case "IP合作":
-      chatMessages.value = [
-        {
-          sender: "contact",
-          content: "关于联动项目，我们希望增加更多定制内容",
-          time: "16:00",
-        },
-        {
-          sender: "contact",
-          content: "预算可能需要增加20%",
-          time: "16:01",
-        },
-      ];
-      replyOptions.value = ["同意增加预算", "协商调整内容", "拒绝修改方案"];
-      break;
-
-    default:
-      chatMessages.value = [
-        {
-          sender: "contact",
-          content: "您好，我�?{contact.name}，有什么可以帮助您的吗？",
-          time: "10:00",
-        },
-      ];
-      replyOptions.value = ["询问当前工作", "请求帮助", "结束对话"];
-  }
+  // 使用服务生成聊天内容
+  const { messages, replies } = ChatService.generateChatContent(contactId, contact.name);
+  chatMessages.value = messages;
+  replyOptions.value = replies;
 };
 
 const selectReply = (option: string): void => {
   chatMessages.value.push({
     sender: "user",
     content: option,
-    time: new Date().toLocaleTimeString("zh-CN", {
-      hour: "2-digit",
-      minute: "2-digit",
-    }),
+    time: ChatService.getCurrentTime(),
   });
 
   replyOptions.value = [];
 
   setTimeout(() => {
-    const autoReplies = [
-      "好的，我会按照您的指示处理",
-      "收到，立即执行",
-      "明白了，感谢您的反馈",
-      "我会尽快跟进此事",
-      "没问题，我会调整方案",
-    ];
-    const randomReply =
-      autoReplies[Math.floor(Math.random() * autoReplies.length)];
+    // 使用服务生成自动回复
+    const randomReply = ChatService.generateAutoReply();
 
     chatMessages.value.push({
       sender: "contact",
       content: randomReply,
-      time: new Date().toLocaleTimeString("zh-CN", {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
+      time: ChatService.getCurrentTime(),
     });
 
-    const contact = contacts.value.find((c) => c.id === activeContactId.value);
-    if (contact?.name === "研发") {
+    const contact = ChatService.getCurrentContact(contacts.value, activeContactId.value || 1);
+    if (contact.name === "研发") {
       replyOptions.value = ["继续推进", "需要进一步讨论", "查看研发进度"];
     }
   }, 1000);

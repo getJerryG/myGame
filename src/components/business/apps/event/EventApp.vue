@@ -113,6 +113,7 @@
 
 <script setup lang="ts">
 import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
+import { EventService, type Event, type EventType, type EventIntensity } from '@/services/EventService';
 
 // 导入类型
 import type { App } from "../../../types/app";
@@ -129,23 +130,11 @@ defineProps<{
 // 活跃标签
 const activeTab = ref("new");
 
-// 活动类型选项
-const eventTypes = [
-  { label: "新英雄折扣", value: "hero_discount" },
-  { label: "英雄+皮肤礼包", value: "hero_skin_bundle" },
-  { label: "排位加成", value: "rank_boost" },
-  { label: "充值返还", value: "recharge_bonus" },
-  { label: "限定返场", value: "limited_return" },
-  { label: "联动主题活动", value: "collab_theme" },
-  { label: "炸服补偿", value: "server_crash_compensation" },
-];
+// 从服务获取活动类型选项
+const eventTypes = ref<EventType[]>(EventService.getEventTypes());
 
-// 活动力度选项
-const eventIntensities = [
-  { label: "轻度", value: "light" },
-  { label: "中度", value: "moderate" },
-  { label: "重磅", value: "heavy" },
-];
+// 从服务获取活动力度选项
+const eventIntensities = ref<EventIntensity[]>(EventService.getEventIntensities());
 
 // 选中的活动配置
 const selectedEvent = ref({
@@ -153,45 +142,17 @@ const selectedEvent = ref({
   intensity: "light",
 });
 
-// 模拟活动数据
-const events = ref([
-  {
-    id: 1,
-    name: "新英雄李白折扣活动",
-    type: "新英雄折扣",
-    status: "进行中",
-    startDate: "2024/1/1",
-    endDate: "2024/1/7",
-    heatBoost: 10,
-    revenueBoost: 5,
-  },
-  {
-    id: 2,
-    name: "春节限定皮肤返场",
-    type: "限定返场",
-    status: "已结束",
-    startDate: "2024/2/1",
-    endDate: "2024/2/15",
-    heatBoost: 30,
-    revenueBoost: 15,
-  },
-]);
+// 从服务获取活动数据
+const events = ref<Event[]>(EventService.getEvents());
 
 // 根据活动力度获取活动持续天数
 const getEventDuration = (): number => {
-  const durationMap = {
-    light: 3,
-    moderate: 5,
-    heavy: 7,
-  };
-  return durationMap[selectedEvent.value.intensity];
+  return EventService.getEventDuration(selectedEvent.value.intensity);
 };
 
 // 创建活动
 const createEvent = (): void => {
-  // 这里应该调用store来创建活动
-  // 模拟创建成功
-  alert("活动创建成功");
+  EventService.createEvent(selectedEvent.value);
 };
 </script>
 

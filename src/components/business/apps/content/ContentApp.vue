@@ -59,6 +59,8 @@
 </template>
 
 <script setup lang="ts">
+import { ContentService } from '@/services/ContentService';
+
 const props = defineProps({
   app: {
     type: Object,
@@ -76,10 +78,7 @@ const emit = defineEmits(["update:activeModule"]);
 
 // 当前激活的模块
 const currentModule = computed(() => {
-  return (
-    props.app.modules.find((_m) => _m.id === activeModule.value) ||
-    props.app.modules[0]
-  );
+  return ContentService.getCurrentModule(props.app.modules, activeModule.value);
 });
 
 // 切换模块
@@ -88,23 +87,14 @@ const switchModule = (moduleId: string): void => {
   emit("update:activeModule", moduleId);
 };
 
-// 获取模块图标
+// 获取模块图标 - 组件方法，用于模板调用
 const getModuleIcon = (moduleId: string): string => {
-  const icons = {
-    "hero-management": "🦸",
-    "skin-release": "🎨",
-    "game-optimization": "⚙️",
-  };
-  return icons[moduleId] || "📦";
+  return ContentService.getModuleIcon(moduleId);
 };
 
-// 获取核心数据标签
+// 获取核心数据标签 - 组件方法，用于模板调用
 const getCoreDataLabel = (key: string): string => {
-  const labels = {
-    heroes: "英雄",
-    skins: "皮肤",
-  };
-  return labels[key] || key;
+  return ContentService.getCoreDataLabel(key);
 };
 </script>
 

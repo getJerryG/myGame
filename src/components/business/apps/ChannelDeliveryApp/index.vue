@@ -113,92 +113,18 @@
 
 <script setup lang="ts">
 import { getChannelTypeName } from "@/utils/appUtils";
-
-interface Channel {
-  id: string;
-  name: string;
-  type: "online" | "offline" | "cooperation";
-  effect: string;
-  cost: number;
-  status: "active" | "inactive";
-}
+import { ChannelDeliveryService, type Channel, type DeliveryIntensity } from '@/services/ChannelDeliveryService';
 
 const activeTab = ref<"all" | "online" | "offline" | "cooperation">("all");
 const showIntensityModal = ref(false);
 const selectedChannel = ref<Channel | null>(null);
 
-const channels = ref<Channel[]>([
-  {
-    id: "1",
-    name: "应用商店推广",
-    type: "online",
-    effect: "medium",
-    cost: 1000,
-    status: "inactive",
-  },
-  {
-    id: "2",
-    name: "社交媒体广告",
-    type: "online",
-    effect: "medium",
-    cost: 800,
-    status: "active",
-  },
-  {
-    id: "3",
-    name: "KOL 合作",
-    type: "online",
-    effect: "high",
-    cost: 1500,
-    status: "inactive",
-  },
-  {
-    id: "4",
-    name: "线下展会",
-    type: "offline",
-    effect: "high",
-    cost: 2000,
-    status: "inactive",
-  },
-  {
-    id: "5",
-    name: "网吧推广",
-    type: "offline",
-    effect: "low",
-    cost: 600,
-    status: "inactive",
-  },
-  {
-    id: "6",
-    name: "游戏平台联动",
-    type: "cooperation",
-    effect: "very-high",
-    cost: 2500,
-    status: "inactive",
-  },
-  {
-    id: "7",
-    name: "直播平台合作",
-    type: "online",
-    effect: "very-high",
-    cost: 1800,
-    status: "inactive",
-  },
-  {
-    id: "8",
-    name: "校园推广",
-    type: "offline",
-    effect: "low",
-    cost: 700,
-    status: "inactive",
-  },
-]);
+// 从服务获取渠道数据
+const channels = ref<Channel[]>(ChannelDeliveryService.getChannels());
 
+// 按类型筛选渠道
 const filteredChannels = computed(() => {
-  if (activeTab.value === "all") {
-    return channels.value;
-  }
-  return channels.value.filter((channel) => channel.type === activeTab.value);
+  return ChannelDeliveryService.filterChannelsByType(channels.value, activeTab.value);
 });
 
 const openIntensityModal = (channel: Channel): void => {
@@ -211,27 +137,19 @@ const closeIntensityModal = (): void => {
   selectedChannel.value = null;
 };
 
-const confirmIntensity = (_intensity: "light" | "medium" | "heavy"): void => {
+const confirmIntensity = (intensity: DeliveryIntensity): void => {
   if (selectedChannel.value) {
-    const index = channels.value.findIndex(
-      (c) => c.id === selectedChannel.value!.id,
-    );
-    if (index !== -1) {
-      channels.value[index].status = "active";
-    }
+    channels.value = ChannelDeliveryService.confirmIntensity(channels.value, selectedChannel.value.id, intensity);
     closeIntensityModal();
   }
 };
 
 const stopDelivery = (channel: Channel): void => {
-  const index = channels.value.findIndex((c) => c.id === channel.id);
-  if (index !== -1) {
-    channels.value[index].status = "inactive";
-  }
+  channels.value = ChannelDeliveryService.stopDelivery(channels.value, channel.id);
 };
 
 const viewReport = (): void => {
-  alert("投放报告已生成，可在数据中心查看详细数据");
+  ChannelDeliveryService.generateReport();
 };
 </script>
 

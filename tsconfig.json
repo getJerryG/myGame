@@ -39,8 +39,7 @@
     "src/auto-imports.d.ts"
   ],
   "exclude": [
-    ".eslintrc.cjs", 
-    "tailwind.config.js",
+    ".config/.eslintrc.cjs", 
     "node_modules",
     "**/*.spec.ts",
     "**/*.test.ts",

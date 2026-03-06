@@ -12,8 +12,8 @@
     "test:coverage": "vitest run --coverage",
     "typecheck": "tsc --noEmit",
     "performance": "tsx performance-monitor.js",
-    "lint": "eslint src/ --ext .vue,.ts --cache --cache-location node_modules/.cache/eslint/ --fix --config .eslintrc.cjs --color --report-unused-disable-directives",
-    "lint:style": "stylelint \"**/*.{scss,vue}\" --fix --config .stylelintrc.json"
+    "lint": "eslint src/ --ext .vue,.ts --cache --cache-location node_modules/.cache/eslint/ --fix --config .config/.eslintrc.cjs ",
+    "lint:style": "stylelint \"**/*.{scss,vue}\" --fix --config .config/.stylelintrc.json"
   },
   "dependencies": {
     "chart.js": "^4.5.1",

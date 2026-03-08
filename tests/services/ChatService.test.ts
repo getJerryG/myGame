@@ -196,18 +196,18 @@ describe('ChatService', () => {
 
     // 模拟Date对象，测试特定时间
     it('should return the correct time when mocked', () => {
-      // 保存原始Date对象
-      const originalDate = global.Date;
+      // 使用Vitest内置的时间模拟
+      vi.useFakeTimers();
       
-      // 创建固定时间的Date模拟
+      // 设置固定时间
       const mockDate = new Date('2023-01-01T14:30:00');
-      vi.spyOn(global, 'Date').mockImplementation(() => mockDate as any);
+      vi.setSystemTime(mockDate);
       
       const timeString = ChatService.getCurrentTime();
       expect(timeString).toBe('14:30');
       
-      // 恢复原始Date对象
-      global.Date = originalDate;
+      // 恢复真实时间
+      vi.useRealTimers();
     });
   });
 });

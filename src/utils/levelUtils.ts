@@ -48,6 +48,12 @@ export function getMaxExp(
   // 经验值公式：基础经验值 × 1.2^等级索引
   // 基础经验值：见习III-1级为100
   const baseExp = 100;
+  
+  // 如果总等级索引小于0，返回0
+  if (totalLevelIndex < 0) {
+    return 0;
+  }
+  
   return Math.floor(baseExp * Math.pow(1.2, totalLevelIndex));
 }
 
@@ -77,19 +83,26 @@ export function getNextLevelInfo(
 
   // 2. 如果等级内等级达到3，重置为1并提升子等级
   if (nextLevelInRank > 2) {
+    const levelIndex = getLevelIndex(level);
+    const subLevelIndex = getSubLevelIndex(subLevel);
+    
+    // 检查是否是最高等级
+    if (levelIndex === plannerLevels.length - 1 && subLevelIndex === subLevels.length - 1) {
+      // 最高等级，只增加等级内等级，不提升子等级或职级
+      return { nextLevel, nextSubLevel, nextLevelInRank };
+    }
+    
     nextLevelInRank = 1;
-    const subLevelIndex = getSubLevelIndex(nextSubLevel);
-    nextSubLevel =
-      subLevelIndex > 0 ? subLevels[subLevelIndex - 1] : subLevels[0];
-
-    // 3. 如果子等级达到I且等级内等级达到3，重置为III并提升职级
-    if (subLevel === "I" && levelInRank === 2) {
+    
+    // 提升子等级（III -> II -> I）
+    if (subLevelIndex < subLevels.length - 1) {
+      nextSubLevel = subLevels[subLevelIndex + 1];
+    } else {
+      // 3. 如果子等级达到I且等级内等级达到3，重置为III并提升职级
       nextSubLevel = "III";
-      const levelIndex = getLevelIndex(nextLevel);
-      nextLevel =
-        levelIndex < plannerLevels.length - 1
-          ? plannerLevels[levelIndex + 1]
-          : plannerLevels[plannerLevels.length - 1];
+      if (levelIndex < plannerLevels.length - 1) {
+        nextLevel = plannerLevels[levelIndex + 1];
+      }
     }
   }
 

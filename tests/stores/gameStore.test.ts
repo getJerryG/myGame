@@ -292,32 +292,35 @@ describe('gameStore', () => {
       });
       
       it('should promote when requirements are met', () => {
-        // Mock canPromote to return true
-        (checkPromotionRequirements as vi.Mock).mockReturnValue(true);
-        
-        // Mock getMaxExp to return a value
-        (getMaxExp as vi.Mock).mockReturnValue(100);
-        
-        // Mock getNextLevelInfo to return new level info
-        (getNextLevelInfo as vi.Mock).mockReturnValue({
-          nextLevel: '初级',
-          nextSubLevel: 'III',
-          nextLevelInRank: 1
-        });
-        
-        // Set up exp to meet promotion requirements
-        gameStore.plannerExp = 150;
-        
-        // Mock giveLevelUpReward to avoid side effects
-        const giveLevelUpRewardSpy = vi.spyOn(gameStore, 'giveLevelUpReward');
-        
-        gameStore.checkPromotion();
-        
-        expect(gameStore.plannerLevel).toBe('初级');
-        expect(gameStore.plannerSubLevel).toBe('III');
-        expect(gameStore.plannerExp).toBe(50); // 150 - 100 = 50
-        expect(giveLevelUpRewardSpy).toHaveBeenCalled();
+      // Mock getMaxExp to return a value
+      (getMaxExp as vi.Mock).mockReturnValue(100);
+      
+      // Mock getNextLevelInfo to return new level info
+      (getNextLevelInfo as vi.Mock).mockReturnValue({
+        nextLevel: '初级',
+        nextSubLevel: 'III',
+        nextLevelInRank: 1
       });
+      
+      // Set up exp to meet promotion requirements
+      gameStore.plannerExp = 150;
+      
+      // Mock giveLevelUpReward to avoid side effects
+      const giveLevelUpRewardSpy = vi.spyOn(gameStore, 'giveLevelUpReward');
+      
+      // Mock checkPromotionRequirements to return true once, then false to prevent infinite recursion
+      (checkPromotionRequirements as vi.Mock).mockImplementation((level, subLevel) => {
+        // After promotion, level changes from '见习' to '初级', so return false for new level
+        return level === '见习';
+      });
+      
+      gameStore.checkPromotion();
+      
+      expect(gameStore.plannerLevel).toBe('初级');
+      expect(gameStore.plannerSubLevel).toBe('III');
+      expect(gameStore.plannerExp).toBe(50); // 150 - 100 = 50
+      expect(giveLevelUpRewardSpy).toHaveBeenCalled();
+    });
     });
     
     describe('giveLevelUpReward', () => {

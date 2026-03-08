@@ -56,7 +56,7 @@ describe('CollabService', () => {
       const newCollab = CollabService.createCollab(params);
       
       expect(newCollab).toHaveProperty('id');
-      expect(newCollab.id).toStartWith('collab-');
+      expect(newCollab.id.startsWith('collab-')).toBe(true);
       expect(newCollab.name).toBe(params.name);
       expect(newCollab.description).toBe(params.description);
       expect(newCollab.expectedRevenue).toBe(params.expectedRevenue);
@@ -67,12 +67,12 @@ describe('CollabService', () => {
     });
 
     it('should set correct start and end time', () => {
-      // 保存原始Date对象
-      const originalDate = global.Date;
+      // 使用Vitest内置的时间模拟
+      vi.useFakeTimers();
       
-      // 创建固定时间的Date模拟
+      // 设置固定时间
       const mockDate = new Date('2023-06-15');
-      vi.spyOn(global, 'Date').mockImplementation(() => mockDate as any);
+      vi.setSystemTime(mockDate);
       
       const params: CreateCollabParams = {
         name: '测试联动',
@@ -85,8 +85,8 @@ describe('CollabService', () => {
       expect(newCollab.startTime).toBe('2023-06-15');
       expect(newCollab.endTime).toBe('2023-07-15'); // 应该是一个月后
       
-      // 恢复原始Date对象
-      global.Date = originalDate;
+      // 恢复真实时间
+      vi.useRealTimers();
     });
 
     it('should handle large expected revenue', () => {

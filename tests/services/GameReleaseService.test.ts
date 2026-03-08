@@ -96,10 +96,9 @@ describe('GameReleaseService', () => {
         selectedChannels: ['steam', 'epic']
       };
       
-      // 保存原始Date对象
-      const originalDate = global.Date;
+      // 设置固定时间
       const mockDate = new Date('2023-06-15');
-      vi.spyOn(global, 'Date').mockImplementation(() => mockDate as any);
+      vi.setSystemTime(mockDate);
       
       // 调用startRelease方法
       const releasePromise = service.startRelease(config);
@@ -121,9 +120,6 @@ describe('GameReleaseService', () => {
       const history = service.getReleaseHistory();
       expect(history[0]).toEqual(result);
       expect(history.length).toBe(3); // 原始2条 + 新发布1条
-      
-      // 恢复原始Date对象
-      global.Date = originalDate;
     });
     
     it('should use default changelog when not provided', async () => {

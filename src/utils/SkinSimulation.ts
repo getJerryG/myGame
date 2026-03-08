@@ -163,27 +163,30 @@ export function calculateSkinMarketData(
   const skinAttractScore = (indicators.designFit + scarcityPrime) / 2;
   const decisionThresholdScore =
     (indicators.costEffectiveness + obtainDiffPrime) / 2;
-  const publicOpinionScore = (indicators.communityHeat + negativeOpPrime) / 2;
+  // 负面舆情应该显著降低公共舆情得分
+  const publicOpinionScore = indicators.communityHeat * Math.pow(1 - negativeOpPrime, 2);
 
-  // 4. 计算喜爱度和市场表现分
-  const likeScore = Number(
-    (
-      (heroScore * dynamicWeights.heroBase +
-        skinAttractScore * dynamicWeights.skinAttract +
-        publicOpinionScore * dynamicWeights.publicOpinion) *
-      100
-    ).toFixed(2),
+  // 4. 计算基础分数
+  const baseLikeScore = (
+    heroScore * dynamicWeights.heroBase +
+    skinAttractScore * dynamicWeights.skinAttract +
+    publicOpinionScore * dynamicWeights.publicOpinion
   );
-
-  const marketScore = Number(
-    (
-      (heroScore * dynamicWeights.heroBase +
-        skinAttractScore * dynamicWeights.skinAttract +
-        decisionThresholdScore * dynamicWeights.decisionThreshold +
-        publicOpinionScore * dynamicWeights.publicOpinion) *
-      100
-    ).toFixed(2),
+  
+  const baseMarketScore = (
+    heroScore * dynamicWeights.heroBase +
+    skinAttractScore * dynamicWeights.skinAttract +
+    decisionThresholdScore * dynamicWeights.decisionThreshold +
+    publicOpinionScore * dynamicWeights.publicOpinion
   );
+  
+  // 5. 应用负面舆情对整体分数的影响
+  const finalLikeScore = baseLikeScore * (1 - negativeOpPrime * 0.5);
+  const finalMarketScore = baseMarketScore * (1 - negativeOpPrime * 0.5);
+  
+  // 6. 计算最终得分
+  const likeScore = Number((finalLikeScore * 100).toFixed(2));
+  const marketScore = Number((finalMarketScore * 100).toFixed(2));
 
   // 5. 获取基础模拟参数
   const {

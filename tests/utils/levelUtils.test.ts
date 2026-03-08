@@ -92,7 +92,7 @@ describe('levelUtils', () => {
     
     it('should handle invalid sub level gracefully', () => {
       // 无效的subLevel会返回-1，导致计算结果为负数
-      expect(getTotalLevelIndex("见习", "无效子等级", 1)).toBe(-1);
+      expect(getTotalLevelIndex("见习", "无效子等级", 1)).toBe(-2);
     });
   });
   
@@ -108,11 +108,11 @@ describe('levelUtils', () => {
       expect(getMaxExp("见习", "II", 1)).toBe(144);
       
       // 初级III-1级
-      expect(getMaxExp("初级", "III", 1)).toBe(311);
+      expect(getMaxExp("初级", "III", 1)).toBe(298);
       
       // 总监I-2级（最高级）
       // 经验值公式：100 * 1.2^47
-      expect(getMaxExp("总监", "I", 2)).toBe(11013);
+      expect(getMaxExp("总监", "I", 2)).toBe(526645);
     });
     
     it('should return 0 for invalid level', () => {
@@ -141,7 +141,7 @@ describe('levelUtils', () => {
       expect(checkPromotionRequirements("见习", "III", 2, 119)).toBe(false);
       
       // 初级III-1级，经验值不足
-      expect(checkPromotionRequirements("初级", "III", 1, 310)).toBe(false);
+      expect(checkPromotionRequirements("初级", "III", 1, 297)).toBe(false);
     });
     
     it('should handle zero exp', () => {

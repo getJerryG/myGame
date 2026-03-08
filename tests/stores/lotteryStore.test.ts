@@ -71,11 +71,11 @@ describe('LotteryStore', () => {
       expect(initialCooldown).toBeLessThanOrEqual(86400000);
       
       // 模拟1小时后，冷却时间应该减少约1小时
-      setTimeout(() => {
-        const laterCooldown = lotteryStore.freeDrawRemainingCooldown;
-        expect(laterCooldown).toBeLessThan(initialCooldown);
-        expect(laterCooldown).toBeGreaterThan(initialCooldown - 3600000 - 1000);
-      }, 10);
+      // 直接修改lastDrawTime来模拟时间流逝，避免异步问题
+      lotteryStore.lastDrawTime = Date.now() - 3600000;
+      const laterCooldown = lotteryStore.freeDrawRemainingCooldown;
+      expect(laterCooldown).toBeLessThan(initialCooldown);
+      expect(laterCooldown).toBeGreaterThan(initialCooldown - 3600000 - 1000);
     });
 
     it('rarityDistribution 应该返回正确的稀有度概率分布', () => {

@@ -287,9 +287,16 @@ export const useGameStore = defineStore("game", {
 
         // 根据职级提升给予奖励
         this.giveLevelUpReward();
-
+        
+        // 保存当前状态，避免无限递归
+        const newLevel = this.plannerLevel;
+        const newSubLevel = this.plannerSubLevel;
+        const newLevelInRank = this.levelInRank;
+        const newExp = this.plannerExp;
+        
         // 检查是否可以连续升级
-        if (this.canPromote) {
+        // 使用新的状态值重新计算canPromote，避免基于旧状态的无限递归
+        if (checkPromotionRequirements(newLevel, newSubLevel, newLevelInRank, newExp)) {
           this.checkPromotion();
         }
       }

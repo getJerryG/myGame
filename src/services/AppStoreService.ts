@@ -170,7 +170,15 @@ export class AppStoreService {
   // 加载已安装应用
   static loadInstalledApps(): string[] {
     const saved = localStorage.getItem(INSTALLED_APPS_KEY);
-    return saved ? JSON.parse(saved) : [];
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (error) {
+        console.error('Failed to parse installed apps from localStorage:', error);
+        return [];
+      }
+    }
+    return [];
   }
 
   // 保存已安装应用

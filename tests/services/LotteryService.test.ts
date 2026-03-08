@@ -116,10 +116,9 @@ describe('LotteryService', () => {
     });
     
     it('should successfully draw a prize with valid tickets', async () => {
-      // 保存原始Date对象
-      const originalDate = global.Date;
+      // 设置固定时间
       const mockDate = new Date('2023-06-15T10:30:00');
-      vi.spyOn(global, 'Date').mockImplementation(() => mockDate as any);
+      vi.setSystemTime(mockDate);
       
       // 调用startDraw方法
       const drawPromise = service.startDraw();
@@ -141,9 +140,6 @@ describe('LotteryService', () => {
       
       // 验证抽奖记录已添加
       expect(service.getDrawHistory().length).toBe(1);
-      
-      // 恢复原始Date对象
-      global.Date = originalDate;
     });
     
     it('should return a valid prize from prizes list', async () => {

@@ -41,8 +41,6 @@
   "exclude": [
     ".config/.eslintrc.cjs", 
     "node_modules",
-    "**/*.spec.ts",
-    "**/*.test.ts",
     "src/**/*.scss"
   ]
 }

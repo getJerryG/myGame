@@ -70,24 +70,24 @@
 // import { useWindowManagerStore } from "@/stores/windowManagerStore";
 
 // 导入所有应用组件
-import ChatApp from "@/components/business/apps/chat/ChatApp.vue";
-import CareerApp from "@/components/business/apps/career/CareerApp.vue";
-import CollabCenterApp from "@/components/business/apps/CollabCenter/CollabCenterApp.vue";
-import ContentApp from "@/components/business/apps/content/ContentApp.vue";
-import DataCenterApp from "@/components/business/apps/DataCenter/DataCenterApp.vue";
-import EventApp from "@/components/business/apps/event/EventApp.vue";
-import EventLogApp from "@/components/business/apps/EventLog/EventLogApp.vue";
-import GameReleaseApp from "@/components/business/apps/GameRelease/GameReleaseApp.vue";
-import HeroApp from "@/components/business/apps/hero/HeroApp.vue";
-import LotteryApp from "@/components/business/apps/lottery/LotteryApp.vue";
-import OperationsApp from "@/components/business/apps/operations/OperationsApp.vue";
-import RewardsApp from "@/components/business/apps/rewards/RewardsApp.vue";
-import SentimentCenterApp from "@/components/business/apps/SentimentCenter/SentimentCenterApp.vue";
-import SkinApp from "@/components/business/apps/skin/SkinApp.vue";
-import SystemSettingsApp from "@/components/business/apps/SystemSettings/SystemSettingsApp.vue";
-import TaskCenterApp from "@/components/business/apps/TaskCenter/TaskCenterApp.vue";
-import WalletApp from "@/components/business/apps/wallet/WalletApp.vue";
-import AppStore from "@/components/business/apps/AppStore/AppStore.vue";
+import ChatApp from "@/components/business/chat/ChatApp.vue";
+import CareerApp from "@/components/business/Career/CareerApp.vue";
+import CollabCenterApp from "@/components/business/CollabCenter/CollabCenterApp.vue";
+import ContentApp from "@/components/business/content/ContentApp.vue";
+import DataCenterApp from "@/components/business/DataCenter/DataCenterApp.vue";
+import EventApp from "@/components/business/event/EventApp.vue";
+import EventLogApp from "@/components/business/EventLog/EventLogApp.vue";
+import GameReleaseApp from "@/components/business/GameRelease/GameReleaseApp.vue";
+import HeroApp from "@/components/business/hero/HeroApp.vue";
+import LotteryApp from "@/components/business/lottery/LotteryApp.vue";
+import OperationsApp from "@/components/business/Operations/OperationsApp.vue";
+import RewardsApp from "@/components/business/Rewards/RewardsApp.vue";
+import SentimentCenterApp from "@/components/business/SentimentCenter/SentimentCenterApp.vue";
+import SkinApp from "@/components/business/Skin/SkinApp.vue";
+import SystemSettingsApp from "@/components/business/SystemSettings/SystemSettingsApp.vue";
+import TaskCenterApp from "@/components/business/TaskCenter/TaskCenterApp.vue";
+import WalletApp from "@/components/business/Wallet/WalletApp.vue";
+import AppStore from "@/components/business/AppStore/AppStore.vue";
 
 // 应用组件映射
 const appComponents: Record<string, DefineComponent> = {

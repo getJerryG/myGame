@@ -105,7 +105,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { gameReleaseService, type ReleaseConfig, type ReleaseStatus } from '../../../services/GameReleaseService';
+import { gameReleaseService, type ReleaseConfig, type ReleaseStatus } from '../../../services/game/GameReleaseService';
 
 // 发布状态
 const releaseStatus = ref<ReleaseStatus>("idle");

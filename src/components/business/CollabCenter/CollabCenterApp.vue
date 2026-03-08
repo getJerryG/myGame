@@ -153,7 +153,7 @@
 
 <script setup lang="ts">
 // 导入联动服务
-import { CollabService, type Collab, type CreateCollabParams } from '@/services/CollabService';
+import { CollabService, type Collab, type CreateCollabParams } from '@/services/app/CollabService';
 
 // 活跃标签页
 const activeTab = ref("all");

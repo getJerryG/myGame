@@ -217,7 +217,7 @@ import type { App } from "../../../types/app";
 import type { GameData } from "../../../types/game";
 import type { Modal } from "../../../types/modal";
 // 导入舆情服务
-import { SentimentService, type Comment } from '@/services/SentimentService';
+import { SentimentService, type Comment } from '@/services/app/SentimentService';
 
 // Props定义
 defineProps<{

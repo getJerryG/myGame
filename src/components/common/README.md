@@ -6,10 +6,23 @@
 
 | 组件名称 | 描述                                        | 文件路径           |
 | -------- | ------------------------------------------- | ------------------ |
+| ActionButtons | 操作按钮组组件 | `ActionButtons/index.vue` |
+| AppNavbar | 应用导航栏组件 | `AppNavbar/index.vue` |
 | Button   | 通用按钮组件，支持多种样式变体和交互状态    | `Button/index.vue` |
-| List     | 通用列表组件，支持不同布局和交互模式        | `List/index.vue`   |
 | Card     | 通用卡片组件，支持不同卡片样式和内容布局    | `Card/index.vue`   |
+| DesktopAppContainer | 桌面应用容器组件 | `DesktopAppContainer/index.vue` |
+| DesktopAppIcon | 桌面应用图标组件 | `DesktopAppIcon/index.vue` |
+| DesktopModal | 桌面模态框组件 | `DesktopModal/index.vue` |
+| DesktopSystem | 桌面系统组件 | `DesktopSystem/index.vue` |
+| GameModal | 游戏模态框组件 | `GameModal/index.vue` |
+| LeftSidebar | 左侧边栏组件 | `LeftSidebar/index.vue` |
+| List     | 通用列表组件，支持不同布局和交互模式        | `List/index.vue`   |
+| NewbieGuide | 新手引导组件 | `NewbieGuide/index.vue` |
+| NotchBar | 刘海栏组件 | `NotchBar/index.vue` |
 | Panel    | 通用面板组件，支持折叠/展开功能和自定义标题 | `Panel/index.vue`  |
+| ResourceList | 资源列表组件 | `ResourceList/index.vue` |
+| TaskSystemPanel | 任务系统面板组件 | `TaskSystemPanel/index.vue` |
+| Window | 窗口相关组件 | `window/`          |
 
 ## Button 组件
 

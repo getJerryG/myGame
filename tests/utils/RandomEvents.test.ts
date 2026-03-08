@@ -6,7 +6,7 @@ import {
   markEventAsRead,
   clearAllEvents,
   RandomEventType
-} from '../../src/utils/RandomEvents';
+} from '@/utils/RandomEvents';
 
 // Mock localStorage with actual storage
 const localStorageMock = (() => {

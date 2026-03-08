@@ -32,11 +32,12 @@
   },
   "include": [
     "src/**/*.ts", 
-    "src/**/*.d.ts", 
+    "**/*.d.ts", 
     "src/**/*.tsx", 
     "src/**/**/*.vue", 
     "src/**/*.js",
-    "src/auto-imports.d.ts"
+    "src/auto-imports.d.ts",
+
   ],
   "exclude": [
     ".config/.eslintrc.cjs", 

@@ -7,7 +7,7 @@ import type {
   SimulationEvent,
   SimulationHero,
   SimulationFullState,
-} from "../types/simulation";
+} from "../types/Simulation";
 import { EventSystem } from "../systems/EventSystem";
 import { TimeManager } from "../systems/TimeManager";
 

@@ -23,12 +23,12 @@ const props = defineProps<{
 // 定义可用的应用组件映射
 const appComponents: Record<string, () => Promise<{ default: unknown }>> = {
   // 引用项目中实际存在的组件
-  hero: () => import("../../modules/game/views/HeroDevelopmentApp.vue"),
-  game: () => import("../../modules/game/views/GameReleaseApp.vue"),
-  settings: () => import("../../modules/game/views/GameSettingsApp.vue"),
-  lottery: () => import("../../modules/lottery/views/LotteryPage.vue"),
+  hero: () => import("../../components/business/hero/HeroApp.vue"),
+  game: () => import("../../components/business/GameRelease/GameReleaseApp.vue"),
+  settings: () => import("../../components/business/SystemSettings/SystemSettingsApp.vue"),
+  lottery: () => import("../../components/business/lottery/LotteryPage.vue"),
   simulation: () =>
-    import("../../modules/simulation/views/NewSimulationPanel.vue"),
+    import("../../components/business/simulation/NewSimulationPanel.vue"),
 };
 
 // 根据page参数获取当前应用组件

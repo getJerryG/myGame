@@ -9,7 +9,9 @@
 ```
 src/styles/
 ├── _variables.scss    # 主题变量定义
+├── _tokens.scss       # 设计令牌（颜色、间距等）
 ├── _mixins.scss       # 公共样式混入
+├── _utilities.scss    # 工具类定义
 ├── index.scss         # 样式系统主入口
 └── README.md          # 使用指南
 ```

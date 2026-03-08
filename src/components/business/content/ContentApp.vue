@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { ContentService } from '@/services/ContentService';
+import { ContentService } from '@/services/content/ContentService';
 
 const props = defineProps({
   app: {

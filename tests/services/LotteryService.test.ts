@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { LotteryService, lotteryService, type LotteryConfig, type Prize } from '@/services/LotteryService';
+import { LotteryService, lotteryService, type LotteryConfig, type Prize } from '@/services/lottery/LotteryService';
 
 describe('LotteryService', () => {
   let service: LotteryService;

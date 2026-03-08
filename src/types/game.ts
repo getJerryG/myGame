@@ -49,3 +49,16 @@ export interface GameFeedback {
   bugReports: number;
   suggestions: number;
 }
+
+// 游戏发布结果类型
+export interface GameReleaseResult {
+  success: boolean;
+  message: string;
+  releaseId: string;
+  timestamp: number;
+  details: {
+    downloaded: number;
+    activeUsers: number;
+    revenue: number;
+  };
+}

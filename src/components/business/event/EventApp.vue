@@ -113,7 +113,7 @@
 
 <script setup lang="ts">
 import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
-import { EventService, type Event, type EventType, type EventIntensity } from '@/services/EventService';
+import { EventService, type Event, type EventType, type EventIntensity } from '@/services/event/EventService';
 
 // 导入类型
 import type { App } from "../../../types/app";

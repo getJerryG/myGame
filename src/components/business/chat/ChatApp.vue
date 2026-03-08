@@ -69,7 +69,7 @@
 
 <script setup lang="ts">
 import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
-import { ChatService, type Contact, type ChatMessage } from '@/services/ChatService';
+import { ChatService, type Contact, type ChatMessage } from '@/services/chat/ChatService';
 
 defineProps<{
   app?: unknown;

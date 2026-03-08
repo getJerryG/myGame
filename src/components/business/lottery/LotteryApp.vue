@@ -132,7 +132,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
-import { lotteryService, type Prize } from '../../../../services/LotteryService';
+import { lotteryService, type Prize } from '../../../services/lottery/LotteryService';
 
 // 状态管理
 const activeTab = ref<string>("draw");

@@ -153,6 +153,16 @@ export interface SimulationHeroAttributes {
   charisma: number;
 }
 
+// 游戏时间类型
+export interface GameTime {
+  day: number;
+  month: number;
+  year: number;
+  hour: number;
+  minute: number;
+  second: number;
+}
+
 // 完整的模拟状态，包含所有相关数据
 export interface SimulationFullState {
   id: string;

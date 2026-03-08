@@ -4,7 +4,7 @@ import type {
   SimulationEventOption,
   SimulationEventEffect,
   SimulationEventRequirement,
-} from "../types/simulation";
+} from "../types/Simulation";
 
 // 导入事件相关类型
 export type EventType =

@@ -82,7 +82,7 @@
 <script setup lang="ts">
 import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
 import { getModuleIcon } from "@/utils/appUtils";
-import { WalletService, type Transaction, type BalanceDetails } from "@/services/WalletService";
+import { WalletService, type Transaction, type BalanceDetails } from "@/services/wallet/WalletService";
 
 const props = defineProps({
   app: {

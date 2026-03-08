@@ -1,97 +1,30 @@
 // 导出应用相关类型
-export * from "./app";
+export * from "./App";
+
+// 导出业务数据相关类型
+export * from "./Business";
 
 // 导出游戏相关类型
-export * from "./game";
+export * from "./Game";
+
+// 导出事件相关类型
+export * from "./Event";
 
 // 导出抽奖相关类型
-export * from "./lottery";
+export * from "./Lottery";
 
 // 导出模态框相关类型
-export * from "./modal";
+export * from "./Modal";
 
 // 导出玩家相关类型
-export * from "./player";
+export * from "./Player";
 
 // 导出模拟相关类型
-export * from "./simulation";
+export * from "./Simulation";
 export * from "./SimulationHistory";
 export * from "./SimulationReport";
 export * from "./SimulationResults";
 export * from "./SimulationStage";
 
 // 导出技能相关类型
-export * from "./skill";
-
-// 添加缺失的类型定义
-export interface GameTime {
-  day: number;
-  month: number;
-  year: number;
-  hour: number;
-  minute: number;
-  second: number;
-}
-
-export interface EventEffect {
-  type: string;
-  value: number;
-  duration: number;
-}
-
-export interface EventCondition {
-  type: string;
-  value: unknown;
-  operator: string;
-}
-
-export interface GameEvent {
-  id: string;
-  type: string;
-  name: string;
-  description: string;
-  effects: EventEffect[];
-  probability: number;
-  timestamp: number;
-  triggeredBy?: string;
-  conditions?: EventCondition[];
-}
-
-export interface BusinessData {
-  downloads: number;
-  activeUsers: number;
-  revenue: number;
-  marketShare: number;
-  retentionRate: number;
-  averagePlayTime: number;
-  dailyGrowthRate: number;
-  rating: number;
-  feedbackCount: number;
-  timestamp: number;
-  date: string;
-  hour: number;
-  minute: number;
-}
-
-export interface GameReleaseData {
-  id: string;
-  name: string;
-  version: string;
-  status: string;
-  createdAt: number;
-  plannedReleaseDate?: number;
-  type: string;
-  description: string;
-}
-
-export interface GameReleaseResult {
-  success: boolean;
-  message: string;
-  releaseId: string;
-  timestamp: number;
-  details: {
-    downloaded: number;
-    activeUsers: number;
-    revenue: number;
-  };
-}
+export * from "./Skill";

@@ -109,7 +109,7 @@ import type { App } from "../../../types/app";
 import type { GameData } from "../../../types/game";
 import type { Modal } from "../../../types/modal";
 // 导入事件日志服务
-import { EventLogService, type Event, type EventFilters } from '@/services/EventLogService';
+import { EventLogService, type Event, type EventFilters } from '@/services/event/EventLogService';
 
 // Props定义
 defineProps<{

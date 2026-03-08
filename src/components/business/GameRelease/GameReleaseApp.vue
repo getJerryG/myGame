@@ -149,7 +149,7 @@ import type { GameData } from "../../../types/game";
 import type { Modal, GameReleaseData } from "../../../types";
 
 // 导入服务
-import { GameReleaseService } from "../../../../services/GameReleaseService";
+import { GameReleaseService } from "../../../services/game/GameReleaseService";
 
 // Props定义
 defineProps<{

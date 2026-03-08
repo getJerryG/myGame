@@ -168,7 +168,7 @@
 import { onMounted, ref } from 'vue';
 import { useHeroSkinStore } from "@/stores/heroSkinStore";
 import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
-import { HeroService } from "@/services/HeroService";
+import { HeroService } from "@/services/hero/HeroService";
 
 // 使用Pinia store
 const heroSkinStore = useHeroSkinStore();

@@ -75,7 +75,7 @@ import { useWindowManagerStore } from "@/stores/windowManagerStore";
 import ApplicationWindow from "@/components/common/window/ApplicationWindow.vue";
 import type { SidebarItem } from "@/components/common/window/ApplicationWindow.vue";
 import { useSimulationCareerSystemStore } from "@/stores/simulation/simulationCareerSystemStore";
-import { AppStoreService, type AvailableApp, type AppStatus } from "@/services/AppStoreService";
+import { AppStoreService, type AvailableApp, type AppStatus } from "@/services/app/AppStoreService";
 
 const careerSystemStore = useSimulationCareerSystemStore();
 const windowManagerStore = useWindowManagerStore();
